@@ -10,10 +10,22 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./main/login/login.module').then( m => m.LoginPageModule)
   },
-  // {
-  //   path: 'work',
-  //   loadChildren: () => import('./module/work/work.module').then( m => m.WorkPageModule)
-  // },
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./module/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
+  {
+    path: 'modal/filter',
+    loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'modal/insert',
+    loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'modal/suggest',
+    loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
+  },
   {
     path: '',
     redirectTo: 'login',

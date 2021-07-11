@@ -23,12 +23,12 @@ export class RestService {
       drug: 0, target: 0, profile: 0
     },
   }
-  public list = {
+  public data = {
     work: [], kaizen: [], schedule: [], vaccine: [],
     spa: [], expire: [], blood: [], usg: [],
     drug: [], target: [], profile: []
   }
-  public filter = {
+  public filter: any = {
     work: {}, kaizen: {}, schedule: {}, vaccine: {},
     spa: {}, expire: {}, blood: {}, usg: {},
     drug: {}, target: {}, profile: {}

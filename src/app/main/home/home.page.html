@@ -16,12 +16,25 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="rest.config.userid">
+  <div *ngIf="rest.config.module.vaccine > 0" class="box" (click)="rest.router.navigateByUrl('vaccine')">
+    <ion-img src="assets/image/vaccine.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý vaccine
+    </div>
+  </div>
+
+  <div class="box" (click)="rest.router.navigateByUrl('setting')">
+    <ion-img src="assets/image/user.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Người dùng
+    </div>
+  </div>
+
+  <!-- <div *ngIf="rest.config.userid">
     <div *ngIf="rest.config.module.work > 0" class="box" (click)="rest.router.navigateByUrl('work')">
       <ion-img src="assets/image/work.png" class="box-image"></ion-img>
       <div class="box-title">
         Quản lý công việc
-        <!-- <ion-badge color="danger" slot="end" *ngIf="rest.work.unread"> {{rest.work.unread}} </ion-badge> -->
       </div>
     </div>
   
@@ -29,7 +42,6 @@
       <ion-img src="assets/image/kaimin.png" class="box-image"></ion-img>
       <div class="box-title">
         5 phút/Kaizen
-        <!-- <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge> -->
       </div>
     </div>
   
@@ -39,14 +51,7 @@
         Đăng ký lịch
       </div>
     </div>
-  
-    <div *ngIf="rest.config.module.vaccine > 0" class="box" (click)="rest.router.navigateByUrl('vaccine')">
-      <ion-img src="assets/image/vaccine.png" class="box-image"></ion-img>
-      <div class="box-title">
-        Quản lý vaccine
-      </div>
-    </div>
-  
+    
     <div *ngIf="rest.config.module.spa > 0" class="box" (click)="rest.router.navigateByUrl('spa')">
       <ion-img src="assets/image/spa.png" class="box-image"></ion-img>
       <div class="box-title">
@@ -88,5 +93,5 @@
         Quản lý sinh hóa
       </div>
     </div>
-  </div>
+  </div> -->
 </ion-content>
