@@ -1,5 +1,7 @@
 {
   "name": "petwork",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
