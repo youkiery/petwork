@@ -23,7 +23,7 @@ export class RestService {
       drug: 0, target: 0, profile: 0
     },
   }
-  public data = {
+  public data: any = {
     work: [], kaizen: [], schedule: [], vaccine: [],
     spa: [], expire: [], blood: [], usg: [],
     drug: [], target: [], profile: []
@@ -33,9 +33,11 @@ export class RestService {
     spa: {}, expire: {}, blood: {}, usg: {},
     drug: {}, target: {}, profile: {}
   }
+  public action: string = ''
   public temp: any = {}
-  toast: any
-  load: any
+  public toast: any
+  public load: any
+  public ok: boolean = false
   public today: string = ''
   public error: string = ''
   public link: string = ''
@@ -56,6 +58,17 @@ export class RestService {
     this.storage.get('session').then(session => {
       this.defreeze()
       this.session(session)
+    })
+  }
+
+  public async ready() {
+    return new Promise(resolve => {
+      let interval = setInterval(() => {
+        if (this.ok) {
+          clearInterval(interval)
+          resolve(true)
+        }
+      }, 200)
     })
   }
 
@@ -109,11 +122,13 @@ export class RestService {
         sess: session
       }).then(resp => {
         this.config = resp.config
-        this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+        if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+        this.ok = true
         this.defreeze()
       }, () => {
         this.navCtrl.navigateRoot('/login')
         this.storage.remove('session')
+        this.ok = true
         this.defreeze()
       })
     }

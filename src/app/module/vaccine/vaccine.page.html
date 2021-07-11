@@ -16,44 +16,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
-  <ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-segment [(ngModel)]="rest.filter.vaccine.status" (ionChange)="onSegmentChange()">
       <ion-segment-button value="0"> Chưa gọi </ion-segment-button>
       <ion-segment-button value="1"> Đã gọi </ion-segment-button>
       <ion-segment-button value="2"> Đã tái chủng </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>
+  </ion-toolbar> -->
 
-  <table border="1">
-    <thead>
-      <th> Tên chủ </th>
-      <th> Số điện thoại </th>
-      <th> Loại vaccine </th>
-      <th> Ngày tái chủng </th>
-    </thead>
-    <tbody *ngFor="let item of rest.data.vaccine; let i = index" [class]="rest.filter.vaccine.status != '2' ? item.color : ''">
-      <tr>
-        <td> {{item.name}} </td>
-        <td> {{item.number}} </td>
-        <td> {{item.vaccine}} </td>
-        <td> {{item.calltime}} </td>
-      </tr>
-      <tr>
-        <td colspan="2"> <ion-icon name="create-outline" (click)="note(i, item.id, item.note)"></ion-icon> {{item.note}} </td>
-        <td colspan="2"> 
-          <ion-button *ngIf="rest.filter.vaccine.status != '2'" color="light" size="small" (click)="changeStatus(item.id)">
-            <ion-icon name="checkmark-outline"></ion-icon>
-          </ion-button>  
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <ion-card *ngFor="let item of this.rest.data.vaccine.list; let i = index">
+    <ion-card-content>
+      <div class="col-xs-6">
+        Tên chủ: {{item.name}}
+      </div>
+      <div class="col-xs-6">
+        Số điện thoại: {{item.number}}
+      </div>
+      Ngày tái chủng: {{item.calltime}} <br>
+      Loại tái chủng: {{item.vaccine}} <br>
+      {{item.note}} 
+      <ion-button color="light" size="small" (click)="changeStatus(item.id)">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ion-toolbar>
@@ -64,19 +56,14 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="insert()">
+      <ion-tab-button (click)="insertModal()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filterM()">
+      <ion-tab-button (click)="filterModal()">
         <ion-icon name="filter-outline"></ion-icon>
         <ion-label> Tìm kiếm </ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button>
-        <ion-icon name="notifications-outline"></ion-icon>
-        <ion-label> Thông báo </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

@@ -7,7 +7,7 @@ import { RestService } from 'src/app/services/rest.service';
   templateUrl: './vaccine.page.html',
   styleUrls: ['./vaccine.page.scss'],
 })
-export class VaccinePage implements OnInit {
+export class VaccinePage {
   constructor(
     public rest: RestService,
     public alert: AlertController,
@@ -15,7 +15,15 @@ export class VaccinePage implements OnInit {
   ) { }
 
   public async ionViewDidEnter() {
+    this.rest.ready().then(() => {
+      this.init()
+    })
+  }
+
+  public async init() {
     if (!this.rest.filter.vaccine.init) {
+      this.rest.data.vaccine.list = []
+      this.rest.data.vaccine.new = []
       await this.rest.freeze('Đang tải danh sách')
       this.filter().then(() => {
         this.rest.defreeze()
@@ -25,12 +33,10 @@ export class VaccinePage implements OnInit {
   
   public filter() {
     return new Promise((resolve) => {
-      this.rest.checkpost('vaccine', 'auto', {
-        status: this.rest.filter.vaccine.status
-      }).then(response => {
+      this.rest.checkpost('vaccine', 'auto', { }).then(resp => {
         this.rest.filter.vaccine.init = true
-        this.rest.filter.vaccine.new = response.new
-        this.rest.filter.vaccine.data = response.data
+        this.rest.data.vaccine.new = resp.new
+        this.rest.data.vaccine.list = resp.list
         resolve('')
       }, () => {
         resolve('')
@@ -38,16 +44,32 @@ export class VaccinePage implements OnInit {
     })
   }
 
-  public filterM() {
-    this.rest.router.navigateByUrl('/vaccine/filter')
+  public filterModal() {
+    this.rest.action = 'vaccine'
+    this.rest.router.navigateByUrl('/modal/filter')
   }
 
-  public async onSegmentChange() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.filter().then(() => {
-      this.rest.defreeze()
-    })
+  public insertModal() {
+    if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.action = 'vaccine'
+      this.rest.temp = {
+        name: '',
+        phone: '',
+        vaccine: '',
+        cometime: '',
+        calltime: ''
+      }
+      this.rest.router.navigateByUrl('/vaccine/insert')
+    }
   }
+
+  // public async onSegmentChange() {
+  //   await this.rest.freeze('Đang tải danh sách')
+  //   this.filter().then(() => {
+  //     this.rest.defreeze()
+  //   })
+  // }
 
   
   public async changeStatus(id: number) {
@@ -80,9 +102,9 @@ export class VaccinePage implements OnInit {
     this.rest.checkpost('vaccine', 'change', {
       id: id,
       status: this.rest.filter.vaccine.status
-    }).then(response => {
+    }).then(resp => {
       this.rest.notify('Đã thay đổi trạng thái')
-      this.rest.filter.vaccine.data = response.data
+      this.rest.filter.vaccine.data = resp.data
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -131,14 +153,4 @@ export class VaccinePage implements OnInit {
     }, () => [
     ])
   }
-
-  public insert() {
-    if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      this.rest.router.navigateByUrl('/vaccine/insert')
-    }
-  }
-  
-  ngOnInit() {}
-
 }
