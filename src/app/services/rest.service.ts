@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Storage } from '@ionic/storage'; 
+import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 
@@ -21,7 +21,7 @@ export class RestService {
       work: 0, kaizen: 0, schedule: 0, vaccine: 0,
       spa: 0, expire: 0, blood: 0, usg: 0,
       drug: 0, target: 0, profile: 0
-    },
+    }
   }
   public data: any = {
     work: [], kaizen: [], schedule: [], vaccine: [],
@@ -36,11 +36,7 @@ export class RestService {
   public action: string = ''
   public temp: any = {}
   public toast: any
-  public load: any
-  public ok: boolean = false
-  public today: string = ''
-  public error: string = ''
-  public link: string = ''
+  public load: any = []
   constructor(
     public http: HttpClient,
     public storage: Storage,
@@ -48,41 +44,77 @@ export class RestService {
     public toastCtrl: ToastController,
     public loadCtrl: LoadingController,
     public navCtrl: NavController
-  ) { 
+  ) {
     this.init()
-  } 
+  }
 
   public async init() {
     await this.freeze('Kiểm tra thông tin người dùng...')
     await this.storage.create()
     this.storage.get('session').then(session => {
-      this.defreeze()
-      this.session(session)
+      if (session && session.length) this.session(session)
+      else {
+        this.logout()
+        this.defreeze()
+      }
     })
   }
 
-  public async ready() {
-    return new Promise(resolve => {
-      let interval = setInterval(() => {
-        if (this.ok) {
-          clearInterval(interval)
-          resolve(true)
-        }
-      }, 200)
+  public async session(session: string) {
+    this.checkpost('user', 'session', {
+      sess: session
+    }).then(resp => {
+      this.config = resp.config
+      this.storage.set('session', this.config.session)
+      if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      this.defreeze()
+    }, () => {
+      this.logout()
+      this.defreeze()
     })
+  }
+
+  public login(username: string, password: string) {
+    if (!username || !username.length) this.notify('Tên tài khoản trống')
+    else if (!password || !password.length) this.notify('Mật khẩu trống')
+    else this.checkpost('user', 'login', {
+      username: username,
+      password: password,
+    }).then(resp => {
+      this.config = resp.config
+      this.storage.set('session', resp.config.session)
+      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      this.defreeze()
+    }, () => {
+      this.defreeze()
+    })
+  }
+
+  public logout() {
+    this.storage.remove('session')
+    this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
   }
 
   public async freeze(text: string = 'connecting to server') {
-    // console.log(this.load);
     let loading = await this.loadCtrl.create({
       message: text
     })
-    this.load = loading
-    await this.load.present()
+    this.load.push(loading)
+    await loading.present()
   }
 
   public defreeze() {
-    this.load.dismiss()
+    this.load[this.load.length - 1].dismiss()
+    this.load.pop()
+  }
+
+  public async notify(text: string, duration: number = 1000) {
+    this.toast = await this.toastCtrl.create({
+      message: text,
+      duration: duration,
+      position: 'bottom'
+    })
+    this.toast.present()
   }
 
   public checkpost(type: string, action: string, param: Object): Promise<any> {
@@ -114,95 +146,5 @@ export class RestService {
         reject(1)
       })
     })
-  }
-
-  public async session(session: string) {
-    if (session && session.length) {
-      this.checkpost('user', 'session', {
-        sess: session
-      }).then(resp => {
-        this.config = resp.config
-        if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-        this.ok = true
-        this.defreeze()
-      }, () => {
-        this.navCtrl.navigateRoot('/login')
-        this.storage.remove('session')
-        this.ok = true
-        this.defreeze()
-      })
-    }
-  }
-
-  // kiểm tra trạng thái đăng nhập, nếu không, chuyển về trang đăng nhập
-  // kim: đặt giới hạn thời gian, kiểm tra session trên web 
-  // đăng nhập kiểm tra dữ liệu từ userlist, nếu khớp, chuyển đến tổng quan, thông báo
-  // kim: kiểm tra dữ liệu từ server
-  public login(username: string, password: string) {
-    if (!username || !username.length) this.notify('Tên tài khoản trống')
-    else if (!password ||!password.length) this.notify('Mật khẩu trống')
-    else this.checkpost('user', 'login', {
-      username: username,
-      password: password,
-    }).then(resp => {
-      this.config = resp.config
-      this.storage.set('session', resp.config.session)
-      console.log(resp.config);
-      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      this.defreeze()
-    }, () => {
-      this.defreeze()
-    })
-  }
-
-  public logout() {
-    this.storage.remove('session')
-    this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
-  }
-
-  public timetodate(time: number) {
-    let datetime = new Date(Number(time))
-    let date = datetime.getDate().toString()
-    date = (Number(date) < 10 ? '0' + date : date)
-    let month = (datetime.getMonth() + 1).toString()
-    month = (Number(month) < 10 ? '0' + month : month)
-    let year = datetime.getFullYear()
-    return date + '/' + month + '/' + year
-  }
-
-  public timetoisodate(time: number) {
-    return this.datetoisodate(this.timetodate(time))
-  }
-
-  public isodatetotime(time: string) {
-    let datetime = time.split("T")[0].split('-')
-    if (datetime.length === 3) return (new Date(Number(datetime[0]), Number(datetime[1]) - 1, Number(datetime[2]))).getTime()
-    return 0
-  }
-
-  public isodatetodate(time: string) {
-    let datetime = time.split("T")[0].split('-')
-    
-    return datetime[2] + '/' + datetime[1] + '/' + datetime[0]
-  }
-
-  public datetotime(date: string) {
-    let datestring = date.split("/")
-    let datetime = new Date(Number(datestring['2']), Number(datestring['1']) - 1, Number(datestring[0]))
-    return datetime.getTime()
-  }
-
-  public datetoisodate(date: string) {
-    let datestring = date.split("/")
-    return datestring['2'] +'-'+ datestring['1'] + '-'+ datestring[0] + 'T00:00:00.000Z'
-  }
-
-  public async notify(text: string, duration: number = 1000) {
-    this.toast = await this.toastCtrl.create({
-      message: text,
-      duration: duration,
-      position: 'bottom'
-    })
-    this.toast.present()
   }
 }
