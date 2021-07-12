@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
@@ -15,32 +15,22 @@ export class VaccinePage {
   ) { }
 
   public async ionViewDidEnter() {
-    this.rest.ready().then(() => {
-      this.init()
-    })
-  }
-
-  public async init() {
     if (!this.rest.filter.vaccine.init) {
       this.rest.data.vaccine.list = []
       this.rest.data.vaccine.new = []
       await this.rest.freeze('Đang tải danh sách')
-      this.filter().then(() => {
-        this.rest.defreeze()
-      })
+      this.filter()
     }
   }
-  
+
   public filter() {
-    return new Promise((resolve) => {
-      this.rest.checkpost('vaccine', 'auto', { }).then(resp => {
-        this.rest.filter.vaccine.init = true
-        this.rest.data.vaccine.new = resp.new
-        this.rest.data.vaccine.list = resp.list
-        resolve('')
-      }, () => {
-        resolve('')
-      })
+    this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
+      this.rest.filter.vaccine.init = true
+      this.rest.data.vaccine.new = resp.new
+      this.rest.data.vaccine.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
     })
   }
 
@@ -53,65 +43,83 @@ export class VaccinePage {
     if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.action = 'vaccine'
-      this.rest.temp = {
-        name: '',
-        phone: '',
-        vaccine: '',
-        cometime: '',
-        calltime: ''
-      }
+      this.rest.temp = { name: '', phone: '', vaccine: '', cometime: '', calltime: '' }
       this.rest.router.navigateByUrl('/vaccine/insert')
     }
   }
 
-  // public async onSegmentChange() {
-  //   await this.rest.freeze('Đang tải danh sách')
-  //   this.filter().then(() => {
-  //     this.rest.defreeze()
-  //   })
-  // }
-
-  
-  public async changeStatus(id: number) {
+  public async called(index: number) {
     if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alert.create({
-        header: 'Chú ý!!!',
-        message: 'Vaccine sẽ chuyển sang tab khác',
+        message: 'Đã gọi khách hàng này?',
         buttons: [
           {
             text: 'Trở về',
             role: 'cancel',
-            cssClass: 'default'
           }, {
             text: 'Xác nhận',
-            cssClass: 'danger',
             handler: () => {
-              this.changeStatusSubmit(id)
+              this.calledSubmit(index)
             }
           }
         ]
       });
-  
+
       await alert.present();
     }
   }
 
-  public async changeStatusSubmit(id: number) {
+  public async calledSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('vaccine', 'change', {
-      id: id,
-      status: this.rest.filter.vaccine.status
+    this.rest.checkpost('vaccine', 'called', {
+      id: this.rest.data.vaccine.list[index].id
     }).then(resp => {
       this.rest.notify('Đã thay đổi trạng thái')
-      this.rest.filter.vaccine.data = resp.data
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  public async note(index: number, id: number, text: string) {
+  public async dead(index: number) {
+    if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alert.create({
+        message: 'Lịch tiêm phòng này sẽ bị xóa?',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: () => {
+              this.deadSubmit(index)
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+  }
+
+  public async deadSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('vaccine', 'dead', {
+      id: this.rest.data.vaccine.list[index].id
+    }).then(() => {
+      this.rest.notify('Đã xóa lịch tiêm phòng')
+      this.rest.data.vaccine.list = this.rest.data.vaccine.list.filter((item, item_index) => {
+        return index !== item_index
+      })
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async note(index: number) {
     if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       let alert = await this.alert.create({
@@ -120,19 +128,17 @@ export class VaccinePage {
           {
             type: 'text',
             name: 'note',
-            value: text
+            value: this.rest.data.vaccine.list[index].note
           }
         ],
         buttons: [
           {
             text: 'Bỏ',
             role: 'cancel',
-            cssClass: 'default'
           }, {
             text: 'Xác nhận',
-            cssClass: 'secondary',
             handler: (e) => {
-              this.noteSubmit(id, index, e['note'])
+              this.noteSubmit(index, e['note'])
             }
           }
         ]
@@ -141,16 +147,16 @@ export class VaccinePage {
     }
   }
 
-  public async noteSubmit(id: number, index: number, note: string) {
+  public async noteSubmit(index: number, note: string) {
     await this.rest.freeze('Đang hoàn thành..')
     this.rest.checkpost('vaccine', 'note', {
-      id: id,
-      text: note,
-      status: this.rest.filter.vaccine.status
+      id: this.rest.data.vaccine.list[index].id,
+      note: note,
     }).then(() => {
-      this.rest.filter.vaccine.data[index].note = note
+      this.rest.data.vaccine.list[index].note = note
       this.rest.defreeze()
-    }, () => [
-    ])
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

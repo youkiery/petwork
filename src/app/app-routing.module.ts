@@ -14,18 +14,18 @@ const routes: Routes = [
     path: 'vaccine',
     loadChildren: () => import('./module/vaccine/vaccine.module').then( m => m.VaccinePageModule)
   },
-  {
-    path: 'modal/filter',
-    loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
-  },
-  {
-    path: 'modal/insert',
-    loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
-    path: 'modal/suggest',
-    loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
-  },
+  // {
+  //   path: 'modal/filter',
+  //   loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
+  // },
+  // {
+  //   path: 'modal/insert',
+  //   loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
+  // },
+  // {
+  //   path: 'modal/suggest',
+  //   loadChildren: () => import('./modal/insert/insert.module').then( m => m.InsertPageModule)
+  // },
   {
     path: '',
     redirectTo: 'login',

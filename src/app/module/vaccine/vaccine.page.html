@@ -22,30 +22,23 @@
     </ion-fab-button>
   </ion-fab> -->
 
-  <!-- <ion-toolbar>
-    <ion-segment [(ngModel)]="rest.filter.vaccine.status" (ionChange)="onSegmentChange()">
-      <ion-segment-button value="0"> Chưa gọi </ion-segment-button>
-      <ion-segment-button value="1"> Đã gọi </ion-segment-button>
-      <ion-segment-button value="2"> Đã tái chủng </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar> -->
-
-  <ion-card *ngFor="let item of this.rest.data.vaccine.list; let i = index">
-    <ion-card-content>
-      <div class="col-xs-6">
-        Tên chủ: {{item.name}}
-      </div>
-      <div class="col-xs-6">
-        Số điện thoại: {{item.number}}
-      </div>
-      Ngày tái chủng: {{item.calltime}} <br>
-      Loại tái chủng: {{item.vaccine}} <br>
-      {{item.note}} 
-      <ion-button color="light" size="small" (click)="changeStatus(item.id)">
-        <ion-icon name="checkmark-outline"></ion-icon>
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.list; let i = index">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.number}}
+    </div>
+    <div class="col-xs-6">
+      Tái chủng: {{item.calltime}} <br>
+      Vaccine: {{item.vaccine}} <br>
+      <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+    </div>
+    <div *ngIf="item.note">
+      Ghi chú: {{item.note}}
+    </div>
+    <img src="/assets/icon/note.png" (click)="note(i, item.note)">
+    <img src="/assets/icon/called.png" (click)="called(i)">
+    <img src="/assets/icon/dead.png" (click)="dead(i)">
+  </div>
 </ion-content>
 
 <ion-toolbar>
