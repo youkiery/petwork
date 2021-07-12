@@ -17,6 +17,8 @@ export class RestService {
     admin: 0,
     session: '',
     users: [],
+    today: '',
+    next: '',
     module: {
       work: 0, kaizen: 0, schedule: 0, vaccine: 0,
       spa: 0, expire: 0, blood: 0, usg: 0,

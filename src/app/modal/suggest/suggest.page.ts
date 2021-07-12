@@ -6,45 +6,42 @@ import { RestService } from 'src/app/services/rest.service';
   templateUrl: './suggest.page.html',
   styleUrls: ['./suggest.page.scss'],
 })
-export class SuggestPage implements OnInit {
+export class SuggestPage {
+  key: string = ''
+  list: any = []
   timeout = null
   @ViewChild('input') input: any;
   constructor (
     public rest: RestService
   ) {}
 
-  ngOnInit() { }
-
   ionViewDidEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
     this.input.setFocus();
   }
     
   public suggest() {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
-      this.rest.check({
-        action: 'vaccine-suggest',
-        value: this.rest.vaccine.suggest
-      }).then((response) => {
-        this.rest.vaccine.suggestList = response.data
-      }, () => {
-        this.rest.vaccine.suggestList = []
-      })
+      if (this.key.length < 1) this.list = []
+      else {
+        this.rest.checkpost('customer', 'search', {
+          key: this.key
+        }).then((resp) => {
+          this.list = resp.list
+        }, () => { })
+      }
     }, 300);
   }
 
-  public async pick() {
-    this.rest.vaccine.edit.customer[this.rest.vaccine.suggesttype] = this.rest.vaccine.suggest
-    this.rest.vaccine.edit.pets = []
-    this.rest.vaccine.edit.pet = 0
+  public selectcurrent() {
+    this.rest.temp.phone = this.key
     this.rest.navCtrl.pop()
-  }
+  } 
 
-  public select(name: string, phone: string, pet: any[]) {
-    this.rest.vaccine.edit.customer.name = name
-    this.rest.vaccine.edit.customer.phone = phone
-    this.rest.vaccine.edit.pets = pet
-    this.rest.vaccine.edit.pet = pet[0].id
+  public select(name:string, phone: string) {
+    this.rest.temp.customer = name
+    this.rest.temp.phone = phone
     this.rest.navCtrl.pop()
   }
 }

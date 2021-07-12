@@ -6,17 +6,15 @@
 
 <ion-content>
   <ion-item>
-    <ion-input [(ngModel)]="rest.vaccine.suggest" (keyup)="suggest()" #input> </ion-input>
-    <ion-button slot="end" color="secondary" (click)="pick()"> chọn </ion-button>
+    <ion-input [(ngModel)]="key" (keyup)="suggest()" #input> </ion-input>
+    <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
   </ion-item>
-  <div *ngIf="rest.vaccine.suggestList.length">
-    <ion-item *ngFor="let item of rest.vaccine.suggestList" (click)="select(item.name, item.phone, item.pet)">
+  <div *ngIf="list.length">
+    <ion-item *ngFor="let item of list" (click)="select(item.name, item.phone)">
       {{item.name}} - {{item.phone}}
     </ion-item>
   </div>
-  <div *ngIf="!rest.vaccine.suggestList.length">
-    <ion-item>
-      Nhập số điện thoại hoặc tên khách
-    </ion-item>
+  <div *ngIf="!list.length" class="text-center">
+      Nhập số điện thoại khách hàng
   </div>
 </ion-content>

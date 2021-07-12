@@ -19,32 +19,29 @@ export class VaccinePage {
       this.rest.data.vaccine.list = []
       this.rest.data.vaccine.new = []
       await this.rest.freeze('Đang tải danh sách')
-      this.filter()
+      this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
+        this.rest.filter.vaccine.init = true
+        this.rest.data.vaccine.new = resp.new
+        this.rest.data.vaccine.list = resp.list
+        this.rest.data.vaccine.disease = resp.disease
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
     }
   }
 
   public filter() {
-    this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
-      this.rest.filter.vaccine.init = true
-      this.rest.data.vaccine.new = resp.new
-      this.rest.data.vaccine.list = resp.list
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public filterModal() {
     this.rest.action = 'vaccine'
     this.rest.router.navigateByUrl('/modal/filter')
   }
 
-  public insertModal() {
+  public insert() {
     if (this.rest.config.module.vaccine < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.action = 'vaccine'
-      this.rest.temp = { name: '', phone: '', vaccine: '', cometime: '', calltime: '' }
-      this.rest.router.navigateByUrl('/vaccine/insert')
+      this.rest.temp = { name: '', phone: '', vaccine: 0, cometime: this.rest.config.today, calltime: this.rest.config.next }
+      this.rest.router.navigateByUrl('/modal/insert')
     }
   }
 
