@@ -5,10 +5,10 @@ import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-setting',
-  templateUrl: './setting.page.html',
-  styleUrls: ['./setting.page.scss'],
+  templateUrl: './user.page.html',
+  styleUrls: ['./user.page.scss'],
 })
-export class SettingPage {
+export class UserPage {
   password: boolean = true
   oldpas: string = ''
   newpas: string = ''
@@ -26,13 +26,11 @@ export class SettingPage {
     else if (this.newpas !== this.verpas) this.rest.notify('Mật khẩu xác nhận không trùng nhau')
     else {
       await this.rest.freeze('Đang đổi mật khẩu')
-      this.rest.check({
+      this.rest.checkpost('user', 'password', {
         action: 'user-change-password',
         old: this.oldpas,
         new: this.newpas
       }).then(data => {
-        this.rest.user.password = this.newpas
-        this.rest.storage.set('userdata', this.rest.user['data'])
         this.oldpas = ''
         this.newpas = ''
         this.verpas = ''

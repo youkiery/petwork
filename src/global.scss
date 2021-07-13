@@ -41,6 +41,15 @@ ion-item {
   --highlight-color-valid: none;
 }
 
+.avatar-box {
+  max-width: 200px;
+  margin: auto;
+}
+
+.underline {
+  border-bottom: 1px solid lightgray;
+}
+
 .none {
   display: none;
 }

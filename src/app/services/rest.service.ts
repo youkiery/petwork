@@ -14,6 +14,8 @@ export class RestService {
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public config = {
     userid: 0,
+    username: '',
+    fullname: '',
     admin: 0,
     session: '',
     users: [],

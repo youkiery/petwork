@@ -19,11 +19,10 @@
 <ion-content>
   <div class="avatar-box">
     <ion-img src="assets/image/avatar.png"></ion-img>
-    <ion-text> {{rest.user.name}} </ion-text>
+    <ion-text> {{rest.config.fullname}} </ion-text>
   </div>
   <ion-list>
-    <ion-list-header> Tài khoản </ion-list-header>
-    <ion-item (click)="password = !password">
+    <ion-item class="underline" (click)="password = !password">
       Đổi mật khẩu
     </ion-item>
     <div [hidden]="password">
@@ -43,10 +42,10 @@
         Đổi mật khẩu
       </ion-button>
     </div>
-    <ion-item *ngIf="rest.admin.type" (click)="rest.router.navigateByUrl('admin')"> 
+    <ion-item class="underline" *ngIf="rest.config.admin" (click)="rest.router.navigateByUrl('admin')"> 
       Phân quyền
     </ion-item>
-    <ion-item (click)="rest.logout()"> 
+    <ion-item class="underline" (click)="rest.logout()"> 
       <ion-icon name="exit-outline" color="danger"></ion-icon>
       Đăng xuất
     </ion-item>
