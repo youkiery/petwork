@@ -2,8 +2,14 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+  <ion-button *ngIf="!editor" slot="end" (click)="insertSubmit()" color="light" fill="clear">
     Thêm
+  </ion-button>
+  <ion-button *ngIf="editor" slot="end" (click)="clear()" color="light" fill="clear">
+    Hủy
+  </ion-button>
+  <ion-button *ngIf="editor" slot="end" (click)="updateSubmit()" color="light" fill="clear">
+    Cập nhật
   </ion-button>
 </ion-toolbar>
 
@@ -11,12 +17,12 @@
   <div *ngIf="rest.action == 'vaccine'">
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>
-      <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
-      <img class="clear-img" src="/assets/image/customer-search.png" slot="end" (click)="suggest()">
+      <ion-input [(ngModel)]="rest.temp.phone" [disabled]="editor"> </ion-input>
+      <img src="/assets/icon/customer-search.png" [class]="editor ? 'none clear-img': 'clear-img'" slot="end" (click)="suggest()">
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Khách hàng </ion-label>
-      <ion-input [(ngModel)]="rest.temp.customer"> </ion-input>
+      <ion-input [(ngModel)]="rest.temp.name" [disabled]="editor"> </ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Loại tiêm phòng </ion-label>
@@ -34,5 +40,18 @@
       <ion-label position="stacked"> Ngày tái chủng </ion-label>
       <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
     </ion-item>
+  </div>
+
+  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.phone}}
+    </div>
+    <div class="col-xs-6">
+      Tái chủng: {{item.calltime}} <br>
+      Vaccine: {{item.vaccine}} <br>
+    </div>
+    <img src="/assets/icon/delete.png" (click)="remove(i)">
+    <img src="/assets/icon/update.png" (click)="update(i)">
   </div>
 </ion-content>

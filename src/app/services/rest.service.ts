@@ -97,6 +97,17 @@ export class RestService {
     this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
   }
 
+  public diseaseIndex(name: string) {
+    let check = '0'
+    for (const key in this.data.vaccine.disease) {
+      if (Object.prototype.hasOwnProperty.call(this.data.vaccine.disease, key)) {
+        const item = this.data.vaccine.disease[key];
+        if (item['name'] == name) check = key
+      }
+    }
+    return check
+  }
+
   public async freeze(text: string = 'connecting to server') {
     let loading = await this.loadCtrl.create({
       message: text
@@ -130,9 +141,9 @@ export class RestService {
           this.router.navigateByUrl('/home')
           reject(data)
         }
-        else if (data['no_branch']) {
-          this.notify("Tài khoản không có trong chi nhánh")
-          this.router.navigateByUrl('/')
+        else if (data['nogin']) {
+          this.notify("Phiên đăng nhập hết hạn")
+          this.logout()
           reject(data)
         }
         else {

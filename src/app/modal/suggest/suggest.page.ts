@@ -40,7 +40,7 @@ export class SuggestPage {
   } 
 
   public select(name:string, phone: string) {
-    this.rest.temp.customer = name
+    this.rest.temp.name = name
     this.rest.temp.phone = phone
     this.rest.navCtrl.pop()
   }

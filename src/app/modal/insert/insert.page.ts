@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -11,7 +11,8 @@ export class InsertPage {
   public editor = 0
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public modal: ModalController,
+    public alert: AlertController
   ) { }
 
   ionViewDidEnter() {
@@ -22,73 +23,81 @@ export class InsertPage {
     this.rest.router.navigateByUrl('/modal/suggest')
   }
 
-  public save() {
-    if (!this.rest.temp.customer.length) this.rest.notify('Chưa nhập tên khách hàng')
+  public async insertSubmit() {
+    if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
+      await this.rest.freeze('Thêm lịch nhắc...')
+      this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.temp.vaccine = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
-        this.rest.data.vaccine.new = resp.list
+        this.rest.data.vaccine.new = resp.new
+        this.clear()
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
       })
     }
   }
 
-  // public edit(index: number) {
-  //   this.rest.temp.edit.customer.name = this.rest.temp.new[index].name
-  //   this.rest.temp.edit.customer.phone = this.rest.temp.new[index].number
-  //   this.rest.temp.disease.forEach((item, i_index) => {
-  //     if (item.name == this.rest.temp.new[index].vaccine) this.rest.temp.edit.disease = i_index
-  //   })
-    
-  //   this.rest.temp.edit.picker.calltime = this.rest.datetoisodate(this.rest.temp.new[index].calltime)
+  public async remove(index: number) {
+    const alert = await this.alert.create({
+      message: 'Xóa lịch tiêm phòng?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.removeSubmit(this.rest.data.vaccine.new[index].id)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
-  //   this.rest.temp = this.rest.temp.new[index]
-  //   this.editor = this.rest.temp.new[index].id
-  // }
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Xóa lịch nhắc...')
+    this.rest.checkpost('vaccine', 'remove', {
+      id: id
+    }).then(resp => {
+      this.rest.data.vaccine.new = resp.new
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public async update() {
-  //   await this.rest.freeze('Đang thêm tiêm phòng')
-  //   this.rest.checkpost('vaccine', 'update', {
-  //     id: this.editor,
-  //     disease: this.rest.temp.disease[this.rest.temp.edit.disease].id,
-  //     calltime: this.rest.temp.edit.time.calltime
-  //   }).then((response) => {
-  //     this.rest.temp.edit.customer.name = ''
-  //     this.rest.temp.edit.customer.phone = ''
-  //     this.rest.temp.edit.pets = []
-  //     this.rest.temp.edit.pet = 0
-  //     this.editor = 0
-  //     this.rest.temp.new = response.new
-  //     this.rest.notify('Đã cập nhật lịch tiêm vaccine')
-  //     this.rest.defreeze()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
-  
-  // public async save() {
-  //   if (!this.rest.temp.edit.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
-  //   else if (!this.rest.temp.edit.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
-  //   else {
-  //     await this.rest.freeze('Đang thêm tiêm phòng')
-  //     this.rest.checkpost('vaccine', 'insert', {
-  //       customer: this.rest.temp.edit.customer.name,
-  //       phone: this.rest.temp.edit.customer.phone,
-  //       pet: this.rest.temp.edit.pet,
-  //       disease: this.rest.temp.disease[this.rest.temp.edit.disease].id,
-  //       cometime: this.rest.temp.edit.time.cometime,
-  //       calltime: this.rest.temp.edit.time.calltime
-  //     }).then((response) => {
-  //       this.rest.temp.edit.customer.name = ''
-  //       this.rest.temp.edit.customer.phone = ''
-  //       this.rest.temp.edit.pets = []
-  //       this.rest.temp.edit.pet = 0
-  //       this.rest.temp.new = response.new
-  //       this.rest.temp.data = response.data
-  //       this.rest.notify('Đã thêm lịch tiêm vaccine')
-  //       this.rest.defreeze()
-  //     }, () => {
-  //       this.rest.defreeze()
-  //     })
-  //   } 
-  // }
+  public update(index: number) {
+    this.editor = this.rest.data.vaccine.new[index].id
+
+    this.rest.temp = {
+      name: this.rest.data.vaccine.new[index].name,
+      phone: this.rest.data.vaccine.new[index].phone,
+      vaccine: Number(this.rest.diseaseIndex(this.rest.data.vaccine.new[index].vaccine)),
+      cometime: this.rest.data.vaccine.new[index].cometime,
+      calltime: this.rest.data.vaccine.new[index].calltime,
+    }
+  }
+
+  public async updateSubmit() {
+    await this.rest.freeze('Thêm lịch nhắc...')
+    this.rest.temp.id = this.editor
+    this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
+    this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
+      this.rest.data.vaccine.new = resp.new
+      this.clear()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public clear() {
+    this.editor = 0
+    this.rest.temp.name = ''
+    this.rest.temp.phone = ''
+  }
 }
