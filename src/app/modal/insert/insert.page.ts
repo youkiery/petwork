@@ -8,7 +8,6 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage {
-  public editor = 0
   constructor(
     public rest: RestService,
     public modal: ModalController,
@@ -32,6 +31,10 @@ export class InsertPage {
       this.rest.temp.vaccine = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
         this.rest.data.vaccine.new = resp.new
+        if (resp.old.length) {
+          this.rest.data.vaccine.old = resp.old
+          this.rest.router.navigateByUrl('/modal/recall')
+        }
         this.clear()
         this.rest.defreeze()
       }, () => {
@@ -71,9 +74,8 @@ export class InsertPage {
   }
 
   public update(index: number) {
-    this.editor = this.rest.data.vaccine.new[index].id
-
     this.rest.temp = {
+      id: this.rest.data.vaccine.new[index].id,
       name: this.rest.data.vaccine.new[index].name,
       phone: this.rest.data.vaccine.new[index].phone,
       vaccine: Number(this.rest.diseaseIndex(this.rest.data.vaccine.new[index].vaccine)),
@@ -84,10 +86,10 @@ export class InsertPage {
 
   public async updateSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
-    this.rest.temp.id = this.editor
     this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
     this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
       this.rest.data.vaccine.new = resp.new
+      this.rest.data.vaccine.list = resp.list
       this.clear()
       this.rest.defreeze()
     }, () => {
@@ -96,7 +98,7 @@ export class InsertPage {
   }
 
   public clear() {
-    this.editor = 0
+    this.rest.temp.id = 0
     this.rest.temp.name = ''
     this.rest.temp.phone = ''
   }

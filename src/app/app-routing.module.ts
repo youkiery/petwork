@@ -22,10 +22,10 @@ const routes: Routes = [
     path: 'modal/suggest',
     loadChildren: () => import('./modal/suggest/suggest.module').then( m => m.SuggestPageModule)
   },
-  // {
-  //   path: 'modal/filter',
-  //   loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
-  // },
+  {
+    path: 'modal/recall',
+    loadChildren: () => import('./modal/recall/recall.module').then( m => m.RecallPageModule)
+  },
   {
     path: '',
     redirectTo: 'login',

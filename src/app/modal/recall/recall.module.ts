@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FilterPageRoutingModule } from './filter-routing.module';
+import { RecallPageRoutingModule } from './recall-routing.module';
 
-import { FilterPage } from './filter.page';
+import { RecallPage } from './recall.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FilterPageRoutingModule
+    RecallPageRoutingModule
   ],
-  declarations: [FilterPage]
+  declarations: [RecallPage]
 })
-export class FilterPageModule {}
+export class RecallPageModule {}

@@ -36,6 +36,7 @@ export class RestService {
     drug: {}, target: {}, profile: {}
   }
   public action: string = ''
+  public isready: boolean = false
   public temp: any = {}
   public toast: any
   public load: any = []
@@ -56,9 +57,23 @@ export class RestService {
     this.storage.get('session').then(session => {
       if (session && session.length) this.session(session)
       else {
+        this.isready = true
         this.logout()
         this.defreeze()
       }
+    })
+  }
+
+  public async ready() {
+    return new Promise(resolve => {
+      let interval = setInterval(() => {
+        if (this.isready) {
+          setTimeout(() => {
+            clearInterval(interval)
+            resolve(true)
+          }, 200);
+        }
+      }, 100)
     })
   }
 
@@ -66,11 +81,13 @@ export class RestService {
     this.checkpost('user', 'session', {
       sess: session
     }).then(resp => {
+      this.isready = true
       this.config = resp.config
       this.storage.set('session', this.config.session)
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
+      this.isready = true
       this.logout()
       this.defreeze()
     })
@@ -95,6 +112,10 @@ export class RestService {
   public logout() {
     this.storage.remove('session')
     this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
+  }
+
+  public back() {
+    this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
   }
 
   public diseaseIndex(name: string) {

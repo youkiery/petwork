@@ -37,14 +37,15 @@
     </div>
     <img src="/assets/icon/note.png" (click)="note(i, item.note)">
     <img src="/assets/icon/called.png" (click)="called(i)">
-    <img src="/assets/icon/dead.png" (click)="dead(i)">
+    <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 </ion-content>
 
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.pop()">
+      <ion-tab-button (click)="rest.back()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
