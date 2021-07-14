@@ -35,6 +35,10 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./main/admin/admin.module').then( m => m.AdminPageModule)
+  },
 ];
 
 @NgModule({
