@@ -15,8 +15,6 @@ export class VaccinePage {
   ) { }
 
   public async ionViewDidEnter() {
-    this.rest.data.vaccine.list = []
-    this.rest.data.vaccine.new = []
     this.rest.ready().then(() => {
       this.init()
     })

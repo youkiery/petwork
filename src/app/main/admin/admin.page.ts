@@ -17,7 +17,6 @@ export class AdminPage {
   ) { }
 
   public async ionViewDidEnter() {
-    this.rest.data.admin = []
     this.rest.ready().then(() => {
       this.init()
     })
@@ -29,6 +28,7 @@ export class AdminPage {
       this.rest.checkpost('admin', 'auto', {
         action: 'admin-user',
       }).then(resp => {
+        this.rest.filter.admin.init = true
         this.rest.data.admin.list = resp.list
         this.rest.defreeze()
       }, () => {
@@ -58,7 +58,7 @@ export class AdminPage {
   }
 
   public async removeSubmit(userid: number) {
-    this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang xóa...')
     this.rest.checkpost('admin', 'remove', {
       id: userid
     }).then(resp => {
@@ -72,6 +72,10 @@ export class AdminPage {
 
   public insert() {
     this.rest.action = 'admin'
+    this.rest.temp = {
+      key: '',
+      list: []
+    }
     this.rest.router.navigateByUrl('modal/insert')
   }
 

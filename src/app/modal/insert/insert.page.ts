@@ -18,6 +18,31 @@ export class InsertPage {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
   }
 
+  public async insertAdmin(id: number) {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('admin', 'insert', {
+      id: id,
+      key: this.rest.temp.key
+    }).then(resp => {
+      this.rest.temp.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async filterAdmin() {
+    await this.rest.freeze('Đang lọc...')
+    this.rest.checkpost('admin', 'filter', {
+      key: this.rest.temp.key
+    }).then(resp => {
+      this.rest.temp.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public suggest() {
     this.rest.router.navigateByUrl('/modal/suggest')
   }

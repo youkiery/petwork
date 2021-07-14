@@ -14,6 +14,22 @@
 </ion-toolbar>
 
 <ion-content>
+  <div *ngIf="rest.action == 'admin'">
+    <ion-item>
+      <ion-label position="stacked"> Nhập username hoặc họ tên </ion-label>
+      <ion-input [(ngModel)]="rest.temp.key"> </ion-input>
+      <img src="/assets/icon/search.png" class="clear-img" slot="end" (click)="filterAdmin()">
+    </ion-item>
+
+    <div class="stl-card" *ngFor="let user of rest.temp.list">
+      Tài khoản: {{user.username}} <br>
+      Họ tên: {{user.fullname}} <br>
+      <ion-button color="secondary" size="small" (click)="insertAdmin(user.userid)">
+        Thêm người dùng
+      </ion-button>
+    </div>
+  </div>
+
   <div *ngIf="rest.action == 'vaccine'">
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>
