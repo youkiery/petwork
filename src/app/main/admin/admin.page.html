@@ -1,9 +1,37 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>admin</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="insert()">
+    <ion-fab-button>
+      Thêm
+    </ion-fab-button>
+  </ion-fab>
 
+  <ion-card *ngFor="let user of rest.data.admin.list; let i = index">
+    <ion-card-content>
+      Tài khoản: {{user.username}} <br>
+      Họ tên: {{user.fullname}} <br>
+      <ion-button color="danger" size="small" (click)="remove(user.userid)">
+        xóa người dùng
+      </ion-button>
+      <ion-button color="secondary" size="small" (click)="detail(i)">
+        chi tiết
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -15,6 +15,8 @@ export class VaccinePage {
   ) { }
 
   public async ionViewDidEnter() {
+    this.rest.data.vaccine.list = []
+    this.rest.data.vaccine.new = []
     this.rest.ready().then(() => {
       this.init()
     })
@@ -22,8 +24,6 @@ export class VaccinePage {
 
   public async init() {
     if (!this.rest.filter.vaccine.init) {
-      this.rest.data.vaccine.list = []
-      this.rest.data.vaccine.new = []
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
         this.rest.filter.vaccine.init = true
