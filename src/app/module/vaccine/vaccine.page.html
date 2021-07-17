@@ -35,7 +35,7 @@
     <div *ngIf="item.note">
       Ghi chú: {{item.note}}
     </div>
-    <img src="/assets/icon/note.png" (click)="note(i, item.note)">
+    <img src="/assets/icon/note.png" (click)="note(i)">
     <img src="/assets/icon/called.png" (click)="called(i)">
     <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/dead.png" (click)="dead(i)">
     <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">

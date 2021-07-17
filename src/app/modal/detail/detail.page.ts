@@ -53,7 +53,7 @@ export class DetailPage {
     })
   }
 
-  public change(module: number, increase: number) {
+  public change(module: string, increase: number) {
     this.module[module] = Number(this.module[module]) + increase
     if (this.module[module] < 0) this.module[module] = 0
     else if (this.module[module] > 2) this.module[module] = 2
