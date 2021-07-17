@@ -98,17 +98,20 @@ export class RestService {
   public login(username: string, password: string) {
     if (!username || !username.length) this.notify('Tên tài khoản trống')
     else if (!password || !password.length) this.notify('Mật khẩu trống')
-    else this.checkpost('user', 'login', {
-      username: username,
-      password: password,
-    }).then(resp => {
-      this.config = resp.config
-      this.storage.set('session', resp.config.session)
-      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      this.defreeze()
-    }, () => {
-      this.defreeze()
-    })
+    else {
+      this.freeze('Đăng nhập...')
+      this.checkpost('user', 'login', {
+        username: username,
+        password: password,
+      }).then(resp => {
+        this.config = resp.config
+        this.storage.set('session', resp.config.session)
+        this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+        this.defreeze()
+      }, () => {
+        this.defreeze()
+      })
+    }
   }
 
   public logout() {

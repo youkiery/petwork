@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { RestService } from 'src/app/services/rest.service';
 export class InsertPage {
   constructor(
     public rest: RestService,
-    public modal: ModalController,
     public alert: AlertController
   ) { }
 

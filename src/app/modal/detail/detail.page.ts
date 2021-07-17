@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -29,9 +28,7 @@ export class DetailPage {
   @Input('username') username: string;
   constructor(
     public rest: RestService,
-    public modal: ModalController
-  ) { 
-  }
+  ) { }
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
@@ -47,7 +44,7 @@ export class DetailPage {
       this.rest.data.admin.list[this.rest.temp.index].module = this.module
       this.rest.config = resp.config
       this.rest.defreeze()
-      this.modal.dismiss()
+      this.rest.navCtrl.back()
     }, () => {
       this.rest.defreeze()
     })

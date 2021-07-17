@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -10,8 +10,7 @@ import { RestService } from 'src/app/services/rest.service';
 export class VaccinePage {
   constructor(
     public rest: RestService,
-    public alert: AlertController,
-    public modal: ModalController
+    public alert: AlertController
   ) { }
 
   public async ionViewDidEnter() {

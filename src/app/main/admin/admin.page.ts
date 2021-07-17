@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
-import { DetailPage } from 'src/app/modal/detail/detail.page';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -12,8 +11,7 @@ export class AdminPage {
 
   constructor(
     public rest: RestService,
-    public alert: AlertController,
-    public modal: ModalController
+    public alert: AlertController
   ) { }
 
   public async ionViewDidEnter() {
@@ -82,9 +80,6 @@ export class AdminPage {
   public async detail(index: number) {
     this.rest.temp.index = index
     this.rest.action = 'admin'
-    let modal = await this.modal.create({
-      component: DetailPage,
-    })
-    modal.present()
+    this.rest.router.navigateByUrl('modal/detail')
   }
 }
