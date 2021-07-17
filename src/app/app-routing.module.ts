@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./modal/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
+    path: 'modal/filter',
+    loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },
@@ -42,10 +46,6 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./main/admin/admin.module').then( m => m.AdminPageModule)
-  },
-  {
-    path: 'filter',
-    loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
   },
 ];
 

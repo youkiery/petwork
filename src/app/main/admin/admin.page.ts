@@ -21,12 +21,12 @@ export class AdminPage {
   }
 
   public async init() {
-    if (!this.rest.filter.admin.init) {
+    if (!this.rest.data.admin.init) {
       await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('admin', 'auto', {
         action: 'admin-user',
       }).then(resp => {
-        this.rest.filter.admin.init = true
+        this.rest.data.admin.init = true
         this.rest.data.admin.list = resp.list
         this.rest.defreeze()
       }, () => {

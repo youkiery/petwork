@@ -1,9 +1,27 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>filter</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="success">
+  <ion-button slot="start" color="light" fill="clear" (click)="rest.navCtrl.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <!-- <ion-button slot="end" (click)="vaccine()" color="light" fill="clear">
+    Lọc
+  </ion-button> -->
+</ion-toolbar>
 
 <ion-content>
-
+  <div *ngIf="rest.action == 'vaccine'">
+    <div class="stl-card" *ngFor="let item of rest.data.vaccine.search">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}}
+      </div>
+      <div class="col-xs-6">
+        Tái chủng: {{item.calltime}} <br>
+        Vaccine: {{item.vaccine}} <br>
+        <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+      </div>
+      <div *ngIf="item.note">
+        Ghi chú: {{item.note}}
+      </div>
+    </div>
+  </div>
 </ion-content>

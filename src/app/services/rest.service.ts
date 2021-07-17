@@ -32,11 +32,6 @@ export class RestService {
     spa: [], expire: [], blood: [], usg: [],
     drug: [], target: [], profile: [], admin: []
   }
-  public filter: any = {
-    work: {}, kaizen: {}, schedule: {}, vaccine: {},
-    spa: {}, expire: {}, blood: {}, usg: {},
-    drug: {}, target: {}, profile: {}, admin: {}
-  }
   public action: string = ''
   public isready: boolean = false
   public temp: any = {}

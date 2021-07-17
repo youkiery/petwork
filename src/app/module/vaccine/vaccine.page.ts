@@ -15,15 +15,18 @@ export class VaccinePage {
 
   public async ionViewDidEnter() {
     this.rest.ready().then(() => {
+      this.rest.data.vaccine.filter = {
+        keyword: ''
+      }
       this.init()
     })
   }
 
   public async init() {
-    if (!this.rest.filter.vaccine.init) {
+    if (!this.rest.data.vaccine.init) {
       await this.rest.freeze('Đang tải danh sách')
-      this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
-        this.rest.filter.vaccine.init = true
+      this.rest.checkpost('vaccine', 'auto', { }).then(resp => {
+        this.rest.data.vaccine.init = true
         this.rest.data.vaccine.new = resp.new
         this.rest.data.vaccine.list = resp.list
         this.rest.data.vaccine.disease = resp.disease
@@ -34,9 +37,18 @@ export class VaccinePage {
     }
   }
 
-  public filter() {
-    this.rest.action = 'vaccine'
-    this.rest.router.navigateByUrl('/modal/filter')
+  public async filter() {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('vaccine', 'search', {
+      filter: this.rest.data.vaccine.filter
+    }).then(resp => {
+      this.rest.action = "vaccine"
+      this.rest.data.vaccine.search = resp.search
+      this.rest.navCtrl.navigateForward('/modal/filter', { animated: true })
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public insert() {
@@ -79,7 +91,7 @@ export class VaccinePage {
   public async calledSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'called', {
-      id: this.rest.data.vaccine.list[index].id
+      id: this.rest.data.vaccine.list[index].id,
     }).then(resp => {
       this.rest.data.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -111,7 +123,7 @@ export class VaccinePage {
   public async deadSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'dead', {
-      id: this.rest.data.vaccine.list[index].id
+      id: this.rest.data.vaccine.list[index].id,
     }).then((resp) => {
       this.rest.data.vaccine.list = resp.list
       this.rest.data.vaccine.list = this.rest.data.vaccine.list.filter((item: any, item_index: number) => {
