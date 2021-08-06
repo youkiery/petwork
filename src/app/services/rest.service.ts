@@ -55,7 +55,7 @@ export class RestService {
       if (session && session.length) this.session(session)
       else {
         this.isready = true
-        this.logout()
+        this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
         this.defreeze()
       }
     })

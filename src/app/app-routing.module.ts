@@ -40,12 +40,16 @@ const routes: Routes = [
     loadChildren: () => import('./main/user/user.module').then( m => m.UserPageModule)
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./main/admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
     path: 'vaccine',
     loadChildren: () => import('./module/vaccine/vaccine.module').then( m => m.VaccinePageModule)
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./main/admin/admin.module').then( m => m.AdminPageModule)
+    path: 'usg',
+    loadChildren: () => import('./module/usg/usg.module').then( m => m.UsgPageModule)
   },
 ];
 

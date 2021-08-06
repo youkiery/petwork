@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
@@ -7,7 +7,7 @@ import { RestService } from 'src/app/services/rest.service';
   templateUrl: './usg.page.html',
   styleUrls: ['./usg.page.scss'],
 })
-export class UsgPage implements OnInit {
+export class UsgPage {
 
   constructor(
     public rest: RestService,
@@ -15,108 +15,92 @@ export class UsgPage implements OnInit {
   ) { }
 
   public async ionViewDidEnter() {
-    if (!this.rest.usg.init) {
+    if (!this.rest.data.usg.init) {
       await this.rest.freeze('Đang tải danh sách')
-      this.filter().then(() => {
+      this.rest.checkpost('usg', 'auto', {
+        action: 'usg-auto'
+      }).then(response => {
+        this.rest.data.usg.new = response.new
+        this.rest.data.usg.data = response.data
+        this.rest.data.usg.init = true
+        this.rest.defreeze()
+      }, () => {
         this.rest.defreeze()
       })
     }
   }
 
   public insert() {
-    if (this.rest.config.usg < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      this.rest.router.navigateByUrl('/usg/insert')
-    }
+    this.rest.router.navigateByUrl('/usg/insert')
   }
-  
-  public filter() {
-    return new Promise((resolve) => {
-      this.rest.check({
-        action: 'usg-auto',
-        keyword: this.rest.usg.filterKey,
-        status: this.rest.usg.status
-      }).then(response => {
-        this.rest.usg.init = true
-        this.rest.usg.new = response.new
-        this.rest.usg.data = response.data
-        resolve('')
-      }, () => {
-        resolve('')
-      })
-    })
-  }
+
+  // public filter() {
+  // }
 
   public filterM() {
     this.rest.router.navigateByUrl('/usg/filter')
   }
 
-  public async onSegmentChange() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.filter().then(() => {
+  // public async onSegmentChange() {
+  //   await this.rest.freeze('Đang tải danh sách')
+  //   this.filter().then(() => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  public async changeStatus(id: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      action: 'usg-check',
+      id: id,
+      keyword: this.rest.data.usg.filterKey,
+      status: this.rest.data.usg.status
+    }).then(response => {
+      this.rest.notify('Đã thay đổi trạng thái')
+      this.rest.data.usg.data = response.data
+      this.rest.defreeze()
+    }, () => {
       this.rest.defreeze()
     })
   }
 
-  public async changeStatus(id: number) {
-    if (this.rest.config.usg < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      await this.rest.freeze('Đang thay đổi trạng thái')
-      this.rest.check({
-        action: 'usg-check',
-        id: id,
-        keyword: this.rest.usg.filterKey,
-        status: this.rest.usg.status
-      }).then(response => {
-        this.rest.notify('Đã thay đổi trạng thái')
-        this.rest.usg.data = response.data
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
-    }
-  }
-
   public async birth(id: number) {
-    if (this.rest.config.usg < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      let alert = await this.alert.create({
-        message: 'Số lượng con sinh ra',
-        inputs: [
-          {
-            type: 'number',
-            name: 'number',
-            value: 0
+    let alert = await this.alert.create({
+      message: 'Số lượng con sinh ra',
+      inputs: [
+        {
+          type: 'number',
+          name: 'number',
+          value: 0
+        }
+      ],
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.birthSubmit(id, e['number'])
           }
-        ],
-        buttons: [
-          {
-            text: 'Bỏ',
-            role: 'cancel',
-            cssClass: 'default'
-          }, {
-            text: 'Xác nhận',
-            cssClass: 'secondary',
-            handler: (e) => {
-              this.birthSubmit(id, e['number'])
-            }
-          }
-        ]
-      })
-      alert.present()
-    }
+        }
+      ]
+    })
+    alert.present()
   }
 
   public async birthSubmit(id: number, number: number) {
     await this.rest.freeze('Đang hoàn thành...')
-    this.rest.check({
+    this.rest.checkpost('usg', 'birth', {
       action: 'usg-birth',
       id: id,
       number: Number(number),
-      keyword: this.rest.usg.filterKey,
-      status: this.rest.usg.status
+      keyword: this.rest.data.usg.filterKey,
+      status: this.rest.data.usg.status
     }).then((response) => {
-      this.rest.usg.data = response.data
+      this.rest.data.usg.data = response.data
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -124,8 +108,6 @@ export class UsgPage implements OnInit {
   }
 
   public async note(index: number, id: number, text: string) {
-    if (this.rest.config.usg < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
       let alert = await this.alert.create({
         message: 'Chỉnh sửa ghi chú',
         inputs: [
@@ -150,23 +132,22 @@ export class UsgPage implements OnInit {
         ]
       })
       alert.present()
-    }
   }
 
   public async noteSubmit(id: number, index: number, note: string) {
     await this.rest.freeze('Đang hoàn thành...')
-    this.rest.check({
+    this.rest.checkpost('usg', 'note', {
       action: 'usg-note',
       id: id,
       text: note,
-      keyword: this.rest.usg.filterKey,
-      status: this.rest.usg.status
+      keyword: this.rest.data.usg.filterKey,
+      status: this.rest.data.usg.status
     }).then(() => {
-      this.rest.usg.data[index].note = note
+      this.rest.data.usg.data[index].note = note
       this.rest.defreeze()
     }, () => [
     ])
   }
-  
-  ngOnInit() {}
+
+  ngOnInit() { }
 }
