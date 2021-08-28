@@ -30,13 +30,13 @@
     </ion-button>
   </ion-item>
 
-  <!-- <ion-toolbar>
+  <ion-toolbar>
     <ion-segment [(ngModel)]="rest.usg.status" (ionChange)="onSegmentChange()">
       <ion-segment-button value="0"> Chưa gọi </ion-segment-button>
       <ion-segment-button value="1"> Đã gọi </ion-segment-button>
       <ion-segment-button value="2"> Đã tái chủng </ion-segment-button>
     </ion-segment>
-  </ion-toolbar> -->
+  </ion-toolbar>
 
   <div class="stl-card" *ngFor="let item of rest.usg.data; let i = index" >
     <div class="col-xs-6">
@@ -70,10 +70,10 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <!-- <ion-tab-button (click)="filterM()">
+      <ion-tab-button (click)="filterM()">
         <ion-icon name="filter-outline"></ion-icon>
         <ion-label> Tìm kiếm </ion-label>
-      </ion-tab-button> -->
+      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>

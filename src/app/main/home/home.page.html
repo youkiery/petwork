@@ -23,6 +23,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.module.usg > 0" class="box" (click)="rest.router.navigateByUrl('usg')">
+    <ion-img src="assets/image/usg.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý siêu âm
+    </div>
+  </div>
+
   <div class="box" (click)="rest.router.navigateByUrl('user')">
     <ion-img src="assets/image/user.png" class="box-image"></ion-img>
     <div class="box-title">

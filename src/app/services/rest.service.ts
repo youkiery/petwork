@@ -11,7 +11,7 @@ export class RestService {
   public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  // public baseurl: string = 'http://app.petcoffee.work/server/index.php?';
   public config = {
     userid: 0,
     username: '',
@@ -85,7 +85,7 @@ export class RestService {
       this.defreeze()
     }, () => {
       this.isready = true
-      this.logout()
+      // this.logout()
       this.defreeze()
     })
   }
@@ -151,7 +151,7 @@ export class RestService {
     this.toast.present()
   }
 
-  public checkpost(type: string, action: string, param: Object): Promise<any> {
+  public async checkpost(type: string, action: string, param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       param['type'] = type
       param['action'] = action
