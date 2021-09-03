@@ -111,11 +111,13 @@ export class InsertPage {
   public async updateSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
     this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
+    this.rest.temp.filter = this.rest.data.vaccine.filter
     this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
       this.rest.data.vaccine.new = resp.new
       this.rest.data.vaccine.list = resp.list
       this.clear()
       this.rest.defreeze()
+      if (this.rest.data.vaccine.filter) this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })
@@ -125,5 +127,86 @@ export class InsertPage {
     this.rest.temp.id = 0
     this.rest.temp.name = ''
     this.rest.temp.phone = ''
+  }
+
+  public async insertUsgSubmit() {
+    if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    else {
+      await this.rest.freeze('Thêm lịch nhắc...')
+      this.rest.checkpost('usg', 'insert', this.rest.temp).then(resp => {
+        this.rest.data.usg.new = resp.new
+        if (resp.old.length) {
+          this.rest.data.usg.old = resp.old
+          this.rest.router.navigateByUrl('/modal/recall')
+        }
+        this.clear()
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+  
+  public async removeUsg(index: number) {
+    const alert = await this.alert.create({
+      message: 'Xóa lịch siêu âm?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.removeUsgSubmit(this.rest.data.usg.new[index].id)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async removeUsgSubmit(id: number) {
+    await this.rest.freeze('Xóa lịch nhắc...')
+    this.rest.checkpost('usg', 'remove', {
+      id: id
+    }).then(resp => {
+      this.rest.data.usg.new = resp.new
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public updateUsg(index: number) {
+    this.rest.temp = {
+      id: this.rest.data.vaccine.new[index].id,
+      name: this.rest.data.vaccine.new[index].name,
+      phone: this.rest.data.vaccine.new[index].phone,
+      cometime: this.rest.data.vaccine.new[index].cometime,
+      calltime: this.rest.data.vaccine.new[index].calltime,
+      number: this.rest.data.vaccine.new[index].number,
+    }
+  }
+
+  public async updateUsgSubmit() {
+    await this.rest.freeze('Thêm lịch nhắc...')
+    this.rest.temp.filter = this.rest.data.usg.filter
+    this.rest.checkpost('usg', 'update', this.rest.temp).then(resp => {
+      this.rest.data.usg.new = resp.new
+      this.rest.data.usg.list = resp.list
+      this.clearUsg()
+      this.rest.defreeze()
+      if (this.rest.data.usg.filter) this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public clearUsg() {
+    this.rest.temp.id = 0
+    this.rest.temp.name = ''
+    this.rest.temp.phone = ''
+    this.rest.temp.number = 0
   }
 }

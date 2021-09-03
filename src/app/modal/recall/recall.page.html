@@ -5,12 +5,27 @@
 </ion-toolbar>
 
 <ion-content>
-  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.old; let i = index">
-    <div>
-      Vaccine: {{item.disease}} <br>
-      Tái chủng: {{item.calltime}} <br>
-      <span *ngIf="item.recall"> Gọi nhắc cuối: {{item.recall}} </span>
+  <div *ngIf="rest.action == 'vaccine'">
+    <div class="stl-card" *ngFor="let item of rest.data.vaccine.old; let i = index">
+      <div>
+        Vaccine: {{item.disease}} <br>
+        Tái chủng: {{item.calltime}} <br>
+        Ghi chú: {{item.note}} <br>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} </span>
+      </div>
+      <img src="/assets/icon/done.png" (click)="done(i)">
     </div>
-    <img src="/assets/icon/done.png" (click)="done(i)">
+  </div>
+
+  <div *ngIf="rest.action == 'usg'">
+    <div class="stl-card" *ngFor="let item of rest.data.usg.old; let i = index">
+      <div>
+        Siêu âm lại: {{item.calltime}} <br>
+        Thai dự kiến: {{item.number}} <br>
+        Ghi chú: {{item.note}} <br>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} </span>
+      </div>
+      <img src="/assets/icon/done.png" (click)="done(i)">
+    </div>
   </div>
 </ion-content>

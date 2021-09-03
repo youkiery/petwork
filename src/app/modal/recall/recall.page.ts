@@ -19,7 +19,7 @@ export class RecallPage {
 
   public async done(index: number) {
     const alert = await this.alert.create({
-      message: 'Hoàn thành lịch tiêm phòng?',
+      message: 'Hoàn thành lịch nhắc?',
       buttons: [
         {
           text: 'Trở về',
@@ -27,7 +27,14 @@ export class RecallPage {
         }, {
           text: 'Xác nhận',
           handler: () => {
-            this.doneSubmit(index)
+            switch (this.rest.action) {
+              case 'vaccine':
+                this.doneSubmit(index)
+              break;
+              case 'usg':
+                this.doneUsgSubmit(index)
+              break;
+            }
           }
         }
       ]
@@ -43,6 +50,20 @@ export class RecallPage {
     }).then(resp => {
       this.rest.data.vaccine.list = resp.list
       this.rest.data.vaccine.old = resp.old
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async doneUsgSubmit(index: number) {
+    await this.rest.freeze('Xóa lịch nhắc...')
+    this.rest.checkpost('usg', 'done', {
+      id: this.rest.data.usg.old[index].id,
+      customerid: this.rest.data.usg.old[index].customerid,
+    }).then(resp => {
+      this.rest.data.usg.list = resp.list
+      this.rest.data.usg.old = resp.old
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

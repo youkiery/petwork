@@ -2,13 +2,19 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="!rest.temp.id" slot="end" (click)="insertSubmit()" color="light" fill="clear">
-    Thêm
-  </ion-button>
   <ion-button *ngIf="rest.temp.id" slot="end" (click)="clear()" color="light" fill="clear">
     Hủy
   </ion-button>
-  <ion-button *ngIf="rest.temp.id" slot="end" (click)="updateSubmit()" color="light" fill="clear">
+  <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="updateSubmit()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+  <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="light" fill="clear">
     Cập nhật
   </ion-button>
 </ion-toolbar>
@@ -34,7 +40,8 @@
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>
       <ion-input [(ngModel)]="rest.temp.phone" [disabled]="rest.temp.id"> </ion-input>
-      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end" (click)="suggest()">
+      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
+        (click)="suggest()">
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Khách hàng </ion-label>
@@ -56,18 +63,57 @@
       <ion-label position="stacked"> Ngày tái chủng </ion-label>
       <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
     </ion-item>
+
+    <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}}
+      </div>
+      <div class="col-xs-6">
+        Tái chủng: {{item.calltime}} <br>
+        Vaccine: {{item.vaccine}} <br>
+      </div>
+      <img src="/assets/icon/delete.png" (click)="remove(i)">
+      <img src="/assets/icon/update.png" (click)="update(i)">
+    </div>
   </div>
 
-  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
-    <div class="col-xs-6">
-      Tên khách: {{item.name}} <br>
-      Điện thoại: {{item.phone}}
+  <div *ngIf="rest.action == 'usg'">
+    <ion-item>
+      <ion-label position="stacked"> Số điện thoại </ion-label>
+      <ion-input [(ngModel)]="rest.temp.phone" [disabled]="rest.temp.id"> </ion-input>
+      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
+        (click)="suggest()">
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Khách hàng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name" [disabled]="rest.temp.id"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ngày siêu âm </ion-label>
+      <ion-input [(ngModel)]="rest.temp.cometime"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ngày siêu âm lại </ion-label>
+      <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Số thai dự kiến </ion-label>
+      <ion-input [(ngModel)]="rest.temp.number"></ion-input>
+    </ion-item>
+
+    <div class="stl-card" *ngFor="let item of this.rest.data.usg.new; let i = index">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}}
+      </div>
+      <div class="col-xs-6">
+        Siêu âm lại: {{item.calltime}} <br>
+        Thai dự kiến: {{item.number}} <br>
+        <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+      </div>
+      <img src="/assets/icon/delete.png" (click)="removeUsg(i)">
+      <img src="/assets/icon/update.png" (click)="updateUsg(i)">
     </div>
-    <div class="col-xs-6">
-      Tái chủng: {{item.calltime}} <br>
-      Vaccine: {{item.vaccine}} <br>
-    </div>
-    <img src="/assets/icon/delete.png" (click)="remove(i)">
-    <img src="/assets/icon/update.png" (click)="update(i)">
   </div>
 </ion-content>

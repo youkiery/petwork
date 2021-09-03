@@ -28,9 +28,14 @@ export class RestService {
     }
   }
   public data: any = {
-    work: [], kaizen: [], schedule: [], vaccine: [],
-    spa: [], expire: [], blood: [], usg: [],
-    drug: [], target: [], profile: [], admin: []
+    vaccine: {
+      list: [], new: [], old: [], disease: [], filter: {keyword: ''}
+    },
+    usg: {
+      list: [], new: [], old: [], filter: {keyword: ''}
+    },work: {}, kaizen: {}, schedule: {}, 
+    spa: {}, expire: {}, blood: {},
+    drug: {}, target: {}, profile: {}, admin: {}
   }
   public action: string = ''
   public isready: boolean = false

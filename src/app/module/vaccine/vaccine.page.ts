@@ -15,9 +15,6 @@ export class VaccinePage {
 
   public async ionViewDidEnter() {
     this.rest.ready().then(() => {
-      this.rest.data.vaccine.filter = {
-        keyword: ''
-      }
       this.init()
     })
   }
@@ -42,9 +39,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine', 'search', {
       filter: this.rest.data.vaccine.filter
     }).then(resp => {
-      this.rest.action = "vaccine"
-      this.rest.data.vaccine.search = resp.search
-      this.rest.navCtrl.navigateForward('/modal/filter', { animated: true })
+      this.rest.data.vaccine.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -71,16 +66,24 @@ export class VaccinePage {
   }
 
   public async called(index: number) {
+    let note = 'Gọi nhắc ngày: ' + this.rest.config.today
+    if (this.rest.data.vaccine.list[index].note.length) note = this.rest.data.vaccine.list[index].note
     const alert = await this.alert.create({
-      message: 'Đã gọi khách hàng này?',
+      message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
+      inputs: [{
+        type: 'text',
+        label: 'Ghi chú',
+        name: 'note',
+        value: note
+      }],
       buttons: [
         {
           text: 'Trở về',
           role: 'cancel',
         }, {
           text: 'Xác nhận',
-          handler: () => {
-            this.calledSubmit(index)
+          handler: (e) => {
+            this.calledSubmit(index, e.note)
           }
         }
       ]
@@ -88,10 +91,53 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async calledSubmit(index: number) {
+  public async calledSubmit(index: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'called', {
       id: this.rest.data.vaccine.list[index].id,
+      note: note,
+      filter: this.rest.data.vaccine.filter
+    }).then(resp => {
+      this.rest.data.vaccine.list = resp.list
+      this.rest.notify('Đã thay đổi trạng thái')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async uncalled(index: number) {
+    let note = 'Gọi nhắc ngày: ' + this.rest.config.today
+    if (this.rest.data.vaccine.list[index].note.length) note = this.rest.data.vaccine.list[index].note
+    const alert = await this.alert.create({
+      message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
+      inputs: [{
+        type: 'text',
+        label: 'Ghi chú',
+        name: 'note',
+        value: note
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.uncalledSubmit(index, e.note)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async uncalledSubmit(index: number, note: string) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('vaccine', 'uncalled', {
+      id: this.rest.data.vaccine.list[index].id,
+      note: note,
+      filter: this.rest.data.vaccine.filter
     }).then(resp => {
       this.rest.data.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -103,15 +149,21 @@ export class VaccinePage {
 
   public async dead(index: number) {
     const alert = await this.alert.create({
-      message: 'Lịch tiêm phòng này sẽ bị xóa?',
+      message: 'Hoàn thành tiêm phòng, lịch nhắc sẽ không xuất hiện nữa',
+      inputs: [{
+        type: 'text',
+        label: 'Ghi chú',
+        name: 'note',
+        value: this.rest.data.vaccine.list[index].note
+      }],
       buttons: [
         {
           text: 'Trở về',
           role: 'cancel',
         }, {
           text: 'Xác nhận',
-          handler: () => {
-            this.deadSubmit(index)
+          handler: (e) => {
+            this.deadSubmit(index, e.note)
           }
         }
       ]
@@ -120,53 +172,14 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async deadSubmit(index: number) {
+  public async deadSubmit(index: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'dead', {
       id: this.rest.data.vaccine.list[index].id,
+      note: note,
+      filter: this.rest.data.vaccine.filter
     }).then((resp) => {
       this.rest.data.vaccine.list = resp.list
-      this.rest.data.vaccine.list = this.rest.data.vaccine.list.filter((item: any, item_index: number) => {
-        return index !== item_index
-      })
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async note(index: number) {
-    let alert = await this.alert.create({
-      message: 'Chỉnh sửa ghi chú',
-      inputs: [
-        {
-          type: 'text',
-          name: 'note',
-          value: this.rest.data.vaccine.list[index].note
-        }
-      ],
-      buttons: [
-        {
-          text: 'Bỏ',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.noteSubmit(index, e['note'])
-          }
-        }
-      ]
-    })
-    alert.present()
-  }
-
-  public async noteSubmit(index: number, note: string) {
-    await this.rest.freeze('Đang hoàn thành..')
-    this.rest.checkpost('vaccine', 'note', {
-      id: this.rest.data.vaccine.list[index].id,
-      note: note,
-    }).then(() => {
-      this.rest.data.vaccine.list[index].note = note
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

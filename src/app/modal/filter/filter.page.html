@@ -17,9 +17,31 @@
       <div class="col-xs-6">
         Tái chủng: {{item.calltime}} <br>
         Vaccine: {{item.vaccine}} <br>
-        <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+        <div class="line">
+          <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+        </div>
       </div>
-      <div *ngIf="item.note">
+      <div class="line">
+        <div *ngIf="item.note">
+          Ghi chú: {{item.note}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'usg'">
+    <div class="stl-card" *ngFor="let item of rest.data.usg.search">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Địa chỉ: {{item.address}}
+      </div>
+      <div class="col-xs-6">
+        Siêu âm lại: {{item.calltime}} <br>
+        Thai dự kiến: {{item.number}} <br>
+        Gọi cuối: {{item.recall}}
+      </div>
+      <div>
         Ghi chú: {{item.note}}
       </div>
     </div>

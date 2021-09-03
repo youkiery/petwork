@@ -30,20 +30,21 @@
   <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.list; let i = index">
     <div class="col-xs-6">
       Tên khách: {{item.name}} <br>
-      Điện thoại: {{item.phone}}
+      Điện thoại: {{item.phone}} <br>
+      Địa chỉ: {{item.address}}
     </div>
     <div class="col-xs-6">
       Tái chủng: {{item.calltime}} <br>
       Vaccine: {{item.vaccine}} <br>
-      <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
+      Gọi cuối: {{item.called}}
     </div>
-    <div *ngIf="item.note">
+    <div>
       Ghi chú: {{item.note}}
     </div>
-    <img src="/assets/icon/note.png" (click)="note(i)">
-    <img src="/assets/icon/called.png" (click)="called(i)">
-    <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/dead.png" (click)="dead(i)">
-    <img *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
+    <img class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+    <img class="icon" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/done.png" (click)="dead(i)">
+    <img class="right" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 </ion-content>
 
