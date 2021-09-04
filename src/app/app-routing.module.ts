@@ -51,6 +51,10 @@ const routes: Routes = [
     path: 'usg',
     loadChildren: () => import('./module/usg/usg.module').then( m => m.UsgPageModule)
   },
+  {
+    path: 'cart',
+    loadChildren: () => import('./module/cart/cart.module').then( m => m.CartPageModule)
+  },
 ];
 
 @NgModule({
