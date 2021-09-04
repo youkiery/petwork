@@ -8,10 +8,10 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://app.petcoffee.work/server/index.php?';
+  public baseurl: string = 'https://petcoffee.work/server/index.php?';
   public config = {
     userid: 0,
     username: '',
