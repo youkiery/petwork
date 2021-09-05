@@ -3,15 +3,23 @@ import { HttpClient } from '@angular/common/http'
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
+import { FCM } from '@capacitor-community/fcm';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'https://petcoffee.work/server/index.php?';
+  // public baseurl: string = 'https://petcoffee.work/server/index.php?';
   public config = {
     userid: 0,
     username: '',
@@ -24,10 +32,11 @@ export class RestService {
     module: {
       work: 0, kaizen: 0, schedule: 0, vaccine: 0,
       spa: 0, expire: 0, blood: 0, usg: 0,
-      drug: 0, target: 0, profile: 0
+      drug: 0, target: 0, profile: 0, cart: 0
     }
   }
   public data: any = {
+    cart: {list: [], init: 0},
     vaccine: {
       list: [], new: [], old: [], disease: [], filter: {keyword: ''}
     },
@@ -95,6 +104,43 @@ export class RestService {
     })
   }
 
+  public async subscribe() {
+    await PushNotifications.requestPermissions();
+    await PushNotifications.register();
+
+    FCM.subscribeTo({ topic: 'test' })
+    .then((r) => {
+      // alert(`subscribed to topic`)
+    }).catch(
+      // (err) => console.log(err)
+    );
+    
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        // alert('Push registration success, token: ' + token.value);
+      }
+    );
+
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        // alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        // alert('Push received: ' + JSON.stringify(notification));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        this.navCtrl.navigateForward('/cart')
+        // alert('Push action performed: ' + JSON.stringify(notification));
+      }
+    );
+  }
+
   public login(username: string, password: string) {
     if (!username || !username.length) this.notify('Tên tài khoản trống')
     else if (!password || !password.length) this.notify('Mật khẩu trống')
@@ -113,6 +159,8 @@ export class RestService {
       })
     }
   }
+
+
 
   public logout() {
     this.storage.remove('session')
