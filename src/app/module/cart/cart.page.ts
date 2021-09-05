@@ -1,61 +1,191 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  ActionPerformed,
-  PushNotificationSchema,
-  PushNotifications,
-  Token,
-} from '@capacitor/push-notifications';
-
+import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { RestService } from 'src/app/services/rest.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
-export class CartPage implements OnInit {
+export class CartPage {
+  constructor(
+    public rest: RestService,
+    public alert: AlertController
+  ) { }
 
-  constructor() { }
-
-  ngOnInit() {
-    console.log('Initializing HomePage');
-    // Request permission to use push notifications
-    // iOS will prompt user and return if they granted permission or not
-    // Android will just grant without prompting
-    PushNotifications.requestPermissions().then(result => {
-      if (result.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
-      }
-    });
-
-    // On success, we should be able to receive notifications
-    PushNotifications.addListener('registration',
-      (token: Token) => {
-        alert('Push registration success, token: ' + token.value);
-      }
-    );
-
-    // Some issue with our setup and push will not work
-    PushNotifications.addListener('registrationError',
-      (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
-      }
-    );
-
-    // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        alert('Push received: ' + JSON.stringify(notification));
-      }
-    );
-
-    // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
-      }
-    );
+  public async ionViewDidEnter() {
+    this.rest.ready().then(() => {
+      this.init()
+    })
   }
 
+  public async init() {
+    if (!this.rest.data.cart.init) {
+      await this.rest.freeze('Đang tải danh sách')
+      this.rest.checkpost('cart', 'auto', { }).then(resp => {
+        this.rest.data.cart.init = true
+        this.rest.data.cart.list = resp.list
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public detail(index: number) {
+    this.rest.temp = index
+    this.rest.action = 'cart';
+    this.rest.navCtrl.navigateForward('/modal/detail')
+  }
+
+  // public async filter() {
+  //   await this.rest.freeze('Đang tải danh sách')
+  //   this.rest.checkpost('cart', 'search', {
+  //     filter: this.rest.data.cart.filter
+  //   }).then(resp => {
+  //     this.rest.data.cart.list = resp.list
+  //     this.rest.defreeze()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  // public insert() {
+  //   this.rest.action = 'cart'
+  //   this.rest.temp = { id: 0, name: '', phone: '', cart: 0, cometime: this.rest.config.today, calltime: this.rest.config.next }
+  //   this.rest.router.navigateByUrl('/modal/insert')
+  // }
+
+  // public update(index: number) {
+  //   this.rest.action = 'cart'
+  //   this.rest.temp = {
+  //     id: this.rest.data.cart.list[index].id,
+  //     name: this.rest.data.cart.list[index].name,
+  //     phone: this.rest.data.cart.list[index].phone,
+  //     cart: Number(this.rest.diseaseIndex(this.rest.data.cart.list[index].cart)),
+  //     cometime: this.rest.data.cart.list[index].cometime,
+  //     calltime: this.rest.data.cart.list[index].calltime,
+  //   }
+  //   this.rest.router.navigateByUrl('/modal/insert')
+  // }
+
+  // public async called(index: number) {
+  //   let note = 'Gọi nhắc ngày: ' + this.rest.config.today
+  //   if (this.rest.data.cart.list[index].note.length) note = this.rest.data.cart.list[index].note
+  //   const alert = await this.alert.create({
+  //     message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
+  //     inputs: [{
+  //       type: 'text',
+  //       label: 'Ghi chú',
+  //       name: 'note',
+  //       value: note
+  //     }],
+  //     buttons: [
+  //       {
+  //         text: 'Trở về',
+  //         role: 'cancel',
+  //       }, {
+  //         text: 'Xác nhận',
+  //         handler: (e) => {
+  //           this.calledSubmit(index, e.note)
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
+
+  // public async calledSubmit(index: number, note: string) {
+  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   this.rest.checkpost('cart', 'called', {
+  //     id: this.rest.data.cart.list[index].id,
+  //     note: note,
+  //     filter: this.rest.data.cart.filter
+  //   }).then(resp => {
+  //     this.rest.data.cart.list = resp.list
+  //     this.rest.notify('Đã thay đổi trạng thái')
+  //     this.rest.defreeze()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  // public async uncalled(index: number) {
+  //   let note = 'Gọi nhắc ngày: ' + this.rest.config.today
+  //   if (this.rest.data.cart.list[index].note.length) note = this.rest.data.cart.list[index].note
+  //   const alert = await this.alert.create({
+  //     message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
+  //     inputs: [{
+  //       type: 'text',
+  //       label: 'Ghi chú',
+  //       name: 'note',
+  //       value: note
+  //     }],
+  //     buttons: [
+  //       {
+  //         text: 'Trở về',
+  //         role: 'cancel',
+  //       }, {
+  //         text: 'Xác nhận',
+  //         handler: (e) => {
+  //           this.uncalledSubmit(index, e.note)
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
+
+  // public async uncalledSubmit(index: number, note: string) {
+  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   this.rest.checkpost('cart', 'uncalled', {
+  //     id: this.rest.data.cart.list[index].id,
+  //     note: note,
+  //     filter: this.rest.data.cart.filter
+  //   }).then(resp => {
+  //     this.rest.data.cart.list = resp.list
+  //     this.rest.notify('Đã thay đổi trạng thái')
+  //     this.rest.defreeze()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  // public async dead(index: number) {
+  //   const alert = await this.alert.create({
+  //     message: 'Hoàn thành tiêm phòng, lịch nhắc sẽ không xuất hiện nữa',
+  //     inputs: [{
+  //       type: 'text',
+  //       label: 'Ghi chú',
+  //       name: 'note',
+  //       value: this.rest.data.cart.list[index].note
+  //     }],
+  //     buttons: [
+  //       {
+  //         text: 'Trở về',
+  //         role: 'cancel',
+  //       }, {
+  //         text: 'Xác nhận',
+  //         handler: (e) => {
+  //           this.deadSubmit(index, e.note)
+  //         }
+  //       }
+  //     ]
+  //   });
+
+  //   await alert.present();
+  // }
+
+  // public async deadSubmit(index: number, note: string = '') {
+  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   this.rest.checkpost('cart', 'dead', {
+  //     id: this.rest.data.cart.list[index].id,
+  //     note: note,
+  //     filter: this.rest.data.cart.filter
+  //   }).then((resp) => {
+  //     this.rest.data.cart.list = resp.list
+  //     this.rest.defreeze()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
 }

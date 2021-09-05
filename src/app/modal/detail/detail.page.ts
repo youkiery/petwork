@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -28,11 +29,56 @@ export class DetailPage {
   @Input('username') username: string;
   constructor(
     public rest: RestService,
+    public alert: AlertController
   ) { }
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
-    this.module = this.rest.data.admin.list[this.rest.temp.index].module
+    if (this.rest.action == 'admin') this.module = this.rest.data.admin.list[this.rest.temp.index].module
+  }
+
+  public async cartpick() {
+    await this.rest.freeze('Đang lưu dữ liệu')
+    this.rest.checkpost('cart', 'pick', {
+      id: this.rest.data.cart.list[this.rest.temp].id
+    }).then(resp => {
+      this.rest.data.cart.list[this.rest.temp].status = resp.status
+      this.rest.data.cart.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async cartdonealert() {
+    const alert = await this.alert.create({
+      message: 'Sau khi hoàn thành, đơn hàng sẽ bị xóa khỏi danh sách',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.cartdone()
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async cartdone() {
+    await this.rest.freeze('Đang lưu dữ liệu')
+    this.rest.checkpost('cart', 'done', {
+      id: this.rest.data.cart.list[this.rest.temp].id
+    }).then(resp => {
+      this.rest.data.cart.list = resp.list
+      this.rest.defreeze()
+      this.rest.navCtrl.back()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async save() {

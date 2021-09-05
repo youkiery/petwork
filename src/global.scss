@@ -264,6 +264,16 @@ ion-item {
   }
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 5px;
+  border: 1px solid gray;
+}
+
 .clearfix:before,
 .clearfix:after,
 .container:before,

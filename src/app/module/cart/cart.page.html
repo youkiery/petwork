@@ -1,9 +1,72 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>cart</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- <ion-item>
+    <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.data.vaccine.filter.keyword"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="filter()">
+  </ion-item> -->
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
 
+  <div class="stl-card" *ngFor="let item of this.rest.data.cart.list; let i = index" (click)="detail(i)">
+    <div class="col-xs-6">
+      <b> Tên khách </b>: {{item.customer}} <br>
+      <b> Điện thoại </b>: {{item.phone}} <br>
+      <b> Địa chỉ </b>: {{item.address}} <br>
+      <b> Email </b>: {{item.mail}}
+    </div>
+    <div class="col-xs-6">
+      <b> Tổng đơn </b>: {{item.total}} <br>
+      <b> Ngày đặt </b>: {{item.time}} <br>
+      <b> Trạng thái </b>: {{item.status}} <br>
+      <b> Thanh toán </b>: {{item.method}}
+    </div>
+    <div>
+      Ghi chú: {{item.note}}
+    </div>
+    <!-- <img class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+    <img class="icon" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/done.png" (click)="dead(i)">
+    <img class="right" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)"> -->
+  </div>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="filter()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Tìm kiếm </ion-label>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
