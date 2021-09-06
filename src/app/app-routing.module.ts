@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'spa',
     loadChildren: () => import('./module/spa/spa.module').then( m => m.SpaPageModule)
   },
+  {
+    path: 'upload',
+    loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
+  },
 ];
 
 @NgModule({
