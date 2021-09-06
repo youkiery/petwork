@@ -10,23 +10,43 @@
     </ion-buttons>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
   <div>
-    Ngày hiển thị: {{ rest.spa.current }}
+    Ngày hiển thị: {{ time.timetodate(rest.data.spa.time) }}
   </div>
 
-  <table border="1">
+  <div class="stl-card" *ngFor="let item of this.rest.data.spa.list; let i = index">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.phone}} <br>
+    </div>
+    <div class="col-xs-6">
+      Người nhận: {{item.user}} <br>
+      Thời gian nhận: {{item.time}}
+    </div>
+    <div>
+      Dịch vụ: {{item.service}}
+    </div>
+    <div>
+      Ghi chú: {{item.note}}
+    </div>
+    <div *ngIf="item.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
+    </div>
+  </div>
+
+  <!-- <table border="1">
     <thead>  
       <tr>
         <th> STT </th>
@@ -54,13 +74,13 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 </ion-content>
 
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.pop()">
+      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
