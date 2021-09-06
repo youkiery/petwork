@@ -37,6 +37,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.module.spa > 0" class="box" (click)="rest.router.navigateByUrl('spa')">
+    <ion-img src="assets/image/spa.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Danh sách spa
+    </div>
+  </div>
+
   <div class="box" (click)="rest.router.navigateByUrl('user')">
     <ion-img src="assets/image/user.png" class="box-image"></ion-img>
     <div class="box-title">
