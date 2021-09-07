@@ -8,7 +8,12 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./usg.page.scss'],
 })
 export class UsgPage {
-
+  public status = {
+    0: 'stl-card',
+    1: 'stl-card green',
+    2: 'stl-card yellow',
+    3: 'stl-card red',
+  }
   constructor(
     public rest: RestService,
     public alert: AlertController
