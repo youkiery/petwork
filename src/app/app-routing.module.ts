@@ -62,7 +62,11 @@ const routes: Routes = [
   {
     path: 'upload',
     loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
+  },  {
+    path: 'lookup',
+    loadChildren: () => import('./module/lookup/lookup.module').then( m => m.LookupPageModule)
   },
+
 ];
 
 @NgModule({
