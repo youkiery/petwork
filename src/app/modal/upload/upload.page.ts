@@ -21,6 +21,9 @@ export class UploadPage {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
+    if (this.rest.temp.id) {
+      this.option = this.rest.temp.option
+    }
   }
 
   public suggest() {
@@ -110,6 +113,12 @@ export class UploadPage {
       this.insertSubmit()
     }
   }
+  public async checkUpdateSubmit() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.updateSubmit()
+    }
+  }
 
   public async insert() {
     this.count = 0
@@ -129,6 +138,24 @@ export class UploadPage {
     });
   }
 
+  public async update() {
+    this.count = 0
+    this.rest.freeze('Đang tải ảnh...')
+    
+    if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    else if (!this.rest.temp.image.length) this.insertSubmit()
+    else this.rest.temp.image.forEach((image: any, index: number) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.checkUpdateSubmit()
+        })
+      }
+      else this.checkUpdateSubmit()
+    });
+  }
+
   public checkOption() {
     let option = {}
     this.option.forEach(item => {
@@ -140,6 +167,16 @@ export class UploadPage {
   public async insertSubmit() {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa', 'insert', this.rest.temp).then(response => {
+      this.rest.navCtrl.pop()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async updateSubmit() {
+    this.rest.temp.option = this.checkOption()
+    this.rest.checkpost('spa', 'update', this.rest.temp).then(response => {
       this.rest.navCtrl.pop()
       this.rest.defreeze()
     }, () => {

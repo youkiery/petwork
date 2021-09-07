@@ -28,6 +28,8 @@
 .thumbnail-box {
   width: 128px;
   height: 128px;
+  display: inline-block;
+  text-align: center;
 }
 .thumbnail {
   max-width: 128px;
@@ -108,12 +110,22 @@ ion-item {
   border-radius: 10px;
   margin: 0.5%;
   padding: 5px;
-  background: #dfd;
+  background: #ddd;
   font-size: 0.8em;
   line-height: 18px;
   width: 98%;
   display: inline-block;
 }
+.stl-card.green {
+  background: #dfd;
+}
+.stl-card.red {
+  background: #fdd;
+}
+.stl-card.yellow {
+  background: #ffd;
+}
+
 
 .text-center {
   text-align: center;

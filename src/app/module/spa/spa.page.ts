@@ -33,6 +33,12 @@ export class SpaModal {
 export class SpaPage {
   interval = null
   checked = false
+  public status = {
+    0: 'stl-card',
+    1: 'stl-card green',
+    2: 'stl-card yellow',
+    3: 'stl-card red',
+  }
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -81,6 +87,113 @@ export class SpaPage {
     }
     this.rest.action = 'spa'
     this.rest.router.navigateByUrl('/upload')
+  }
+
+  public update(index: number) {
+    this.rest.temp = {
+      id: this.rest.data.spa.list[index].id,
+      name: this.rest.data.spa.list[index].name,
+      phone: this.rest.data.spa.list[index].phone,
+      note: this.rest.data.spa.list[index].note,
+      image: this.rest.data.spa.list[index].image,
+      option: this.rest.data.spa.list[index].option,
+      time: this.rest.data.spa.time
+    }
+    this.rest.action = 'spa'
+    this.rest.router.navigateByUrl('/upload')
+  }
+  
+  public async called(index: number) {
+    const alert = await this.alert.create({
+      message: 'Đã gọi cho khách?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.calledSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async calledSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('spa', 'called', {
+      id: this.rest.data.spa.list[index].id,
+    }).then((resp) => {
+      this.rest.data.spa.list[index].status = resp.status
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async returned(index: number) {
+    const alert = await this.alert.create({
+      message: 'Thú cưng đã đón về?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.returnedSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async returnedSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('spa', 'returned', {
+      id: this.rest.data.spa.list[index].id,
+    }).then((resp) => {
+      this.rest.data.spa.list[index].status = resp.status
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async done(index: number) {
+    const alert = await this.alert.create({
+      message: 'Hoàn thành mục spa?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('spa', 'done', {
+      id: this.rest.data.spa.list[index].id,
+    }).then((resp) => {
+      this.rest.data.spa.list[index].status = resp.status
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async pickDate() {

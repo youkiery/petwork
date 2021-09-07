@@ -26,7 +26,7 @@
     Ngày hiển thị: {{ time.timetodate(rest.data.spa.time) }}
   </div>
 
-  <div class="stl-card" *ngFor="let item of this.rest.data.spa.list; let i = index">
+  <div *ngFor="let item of this.rest.data.spa.list; let i = index" [class]="status[item.status]">
     <div class="col-xs-6">
       Tên khách: {{item.name}} <br>
       Điện thoại: {{item.phone}} <br>
@@ -41,9 +41,14 @@
     <div>
       Ghi chú: {{item.note}}
     </div>
+    
     <div *ngIf="item.image.length">
       <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
     </div>
+    <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
+    <img *ngIf="rest.config.module.spa > 1" class="right" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 
   <!-- <table border="1">
