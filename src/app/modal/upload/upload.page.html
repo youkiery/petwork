@@ -2,10 +2,17 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="!rest.temp.id" slot="end" (click)="insert()" color="light" fill="clear">
+  <ion-button *ngIf="!rest.temp.id && rest.action == 'spa'" slot="end" (click)="insert()" color="light" fill="clear">
     Thêm
   </ion-button>
-  <ion-button *ngIf="rest.temp.id" slot="end" (click)="update()" color="light" fill="clear">
+  <ion-button *ngIf="rest.temp.id && rest.action == 'spa'" slot="end" (click)="update()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+
+  <ion-button *ngIf="!rest.temp.id && rest.action == 'drug'" slot="end" (click)="drugInsert()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.id && rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="light" fill="clear">
     Cập nhật
   </ion-button>
 </ion-toolbar>
@@ -15,31 +22,59 @@
     <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
   </div>
 
-  <ion-item>
-    <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
-    <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
-      (click)="suggest()">
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
-  </ion-item>
-
-
-  <ion-item>
-    <ion-label position="stacked"> Ghi chú </ion-label>
-    <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
-  </ion-item>
-
-  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-  <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
-    <img class="thumbnail" [src]="item">
+  <div *ngIf="rest.action == 'drug'">
+    <ion-item>
+      <ion-label position="stacked"> Tên thuốc </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Liều dùng </ion-label>
+      <ion-textarea [(ngModel)]="rest.temp.limits" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Công dụng </ion-label>
+      <ion-textarea [(ngModel)]="rest.temp.effect" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tác dụng phụ </ion-label>
+      <ion-textarea [(ngModel)]="rest.temp.sideeffect" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Cơ chế hoạt động </ion-label>
+      <ion-textarea [(ngModel)]="rest.temp.mechanic" autoGrow="true"></ion-textarea>
+    </ion-item>
+    
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+      <img class="thumbnail" [src]="item">
+    </div>
   </div>
 
-  <ion-item *ngFor="let item of option; let i = index;">
-    <ion-label> {{item.value}} </ion-label>
-    <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>
-  </ion-item>
+  <div *ngIf="rest.action == 'spa'">
+    <ion-item>
+      <ion-label position="stacked"> Số điện thoại </ion-label>
+      <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
+      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
+        (click)="suggest()">
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Khách hàng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
+    </ion-item>
   
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+    </ion-item>
+  
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+      <img class="thumbnail" [src]="item">
+    </div>
+  
+    <ion-item *ngFor="let item of option; let i = index;">
+      <ion-label> {{item.value}} </ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>
+    </ion-item>
+  </div>
 </ion-content>

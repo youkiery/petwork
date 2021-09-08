@@ -1,6 +1,27 @@
 import { Component, Input } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+
+@Component({
+  selector: 'modal-spa',
+  template: `
+    <ion-toolbar color="success">
+      <ion-button color="light" fill="clear" (click)="modal.dismiss()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+
+    <ion-content>
+      <img [src]="rest.temp.image">
+    </ion-content>
+  `
+})
+export class DrugModal {
+  constructor(
+    public rest: RestService,
+    public modal: ModalController
+  ) { }
+}
 
 @Component({
   selector: 'app-detail',
@@ -29,12 +50,38 @@ export class DetailPage {
   @Input('username') username: string;
   constructor(
     public rest: RestService,
-    public alert: AlertController
+    public alert: AlertController,
+    public modal: ModalController
   ) { }
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
     if (this.rest.action == 'admin') this.module = this.rest.data.admin.list[this.rest.temp.index].module
+  }
+  
+  public async view(image: string) {
+    this.rest.temp.image = image
+    let modal = await this.modal.create({
+      component: DrugModal
+    })
+    await modal.present()
+  }
+
+  async drugUpdate() {
+    if (this.rest.config.module.drug < 2) this.rest.notify('Không có quyền truy cập')
+    else {
+      this.rest.temp = {
+        index: this.rest.temp.index,
+        id: this.rest.data.drug.list[this.rest.temp.index]['id'],
+        name: this.rest.data.drug.list[this.rest.temp.index]['name'],
+        limits: this.rest.data.drug.list[this.rest.temp.index]['limits'],
+        effect: this.rest.data.drug.list[this.rest.temp.index]['effect'],
+        sideeffect: this.rest.data.drug.list[this.rest.temp.index]['sideeffect'],
+        mechanic: this.rest.data.drug.list[this.rest.temp.index]['mechanic'],
+        image: this.rest.data.drug.list[this.rest.temp.index]['image'],
+      }
+      this.rest.navCtrl.navigateForward('/upload')
+    }
   }
 
   public async cartpick() {

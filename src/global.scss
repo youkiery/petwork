@@ -25,6 +25,20 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.pad {
+  padding: 10px;
+}
+
+.endline-text {
+  border-bottom: 1px solid lightslategray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+}
+.endline-text.last {
+  border-bottom: none;
+}
+
 .thumbnail-box {
   width: 128px;
   height: 128px;
@@ -47,7 +61,7 @@
   margin-right: 20px;
 }
 
-.native-input {
+.native-input, .native-textarea {
   color: black !important;
 }
 

@@ -44,6 +44,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.module.drug > 0" class="box" (click)="rest.router.navigateByUrl('lookup')">
+    <ion-img src="assets/image/drug.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Tra cứu
+    </div>
+  </div>
+
   <div class="box" (click)="rest.router.navigateByUrl('user')">
     <ion-img src="assets/image/user.png" class="box-image"></ion-img>
     <div class="box-title">

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, ModalController } from '@ionic/angular';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-lookup',
@@ -6,10 +8,108 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lookup.page.scss'],
 })
 export class LookupPage implements OnInit {
-
-  constructor() { }
+  public id = 0
+  constructor(
+    public modalCtrl: ModalController,
+    public rest: RestService,
+    public alertCtrl: AlertController
+  ) { }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.rest.ready().then(() => {
+      this.init()
+    })
+  }
+  
+  public async init() {
+    if (!this.rest.data.drug.init) {
+      await this.rest.freeze('Đang tải danh sách')
+      this.rest.checkpost('drug', 'auto', { }).then(resp => {
+        this.rest.data.drug.init = true
+        this.rest.data.drug.list = resp.list
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public async filter() {
+    await this.rest.freeze('Đang lọc thuốc')
+    this.rest.checkpost('drug', 'auto', {
+      name: this.rest.data.drug.filter.name,
+      effect: this.rest.data.drug.filter.effect
+    }).then(response => {
+      this.rest.data.drug.list = response.list
+      this.rest.defreeze()
+    }, (response) => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async detail(index: number) {
+    this.rest.temp.index = index
+    this.rest.action = 'drug'
+    this.rest.router.navigateByUrl('/modal/detail')
+  }
+  
+  async insert() {
+    if (this.rest.config.module.drug < 2) this.rest.notify('Không có quyền truy cập')
+    else {
+      this.rest.action = 'drug'
+      this.rest.temp = {
+        name: '',
+        limits: '',
+        effect: '',
+        sideeffect: '',
+        mechanic: '',
+        image: [],
+      }
+      this.rest.navCtrl.navigateForward('/upload')
+    }
+  }
+
+  public async remove(id: number) {
+    if (this.rest.config.module.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alertCtrl.create({
+        header: 'Xóa thuốc',
+        message: 'Sau khi xác nhận, thuốc sẽ bị xóa',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'danger',
+            handler: () => {
+              this.removeSubmit()
+              this.rest.temp = id
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+  }
+
+  public async removeSubmit() {
+    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    this.rest.checkpost('drug', 'remove', {
+      id: this.rest.temp,
+      name: this.rest.data.drug.filter.name,
+      effect: this.rest.data.drug.filter.effect
+    }).then(response => {
+      this.rest.notify('Đã xóa thuốc')
+      this.rest.data.drug.list = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

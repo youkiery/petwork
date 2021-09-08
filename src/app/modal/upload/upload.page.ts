@@ -113,6 +113,7 @@ export class UploadPage {
       this.insertSubmit()
     }
   }
+
   public async checkUpdateSubmit() {
     this.count++
     if (this.rest.temp.image.length == this.count) {
@@ -177,6 +178,79 @@ export class UploadPage {
   public async updateSubmit() {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa', 'update', this.rest.temp).then(response => {
+      this.rest.navCtrl.pop()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async drugInsert() {
+    this.count = 0
+    this.rest.freeze('Đang tải ảnh...')
+    
+    if (!this.rest.temp.image.length) this.drugInsertSubmit()
+    else this.rest.temp.image.forEach((image, index) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.checkDrugInsertSubmit()
+        })
+      }
+      else this.checkDrugInsertSubmit()
+    });
+  }
+  
+  public async drugUpdate() {
+    this.count = 0
+    this.rest.freeze('Đang tải ảnh...')
+    
+    if (!this.rest.temp.image.length) this.drugUpdateSubmit()
+    else this.rest.temp.image.forEach((image, index) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.checkDrugUpdateSubmit()
+        })
+      }
+      else this.checkDrugUpdateSubmit()
+    });
+  }
+
+  public async checkDrugInsertSubmit() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.drugInsertSubmit()
+    }
+  }
+  
+  public async checkDrugUpdateSubmit() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.drugUpdateSubmit()
+    }
+  }
+
+  public async drugInsertSubmit() {
+    await this.rest.freeze('Thêm thuốc...')
+    this.rest.temp.name = this.rest.data.drug.filter.name
+    this.rest.temp.effect = this.rest.data.drug.filter.effect
+
+    this.rest.checkpost('drug', 'insert', this.rest.temp).then((response) => {
+      this.rest.data.drug.list = response.list
+      this.rest.defreeze()
+      this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async drugUpdateSubmit() {
+    await this.rest.freeze('Cập nhật thông tin...')
+    this.rest.temp.name = this.rest.data.drug.filter.name
+    this.rest.temp.effect = this.rest.data.drug.filter.effect
+    this.rest.checkpost('drug', 'update', this.rest.temp).then((response) => {
+      this.rest.data.drug.list = response.list
       this.rest.navCtrl.pop()
       this.rest.defreeze()
     }, () => {

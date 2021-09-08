@@ -42,9 +42,13 @@ export class RestService {
     },
     usg: {
       list: [], new: [], old: [], filter: {keyword: ''}
-    },work: {}, kaizen: {}, schedule: {}, 
+    },
+    drug: {
+      list: [], filter: { name: '', effect: '' }
+    }, 
+    work: {}, kaizen: {}, schedule: {}, 
     spa: {}, expire: {}, blood: {},
-    drug: {}, target: {}, profile: {}, admin: {}
+    target: {}, profile: {}, admin: {}
   }
   public action: string = ''
   public isready: boolean = false
