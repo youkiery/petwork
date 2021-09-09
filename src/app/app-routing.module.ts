@@ -66,6 +66,34 @@ const routes: Routes = [
     path: 'lookup',
     loadChildren: () => import('./module/lookup/lookup.module').then( m => m.LookupPageModule)
   },
+  {
+    path: 'fivemin',
+    loadChildren: () => import('./module/fivemin/fivemin.module').then( m => m.FiveminPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'blood',
+    loadChildren: () => import('./module/blood/blood.module').then( m => m.BloodPageModule)
+  },
+  {
+    path: 'item',
+    loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
+  },
+  {
+    path: 'kaizen',
+    loadChildren: () => import('./module/kaizen/kaizen.module').then( m => m.KaizenPageModule)
+  },
+  {
+    path: 'vehicle',
+    loadChildren: () => import('./module/vehicle/vehicle.module').then( m => m.VehiclePageModule)
+  },
+  {
+    path: 'schedule',
+    loadChildren: () => import('./module/schedule/schedule.module').then( m => m.SchedulePageModule)
+  },
 
 ];
 
