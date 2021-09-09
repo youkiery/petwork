@@ -94,6 +94,10 @@ const routes: Routes = [
     path: 'schedule',
     loadChildren: () => import('./module/schedule/schedule.module').then( m => m.SchedulePageModule)
   },
+  {
+    path: 'inout',
+    loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
+  },
 
 ];
 
