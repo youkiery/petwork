@@ -62,7 +62,8 @@ const routes: Routes = [
   {
     path: 'upload',
     loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
-  },  {
+  },
+  {
     path: 'lookup',
     loadChildren: () => import('./module/lookup/lookup.module').then( m => m.LookupPageModule)
   },
@@ -97,6 +98,10 @@ const routes: Routes = [
   {
     path: 'inout',
     loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
+  },
+  {
+    path: 'modal/item',
+    loadChildren: () => import('./modal/item/item.module').then( m => m.ItemPageModule)
   },
 
 ];
