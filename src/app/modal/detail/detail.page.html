@@ -14,6 +14,38 @@
 </ion-toolbar>
 
 <ion-content>
+  <div *ngIf="rest.action == 'blood">
+    <ion-toolbar color="success">
+      <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+    
+    <ion-content>
+      <p> Thống kê từ {{rest.temp.from}} đến {{rest.temp.end}} </p>
+    
+      <ion-item>
+        Tổng số phiếu thử: {{rest.temp.number}}
+      </ion-item>
+      <ion-item>
+        Tổng số mẫu thử: {{rest.temp.sample}}
+      </ion-item>
+      <ion-item>
+        Tổng tiền chi: {{rest.temp.total}}
+      </ion-item>
+    
+      <ion-card *ngFor="let item of rest.temp.list">
+        <ion-card-header>
+          {{item.name}}
+        </ion-card-header>
+        <ion-card-content>
+          <p> Số lần xét nghiệm: {{item.number}} </p>
+          <p> Số mẫu xét nghiệm: {{item.sample}} </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </div>
+
   <div *ngIf="rest.action == 'drug'" class="pad">
     <div class="endline-text">
       <b>Tên:</b>  {{rest.data.drug.list[rest.temp.index].name}}

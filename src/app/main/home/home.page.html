@@ -51,6 +51,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.module.blood > 0" class="box" (click)="rest.router.navigateByUrl('blood')">
+    <ion-img src="assets/image/blood.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Xét nghiệm máu
+    </div>
+  </div>
+
   <div class="box" (click)="rest.router.navigateByUrl('user')">
     <ion-img src="assets/image/user.png" class="box-image"></ion-img>
     <div class="box-title">

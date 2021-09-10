@@ -209,4 +209,31 @@ export class InsertPage {
     this.rest.temp.phone = ''
     this.rest.temp.number = 0
   }
+
+  public inout(action: string) {
+    this.rest.temp.action = action
+    this.rest.navCtrl.navigateForward('/inout')
+  }
+
+  public changeNumber() {
+    this.rest.temp.end = this.rest.temp.start - this.rest.temp.number
+  }
+
+  public async bloodInsert() {
+    await this.rest.freeze('Đang thêm phiếu nhập...')
+    this.rest.checkpost('blood', 'insert', {
+      'number': this.rest.temp.number,
+      'target': this.rest.temp.target,
+    }).then(response => {
+      this.rest.temp.number = 1
+      this.rest.temp.total = Number(response.number)
+      this.rest.temp.start = this.rest.temp.total
+      this.rest.temp.end = this.rest.temp.total - 1
+      this.rest.temp.target = ''
+      this.rest.defreeze()
+      this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

@@ -1,9 +1,93 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>blood</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+  <div class="stl-card">
+    <p> Kho </p>
+    <p> Lyse: {{rest.data.blood.number[1]}} (ML) </p>
+    <p> Diluent: {{rest.data.blood.number[2]}} (L) </p>
+    <p> Rinse: {{rest.data.blood.number[3]}} (L) </p>
+  </div>
 
+  <div class="stl-card">
+    <p> Máy </p>
+    <p> Lyse: {{rest.data.blood.current[1]}} (ML) </p>
+    <p> Diluent: {{rest.data.blood.current[2]}} (L) </p>
+    <p> Rinse: {{rest.data.blood.current[3]}} (L) </p>
+  </div>
+  
+  <ion-item>
+    <ion-label position="stacked"> Từ </ion-label>
+    <ion-input [(ngModel)]="rest.data.blood.start"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Đến </ion-label>
+    <ion-input [(ngModel)]="rest.data.blood.end"></ion-input>
+  </ion-item>
+
+  <ion-button size="small" expand="block" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <table>
+    <tr>
+      <th> Thời gian </th>
+      <th> SL </th>
+      <th> Mục đích </th>
+      <th> Thực hiện </th>
+    </tr>
+    <tbody *ngFor="let item of rest.data.blood.list">
+      <tr>
+        <td> {{item.time}} </td>
+        <td> {{item.number}} </td>
+        <td> {{item.target}} </td>
+        <td> {{item.doctor}} </td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="import()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Nhập hóa chất </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

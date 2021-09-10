@@ -57,6 +57,17 @@ export class DetailPage {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
     if (this.rest.action == 'admin') this.module = this.rest.data.admin.list[this.rest.temp.index].module
+    if (this.rest.action == 'blood') this.bloodInit()
+  }
+
+  public async bloodInit() {
+    await this.rest.freeze('Đang lấy dữ liệu...')
+    this.rest.checkpost('blood', 'statistic', { }).then(response => {
+      this.rest.temp = response.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
   
   public async view(image: string) {

@@ -46,8 +46,11 @@ export class RestService {
     drug: {
       list: [], filter: { name: '', effect: '' }
     }, 
+    blood: {
+      list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: ''
+    },
     work: {}, kaizen: {}, schedule: {}, 
-    spa: {}, expire: {}, blood: {},
+    spa: {}, expire: {}, 
     target: {}, profile: {}, admin: {}
   }
   public action: string = ''
