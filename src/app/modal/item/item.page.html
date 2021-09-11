@@ -1,9 +1,109 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>item</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="rest.temp.action == 'expire'" slot="end" (click)="insertExpire()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'item' && !rest.temp.id" slot="end" (click)="insertItem()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'item' && rest.temp.id" slot="end" (click)="updateItem()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+
+  <!-- <ion-button *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 1" slot="end" (click)="purchase()" color="light" fill="clear">
+    Lưu
+  </ion-button> -->
+  <!-- <ion-button *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 2" slot="end" (click)="excelPurchase()" color="light" fill="clear">
+    Excel
+  </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 2" slot="end" (click)="copyPurchase()" color="light" fill="clear">
+    Copy
+  </ion-button> -->
+</ion-toolbar>
 
 <ion-content>
+  <div *ngIf="rest.temp.action == 'position'">
+    <ion-item>
+      <ion-input [(ngModel)]="rest.temp.keyword" (keyup)="suggestItem()"> </ion-input>
+    </ion-item>
+    
+    <div *ngIf="rest.temp.list.length">
+      <div class="stl-cart" *ngFor="let item of rest.temp.list; let i = index">
+        Mã hàng: {{item.code}} <br>
+        Tên hàng: {{item.name}} <br>
+        Vị trí: <span class="pos" (click)="insertPos(i)"> + </span> <span class="pos" *ngFor="let pos of item.position" (click)="removePos(i, pos)"> {{pos}} </span> 
+      </div>
+    </div>
+    <div *ngIf="!rest.temp.list.length" class="text-center">
+        Nhập mã, tên hàng hóa
+    </div>
+  </div>
 
+  <div *ngIf="rest.temp.action == 'expire'">
+    <ion-item>
+      <ion-label position="stacked"> Hàng hóa </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
+      <img src="/assets/icon/item-search.png" class="clear-img" slot="end"
+        (click)="suggest()">
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ngày hết hạn </ion-label>
+      <ion-input [(ngModel)]="rest.temp.expire"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Số lượng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.number"></ion-input>
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.temp.action == 'item'">
+    <div id="pwa" style="display: none;">
+      <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked"> Tên hàng hóa </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Mã hàng hóa </ion-label>
+      <ion-input [(ngModel)]="rest.temp.code"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Giới hạn chuyển/nhập hàng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.border"></ion-input>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+      <img class="thumbnail" [src]="item">
+    </div>
+  </div>
+
+  <div *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 1">
+    <ion-item *ngFor="let item of rest.temp.list; let i = index">
+      <ion-label> {{item.name}}: {{item.number}} </ion-label>
+      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.temp.action == 'transfer' && rest.temp.step == 1">
+    <ion-item *ngFor="let item of rest.temp.list; let i = index">
+      <ion-label> {{item.name}}: {{item.shop}} | {{item.storage}} </ion-label>
+      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.temp.action == 'expired' && rest.temp.step == 1">
+    <ion-item *ngFor="let item of rest.temp.list; let i = index">
+      <ion-label> {{item.name}}: {{item.expire}} </ion-label>
+      <ion-button color="primary" (click)="done(item.id)">
+        xong
+      </ion-button>
+      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
+    </ion-item>
+  </div>
 </ion-content>

@@ -30,7 +30,7 @@ export class DrugModal {
 })
 export class DetailPage {
   public module = {
-    work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, expire: 0, blood: 0, usg: 0, drug: 0, profile: 0,
+    work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, item: 0, blood: 0, usg: 0, drug: 0, profile: 0,
   }
   public list = [
     {name: 'Quản lý công việc', module: 'work'},
@@ -38,7 +38,7 @@ export class DetailPage {
     {name: 'Đăng ký lịch', module: 'schedule'},
     {name: 'Quản lý vaccine', module: 'vaccine'},
     {name: 'Lịch spa', module: 'spa'},
-    {name: 'Quản lý hạn', module: 'expire'},
+    {name: 'Quản lý hàng hóa', module: 'item'},
     {name: 'Quản lý xét nghiệm', module: 'blood'},
     {name: 'Quản lý siêu âm', module: 'usg'},
     {name: 'Tra cứu thuốc', module: 'drug'},

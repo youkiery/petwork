@@ -58,6 +58,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.module.item > 0" class="box" (click)="rest.router.navigateByUrl('item')">
+    <ion-img src="assets/image/item.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Hàng hóa
+    </div>
+  </div>
+
   <div class="box" (click)="rest.router.navigateByUrl('user')">
     <ion-img src="assets/image/user.png" class="box-image"></ion-img>
     <div class="box-title">

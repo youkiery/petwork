@@ -11,13 +11,15 @@ export class SuggestPage {
   list: any = []
   timeout = null
   @ViewChild('input') input: any;
+  @ViewChild('input2') input2: any;
   constructor (
     public rest: RestService
   ) {}
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
-    this.input.setFocus();
+    if (this.rest.action == 'item') this.input2.setFocus();
+    else this.input.setFocus();
   }
     
   public suggest() {
@@ -42,6 +44,30 @@ export class SuggestPage {
   public select(name:string, phone: string) {
     this.rest.temp.name = name
     this.rest.temp.phone = phone
+    this.rest.navCtrl.pop()
+  }
+    
+  public suggestItem() {
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      if (this.key.length < 1) this.list = []
+      else {
+        this.rest.checkpost('item', 'search', {
+          key: this.key
+        }).then((resp) => {
+          this.list = resp.list
+        }, () => { })
+      }
+    }, 300);
+  }
+
+  public selectcurrentItem() {
+    this.rest.temp.name = this.key
+    this.rest.navCtrl.pop()
+  } 
+
+  public selectItem(name:string) {
+    this.rest.temp.name = name
     this.rest.navCtrl.pop()
   }
 }

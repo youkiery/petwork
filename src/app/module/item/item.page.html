@@ -22,14 +22,23 @@
     </ion-fab-button>
   </ion-fab> -->
 
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
+    <ion-input [(ngModel)]="rest.data.item.keyword"></ion-input>
+  </ion-item>
+
+  <ion-button size="small" expand="block" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
   <ion-card>
     <ion-card-content>
-      Hàng sắp hết: rest.data.item.purchase
-      <ion-button color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng cần chuyển: rest.data.item.transfer
-      <ion-button color="secondary" (click)="transfer()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng sắp hết hạn: rest.data.item.expired
-      <ion-button color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+      Hàng sắp hết: {{rest.data.item.purchase}}
+      <ion-button size="small" color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+      Hàng cần chuyển: {{rest.data.item.transfer}}
+      <ion-button size="small" color="secondary" (click)="transfer()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+      Hàng sắp hết hạn: {{rest.data.item.expired}}
+      <ion-button size="small" color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
     </ion-card-content>
   </ion-card>
 
@@ -37,6 +46,8 @@
     Tên hàng: {{item.name}} <br>
     Tồn kho: {{item.shop}}, {{item.storage}} <br>
     Vị trí: {{item.position}}
+    <img class="right icon" src="/assets/icon/update.png" (click)="updateItem(i)">
+    <img class="right icon" src="/assets/icon/delete.png" (click)="removeItem(item.id)">
   </div>
 </ion-content>
 

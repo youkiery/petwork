@@ -49,8 +49,11 @@ export class RestService {
     blood: {
       list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: ''
     },
+    item: {
+      list: [], purchase: 0, transfer: 0, expired: 0, keyword: ''
+    },
     work: {}, kaizen: {}, schedule: {}, 
-    spa: {}, expire: {}, 
+    spa: {}, 
     target: {}, profile: {}, admin: {}
   }
   public action: string = ''
