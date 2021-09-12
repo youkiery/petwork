@@ -52,7 +52,10 @@ export class RestService {
     item: {
       list: [], purchase: 0, transfer: 0, expired: 0, keyword: ''
     },
-    work: {}, kaizen: {}, schedule: {}, 
+    kaizen: {
+      data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: 0, filter: { keyword: '', starttime: '', endtime: '' }
+    }, 
+    work: {}, schedule: {}, 
     spa: {}, 
     target: {}, profile: {}, admin: {}
   }
