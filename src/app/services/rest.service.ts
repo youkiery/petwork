@@ -21,6 +21,11 @@ export class RestService {
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://petcoffee.work/server/index.php?';
   public config = {
+    work: 0, kaizen: 0, schedule: 0, vaccine: 0,
+    spa: 0, expire: 0, blood: 0, usg: 0,
+    drug: 0, target: 0, profile: 0, cart: 0
+  }
+  public home = {
     userid: 0,
     username: '',
     fullname: '',
@@ -29,36 +34,21 @@ export class RestService {
     users: [],
     today: '',
     next: '',
-    module: {
-      work: 0, kaizen: 0, schedule: 0, vaccine: 0,
-      spa: 0, expire: 0, blood: 0, usg: 0,
-      drug: 0, target: 0, profile: 0, cart: 0
-    }
   }
-  public data: any = {
-    cart: {list: [], init: 0},
-    vaccine: {
-      list: [], new: [], old: [], disease: [], filter: {keyword: ''}
-    },
-    usg: {
-      list: [], new: [], old: [], filter: {keyword: ''}
-    },
-    drug: {
-      list: [], filter: { name: '', effect: '' }
-    }, 
-    blood: {
-      list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: ''
-    },
-    item: {
-      list: [], purchase: 0, transfer: 0, expired: 0, keyword: ''
-    },
-    kaizen: {
-      data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: 0, filter: { keyword: '', starttime: '', endtime: '' }
-    }, 
-    work: {}, schedule: {}, 
-    spa: {}, 
-    target: {}, profile: {}, admin: {}
-  }
+  public cart = { list: [], init: false }
+  public vaccine = { init: false, list: [], new: [], old: [], disease: [], filter: {keyword: ''} }
+  public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''} }
+  public drug = { init: false, list: [], filter: { name: '', effect: '' } }
+  public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
+  public item = { init: false, list: [], all: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
+  public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
+  public work = {}
+  public schedule = {}
+  public spa = {time: 0, init: 0, list: []}
+  public target = {}
+  public profile = {}
+  public admin = { init: false, list: [] }
+
   public action: string = ''
   public isready: boolean = false
   public temp: any = {}
@@ -107,7 +97,7 @@ export class RestService {
     }).then(resp => {
       this.isready = true
       this.config = resp.config
-      this.storage.set('session', this.config.session)
+      this.storage.set('session', this.home.session)
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
@@ -164,7 +154,7 @@ export class RestService {
         password: password,
       }).then(resp => {
         this.config = resp.config
-        this.storage.set('session', resp.config.session)
+        this.storage.set('session', resp.home.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
         this.defreeze()
       }, () => {
@@ -186,9 +176,9 @@ export class RestService {
 
   public diseaseIndex(name: string) {
     let check = '0'
-    for (const key in this.data.vaccine.disease) {
-      if (Object.prototype.hasOwnProperty.call(this.data.vaccine.disease, key)) {
-        const item = this.data.vaccine.disease[key];
+    for (const key in this.vaccine.disease) {
+      if (Object.prototype.hasOwnProperty.call(this.vaccine.disease, key)) {
+        const item = this.vaccine.disease[key];
         if (item['name'] == name) check = key
       }
     }
@@ -221,7 +211,7 @@ export class RestService {
     return new Promise((resolve, reject) => {
       param['type'] = type
       param['action'] = action
-      param['session'] = this.config.session
+      param['session'] = this.home.session
       this.http.post(this.baseurl, JSON.stringify(param)).toPromise().then((data) => {
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")

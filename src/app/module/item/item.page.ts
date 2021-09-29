@@ -19,7 +19,7 @@ export class ItemPage implements OnInit {
   public async ionViewWillEnter() {
     this.rest.action = 'item'
     this.rest.ready().then(() => {
-      if (!this.rest.data.item.init) {
+      if (!this.rest.item.init) {
         this.init()
       }
     })
@@ -28,14 +28,14 @@ export class ItemPage implements OnInit {
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'init', {
-      keyword: this.rest.data.item.keyword
+      keyword: this.rest.item.keyword
     }).then(resp => {
-      this.rest.data.item.init = 1
-      this.rest.data.item.purchase = resp.purchase
-      this.rest.data.item.transfer = resp.transfer
-      this.rest.data.item.expired = resp.expired
-      this.rest.data.item.list = resp.list
-      this.rest.data.item.all = resp.all
+      this.rest.item.init = true
+      this.rest.item.purchase = resp.purchase
+      this.rest.item.transfer = resp.transfer
+      this.rest.item.expired = resp.expired
+      this.rest.item.list = resp.list
+      this.rest.item.all = resp.all
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -45,9 +45,9 @@ export class ItemPage implements OnInit {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'filter', {
-      keyword: this.rest.data.item.keyword
+      keyword: this.rest.item.keyword
     }).then(resp => {
-      this.rest.data.item.list = resp.list
+      this.rest.item.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -92,11 +92,11 @@ export class ItemPage implements OnInit {
   public updateItem(index: number) {
     this.rest.temp = {
       action: 'item',
-      id: this.rest.data.item.list[index].id,
-      name: this.rest.data.item.list[index].name,
-      code: this.rest.data.item.list[index].code,
-      border: this.rest.data.item.list[index].border,
-      image: this.rest.data.item.list[index].image
+      id: this.rest.item.list[index].id,
+      name: this.rest.item.list[index].name,
+      code: this.rest.item.list[index].code,
+      border: this.rest.item.list[index].border,
+      image: this.rest.item.list[index].image
     }
     this.rest.navCtrl.navigateForward('modal/item')
   }
@@ -124,9 +124,9 @@ export class ItemPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('item', 'remove', {
       id: id,
-      keyword: this.rest.data.item.keyword
+      keyword: this.rest.item.keyword
     }).then((resp) => {
-      this.rest.data.item.list = resp.list
+      this.rest.item.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -137,7 +137,7 @@ export class ItemPage implements OnInit {
     this.rest.temp = {
       action: 'expire',
       name: '',
-      expire: this.rest.config.today,
+      expire: this.rest.home.today,
       Number: 1
     }
     this.rest.navCtrl.navigateForward('modal/item')

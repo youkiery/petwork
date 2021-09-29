@@ -51,12 +51,12 @@ export class InsertPage {
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
-      this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
-      this.rest.temp.vaccine = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.temp.vaccine = this.rest.vaccine.disease[this.rest.temp.vaccine].id
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
-        this.rest.data.vaccine.new = resp.new
+        this.rest.vaccine.new = resp.new
         if (resp.old.length) {
-          this.rest.data.vaccine.old = resp.old
+          this.rest.vaccine.old = resp.old
           this.rest.router.navigateByUrl('/modal/recall')
         }
         this.clear()
@@ -77,7 +77,7 @@ export class InsertPage {
         }, {
           text: 'Xác nhận',
           handler: () => {
-            this.removeSubmit(this.rest.data.vaccine.new[index].id)
+            this.removeSubmit(this.rest.vaccine.new[index].id)
           }
         }
       ]
@@ -90,7 +90,7 @@ export class InsertPage {
     this.rest.checkpost('vaccine', 'remove', {
       id: id
     }).then(resp => {
-      this.rest.data.vaccine.new = resp.new
+      this.rest.vaccine.new = resp.new
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -99,25 +99,25 @@ export class InsertPage {
 
   public update(index: number) {
     this.rest.temp = {
-      id: this.rest.data.vaccine.new[index].id,
-      name: this.rest.data.vaccine.new[index].name,
-      phone: this.rest.data.vaccine.new[index].phone,
-      vaccine: Number(this.rest.diseaseIndex(this.rest.data.vaccine.new[index].vaccine)),
-      cometime: this.rest.data.vaccine.new[index].cometime,
-      calltime: this.rest.data.vaccine.new[index].calltime,
+      id: this.rest.vaccine.new[index].id,
+      name: this.rest.vaccine.new[index].name,
+      phone: this.rest.vaccine.new[index].phone,
+      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.new[index].vaccine)),
+      cometime: this.rest.vaccine.new[index].cometime,
+      calltime: this.rest.vaccine.new[index].calltime,
     }
   }
 
   public async updateSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
-    this.rest.temp.disease = this.rest.data.vaccine.disease[this.rest.temp.vaccine].id
-    this.rest.temp.filter = this.rest.data.vaccine.filter
+    this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+    this.rest.temp.filter = this.rest.vaccine.filter
     this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
-      this.rest.data.vaccine.new = resp.new
-      this.rest.data.vaccine.list = resp.list
+      this.rest.vaccine.new = resp.new
+      this.rest.vaccine.list = resp.list
       this.clear()
       this.rest.defreeze()
-      if (this.rest.data.vaccine.filter) this.rest.navCtrl.pop()
+      if (this.rest.vaccine.filter) this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })
@@ -135,9 +135,9 @@ export class InsertPage {
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('usg', 'insert', this.rest.temp).then(resp => {
-        this.rest.data.usg.new = resp.new
+        this.rest.usg.new = resp.new
         if (resp.old.length) {
-          this.rest.data.usg.old = resp.old
+          this.rest.usg.old = resp.old
           this.rest.router.navigateByUrl('/modal/recall')
         }
         this.clear()
@@ -158,7 +158,7 @@ export class InsertPage {
         }, {
           text: 'Xác nhận',
           handler: () => {
-            this.removeUsgSubmit(this.rest.data.usg.new[index].id)
+            this.removeUsgSubmit(this.rest.usg.new[index].id)
           }
         }
       ]
@@ -171,7 +171,7 @@ export class InsertPage {
     this.rest.checkpost('usg', 'remove', {
       id: id
     }).then(resp => {
-      this.rest.data.usg.new = resp.new
+      this.rest.usg.new = resp.new
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -180,24 +180,24 @@ export class InsertPage {
 
   public updateUsg(index: number) {
     this.rest.temp = {
-      id: this.rest.data.vaccine.new[index].id,
-      name: this.rest.data.vaccine.new[index].name,
-      phone: this.rest.data.vaccine.new[index].phone,
-      cometime: this.rest.data.vaccine.new[index].cometime,
-      calltime: this.rest.data.vaccine.new[index].calltime,
-      number: this.rest.data.vaccine.new[index].number,
+      id: this.rest.vaccine.new[index].id,
+      name: this.rest.vaccine.new[index].name,
+      phone: this.rest.vaccine.new[index].phone,
+      cometime: this.rest.vaccine.new[index].cometime,
+      calltime: this.rest.vaccine.new[index].calltime,
+      number: this.rest.vaccine.new[index].number,
     }
   }
 
   public async updateUsgSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
-    this.rest.temp.filter = this.rest.data.usg.filter
+    this.rest.temp.filter = this.rest.usg.filter
     this.rest.checkpost('usg', 'update', this.rest.temp).then(resp => {
-      this.rest.data.usg.new = resp.new
-      this.rest.data.usg.list = resp.list
+      this.rest.usg.new = resp.new
+      this.rest.usg.list = resp.list
       this.clearUsg()
       this.rest.defreeze()
-      if (this.rest.data.usg.filter) this.rest.navCtrl.pop()
+      if (this.rest.usg.filter) this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })

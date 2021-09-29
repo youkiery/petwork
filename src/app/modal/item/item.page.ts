@@ -83,7 +83,7 @@ export class ItemPage implements OnInit {
       id: id,
     }).then((resp) => {
       this.rest.temp.list = resp.list
-      this.rest.data.item.expired = resp.expired
+      this.rest.item.expired = resp.expired
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -196,9 +196,9 @@ export class ItemPage implements OnInit {
 
   public async insertSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
-    temp.keyword = this.rest.data.item.keyword    
+    temp.keyword = this.rest.item.keyword    
     this.rest.checkpost('item', 'insert', temp).then(resp => {
-      this.rest.data.item.list = resp.list
+      this.rest.item.list = resp.list
       this.rest.navCtrl.pop()
       this.rest.defreeze()
     }, () => {
@@ -232,9 +232,9 @@ export class ItemPage implements OnInit {
 
   public async updateSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
-    temp.keyword = this.rest.data.item.keyword    
+    temp.keyword = this.rest.item.keyword    
     this.rest.checkpost('item', 'update', temp).then(resp => {
-      this.rest.data.item.list = resp.list
+      this.rest.item.list = resp.list
       this.rest.navCtrl.pop()
       this.rest.defreeze()
     }, () => {
@@ -253,7 +253,7 @@ export class ItemPage implements OnInit {
       this.rest.temp = {
         action: 'expire',
         name: '',
-        expire: this.rest.config.today,
+        expire: this.rest.home.today,
         Number: 1
       }
       this.rest.defreeze()
@@ -263,7 +263,7 @@ export class ItemPage implements OnInit {
   }
 
   public suggestItem() {
-    this.rest.temp.list = this.rest.data.item.all.filter((item: any) => {
+    this.rest.temp.list = this.rest.item.all.filter((item: any) => {
       return item.name.search(this.rest.temp.keyword) >= 0 || item.code.search(this.rest.temp.keyword) >= 0
     })
   }
@@ -303,10 +303,10 @@ export class ItemPage implements OnInit {
       pos: temp
     }).then((resp) => {
       this.rest.temp.list[index].position = temp
-      // tìm kiếm dữ liệu trong rest.data.item.all
-      this.rest.data.item.all.forEach((item: any, i: number) => {
+      // tìm kiếm dữ liệu trong rest.item.all
+      this.rest.item.all.forEach((item: any, i: number) => {
         if (item.code == this.rest.temp.list[index].code) {
-          this.rest.data.item.all[i].position = temp
+          this.rest.item.all[i].position = temp
         }
       });
       this.rest.defreeze()
@@ -326,10 +326,10 @@ export class ItemPage implements OnInit {
       pos: temp
     }).then((resp) => {
       this.rest.temp.list[index].position = temp
-      // tìm kiếm dữ liệu trong rest.data.item.all
-      this.rest.data.item.all.forEach((item: any, i: number) => {
+      // tìm kiếm dữ liệu trong rest.item.all
+      this.rest.item.all.forEach((item: any, i: number) => {
         if (item.code == this.rest.temp.list[index].code) {
-          this.rest.data.item.all[i].position = temp
+          this.rest.item.all[i].position = temp
         }
       });
       this.rest.defreeze()

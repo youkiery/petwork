@@ -25,11 +25,11 @@ export class LookupPage implements OnInit {
   }
   
   public async init() {
-    if (!this.rest.data.drug.init) {
+    if (!this.rest.drug.init) {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('drug', 'auto', { }).then(resp => {
-        this.rest.data.drug.init = true
-        this.rest.data.drug.list = resp.list
+        this.rest.drug.init = true
+        this.rest.drug.list = resp.list
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -40,10 +40,10 @@ export class LookupPage implements OnInit {
   public async filter() {
     await this.rest.freeze('Đang lọc thuốc')
     this.rest.checkpost('drug', 'auto', {
-      name: this.rest.data.drug.filter.name,
-      effect: this.rest.data.drug.filter.effect
+      name: this.rest.drug.filter.name,
+      effect: this.rest.drug.filter.effect
     }).then(response => {
-      this.rest.data.drug.list = response.list
+      this.rest.drug.list = response.list
       this.rest.defreeze()
     }, (response) => {
       this.rest.defreeze()
@@ -57,7 +57,7 @@ export class LookupPage implements OnInit {
   }
   
   async insert() {
-    if (this.rest.config.module.drug < 2) this.rest.notify('Không có quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Không có quyền truy cập')
     else {
       this.rest.action = 'drug'
       this.rest.temp = {
@@ -73,7 +73,7 @@ export class LookupPage implements OnInit {
   }
 
   public async remove(id: number) {
-    if (this.rest.config.module.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alertCtrl.create({
         header: 'Xóa thuốc',
@@ -102,11 +102,11 @@ export class LookupPage implements OnInit {
     await this.rest.freeze('Đang xóa chỉ tiêu...')
     this.rest.checkpost('drug', 'remove', {
       id: this.rest.temp,
-      name: this.rest.data.drug.filter.name,
-      effect: this.rest.data.drug.filter.effect
+      name: this.rest.drug.filter.name,
+      effect: this.rest.drug.filter.effect
     }).then(response => {
       this.rest.notify('Đã xóa thuốc')
-      this.rest.data.drug.list = response.list
+      this.rest.drug.list = response.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

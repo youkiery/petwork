@@ -6,7 +6,7 @@
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
-    <div class="stl-card" *ngFor="let item of rest.data.vaccine.old; let i = index">
+    <div class="stl-card" *ngFor="let item of rest.vaccine.old; let i = index">
       <div>
         Vaccine: {{item.disease}} <br>
         Tái chủng: {{item.calltime}} <br>
@@ -18,7 +18,7 @@
   </div>
 
   <div *ngIf="rest.action == 'usg'">
-    <div class="stl-card" *ngFor="let item of rest.data.usg.old; let i = index">
+    <div class="stl-card" *ngFor="let item of rest.usg.old; let i = index">
       <div>
         Siêu âm lại: {{item.calltime}} <br>
         Thai dự kiến: {{item.number}} <br>

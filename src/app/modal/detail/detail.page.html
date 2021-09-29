@@ -48,27 +48,27 @@
 
   <div *ngIf="rest.action == 'drug'" class="pad">
     <div class="endline-text">
-      <b>Tên:</b>  {{rest.data.drug.list[rest.temp.index].name}}
+      <b>Tên:</b>  {{rest.drug.list[rest.temp.index].name}}
     </div>
     <div class="endline-text">
       <b>Liều dùng:</b> <br>
-      {{rest.data.drug.list[rest.temp.index].limits}}
+      {{rest.drug.list[rest.temp.index].limits}}
     </div>
     <div class="endline-text">
       <b> Công dụng: </b> <br>
-      {{rest.data.drug.list[rest.temp.index].effect}}
+      {{rest.drug.list[rest.temp.index].effect}}
     </div>
     <div class="endline-text">
       <b> Tác dụng phụ: </b> <br>
-      {{rest.data.drug.list[rest.temp.index].sideeffect}}
+      {{rest.drug.list[rest.temp.index].sideeffect}}
     </div>
     <div class="endline-text end">
       <b> Cơ chế hoạt động: </b> <br>
-      {{rest.data.drug.list[rest.temp.index].mechanic}}
+      {{rest.drug.list[rest.temp.index].mechanic}}
     </div>
     <div class="endline-text">
-      <div *ngIf="rest.data.drug.list[rest.temp.index].image.length">
-        <img class="thumbnail-sm" *ngFor="let image of rest.data.drug.list[rest.temp.index].image" [src]="image" (click)="view(image)">
+      <div *ngIf="rest.drug.list[rest.temp.index].image.length">
+        <img class="thumbnail-sm" *ngFor="let image of rest.drug.list[rest.temp.index].image" [src]="image" (click)="view(image)">
       </div>
     </div>
   </div>
@@ -89,19 +89,19 @@
     <ion-card>
       <ion-card-header>
         <div class="col-xs-6">
-          <b> Tên khách </b>: {{rest.data.cart.list[this.rest.temp.index].customer}} <br>
-          <b> Điện thoại </b>: {{rest.data.cart.list[this.rest.temp.index].phone}} <br>
-          <b> Địa chỉ </b>: {{rest.data.cart.list[this.rest.temp.index].address}} <br>
-          <b> Email </b>: {{rest.data.cart.list[this.rest.temp.index].mail}}
+          <b> Tên khách </b>: {{rest.cart.list[this.rest.temp.index].customer}} <br>
+          <b> Điện thoại </b>: {{rest.cart.list[this.rest.temp.index].phone}} <br>
+          <b> Địa chỉ </b>: {{rest.cart.list[this.rest.temp.index].address}} <br>
+          <b> Email </b>: {{rest.cart.list[this.rest.temp.index].mail}}
         </div>
         <div class="col-xs-6">
-          <b> Tổng đơn </b>: {{rest.data.cart.list[this.rest.temp.index].total}} <br>
-          <b> Ngày đặt </b>: {{rest.data.cart.list[this.rest.temp.index].time}} <br>
-          <b> Trạng thái </b>: {{rest.data.cart.list[this.rest.temp.index].status}} <br>
-          <b> Thanh toán </b>: {{rest.data.cart.list[this.rest.temp.index].method}}
+          <b> Tổng đơn </b>: {{rest.cart.list[this.rest.temp.index].total}} <br>
+          <b> Ngày đặt </b>: {{rest.cart.list[this.rest.temp.index].time}} <br>
+          <b> Trạng thái </b>: {{rest.cart.list[this.rest.temp.index].status}} <br>
+          <b> Thanh toán </b>: {{rest.cart.list[this.rest.temp.index].method}}
         </div>
         <div>
-          Ghi chú: {{rest.data.cart.list[this.rest.temp.index].note}}
+          Ghi chú: {{rest.cart.list[this.rest.temp.index].note}}
         </div>
       </ion-card-header>
 
@@ -115,7 +115,7 @@
             <th> Số lượng </th>
             <th> Tổng </th>
           </tr>
-          <tr *ngFor="let item of rest.data.cart.list[this.rest.temp.index].item">
+          <tr *ngFor="let item of rest.cart.list[this.rest.temp.index].item">
             <td> {{item.name}} </td>
             <td> {{item.price}} </td>
             <td> {{item.number}} </td>

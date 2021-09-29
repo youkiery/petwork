@@ -48,8 +48,8 @@ export class SpaPage {
 
   async ionViewDidEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.data.spa.init) {
-        this.rest.data.spa.time = (new Date()).getTime()
+      if (!this.rest.spa.init) {
+        this.rest.spa.time = (new Date()).getTime()
         this.filter()
       }
     })
@@ -59,9 +59,9 @@ export class SpaPage {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('spa', 'auto', {
       action: 'spa-auto',
-      time: this.rest.data.spa.time
+      time: this.rest.spa.time
     }).then((resp) => {
-      this.rest.data.spa.list = resp.list
+      this.rest.spa.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -83,7 +83,7 @@ export class SpaPage {
       phone: '',
       note: '',
       image: [],
-      time: this.rest.data.spa.time
+      time: this.rest.spa.time
     }
     this.rest.action = 'spa'
     this.rest.router.navigateByUrl('/upload')
@@ -91,13 +91,13 @@ export class SpaPage {
 
   public update(index: number) {
     this.rest.temp = {
-      id: this.rest.data.spa.list[index].id,
-      name: this.rest.data.spa.list[index].name,
-      phone: this.rest.data.spa.list[index].phone,
-      note: this.rest.data.spa.list[index].note,
-      image: this.rest.data.spa.list[index].image,
-      option: this.rest.data.spa.list[index].option,
-      time: this.rest.data.spa.time
+      id: this.rest.spa.list[index].id,
+      name: this.rest.spa.list[index].name,
+      phone: this.rest.spa.list[index].phone,
+      note: this.rest.spa.list[index].note,
+      image: this.rest.spa.list[index].image,
+      option: this.rest.spa.list[index].option,
+      time: this.rest.spa.time
     }
     this.rest.action = 'spa'
     this.rest.router.navigateByUrl('/upload')
@@ -125,9 +125,9 @@ export class SpaPage {
   public async calledSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'called', {
-      id: this.rest.data.spa.list[index].id,
+      id: this.rest.spa.list[index].id,
     }).then((resp) => {
-      this.rest.data.spa.list[index].status = resp.status
+      this.rest.spa.list[index].status = resp.status
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -156,9 +156,9 @@ export class SpaPage {
   public async returnedSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'returned', {
-      id: this.rest.data.spa.list[index].id,
+      id: this.rest.spa.list[index].id,
     }).then((resp) => {
-      this.rest.data.spa.list[index].status = resp.status
+      this.rest.spa.list[index].status = resp.status
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -187,9 +187,9 @@ export class SpaPage {
   public async doneSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'done', {
-      id: this.rest.data.spa.list[index].id,
+      id: this.rest.spa.list[index].id,
     }).then((resp) => {
-      this.rest.data.spa.list[index].status = resp.status
+      this.rest.spa.list[index].status = resp.status
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -197,7 +197,7 @@ export class SpaPage {
   }
 
   public async pickDate() {
-    let current = this.time.timetodate(this.rest.data.spa.time).split('/')
+    let current = this.time.timetodate(this.rest.spa.time).split('/')
     let target = current[2] + '-' + current[1] + '-' + current[0]
     let alert = await this.alert.create({
       header: 'Chọn ngày',
@@ -219,7 +219,7 @@ export class SpaPage {
           cssClass: 'secondary',
           handler: (e) => {
             let result = e.date.split('-')
-            this.rest.data.spa.time = this.time.datetotime(result[2] + '/' + result[1] + '/' + result[0])
+            this.rest.spa.time = this.time.datetotime(result[2] + '/' + result[1] + '/' + result[0])
             this.filter()
           }
         }
@@ -229,7 +229,7 @@ export class SpaPage {
   }
 
   public async changeDate(amount: number) {
-    this.rest.data.spa.time += amount * 60 * 60 * 24 * 1000
+    this.rest.spa.time += amount * 60 * 60 * 24 * 1000
     this.filter()
   }
 }

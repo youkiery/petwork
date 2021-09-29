@@ -78,7 +78,7 @@
     <ion-item>
       <ion-label position="stacked"> Loại tiêm phòng </ion-label>
       <ion-select [(ngModel)]="rest.temp.vaccine">
-        <ion-select-option *ngFor="let item of rest.data.vaccine.disease; let i = index" [value]="i">
+        <ion-select-option *ngFor="let item of rest.vaccine.disease; let i = index" [value]="i">
           {{item.name}}
         </ion-select-option>
       </ion-select>
@@ -92,7 +92,7 @@
       <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
     </ion-item>
 
-    <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
+    <div class="stl-card" *ngFor="let item of this.rest.vaccine.new; let i = index">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}}
@@ -130,7 +130,7 @@
       <ion-input [(ngModel)]="rest.temp.number"></ion-input>
     </ion-item>
 
-    <div class="stl-card" *ngFor="let item of this.rest.data.usg.new; let i = index">
+    <div class="stl-card" *ngFor="let item of this.rest.usg.new; let i = index">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}}

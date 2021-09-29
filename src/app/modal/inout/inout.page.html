@@ -13,15 +13,15 @@
 <ion-content>
   <div *ngIf="rest.temp.action == 'in'">
     <ion-item>
-      <ion-label position="stacked"> Lyse: {{rest.data.blood.current[1]}} (ML) </ion-label>
+      <ion-label position="stacked"> Lyse: {{rest.blood.current[1]}} (ML) </ion-label>
       <ion-input [(ngModel)]="number[1]"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked"> Diluent: {{rest.data.blood.current[2]}} (L) </ion-label>
+      <ion-label position="stacked"> Diluent: {{rest.blood.current[2]}} (L) </ion-label>
       <ion-input [(ngModel)]="number[2]"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked"> Rinse: {{rest.data.blood.current[3]}} (L) </ion-label>
+      <ion-label position="stacked"> Rinse: {{rest.blood.current[3]}} (L) </ion-label>
       <ion-input [(ngModel)]="number[3]"></ion-input>
     </ion-item>
     <ion-item>

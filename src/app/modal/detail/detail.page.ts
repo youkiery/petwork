@@ -56,7 +56,7 @@ export class DetailPage {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
-    if (this.rest.action == 'admin') this.module = this.rest.data.admin.list[this.rest.temp.index].module
+    if (this.rest.action == 'admin') this.module = this.rest.admin.list[this.rest.temp.index].module
     if (this.rest.action == 'blood') this.bloodInit()
   }
 
@@ -79,17 +79,17 @@ export class DetailPage {
   }
 
   async drugUpdate() {
-    if (this.rest.config.module.drug < 2) this.rest.notify('Không có quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Không có quyền truy cập')
     else {
       this.rest.temp = {
         index: this.rest.temp.index,
-        id: this.rest.data.drug.list[this.rest.temp.index]['id'],
-        name: this.rest.data.drug.list[this.rest.temp.index]['name'],
-        limits: this.rest.data.drug.list[this.rest.temp.index]['limits'],
-        effect: this.rest.data.drug.list[this.rest.temp.index]['effect'],
-        sideeffect: this.rest.data.drug.list[this.rest.temp.index]['sideeffect'],
-        mechanic: this.rest.data.drug.list[this.rest.temp.index]['mechanic'],
-        image: this.rest.data.drug.list[this.rest.temp.index]['image'],
+        id: this.rest.drug.list[this.rest.temp.index]['id'],
+        name: this.rest.drug.list[this.rest.temp.index]['name'],
+        limits: this.rest.drug.list[this.rest.temp.index]['limits'],
+        effect: this.rest.drug.list[this.rest.temp.index]['effect'],
+        sideeffect: this.rest.drug.list[this.rest.temp.index]['sideeffect'],
+        mechanic: this.rest.drug.list[this.rest.temp.index]['mechanic'],
+        image: this.rest.drug.list[this.rest.temp.index]['image'],
       }
       this.rest.navCtrl.navigateForward('/upload')
     }
@@ -98,10 +98,10 @@ export class DetailPage {
   public async cartpick() {
     await this.rest.freeze('Đang lưu dữ liệu')
     this.rest.checkpost('cart', 'pick', {
-      id: this.rest.data.cart.list[this.rest.temp].id
+      id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {
-      this.rest.data.cart.list[this.rest.temp].status = resp.status
-      this.rest.data.cart.list = resp.list
+      this.rest.cart.list[this.rest.temp].status = resp.status
+      this.rest.cart.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -129,9 +129,9 @@ export class DetailPage {
   public async cartdone() {
     await this.rest.freeze('Đang lưu dữ liệu')
     this.rest.checkpost('cart', 'done', {
-      id: this.rest.data.cart.list[this.rest.temp].id
+      id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {
-      this.rest.data.cart.list = resp.list
+      this.rest.cart.list = resp.list
       this.rest.defreeze()
       this.rest.navCtrl.back()
     }, () => {
@@ -143,9 +143,9 @@ export class DetailPage {
     await this.rest.freeze('Đang lưu dữ liệu')
     this.rest.checkpost('admin', 'update', {
       module: this.module,
-      id: this.rest.data.admin.list[this.rest.temp.index].userid
+      id: this.rest.admin.list[this.rest.temp.index].userid
     }).then(resp => {
-      this.rest.data.admin.list[this.rest.temp.index].module = this.module
+      this.rest.admin.list[this.rest.temp.index].module = this.module
       this.rest.config = resp.config
       this.rest.defreeze()
       this.rest.navCtrl.back()

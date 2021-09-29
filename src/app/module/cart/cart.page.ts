@@ -19,11 +19,11 @@ export class CartPage {
   }
 
   public async init() {
-    if (!this.rest.data.cart.init) {
+    if (!this.rest.cart.init) {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('cart', 'auto', { }).then(resp => {
-        this.rest.data.cart.init = true
-        this.rest.data.cart.list = resp.list
+        this.rest.cart.init = true
+        this.rest.cart.list = resp.list
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -40,9 +40,9 @@ export class CartPage {
   // public async filter() {
   //   await this.rest.freeze('Đang tải danh sách')
   //   this.rest.checkpost('cart', 'search', {
-  //     filter: this.rest.data.cart.filter
+  //     filter: this.rest.cart.filter
   //   }).then(resp => {
-  //     this.rest.data.cart.list = resp.list
+  //     this.rest.cart.list = resp.list
   //     this.rest.defreeze()
   //   }, () => {
   //     this.rest.defreeze()
@@ -51,26 +51,26 @@ export class CartPage {
 
   // public insert() {
   //   this.rest.action = 'cart'
-  //   this.rest.temp = { id: 0, name: '', phone: '', cart: 0, cometime: this.rest.config.today, calltime: this.rest.config.next }
+  //   this.rest.temp = { id: 0, name: '', phone: '', cart: 0, cometime: this.rest.home.today, calltime: this.rest.config.next }
   //   this.rest.router.navigateByUrl('/modal/insert')
   // }
 
   // public update(index: number) {
   //   this.rest.action = 'cart'
   //   this.rest.temp = {
-  //     id: this.rest.data.cart.list[index].id,
-  //     name: this.rest.data.cart.list[index].name,
-  //     phone: this.rest.data.cart.list[index].phone,
-  //     cart: Number(this.rest.diseaseIndex(this.rest.data.cart.list[index].cart)),
-  //     cometime: this.rest.data.cart.list[index].cometime,
-  //     calltime: this.rest.data.cart.list[index].calltime,
+  //     id: this.rest.cart.list[index].id,
+  //     name: this.rest.cart.list[index].name,
+  //     phone: this.rest.cart.list[index].phone,
+  //     cart: Number(this.rest.diseaseIndex(this.rest.cart.list[index].cart)),
+  //     cometime: this.rest.cart.list[index].cometime,
+  //     calltime: this.rest.cart.list[index].calltime,
   //   }
   //   this.rest.router.navigateByUrl('/modal/insert')
   // }
 
   // public async called(index: number) {
-  //   let note = 'Gọi nhắc ngày: ' + this.rest.config.today
-  //   if (this.rest.data.cart.list[index].note.length) note = this.rest.data.cart.list[index].note
+  //   let note = 'Gọi nhắc ngày: ' + this.rest.home.today
+  //   if (this.rest.cart.list[index].note.length) note = this.rest.cart.list[index].note
   //   const alert = await this.alert.create({
   //     message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
   //     inputs: [{
@@ -97,11 +97,11 @@ export class CartPage {
   // public async calledSubmit(index: number, note: string) {
   //   await this.rest.freeze('Đang thay đổi trạng thái')
   //   this.rest.checkpost('cart', 'called', {
-  //     id: this.rest.data.cart.list[index].id,
+  //     id: this.rest.cart.list[index].id,
   //     note: note,
-  //     filter: this.rest.data.cart.filter
+  //     filter: this.rest.cart.filter
   //   }).then(resp => {
-  //     this.rest.data.cart.list = resp.list
+  //     this.rest.cart.list = resp.list
   //     this.rest.notify('Đã thay đổi trạng thái')
   //     this.rest.defreeze()
   //   }, () => {
@@ -110,8 +110,8 @@ export class CartPage {
   // }
 
   // public async uncalled(index: number) {
-  //   let note = 'Gọi nhắc ngày: ' + this.rest.config.today
-  //   if (this.rest.data.cart.list[index].note.length) note = this.rest.data.cart.list[index].note
+  //   let note = 'Gọi nhắc ngày: ' + this.rest.home.today
+  //   if (this.rest.cart.list[index].note.length) note = this.rest.cart.list[index].note
   //   const alert = await this.alert.create({
   //     message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
   //     inputs: [{
@@ -138,11 +138,11 @@ export class CartPage {
   // public async uncalledSubmit(index: number, note: string) {
   //   await this.rest.freeze('Đang thay đổi trạng thái')
   //   this.rest.checkpost('cart', 'uncalled', {
-  //     id: this.rest.data.cart.list[index].id,
+  //     id: this.rest.cart.list[index].id,
   //     note: note,
-  //     filter: this.rest.data.cart.filter
+  //     filter: this.rest.cart.filter
   //   }).then(resp => {
-  //     this.rest.data.cart.list = resp.list
+  //     this.rest.cart.list = resp.list
   //     this.rest.notify('Đã thay đổi trạng thái')
   //     this.rest.defreeze()
   //   }, () => {
@@ -157,7 +157,7 @@ export class CartPage {
   //       type: 'text',
   //       label: 'Ghi chú',
   //       name: 'note',
-  //       value: this.rest.data.cart.list[index].note
+  //       value: this.rest.cart.list[index].note
   //     }],
   //     buttons: [
   //       {
@@ -178,11 +178,11 @@ export class CartPage {
   // public async deadSubmit(index: number, note: string = '') {
   //   await this.rest.freeze('Đang thay đổi trạng thái')
   //   this.rest.checkpost('cart', 'dead', {
-  //     id: this.rest.data.cart.list[index].id,
+  //     id: this.rest.cart.list[index].id,
   //     note: note,
-  //     filter: this.rest.data.cart.filter
+  //     filter: this.rest.cart.filter
   //   }).then((resp) => {
-  //     this.rest.data.cart.list = resp.list
+  //     this.rest.cart.list = resp.list
   //     this.rest.defreeze()
   //   }, () => {
   //     this.rest.defreeze()

@@ -233,11 +233,11 @@ export class UploadPage {
 
   public async drugInsertSubmit() {
     await this.rest.freeze('Thêm thuốc...')
-    this.rest.temp.name = this.rest.data.drug.filter.name
-    this.rest.temp.effect = this.rest.data.drug.filter.effect
+    this.rest.temp.name = this.rest.drug.filter.name
+    this.rest.temp.effect = this.rest.drug.filter.effect
 
     this.rest.checkpost('drug', 'insert', this.rest.temp).then((response) => {
-      this.rest.data.drug.list = response.list
+      this.rest.drug.list = response.list
       this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
@@ -247,10 +247,10 @@ export class UploadPage {
 
   public async drugUpdateSubmit() {
     await this.rest.freeze('Cập nhật thông tin...')
-    this.rest.temp.name = this.rest.data.drug.filter.name
-    this.rest.temp.effect = this.rest.data.drug.filter.effect
+    this.rest.temp.name = this.rest.drug.filter.name
+    this.rest.temp.effect = this.rest.drug.filter.effect
     this.rest.checkpost('drug', 'update', this.rest.temp).then((response) => {
-      this.rest.data.drug.list = response.list
+      this.rest.drug.list = response.list
       this.rest.navCtrl.pop()
       this.rest.defreeze()
     }, () => {

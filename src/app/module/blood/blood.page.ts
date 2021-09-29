@@ -15,13 +15,13 @@ export class BloodPage implements OnInit {
   ngOnInit() { }
 
   public insert() {
-    if (this.rest.config.module.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
      
       this.rest.temp = {
         number: 1,
-        start: this.rest.data.blood.total,
-        end: this.rest.data.blood.total - 1,
+        start: this.rest.blood.total,
+        end: this.rest.blood.total - 1,
         target: ''
       }
       this.rest.router.navigateByUrl('/modal/insert')
@@ -29,7 +29,7 @@ export class BloodPage implements OnInit {
   }
 
   public import() {
-    if (this.rest.config.module.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.temp.action = 'in'
       this.rest.navCtrl.navigateForward('/inout')
@@ -37,7 +37,7 @@ export class BloodPage implements OnInit {
   }
 
   public statistic() {
-    if (this.rest.config.module.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.router.navigateByUrl('/detail')
     }
@@ -46,8 +46,8 @@ export class BloodPage implements OnInit {
   public async ionViewWillEnter() {
     this.rest.action = 'blood'
     this.rest.ready().then(() => {
-      if (!this.rest.data.blood.init) {
-        this.rest.data.blood.page = 1
+      if (!this.rest.blood.init) {
+        this.rest.blood.page = 1
         this.init()
       }
     })
@@ -56,14 +56,14 @@ export class BloodPage implements OnInit {
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('blood', 'init', {}).then(response => {
-      this.rest.data.blood.list = response.list
-      this.rest.data.blood.total = response.total
-      this.rest.data.blood.current = response.number
-      this.rest.data.blood.current = response.current
-      this.rest.data.blood.start = response.start
-      this.rest.data.blood.end = response.end
+      this.rest.blood.list = response.list
+      this.rest.blood.total = response.total
+      this.rest.blood.current = response.number
+      this.rest.blood.current = response.current
+      this.rest.blood.start = response.start
+      this.rest.blood.end = response.end
 
-      this.rest.data.blood.init = 1
+      this.rest.blood.init = true
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -73,10 +73,10 @@ export class BloodPage implements OnInit {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('blood', 'init', {
-      start: this.rest.data.blood.start,
-      end: this.rest.data.blood.end,
+      start: this.rest.blood.start,
+      end: this.rest.blood.end,
     }).then(response => {
-      this.rest.data.blood.list = response.list
+      this.rest.blood.list = response.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

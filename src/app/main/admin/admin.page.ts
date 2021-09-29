@@ -21,13 +21,13 @@ export class AdminPage {
   }
 
   public async init() {
-    if (!this.rest.data.admin.init) {
+    if (!this.rest.admin.init) {
       await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('admin', 'auto', {
         action: 'admin-user',
       }).then(resp => {
-        this.rest.data.admin.init = true
-        this.rest.data.admin.list = resp.list
+        this.rest.admin.init = true
+        this.rest.admin.list = resp.list
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -61,7 +61,7 @@ export class AdminPage {
       id: userid
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.data.admin.list = resp.list
+      this.rest.admin.list = resp.list
       this.rest.notify('Đã xóa nhân viên')
     }, () => {
       this.rest.defreeze()

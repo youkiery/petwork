@@ -5,7 +5,7 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,25 +18,25 @@
   </ion-fab> -->
   <div class="stl-card">
     <p> Kho </p>
-    <p> Lyse: {{rest.data.blood.number[1]}} (ML) </p>
-    <p> Diluent: {{rest.data.blood.number[2]}} (L) </p>
-    <p> Rinse: {{rest.data.blood.number[3]}} (L) </p>
+    <p> Lyse: {{rest.blood.number[1]}} (ML) </p>
+    <p> Diluent: {{rest.blood.number[2]}} (L) </p>
+    <p> Rinse: {{rest.blood.number[3]}} (L) </p>
   </div>
 
   <div class="stl-card">
     <p> Máy </p>
-    <p> Lyse: {{rest.data.blood.current[1]}} (ML) </p>
-    <p> Diluent: {{rest.data.blood.current[2]}} (L) </p>
-    <p> Rinse: {{rest.data.blood.current[3]}} (L) </p>
+    <p> Lyse: {{rest.blood.current[1]}} (ML) </p>
+    <p> Diluent: {{rest.blood.current[2]}} (L) </p>
+    <p> Rinse: {{rest.blood.current[3]}} (L) </p>
   </div>
   
   <ion-item>
     <ion-label position="stacked"> Từ </ion-label>
-    <ion-input [(ngModel)]="rest.data.blood.start"></ion-input>
+    <ion-input [(ngModel)]="rest.blood.start"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Đến </ion-label>
-    <ion-input [(ngModel)]="rest.data.blood.end"></ion-input>
+    <ion-input [(ngModel)]="rest.blood.end"></ion-input>
   </ion-item>
 
   <ion-button size="small" expand="block" (click)="filter()">
@@ -50,7 +50,7 @@
       <th> Mục đích </th>
       <th> Thực hiện </th>
     </tr>
-    <tbody *ngFor="let item of rest.data.blood.list">
+    <tbody *ngFor="let item of rest.blood.list">
       <tr>
         <td> {{item.time}} </td>
         <td> {{item.number}} </td>

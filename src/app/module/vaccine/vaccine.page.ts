@@ -26,13 +26,13 @@ export class VaccinePage {
   }
 
   public async init() {
-    if (!this.rest.data.vaccine.init) {
+    if (!this.rest.vaccine.init) {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('vaccine', 'auto', { }).then(resp => {
-        this.rest.data.vaccine.init = true
-        this.rest.data.vaccine.new = resp.new
-        this.rest.data.vaccine.list = resp.list
-        this.rest.data.vaccine.disease = resp.disease
+        this.rest.vaccine.init = true
+        this.rest.vaccine.new = resp.new
+        this.rest.vaccine.list = resp.list
+        this.rest.vaccine.disease = resp.disease
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -43,9 +43,9 @@ export class VaccinePage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine', 'search', {
-      filter: this.rest.data.vaccine.filter
+      filter: this.rest.vaccine.filter
     }).then(resp => {
-      this.rest.data.vaccine.list = resp.list
+      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -54,26 +54,26 @@ export class VaccinePage {
 
   public insert() {
     this.rest.action = 'vaccine'
-    this.rest.temp = { id: 0, name: '', phone: '', vaccine: 0, cometime: this.rest.config.today, calltime: this.rest.config.next }
+    this.rest.temp = { id: 0, name: '', phone: '', vaccine: 0, cometime: this.rest.home.today, calltime: this.rest.home.next }
     this.rest.router.navigateByUrl('/modal/insert')
   }
 
   public update(index: number) {
     this.rest.action = 'vaccine'
     this.rest.temp = {
-      id: this.rest.data.vaccine.list[index].id,
-      name: this.rest.data.vaccine.list[index].name,
-      phone: this.rest.data.vaccine.list[index].phone,
-      vaccine: Number(this.rest.diseaseIndex(this.rest.data.vaccine.list[index].vaccine)),
-      cometime: this.rest.data.vaccine.list[index].cometime,
-      calltime: this.rest.data.vaccine.list[index].calltime,
+      id: this.rest.vaccine.list[index].id,
+      name: this.rest.vaccine.list[index].name,
+      phone: this.rest.vaccine.list[index].phone,
+      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.list[index].vaccine)),
+      cometime: this.rest.vaccine.list[index].cometime,
+      calltime: this.rest.vaccine.list[index].calltime,
     }
     this.rest.router.navigateByUrl('/modal/insert')
   }
 
   public async called(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.config.today
-    if (this.rest.data.vaccine.list[index].note.length) note = this.rest.data.vaccine.list[index].note
+    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
+    if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
       message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
       inputs: [{
@@ -100,11 +100,11 @@ export class VaccinePage {
   public async calledSubmit(index: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'called', {
-      id: this.rest.data.vaccine.list[index].id,
+      id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.data.vaccine.filter
+      filter: this.rest.vaccine.filter
     }).then(resp => {
-      this.rest.data.vaccine.list = resp.list
+      this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
       this.rest.defreeze()
     }, () => {
@@ -113,8 +113,8 @@ export class VaccinePage {
   }
 
   public async uncalled(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.config.today
-    if (this.rest.data.vaccine.list[index].note.length) note = this.rest.data.vaccine.list[index].note
+    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
+    if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
       message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
       inputs: [{
@@ -141,11 +141,11 @@ export class VaccinePage {
   public async uncalledSubmit(index: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'uncalled', {
-      id: this.rest.data.vaccine.list[index].id,
+      id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.data.vaccine.filter
+      filter: this.rest.vaccine.filter
     }).then(resp => {
-      this.rest.data.vaccine.list = resp.list
+      this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
       this.rest.defreeze()
     }, () => {
@@ -160,7 +160,7 @@ export class VaccinePage {
         type: 'text',
         label: 'Ghi chú',
         name: 'note',
-        value: this.rest.data.vaccine.list[index].note
+        value: this.rest.vaccine.list[index].note
       }],
       buttons: [
         {
@@ -181,11 +181,11 @@ export class VaccinePage {
   public async deadSubmit(index: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'dead', {
-      id: this.rest.data.vaccine.list[index].id,
+      id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.data.vaccine.filter
+      filter: this.rest.vaccine.filter
     }).then((resp) => {
-      this.rest.data.vaccine.list = resp.list
+      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

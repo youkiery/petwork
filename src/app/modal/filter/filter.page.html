@@ -9,7 +9,7 @@
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
-    <div class="stl-card" *ngFor="let item of rest.data.vaccine.search">
+    <div class="stl-card" *ngFor="let item of rest.vaccine.search">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}}
@@ -30,7 +30,7 @@
   </div>
 
   <div *ngIf="rest.action == 'usg'">
-    <div class="stl-card" *ngFor="let item of rest.data.usg.search">
+    <div class="stl-card" *ngFor="let item of rest.usg.search">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}} <br>

@@ -45,11 +45,11 @@ export class RecallPage {
   public async doneSubmit(index: number) {
     await this.rest.freeze('Xóa lịch nhắc...')
     this.rest.checkpost('vaccine', 'done', {
-      id: this.rest.data.vaccine.old[index].id,
-      customerid: this.rest.data.vaccine.old[index].customerid,
+      id: this.rest.vaccine.old[index].id,
+      customerid: this.rest.vaccine.old[index].customerid,
     }).then(resp => {
-      this.rest.data.vaccine.list = resp.list
-      this.rest.data.vaccine.old = resp.old
+      this.rest.vaccine.list = resp.list
+      this.rest.vaccine.old = resp.old
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -59,11 +59,11 @@ export class RecallPage {
   public async doneUsgSubmit(index: number) {
     await this.rest.freeze('Xóa lịch nhắc...')
     this.rest.checkpost('usg', 'done', {
-      id: this.rest.data.usg.old[index].id,
-      customerid: this.rest.data.usg.old[index].customerid,
+      id: this.rest.usg.old[index].id,
+      customerid: this.rest.usg.old[index].customerid,
     }).then(resp => {
-      this.rest.data.usg.list = resp.list
-      this.rest.data.usg.old = resp.old
+      this.rest.usg.list = resp.list
+      this.rest.usg.old = resp.old
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

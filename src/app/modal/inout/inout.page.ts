@@ -43,8 +43,8 @@ export class InoutPage implements OnInit {
       number: this.number,
       total: this.total,
     }).then(response => {
-      this.rest.data.blood.current = response.current
-      this.rest.data.blood.total = Number(response.total)
+      this.rest.blood.current = response.current
+      this.rest.blood.total = Number(response.total)
       this.rest.temp.start = response.total
       this.rest.temp.end = response.total - response.total
       this.rest.defreeze()

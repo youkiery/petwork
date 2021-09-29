@@ -5,7 +5,7 @@
     </ion-title>
     
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +17,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="stl-card" *ngFor="let user of rest.data.admin.list; let i = index">
+  <div class="stl-card" *ngFor="let user of rest.admin.list; let i = index">
     Tài khoản: {{user.username}} <br>
     Họ tên: {{user.fullname}} <br>
     <ion-button color="danger" size="small" (click)="remove(user.userid)">

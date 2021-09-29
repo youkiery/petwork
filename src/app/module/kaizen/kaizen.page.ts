@@ -27,11 +27,11 @@ export class KaizenPage implements OnInit {
   }
 
   public async init() {
-    if (!this.rest.data.drug.init) {
+    if (!this.rest.kaizen.init) {
       await this.rest.freeze('Đang lấy dữ liệu...')
       this.rest.checkpost('kaizen', 'init', {  }).then(data => {
-        this.rest.data.kaizen.init = 1
-        this.rest.data.kaizen.list = data.list
+        this.rest.kaizen.init = false
+        this.rest.kaizen.list = data.list
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -41,15 +41,15 @@ export class KaizenPage implements OnInit {
 
   
   public clear(name: string) {
-    this.rest.data.kaizen.filter[name] = ''
+    this.rest.kaizen.filter[name] = ''
   }
 
   public async filter() {
     await this.rest.freeze('Đang lấy dữ liệu')
-    this.rest.data.kaizen.page = { undone: 1, done: 1 }
+    this.rest.kaizen.page = { undone: 1, done: 1 }
 
-    this.rest.checkpost('kaizen', 'init', this.rest.data.kaizen.filter).then(data => {
-      this.rest.data.kaizen.list = data['list']
+    this.rest.checkpost('kaizen', 'init', this.rest.kaizen.filter).then(data => {
+      this.rest.kaizen.list = data['list']
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -61,18 +61,18 @@ export class KaizenPage implements OnInit {
   //     if (!this.autoupdate) {
   //       this.autoupdate = true
   //       this.rest.checkpost('kaizen', 'auto', {
-  //         starttime: this.time.datetotime(this.rest.data.kaizen.filter.starttime),
-  //         endtime: this.time.datetotime(this.rest.data.kaizen.filter.endtime),
-  //         keyword: this.rest.data.kaizen.filter.keyword,
-  //         type: this.rest.data.kaizen.reversal_segment[this.rest.data.kaizen.segment],
-  //         page: this.rest.data.kaizen.page[this.rest.data.kaizen.segment],
-  //         sort: this.rest.data.kaizen.filter.sort,
+  //         starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
+  //         endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
+  //         keyword: this.rest.kaizen.filter.keyword,
+  //         type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
+  //         page: this.rest.kaizen.page[this.rest.kaizen.segment],
+  //         sort: this.rest.kaizen.filter.sort,
   //       }).then(data => {
   //         this.autoupdate = false
   //         if (data['list']) {
-  //           this.rest.data.kaizen.unread = data['unread']
-  //           this.rest.data.kaizen.time = data.time
-  //           if (data.list) this.rest.data.kaizen.data[this.rest.data.kaizen.segment] = this.rest.data.kaizen.data[this.rest.data.kaizen.segment].concat(data.list)
+  //           this.rest.kaizen.unread = data['unread']
+  //           this.rest.kaizen.time = data.time
+  //           if (data.list) this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
   //           resolve('')
   //         }
   //       }, (e) => {
@@ -106,15 +106,14 @@ export class KaizenPage implements OnInit {
     await this.rest.freeze('Đang hoàn thành...')
     this.rest.checkpost('kaizen', 'check', {
       id: id,
-      type: this.rest.data.kaizen.reversal_segment[this.rest.data.kaizen.segment],
-      starttime: this.time.datetotime(this.rest.data.kaizen.filter.starttime),
-      endtime: this.time.datetotime(this.rest.data.kaizen.filter.endtime),
-      keyword: this.rest.data.kaizen.filter.keyword,
-      page1: this.rest.data.kaizen.page.undone,
-      page2: this.rest.data.kaizen.page.done,
-      sort: this.rest.data.kaizen.filter.sort
+      type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
+      starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
+      endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
+      keyword: this.rest.kaizen.filter.keyword,
+      page1: this.rest.kaizen.page.undone,
+      page2: this.rest.kaizen.page.done,
     }).then(data => {
-      this.rest.data.kaizen.data = data['list']
+      this.rest.kaizen.data = data['list']
       this.rest.defreeze()
     }, () => [
       this.rest.defreeze()
@@ -122,9 +121,9 @@ export class KaizenPage implements OnInit {
   }
 
   // public async edit(insert = false, index: number = 0) {
-  //   this.rest.data.kaizen.insert = insert
+  //   this.rest.kaizen.insert = insert
   //   if (insert) {
-  //     this.rest.data.kaizen.edit = {
+  //     this.rest.kaizen.edit = {
   //       id: 0,
   //       problem: '',
   //       solution: '',
@@ -132,8 +131,8 @@ export class KaizenPage implements OnInit {
   //     }
   //   }
   //   else {
-  //     let current = this.rest.data.kaizen.data[this.rest.data.kaizen.segment][index]
-  //     this.rest.data.kaizen.edit = {
+  //     let current = this.rest.kaizen.data[this.rest.kaizen.segment][index]
+  //     this.rest.kaizen.edit = {
   //       id: current['id'],
   //       problem: current['problem'],
   //       solution: current['solution'],
@@ -173,16 +172,15 @@ export class KaizenPage implements OnInit {
     this.rest.checkpost('kaizen', 'remove', {
       action: 'kaizen-remove',
       id: id,
-      starttime: this.time.datetotime(this.rest.data.kaizen.filter.starttime),
-      endtime: this.time.datetotime(this.rest.data.kaizen.filter.endtime),
-      keyword: this.rest.data.kaizen.filter.keyword,
-      page: this.rest.data.kaizen.page[this.rest.data.kaizen.segment],
-      type: this.rest.data.kaizen.segment,
-      sort: this.rest.data.kaizen.filter.sort
+      starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
+      endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
+      keyword: this.rest.kaizen.filter.keyword,
+      page: this.rest.kaizen.page[this.rest.kaizen.segment],
+      type: this.rest.kaizen.segment,
     }).then((data) => {
-      this.rest.data.kaizen.unread = data['unread']
-      this.rest.data.kaizen.time = data['time']
-      this.rest.data.kaizen.data = data['list']
+      this.rest.kaizen.unread = data['unread']
+      this.rest.kaizen.time = data['time']
+      this.rest.kaizen.data = data['list']
       this.rest.defreeze()
     }, (error) => {
       this.rest.defreeze()
@@ -190,7 +188,7 @@ export class KaizenPage implements OnInit {
   }
 
   public loadData(event) {
-    this.rest.data.kaizen.page[this.rest.data.kaizen.segment] += 1
+    this.rest.kaizen.page[this.rest.kaizen.segment] += 1
 
     this.filter().then(() => {
       event.target.complete();

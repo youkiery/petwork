@@ -5,7 +5,7 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,7 +19,7 @@
 
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
-    <ion-input [(ngModel)]="rest.data.item.keyword"></ion-input>
+    <ion-input [(ngModel)]="rest.item.keyword"></ion-input>
   </ion-item>
 
   <ion-button size="small" expand="block" (click)="filter()">
@@ -28,16 +28,16 @@
 
   <ion-card>
     <ion-card-content>
-      Hàng sắp hết: {{rest.data.item.purchase}}
+      Hàng sắp hết: {{rest.item.purchase}}
       <ion-button size="small" color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng cần chuyển: {{rest.data.item.transfer}}
+      Hàng cần chuyển: {{rest.item.transfer}}
       <ion-button size="small" color="secondary" (click)="transfer()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng sắp hết hạn: {{rest.data.item.expired}}
+      Hàng sắp hết hạn: {{rest.item.expired}}
       <ion-button size="small" color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
     </ion-card-content>
   </ion-card>
 
-  <div class="stl-card" *ngFor="let item of rest.data.item.list; let i = index">
+  <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
     Tên hàng: {{item.name}} <br>
     Tồn kho: {{item.shop}}, {{item.storage}} <br>
     Vị trí: {{item.position}}
