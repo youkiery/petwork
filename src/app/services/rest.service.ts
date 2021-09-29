@@ -26,11 +26,11 @@ export class RestService {
     username: '',
     fullname: '',
     admin: 0,
-    session: '',
     users: [],
     today: '',
     next: '',
   }
+  public session = ''
   public cart = { list: [], init: false }
   public vaccine = { init: false, list: [], new: [], old: [], disease: [], filter: {keyword: ''} }
   public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''} }
@@ -64,7 +64,7 @@ export class RestService {
   public async init() {
     await this.storage.create()
     this.storage.get('session').then(session => {
-      if (session && session.length) this.session(session)
+      if (session && session.length) this.sess(session)
       else {
         this.isready = true
         this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
@@ -123,7 +123,7 @@ export class RestService {
     );
   }
 
-  public async session(session: string) {
+  public async sess(session: string) {
     await this.freeze('Kiểm tra thông tin người dùng...')
     this.checkpost('user', 'session', {
       sess: session
@@ -131,7 +131,8 @@ export class RestService {
       this.isready = true
       this.config = resp.config
       this.home = resp.data
-      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      this.session = session
+      if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
       this.isready = true
@@ -151,8 +152,9 @@ export class RestService {
       }).then(resp => {
         this.config = resp.config
         this.home = resp.data
+        this.session = resp.session
         this.storage.set('session', resp.session)
-        this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+        if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()
       }, () => {
         this.defreeze()
@@ -166,7 +168,7 @@ export class RestService {
   }
 
   public back() {
-    this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
+    this.navCtrl.pop()
   }
 
   public diseaseIndex(name: string) {
@@ -206,7 +208,7 @@ export class RestService {
     return new Promise((resolve, reject) => {
       param['type'] = type
       param['action'] = action
-      param['session'] = this.home.session
+      param['session'] = this.session
       this.http.post(this.baseurl, JSON.stringify(param)).toPromise().then((data) => {
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")

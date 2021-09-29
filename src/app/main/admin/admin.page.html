@@ -17,14 +17,21 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="stl-card" *ngFor="let user of rest.admin.list; let i = index">
-    Tài khoản: {{home.username}} <br>
-    Họ tên: {{home.fullname}} <br>
-    <ion-button color="danger" size="small" (click)="remove(home.userid)">
-      xóa người dùng
-    </ion-button>
-    <ion-button color="secondary" size="small" (click)="detail(i)">
-      chi tiết
-    </ion-button>
+  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+    Tài khoản: {{user.username}} <br>
+    Họ tên: {{user.fullname}} <br>
+    <img class="icon" src="/assets/icon/update.png" (click)="detail(i)">
+    <img class="icon" src="/assets/icon/delete.png" (click)="remove(user.userid)">
   </div>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
