@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div class="avatar-box">
     <ion-img src="assets/image/avatar.png"></ion-img>
     <ion-text> {{rest.home.fullname}} </ion-text>

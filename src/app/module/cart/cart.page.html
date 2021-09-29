@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <!-- <ion-item>
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
     <ion-input [(ngModel)]="rest.vaccine.filter.keyword"> </ion-input>

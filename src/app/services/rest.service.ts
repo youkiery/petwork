@@ -130,7 +130,7 @@ export class RestService {
     }).then(resp => {
       this.isready = true
       this.config = resp.config
-      this.home = resp.home
+      this.home = resp.data
       this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
@@ -150,7 +150,7 @@ export class RestService {
         password: password,
       }).then(resp => {
         this.config = resp.config
-        this.home = resp.home
+        this.home = resp.data
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
         this.defreeze()
