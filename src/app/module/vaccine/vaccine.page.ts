@@ -55,7 +55,7 @@ export class VaccinePage {
   public insert() {
     this.rest.action = 'vaccine'
     this.rest.temp = { id: 0, name: '', phone: '', vaccine: 0, cometime: this.rest.home.today, calltime: this.rest.home.next }
-    this.rest.router.navigateByUrl('/modal/insert')
+    this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public update(index: number) {
@@ -68,7 +68,7 @@ export class VaccinePage {
       cometime: this.rest.vaccine.list[index].cometime,
       calltime: this.rest.vaccine.list[index].calltime,
     }
-    this.rest.router.navigateByUrl('/modal/insert')
+    this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public async called(index: number) {

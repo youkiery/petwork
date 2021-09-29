@@ -27,7 +27,7 @@ export class UploadPage {
   }
 
   public suggest() {
-    this.rest.router.navigateByUrl('/modal/suggest')
+    this.rest.navCtrl.navigateForward('/modal/suggest')
   }
 
   public upload() {

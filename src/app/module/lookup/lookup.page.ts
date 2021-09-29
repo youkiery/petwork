@@ -53,7 +53,7 @@ export class LookupPage implements OnInit {
   public async detail(index: number) {
     this.rest.temp.index = index
     this.rest.action = 'drug'
-    this.rest.router.navigateByUrl('/modal/detail')
+    this.rest.navCtrl.navigateForward('/modal/detail')
   }
   
   async insert() {

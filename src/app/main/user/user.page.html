@@ -5,7 +5,7 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot('home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
 <ion-content>
   <div class="avatar-box">
     <ion-img src="assets/image/avatar.png"></ion-img>
-    <ion-text> {{rest.config.fullname}} </ion-text>
+    <ion-text> {{rest.home.fullname}} </ion-text>
   </div>
   <ion-list>
     <ion-item class="underline" (click)="password = !password">
@@ -36,7 +36,7 @@
         Đổi mật khẩu
       </ion-button>
     </div>
-    <ion-item class="underline" *ngIf="rest.config.admin" (click)="rest.router.navigateByUrl('admin')"> 
+    <ion-item class="underline" *ngIf="rest.home.admin" (click)="rest.navCtrl.navigateForward('admin')"> 
       Phân quyền
     </ion-item>
     <ion-item class="underline" (click)="rest.logout()"> 

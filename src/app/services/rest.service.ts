@@ -20,11 +20,7 @@ export class RestService {
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://petcoffee.work/server/index.php?';
-  public config = {
-    work: 0, kaizen: 0, schedule: 0, vaccine: 0,
-    spa: 0, expire: 0, blood: 0, usg: 0,
-    drug: 0, target: 0, profile: 0, cart: 0
-  }
+  public config: any
   public home = {
     userid: 0,
     username: '',
@@ -66,7 +62,6 @@ export class RestService {
   }
 
   public async init() {
-    await this.freeze('Kiểm tra thông tin người dùng...')
     await this.storage.create()
     this.storage.get('session').then(session => {
       if (session && session.length) this.session(session)
@@ -88,22 +83,6 @@ export class RestService {
           }, 200);
         }
       }, 100)
-    })
-  }
-
-  public async session(session: string) {
-    this.checkpost('user', 'session', {
-      sess: session
-    }).then(resp => {
-      this.isready = true
-      this.config = resp.config
-      this.storage.set('session', this.home.session)
-      if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      this.defreeze()
-    }, () => {
-      this.isready = true
-      // this.logout()
-      this.defreeze()
     })
   }
 
@@ -144,17 +123,35 @@ export class RestService {
     );
   }
 
-  public login(username: string, password: string) {
+  public async session(session: string) {
+    await this.freeze('Kiểm tra thông tin người dùng...')
+    this.checkpost('user', 'session', {
+      sess: session
+    }).then(resp => {
+      this.isready = true
+      this.config = resp.config
+      this.home = resp.home
+      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      this.defreeze()
+    }, () => {
+      this.isready = true
+      // this.logout()
+      this.defreeze()
+    })
+  }
+
+  public async login(username: string, password: string) {
     if (!username || !username.length) this.notify('Tên tài khoản trống')
     else if (!password || !password.length) this.notify('Mật khẩu trống')
     else {
-      this.freeze('Đăng nhập...')
+      await this.freeze('Đăng nhập...')
       this.checkpost('user', 'login', {
         username: username,
         password: password,
       }).then(resp => {
         this.config = resp.config
-        this.storage.set('session', resp.home.session)
+        this.home = resp.home
+        this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
         this.defreeze()
       }, () => {
@@ -162,8 +159,6 @@ export class RestService {
       })
     }
   }
-
-
 
   public logout() {
     this.storage.remove('session')

@@ -74,12 +74,12 @@ export class AdminPage {
       key: '',
       list: []
     }
-    this.rest.router.navigateByUrl('modal/insert')
+    this.rest.navCtrl.navigateForward('modal/insert')
   }
 
   public async detail(index: number) {
     this.rest.temp.index = index
     this.rest.action = 'admin'
-    this.rest.router.navigateByUrl('modal/detail')
+    this.rest.navCtrl.navigateForward('modal/detail')
   }
 }

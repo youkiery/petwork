@@ -5,13 +5,13 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot('home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>
@@ -98,7 +98,7 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="rest.router.navigateByUrl('/kaizen/notify')">
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/kaizen/notify')">
         <ion-icon name="notifications-outline"></ion-icon>
         <ion-label> Thông báo </ion-label>
         <ion-badge color="danger" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>

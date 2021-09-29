@@ -52,7 +52,7 @@ export class CartPage {
   // public insert() {
   //   this.rest.action = 'cart'
   //   this.rest.temp = { id: 0, name: '', phone: '', cart: 0, cometime: this.rest.home.today, calltime: this.rest.config.next }
-  //   this.rest.router.navigateByUrl('/modal/insert')
+  //   this.rest.navCtrl.navigateForward('/modal/insert')
   // }
 
   // public update(index: number) {
@@ -65,7 +65,7 @@ export class CartPage {
   //     cometime: this.rest.cart.list[index].cometime,
   //     calltime: this.rest.cart.list[index].calltime,
   //   }
-  //   this.rest.router.navigateByUrl('/modal/insert')
+  //   this.rest.navCtrl.navigateForward('/modal/insert')
   // }
 
   // public async called(index: number) {

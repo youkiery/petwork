@@ -5,13 +5,13 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateForward('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>
@@ -64,7 +64,7 @@
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/home')">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>

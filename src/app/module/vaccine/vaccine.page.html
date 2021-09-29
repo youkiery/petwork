@@ -5,7 +5,7 @@
     </ion-title>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.navigateRoot('home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
     <ion-input [(ngModel)]="rest.vaccine.filter.keyword"> </ion-input>
     <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="filter()">
   </ion-item>
-  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>

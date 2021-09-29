@@ -43,7 +43,7 @@ export class InsertPage {
   }
 
   public suggest() {
-    this.rest.router.navigateByUrl('/modal/suggest')
+    this.rest.navCtrl.navigateForward('/modal/suggest')
   }
 
   public async insertSubmit() {
@@ -57,7 +57,7 @@ export class InsertPage {
         this.rest.vaccine.new = resp.new
         if (resp.old.length) {
           this.rest.vaccine.old = resp.old
-          this.rest.router.navigateByUrl('/modal/recall')
+          this.rest.navCtrl.navigateForward('/modal/recall')
         }
         this.clear()
         this.rest.defreeze()
@@ -138,7 +138,7 @@ export class InsertPage {
         this.rest.usg.new = resp.new
         if (resp.old.length) {
           this.rest.usg.old = resp.old
-          this.rest.router.navigateByUrl('/modal/recall')
+          this.rest.navCtrl.navigateForward('/modal/recall')
         }
         this.clear()
         this.rest.defreeze()

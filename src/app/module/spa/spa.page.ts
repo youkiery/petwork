@@ -86,7 +86,7 @@ export class SpaPage {
       time: this.rest.spa.time
     }
     this.rest.action = 'spa'
-    this.rest.router.navigateByUrl('/upload')
+    this.rest.navCtrl.navigateForward('/upload')
   }
 
   public update(index: number) {
@@ -100,7 +100,7 @@ export class SpaPage {
       time: this.rest.spa.time
     }
     this.rest.action = 'spa'
-    this.rest.router.navigateByUrl('/upload')
+    this.rest.navCtrl.navigateForward('/upload')
   }
   
   public async called(index: number) {

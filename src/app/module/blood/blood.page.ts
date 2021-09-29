@@ -24,7 +24,7 @@ export class BloodPage implements OnInit {
         end: this.rest.blood.total - 1,
         target: ''
       }
-      this.rest.router.navigateByUrl('/modal/insert')
+      this.rest.navCtrl.navigateForward('/modal/insert')
     }
   }
 
@@ -39,7 +39,7 @@ export class BloodPage implements OnInit {
   public statistic() {
     if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.router.navigateByUrl('/detail')
+      this.rest.navCtrl.navigateForward('/detail')
     }
   }
 

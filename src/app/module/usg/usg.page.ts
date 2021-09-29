@@ -98,7 +98,7 @@ export class UsgPage {
   public insert() {
     this.rest.action = 'usg'
     this.rest.temp = { id: 0, name: '', phone: '', number: 0, cometime: this.rest.home.today, calltime: this.rest.home.next }
-    this.rest.router.navigateByUrl('/modal/insert')
+    this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public update(index: number) {
@@ -112,7 +112,7 @@ export class UsgPage {
       calltime: this.rest.usg.list[index].calltime,
       number: this.rest.usg.list[index].number,
     }
-    this.rest.router.navigateByUrl('/modal/insert')
+    this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public async called(index: number) {
