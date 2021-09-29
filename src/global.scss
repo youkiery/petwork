@@ -25,6 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.item-label-class {
+  width: 50%;
+  display: inline-block;
+}
+
+.item-label-class ion-checkbox {
+  margin: 5px;
+}
+
 .pad {
   padding: 10px;
 }

@@ -40,7 +40,7 @@ export class RestService {
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
   public schedule = {}
-  public spa = {time: 0, init: 0, list: []}
+  public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [] }
   public target = {}
   public profile = {}
   public admin = { init: false, list: [] }
@@ -61,6 +61,9 @@ export class RestService {
     this.init()
   }
 
+  // kiểm tra thông tin đăng nhập
+  // nếu có, login
+  // nếu không, báo tải xong, chuyển về trang đăng nhập
   public async init() {
     await this.storage.create()
     this.storage.get('session').then(session => {
@@ -68,7 +71,6 @@ export class RestService {
       else {
         this.isready = true
         this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
-        this.defreeze()
       }
     })
   }
@@ -154,7 +156,9 @@ export class RestService {
         this.home = resp.data
         this.session = resp.session
         this.storage.set('session', resp.session)
-        if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
+        console.log(this.router.url);
+        
+        this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()
       }, () => {
         this.defreeze()

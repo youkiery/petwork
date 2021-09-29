@@ -91,7 +91,7 @@ export class DetailPage {
         mechanic: this.rest.drug.list[this.rest.temp.index]['mechanic'],
         image: this.rest.drug.list[this.rest.temp.index]['image'],
       }
-      this.rest.navCtrl.navigateForward('/upload')
+      this.rest.navCtrl.navigateForward('/modal/upload')
     }
   }
 

@@ -68,7 +68,7 @@ export class LookupPage implements OnInit {
         mechanic: '',
         image: [],
       }
-      this.rest.navCtrl.navigateForward('/upload')
+      this.rest.navCtrl.navigateForward('/modal/upload')
     }
   }
 

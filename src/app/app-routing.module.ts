@@ -28,6 +28,14 @@ const routes: Routes = [
     loadChildren: () => import('./modal/filter/filter.module').then( m => m.FilterPageModule)
   },
   {
+    path: 'modal/upload',
+    loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
+  },
+  {
+    path: 'modal/item',
+    loadChildren: () => import('./modal/item/item.module').then( m => m.ItemPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },
@@ -58,10 +66,6 @@ const routes: Routes = [
   {
     path: 'spa',
     loadChildren: () => import('./module/spa/spa.module').then( m => m.SpaPageModule)
-  },
-  {
-    path: 'upload',
-    loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
   },
   {
     path: 'lookup',
@@ -99,11 +103,6 @@ const routes: Routes = [
     path: 'inout',
     loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
   },
-  {
-    path: 'modal/item',
-    loadChildren: () => import('./modal/item/item.module').then( m => m.ItemPageModule)
-  },
-
 ];
 
 @NgModule({

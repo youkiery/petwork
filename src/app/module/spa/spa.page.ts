@@ -1,29 +1,8 @@
 import { Component } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { DetailPage } from 'src/app/modal/detail/detail.page';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
-
-
-@Component({
-  selector: 'modal-spa',
-  template: `
-    <ion-toolbar color="success">
-      <ion-button color="light" fill="clear" (click)="modal.dismiss()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-toolbar>
-
-    <ion-content>
-      <img [src]="rest.temp">
-    </ion-content>
-  `
-})
-export class SpaModal {
-  constructor(
-    public rest: RestService,
-    public modal: ModalController
-  ) { }
-}
 
 @Component({
   selector: 'app-spa',
@@ -39,6 +18,17 @@ export class SpaPage {
     2: 'stl-card yellow',
     3: 'stl-card red',
   }
+  public status_text = {
+    0: 'Chưa xong',
+    1: 'Đã xong',
+    2: 'Đã gọi',
+    3: 'Đã về'
+  }
+  public weight = ['< 2kg', '2 ', ' 4kg', '4 ', ' 10kg', '10 ', ' 15kg', '15 ', ' 25kg', '25 ', ' 35kg', '35 ', ' 50kg', '> 50kg']
+  public autoload = null
+  public check = true
+  public keyword = ''
+  public option = []
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -48,20 +38,80 @@ export class SpaPage {
 
   async ionViewDidEnter() {
     this.rest.ready().then(() => {
+      this.rest.action = 'spa'
+      this.autoload = setInterval(() => {
+        if (this.rest.spa.init) this.auto()
+      }, 15000)
       if (!this.rest.spa.init) {
         this.rest.spa.time = (new Date()).getTime()
-        this.filter()
+        this.init()
       }
     })
   }
 
+  ionViewWillLeave() {
+    clearInterval(this.autoload)
+  }
+
+  public async init() {
+    this.check = false
+    this.rest.checkpost('spa', 'init', {
+      time: this.rest.spa.time,
+    }).then((resp) => {
+      this.check = true
+      this.rest.spa.init = new Date().getTime()
+      this.rest.spa.list = resp.list
+      this.rest.spa.type = resp.type
+      this.rest.spa.doctor = resp.doctor
+      this.rest.spa.init = resp.time
+      this.rest.spa.doctor.forEach(item => {
+        this.option.push({
+          name: 'userid',
+          type: 'radio',
+          label: item.name,
+          value: item.userid,
+          checked: (this.rest.home.userid == item.userid ? true : false)
+        })
+      });
+    }, () => { })
+  }
+
+  public async auto() {
+    if (this.check) {
+      this.check = false
+      this.rest.checkpost('spa', 'auto', {
+        time: this.rest.spa.time,
+        ctime: this.rest.spa.init
+      }).then((resp) => {
+        this.check = true
+        if (resp.list.length) {
+          this.rest.spa.init = resp.time
+          this.rest.spa.list = resp.list
+        }
+      }, () => { })
+    }
+  }
+
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('spa', 'auto', {
-      action: 'spa-auto',
-      time: this.rest.spa.time
+    this.rest.checkpost('spa', 'filter', {
+      time: this.rest.spa.time,
     }).then((resp) => {
+      this.rest.spa.init = resp.time
       this.rest.spa.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async search() {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('spa', 'search', {
+      keyword: this.keyword
+    }).then((resp) => {
+      this.rest.spa.old = resp.list
+      this.rest.navCtrl.navigateForward('modal/filter')
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -71,7 +121,7 @@ export class SpaPage {
   public async detail(image: string) {
     this.rest.temp = image
     let modal = await this.modal.create({
-      component: SpaModal
+      component: DetailPage
     })
     await modal.present()
   }
@@ -81,12 +131,17 @@ export class SpaPage {
       id: 0,
       name: '',
       phone: '',
+      name2: '',
+      phone2: '',
       note: '',
+      weight: 0,
       image: [],
-      time: this.rest.spa.time
+      option: [],
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }
-    this.rest.action = 'spa'
-    this.rest.navCtrl.navigateForward('/upload')
+
+    this.rest.navCtrl.navigateForward('/modal/upload')
   }
 
   public update(index: number) {
@@ -94,17 +149,20 @@ export class SpaPage {
       id: this.rest.spa.list[index].id,
       name: this.rest.spa.list[index].name,
       phone: this.rest.spa.list[index].phone,
+      name2: this.rest.spa.list[index].name2,
+      phone2: this.rest.spa.list[index].phone2,
       note: this.rest.spa.list[index].note,
       image: this.rest.spa.list[index].image,
       option: this.rest.spa.list[index].option,
-      time: this.rest.spa.time
+      weight: Number(this.rest.spa.list[index].weight),
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }
-    this.rest.action = 'spa'
-    this.rest.navCtrl.navigateForward('/upload')
+    this.rest.router.navigateByUrl('/modal/upload')
   }
-  
+
   public async called(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Đã gọi cho khách?',
       buttons: [
         {
@@ -113,29 +171,37 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(index)
+            this.calledSubmit(index, e)
           }
         }
       ]
     });
 
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
+
     await alert.present();
   }
 
-  public async calledSubmit(index: number) {
+  public async calledSubmit(index: number, uid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'called', {
       id: this.rest.spa.list[index].id,
+      uid: uid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
-  
+
   public async returned(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Thú cưng đã đón về?',
       buttons: [
         {
@@ -144,29 +210,36 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.returnedSubmit(index)
+            this.returnedSubmit(index, e)
           }
         }
       ]
     });
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
 
     await alert.present();
   }
 
-  public async returnedSubmit(index: number) {
+  public async returnedSubmit(index: number, uid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'returned', {
       id: this.rest.spa.list[index].id,
+      uid: uid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
-  
+
   public async done(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Hoàn thành mục spa?',
       buttons: [
         {
@@ -175,21 +248,29 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(index)
+            this.doneSubmit(index, e)
           }
         }
       ]
     });
 
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
+
     await alert.present();
   }
 
-  public async doneSubmit(index: number) {
+  public async doneSubmit(index: number, userid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa', 'done', {
       id: this.rest.spa.list[index].id,
+      uid: userid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -233,4 +314,3 @@ export class SpaPage {
     this.filter()
   }
 }
-
