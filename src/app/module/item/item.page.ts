@@ -18,16 +18,14 @@ export class ItemPage implements OnInit {
 
   public async ionViewWillEnter() {
     this.rest.action = 'item'
-    this.rest.ready().then(() => {
-      if (!this.rest.item.init) {
-        this.init()
-      }
-    })
+    if (!this.rest.item.init) {
+      this.init()
+    }
   }
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item', 'init', {
+    this.rest.checkpost('item','init', {
       keyword: this.rest.item.keyword
     }).then(resp => {
       this.rest.item.init = true
@@ -36,6 +34,8 @@ export class ItemPage implements OnInit {
       this.rest.item.expired = resp.expired
       this.rest.item.list = resp.list
       this.rest.item.all = resp.all
+      this.rest.item.image = resp.image
+      this.rest.item.catlist = resp.catlist
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -78,10 +78,17 @@ export class ItemPage implements OnInit {
     }
     this.rest.navCtrl.navigateForward('modal/item')
   }
+
+  public view(posid: number) {
+    this.rest.temp.image = this.rest.item.image[posid]
+    this.rest.navCtrl.navigateForward('modal/detail')
+  }
+
   public insertItem() {
     this.rest.temp = {
       action: 'item',
       id: 0,
+      cat: (this.rest.item.catlist.length ? this.rest.item.catlist[0].id.toString() : 0),
       name: '',
       code: '',
       border: 10,
@@ -93,6 +100,7 @@ export class ItemPage implements OnInit {
     this.rest.temp = {
       action: 'item',
       id: this.rest.item.list[index].id,
+      cat: this.rest.item.list[index].cat,
       name: this.rest.item.list[index].name,
       code: this.rest.item.list[index].code,
       border: this.rest.item.list[index].border,
@@ -137,17 +145,21 @@ export class ItemPage implements OnInit {
     this.rest.temp = {
       action: 'expire',
       name: '',
+      code: '',
       expire: this.rest.home.today,
-      Number: 1
+      number: 1
     }
     this.rest.navCtrl.navigateForward('modal/item')
   }
   public position() {
-    this.rest.temp = {
-      action: 'position',
-      keyword: '',
-      list: []
+    if (this.rest.config.item < 2) this.rest.notify('Không có quyền truy cập')
+    else {
+      this.rest.temp = {
+        action: 'position',
+        keyword: '',
+        list: []
+      }
+      this.rest.navCtrl.navigateForward('modal/item')
     }
-    this.rest.navCtrl.navigateForward('modal/item')
   }
 }

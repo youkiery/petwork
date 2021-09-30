@@ -25,6 +25,23 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.bold {
+  font-weight: bold;
+}
+
+.stl-card.red .bold {
+  color: red;
+}
+.stl-card.yellow .bold {
+  color: orange;
+}
+.stl-card.green .bold {
+  color: green;
+}
+.stl-card.green .white {
+  color: gray;
+}
+
 .upperline {
   margin-top: 5px;
   padding-top: 5px;

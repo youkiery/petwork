@@ -9,6 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./item.page.scss'],
 })
 export class ItemPage implements OnInit {
+  public key = ''
   public max = 640
   public count = 0
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
@@ -22,10 +23,25 @@ export class ItemPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.back()
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
     if (this.rest.temp.action == 'purchase') this.purchaseInit()
     if (this.rest.temp.action == 'transfer') this.transferInit()
     if (this.rest.temp.action == 'expired') this.expiredInit()
+    if (this.rest.temp.action == 'position') this.positionInit()
+  }
+
+  ionViewWillLeave() {
+    this.rest.temp.prv = false
+  }
+
+  public async positionInit() {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('item', 'position_init', {}).then(resp => {
+      this.rest.temp.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async purchaseInit() {
@@ -39,13 +55,15 @@ export class ItemPage implements OnInit {
   }
 
   public async transferInit() {
-    await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
-      this.rest.temp.list = resp.list
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
+    if (!this.rest.temp.prv) {
+      await this.rest.freeze('Đang tải danh sách...')
+      this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
+        this.rest.temp.list = resp.list
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
   }
 
   public async expiredInit() {
@@ -56,6 +74,179 @@ export class ItemPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async updatePosition(i: number) {
+    this.rest.temp.action = 'update'
+    this.rest.temp.prv = i
+    this.rest.temp.id = this.rest.temp.list[i].id
+    this.rest.temp.pos = this.rest.temp.list[i].name
+    this.rest.temp.image = [this.rest.temp.list[i].image]
+  }
+  
+  public async checkupdatePosition() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.updatePositionSubmit()
+    }
+  }
+
+  public async updatePositionCheck() {
+    this.count = 0
+    await this.rest.freeze('Đang tải ảnh...')
+    if (!this.rest.temp.image.length) this.updatePositionSubmit()
+    else this.rest.temp.image.forEach((image: any, index: number) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.updatePositionSubmit()
+        })
+      }
+      else this.updatePositionSubmit()
+    });
+  }
+
+  public async updatePositionSubmit() {
+    this.rest.checkpost('item', 'uppos', {
+      id: this.rest.temp.id,
+      pos: this.rest.temp.pos,
+      image: this.rest.temp.image,
+    }).then((resp) => {
+      this.rest.item.image[this.rest.temp.id] = this.rest.temp.image
+      this.rest.temp.list[this.rest.temp.prv].name = this.rest.temp.pos
+      this.rest.temp.list[this.rest.temp.prv].image = this.rest.temp.image
+      this.rest.defreeze()
+      this.posback()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async insertPosition() {
+    this.rest.temp.action = 'insert'
+    this.rest.temp.pos = ''
+    this.rest.temp.image = []
+  }
+  
+  public async checkinsertPosition() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.insertPositionSubmit()
+    }
+  }
+
+  public async insertPositionCheck() {
+    this.count = 0
+    await this.rest.freeze('Đang tải ảnh...')
+    if (!this.rest.temp.image.length) this.insertPositionSubmit()
+    else this.rest.temp.image.forEach((image: any, index: number) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.insertPositionSubmit()
+        })
+      }
+      else this.insertPositionSubmit()
+    });
+  }
+
+  public async insertPositionSubmit() {
+    this.rest.checkpost('item', 'inpos', {
+      pos: this.rest.temp.pos,
+      image: this.rest.temp.image,
+    }).then((resp) => {
+      this.rest.item.image[resp.id] = resp.image
+      this.rest.temp.list.push({
+        name: this.rest.temp.pos,
+        list: []
+      })
+      this.rest.defreeze()
+      this.posback()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public insertPos(i: number) {
+    this.rest.temp.action = 'inpos'
+    this.rest.temp.prv = i
+    this.rest.temp.name = this.rest.temp.list[i].name
+    this.rest.temp.old = []
+    this.rest.temp.selected = []
+  }
+
+  public insertPosItem(i: number) {
+    this.rest.temp.selected.push(this.rest.temp.old[i])
+  }
+
+  public itemPosFilter() {
+    let key = this.key.toLowerCase()
+    this.rest.temp.old = this.rest.item.all.filter((item: any, index: number) => {
+      return item.alias.search(key) >= 0
+    })
+  }
+
+  public view(posid: number) {
+    this.rest.temp.image = this.rest.item.image[posid]
+    this.rest.navCtrl.navigateForward('modal/detail')
+  }
+
+  public async insertPosItemSubmit() {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('item', 'inpositem', {
+      list: this.rest.temp.selected,
+      image: this.rest.temp.image,
+      posid: this.rest.temp.list[this.rest.temp.prv].id
+    }).then((resp) => {
+      this.rest.temp.list[this.rest.temp.prv].position = resp.list
+      this.posback()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public removePosItem(i: number) {
+    this.rest.temp.selected = this.rest.temp.selected.filter((item: any, index: number) => {
+      return i !== index
+    })
+  }
+
+  public async removePosition(index: number) {
+    const alert = await this.alert.create({
+      message: 'Sau khi xác nhận vị trí sẽ biến mất vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removePositionSbumit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removePositionSbumit(index: number) {
+    await this.rest.freeze('Đang xóa...')
+    this.rest.checkpost('item', 'position_remove', {
+      id: this.rest.temp.list[index].id,
+    }).then((resp) => {
+      this.rest.temp.list = this.rest.temp.list.filter((item: any, i: number) => {
+        return i !== index
+      })
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public posback() {
+    this.rest.temp.action = 'position'
   }
 
   public async done(id: number) {
@@ -253,6 +444,7 @@ export class ItemPage implements OnInit {
       this.rest.temp = {
         action: 'expire',
         name: '',
+        code: '',
         expire: this.rest.home.today,
         Number: 1
       }
@@ -268,13 +460,73 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public async insertPos(index: number) {
+  // public async insertPos(index: number) {
+  //   const alert = await this.alert.create({
+  //     message: 'Nhập vị trí',
+  //     inputs: [
+  //       {
+  //         label: 'Vị trí',
+  //         name: 'pos',
+  //         value: ''
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Trở về',
+  //         role: 'cancel',
+  //       }, {
+  //         text: 'Xác nhận',
+  //         handler: (e) => {
+  //           this.insertPosSubmit(index, e.pos)
+  //         }
+  //       }
+  //     ]
+  //   });
+
+  //   await alert.present();
+  // }
+
+  // public async insertPosSubmit(index: number, pos: number) {
+  //   await this.rest.freeze('Đang thêm...')
+  //   let temp = JSON.parse(JSON.stringify(this.rest.temp.list[index].position))
+  //   temp.push(pos)
+  //   this.rest.checkpost('item', 'inpos', {
+  //     id: this.rest.temp.list[index].id,
+  //     pos: temp
+  //   }).then((resp) => {
+  //     this.rest.temp.list[index].position = temp
+  //     // tìm kiếm dữ liệu trong rest.item.all
+  //     this.rest.item.all.forEach((item: any, i: number) => {
+  //       if (item.code == this.rest.temp.list[index].code) {
+  //         this.rest.item.all[i].position = temp
+  //       }
+  //     });
+  //     this.rest.defreeze()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  public async removePos(index: number, itemid: string) {
+    await this.rest.freeze('Đang xóa...')
+    this.rest.checkpost('item', 'repos', {
+      itemid: itemid,
+      posid: this.rest.temp.list[index].id,
+    }).then((resp) => {
+      this.rest.temp.list[index].position = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async insertCat() {
     const alert = await this.alert.create({
-      message: 'Nhập vị trí?',
+      message: 'Nhập tên danh mục',
       inputs: [
         {
-          label: 'Vị trí',
-          name: 'pos',
+          label: 'Danh mục',
+          name: 'cat',
           value: ''
         }
       ],
@@ -285,7 +537,7 @@ export class ItemPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.insertPosSubmit(index, e.pos)
+            this.insertCatSubmit(e.cat)
           }
         }
       ]
@@ -294,44 +546,13 @@ export class ItemPage implements OnInit {
     await alert.present();
   }
 
-  public async insertPosSubmit(index: number, pos: number) {
+  public async insertCatSubmit(cat: number) {
     await this.rest.freeze('Đang thêm...')
-    let temp = JSON.parse(JSON.stringify(this.rest.temp.list[index].position))
-    temp.push(pos)
-    this.rest.checkpost('item', 'inpos', {
-      id: this.rest.temp.list[index].id,
-      pos: temp
+    this.rest.checkpost('item', 'incat', {
+      cat: cat
     }).then((resp) => {
-      this.rest.temp.list[index].position = temp
-      // tìm kiếm dữ liệu trong rest.item.all
-      this.rest.item.all.forEach((item: any, i: number) => {
-        if (item.code == this.rest.temp.list[index].code) {
-          this.rest.item.all[i].position = temp
-        }
-      });
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async removePos(index: number, pos: string) {
-    await this.rest.freeze('Đang xóa...')
-    let temp = JSON.parse(JSON.stringify(this.rest.temp.list[index].position))
-    temp = temp.filter((item: any) => {
-      return item !== pos
-    })
-    this.rest.checkpost('item', 'repos', {
-      id: this.rest.temp.list[index].id,
-      pos: temp
-    }).then((resp) => {
-      this.rest.temp.list[index].position = temp
-      // tìm kiếm dữ liệu trong rest.item.all
-      this.rest.item.all.forEach((item: any, i: number) => {
-        if (item.code == this.rest.temp.list[index].code) {
-          this.rest.item.all[i].position = temp
-        }
-      });
+      this.rest.item.catlist = resp.catlist
+      this.rest.temp.cat = resp.cat.toString()
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

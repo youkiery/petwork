@@ -1,15 +1,37 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.back()">
+  <ion-button *ngIf="!(rest.temp.action == 'inpos' || rest.temp.action == 'insert' || rest.temp.action == 'update')"
+    color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'inpos' || rest.temp.action == 'insert' || rest.temp.action == 'update'"
+    color="light" fill="clear" (click)="posback()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'inpos'" slot="end" color="light" fill="clear" (click)="insertPosItemSubmit()">
+    Thêm hàng hóa
+  </ion-button>
 
+  <ion-button *ngIf="rest.temp.action == 'update'" slot="end" (click)="updatePositionCheck()" color="light"
+    fill="clear">
+    Xác nhận
+  </ion-button>
+  <ion-button *ngIf="rest.temp.action == 'insert'" slot="end" (click)="insertPositionCheck()" color="light"
+    fill="clear">
+    Xác nhận
+  </ion-button>
+
+  <ion-button *ngIf="rest.temp.action == 'position'" slot="end" (click)="insertPosition()" color="light" fill="clear">
+    Thêm vị trí
+  </ion-button>
   <ion-button *ngIf="rest.temp.action == 'expire'" slot="end" (click)="insertExpire()" color="light" fill="clear">
     Thêm
   </ion-button>
-  <ion-button *ngIf="rest.temp.action == 'item' && !rest.temp.id" slot="end" (click)="insertItem()" color="light" fill="clear">
+  <ion-button *ngIf="rest.temp.action == 'item' && !rest.temp.id" slot="end" (click)="insertItem()" color="light"
+    fill="clear">
     Thêm
   </ion-button>
-  <ion-button *ngIf="rest.temp.action == 'item' && rest.temp.id" slot="end" (click)="updateItem()" color="light" fill="clear">
+  <ion-button *ngIf="rest.temp.action == 'item' && rest.temp.id" slot="end" (click)="updateItem()" color="light"
+    fill="clear">
     Cập nhật
   </ion-button>
 
@@ -25,20 +47,51 @@
 </ion-toolbar>
 
 <ion-content>
-  <div *ngIf="rest.temp.action == 'position'">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <div *ngIf="rest.temp.action == 'insert' || rest.temp.action == 'update'">
     <ion-item>
-      <ion-input [(ngModel)]="rest.temp.keyword" (keyup)="suggestItem()"> </ion-input>
+      <ion-label position="stacked"> Vị trí </ion-label>
+      <ion-input [(ngModel)]="rest.temp.pos"></ion-input>
     </ion-item>
-    
-    <div *ngIf="rest.temp.list.length">
-      <div class="stl-cart" *ngFor="let item of rest.temp.list; let i = index">
-        Mã hàng: {{item.code}} <br>
-        Tên hàng: {{item.name}} <br>
-        Vị trí: <span class="pos" (click)="insertPos(i)"> + </span> <span class="pos" *ngFor="let pos of item.position" (click)="removePos(i, pos)"> {{pos}} </span> 
-      </div>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+      <img class="thumbnail" [src]="item">
     </div>
-    <div *ngIf="!rest.temp.list.length" class="text-center">
-        Nhập mã, tên hàng hóa
+  </div>
+
+  <div *ngIf="rest.temp.action == 'inpos'">
+    <ion-card>
+      <ion-card-content>
+        Vị trí: {{rest.temp.name}} <br>
+        Hàng hóa: <span class="pos" *ngFor="let item of rest.temp.selected; let i = index" (click)="removePosItem(i)">
+          {{item.name}} </span>
+      </ion-card-content>
+    </ion-card>
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm tên hàng hóa để thêm vào kho </ion-label>
+      <ion-input [(ngModel)]="key"> </ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="itemPosFilter()">
+      Tìm kiếm
+    </ion-button>
+    <div class="stl-card" *ngFor="let item of rest.temp.old; let i = index" (click)="insertPosItem(i)">
+      {{item.name}}
+    </div>
+  </div>
+
+  <div *ngIf="rest.temp.action == 'position'">
+    <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
+      Vị trí: {{item.name}} <br>
+      Hàng hóa: <span class="pos" *ngFor="let pos of item.position; let j = index" (click)="removePos(i, pos.id)">
+        {{pos.name}} </span> <span class="pos" (click)="insertPos(i)"> + </span>
+      <div>
+        <img class="right icon" src="/assets/icon/update.png" (click)="updatePosition(i)">
+        <img class="right icon" src="/assets/icon/delete.png" (click)="removePosition(i)">
+      </div>
     </div>
   </div>
 
@@ -46,8 +99,11 @@
     <ion-item>
       <ion-label position="stacked"> Hàng hóa </ion-label>
       <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
-      <img src="/assets/icon/item-search.png" class="clear-img" slot="end"
-        (click)="suggest()">
+      <img src="/assets/icon/item-search.png" class="clear-img" slot="end" (click)="suggest()">
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Mã hàng hóa </ion-label>
+      <ion-input [(ngModel)]="rest.temp.code"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Ngày hết hạn </ion-label>
@@ -60,9 +116,6 @@
   </div>
 
   <div *ngIf="rest.temp.action == 'item'">
-    <div id="pwa" style="display: none;">
-      <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
-    </div>
 
     <ion-item>
       <ion-label position="stacked"> Tên hàng hóa </ion-label>
@@ -71,6 +124,15 @@
     <ion-item>
       <ion-label position="stacked"> Mã hàng hóa </ion-label>
       <ion-input [(ngModel)]="rest.temp.code"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label> Danh mục </ion-label>
+      <ion-select [(ngModel)]="rest.temp.cat">
+        <ion-select-option *ngFor="let item of rest.item.catlist" [value]="item.id"> {{item.name}} </ion-select-option>
+      </ion-select>
+      <button slot="end" (click)="insertCat()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </button>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Giới hạn chuyển/nhập hàng </ion-label>
@@ -91,8 +153,15 @@
   </div>
 
   <div *ngIf="rest.temp.action == 'transfer' && rest.temp.step == 1">
+    <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
+      Tên hàng: {{item.name}} <br>
+      Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
+      Vị trí: <span class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </span>
+    </div>
+
     <ion-item *ngFor="let item of rest.temp.list; let i = index">
-      <ion-label> {{item.name}}: {{item.shop}} | {{item.storage}} </ion-label>
+      <ion-label> {{item.name}}: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img
+          src="/assets/icon/storage-xs.png"> </ion-label>
       <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
     </ion-item>
   </div>

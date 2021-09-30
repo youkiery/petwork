@@ -36,7 +36,7 @@ export class RestService {
   public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''} }
   public drug = { init: false, list: [], filter: { name: '', effect: '' } }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
-  public item = { init: false, list: [], all: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
+  public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
   public schedule = {}
