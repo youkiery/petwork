@@ -14,6 +14,12 @@ export class VaccinePage {
     2: 'stl-card yellow',
     3: 'stl-card red',
   }
+  public status_text = {
+    0: 'Chưa nhắc',
+    1: 'Đã gọi chưa quá ngày',
+    2: 'Đã gọi đã quá ngày',
+    3: 'Chưa gọi đã quá ngày',
+  }
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -32,7 +38,7 @@ export class VaccinePage {
         this.rest.vaccine.init = true
         this.rest.vaccine.new = resp.new
         this.rest.vaccine.list = resp.list
-        this.rest.vaccine.disease = resp.disease
+        this.rest.vaccine.type = resp.type
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -43,7 +49,7 @@ export class VaccinePage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine', 'search', {
-      filter: this.rest.vaccine.filter
+      keyword: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -64,7 +70,7 @@ export class VaccinePage {
       id: this.rest.vaccine.list[index].id,
       name: this.rest.vaccine.list[index].name,
       phone: this.rest.vaccine.list[index].phone,
-      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.list[index].vaccine)),
+      vaccine: Number(this.rest.typeIndex(this.rest.vaccine.list[index].vaccine)),
       cometime: this.rest.vaccine.list[index].cometime,
       calltime: this.rest.vaccine.list[index].calltime,
     }
@@ -102,7 +108,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine', 'called', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      keyword: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -143,7 +149,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine', 'uncalled', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      keyword: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -183,7 +189,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine', 'dead', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      keyword: this.rest.vaccine.keyword
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()

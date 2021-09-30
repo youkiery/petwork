@@ -22,7 +22,7 @@ export class ItemPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
+    if (!this.rest.action.length) this.rest.back()
     if (this.rest.temp.action == 'purchase') this.purchaseInit()
     if (this.rest.temp.action == 'transfer') this.transferInit()
     if (this.rest.temp.action == 'expired') this.expiredInit()

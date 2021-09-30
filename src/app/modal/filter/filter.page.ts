@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
-import { DetailPage } from '../detail/detail.page';
 
 @Component({
   selector: 'app-filter',
@@ -11,7 +9,6 @@ import { DetailPage } from '../detail/detail.page';
 export class FilterPage {
   constructor(
     public rest: RestService,
-    public modal: ModalController
   ) {  }
 
   ionViewDidEnter() {
@@ -20,9 +17,6 @@ export class FilterPage {
 
   public async detail(image: string) {
     this.rest.temp = image
-    let modal = await this.modal.create({
-      component: DetailPage
-    })
-    await modal.present()
+    this.rest.navCtrl.navigateForward('/modal/detail')
   }
 }

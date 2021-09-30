@@ -1,17 +1,19 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+  <ion-button color="light" fill="clear" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
 </ion-toolbar>
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
-    <div class="stl-card" *ngFor="let item of rest.vaccine.old; let i = index">
+    <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
       <div>
-        Vaccine: {{item.disease}} <br>
+        Vaccine: {{item.type}} <br>
+        Ngày tiêm: {{item.cometime}} <br>
         Tái chủng: {{item.calltime}} <br>
         Ghi chú: {{item.note}} <br>
-        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} </span>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
       </div>
       <img src="/assets/icon/done.png" (click)="done(i)">
     </div>

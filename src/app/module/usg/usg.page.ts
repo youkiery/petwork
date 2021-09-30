@@ -107,7 +107,6 @@ export class UsgPage {
       id: this.rest.usg.list[index].id,
       name: this.rest.usg.list[index].name,
       phone: this.rest.usg.list[index].phone,
-      usg: Number(this.rest.diseaseIndex(this.rest.usg.list[index].usg)),
       cometime: this.rest.usg.list[index].cometime,
       calltime: this.rest.usg.list[index].calltime,
       number: this.rest.usg.list[index].number,

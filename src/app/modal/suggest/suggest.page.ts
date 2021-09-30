@@ -17,7 +17,7 @@ export class SuggestPage {
   ) {}
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
+    if (!this.rest.action.length) this.rest.back()
     if (this.rest.action == 'item') this.input2.setFocus();
     else this.input.setFocus();
   }
@@ -37,7 +37,8 @@ export class SuggestPage {
   }
 
   public selectcurrent() {
-    this.rest.temp.phone = this.key
+    if (this.rest.temp.param) this.rest.temp.phone2 = this.key
+    else this.rest.temp.phone = this.key
     this.rest.navCtrl.pop()
   } 
 

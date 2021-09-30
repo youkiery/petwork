@@ -55,7 +55,7 @@ export class DetailPage {
   ) { }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
+    if (!this.rest.action.length) this.rest.back()
     if (this.rest.action == 'admin') this.module = this.rest.admin.list[this.rest.temp.index].module
     if (this.rest.action == 'blood') this.bloodInit()
   }

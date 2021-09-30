@@ -8,13 +8,25 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./recall.page.scss'],
 })
 export class RecallPage {
+  public status_text = {
+    0: 'Chưa nhắc',
+    1: 'Đã gọi chưa quá ngày',
+    2: 'Đã gọi đã quá ngày',
+    3: 'Chưa gọi đã quá ngày',
+  }
+  public status = {
+    0: 'stl-card',
+    1: 'stl-card green',
+    2: 'stl-card yellow',
+    3: 'stl-card red',
+  }
   constructor(
     public rest: RestService,
     public alert: AlertController
   ) { }
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
+    if (!this.rest.action.length) this.rest.back()
   }
 
   public async done(index: number) {
@@ -49,7 +61,8 @@ export class RecallPage {
       customerid: this.rest.vaccine.old[index].customerid,
     }).then(resp => {
       this.rest.vaccine.list = resp.list
-      this.rest.vaccine.old = resp.old
+      if (resp.old.length) this.rest.vaccine.old = resp.old
+      else this.rest.navCtrl.back()
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

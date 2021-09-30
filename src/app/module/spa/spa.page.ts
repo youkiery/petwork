@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
-import { DetailPage } from 'src/app/modal/detail/detail.page';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
@@ -32,8 +31,7 @@ export class SpaPage {
   constructor(
     public rest: RestService,
     public time: TimeService,
-    public alert: AlertController,
-    public modal: ModalController
+    public alert: AlertController
   ) { }
 
   async ionViewDidEnter() {
@@ -120,10 +118,7 @@ export class SpaPage {
 
   public async detail(image: string) {
     this.rest.temp = image
-    let modal = await this.modal.create({
-      component: DetailPage
-    })
-    await modal.present()
+    this.rest.navCtrl.navigateForward('/modal/detail')
   }
 
   public insert() {

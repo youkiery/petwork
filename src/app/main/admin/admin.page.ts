@@ -15,9 +15,8 @@ export class AdminPage {
   ) { }
 
   public async ionViewDidEnter() {
-    this.rest.ready().then(() => {
-      this.init()
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/home', {animated: true, animationDirection: 'back'})
+    else this.init()
   }
 
   public async init() {

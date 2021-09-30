@@ -32,7 +32,7 @@ export class RestService {
   }
   public session = ''
   public cart = { list: [], init: false }
-  public vaccine = { init: false, list: [], new: [], old: [], disease: [], filter: {keyword: ''} }
+  public vaccine = { init: false, list: [], new: [], old: [], type: [], keyword: '' }
   public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''} }
   public drug = { init: false, list: [], filter: { name: '', effect: '' } }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
@@ -134,7 +134,8 @@ export class RestService {
       this.config = resp.config
       this.home = resp.data
       this.session = session
-      if (this.router.url == 'login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      
+      if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
       this.isready = true
@@ -156,7 +157,6 @@ export class RestService {
         this.home = resp.data
         this.session = resp.session
         this.storage.set('session', resp.session)
-        console.log(this.router.url);
         
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()
@@ -175,11 +175,15 @@ export class RestService {
     this.navCtrl.pop()
   }
 
-  public diseaseIndex(name: string) {
+  public root() {
+    this.navCtrl.navigateRoot('/home')
+  }
+
+  public typeIndex(name: string) {
     let check = '0'
-    for (const key in this.vaccine.disease) {
-      if (Object.prototype.hasOwnProperty.call(this.vaccine.disease, key)) {
-        const item = this.vaccine.disease[key];
+    for (const key in this.vaccine.type) {
+      if (Object.prototype.hasOwnProperty.call(this.vaccine.type, key)) {
+        const item = this.vaccine.type[key];
         if (item['name'] == name) check = key
       }
     }
