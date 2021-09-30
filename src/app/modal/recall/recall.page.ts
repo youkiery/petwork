@@ -13,12 +13,16 @@ export class RecallPage {
     1: 'Đã gọi chưa quá ngày',
     2: 'Đã gọi đã quá ngày',
     3: 'Chưa gọi đã quá ngày',
+    4: 'Đã tái chủng',
+    5: 'Không tái chủng',
   }
   public status = {
     0: 'stl-card',
     1: 'stl-card green',
     2: 'stl-card yellow',
     3: 'stl-card red',
+    4: 'stl-card white',
+    5: 'stl-card white',
   }
   constructor(
     public rest: RestService,

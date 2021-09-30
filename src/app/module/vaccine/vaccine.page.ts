@@ -8,19 +8,21 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./vaccine.page.scss'],
 })
 export class VaccinePage {
+  public status_text = {
+    0: 'Chưa nhắc',
+    1: 'Đã gọi chưa quá ngày',
+    2: 'Đã gọi đã quá ngày',
+    3: 'Chưa gọi đã quá ngày',
+    4: 'Đã tái chủng',
+    5: 'Không tái chủng',
+  }
   public status = {
     0: 'stl-card',
     1: 'stl-card green',
     2: 'stl-card yellow',
     3: 'stl-card red',
     4: 'stl-card white',
-  }
-  public status_text = {
-    0: 'Chưa nhắc',
-    1: 'Đã gọi chưa quá ngày',
-    2: 'Đã gọi đã quá ngày',
-    3: 'Chưa gọi đã quá ngày',
-    4: 'Đã tiêm',
+    5: 'stl-card white',
   }
   constructor(
     public rest: RestService,
@@ -41,6 +43,8 @@ export class VaccinePage {
         this.rest.vaccine.new = resp.new
         this.rest.vaccine.list = resp.list
         this.rest.vaccine.type = resp.type
+        this.rest.vaccine.temp = resp.temp
+        this.rest.vaccine.doctor = resp.doctor
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -161,12 +165,46 @@ export class VaccinePage {
     })
   }
 
+  public async done(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận tiêm phòng',
+      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('vaccine', 'done', {
+      id: this.rest.vaccine.list[index].id,
+      keyword: this.rest.vaccine.keyword
+    }).then((resp) => {
+      this.rest.vaccine.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async dead(index: number) {
     const alert = await this.alert.create({
-      message: 'Hoàn thành tiêm phòng, lịch nhắc sẽ không xuất hiện nữa',
+      header: 'Xác nhận không tiêm phòng',
+      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: this.rest.vaccine.list[index].note
       }],
@@ -198,5 +236,11 @@ export class VaccinePage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public manager() {
+    this.rest.temp = {}
+    this.rest.action = 'temp'
+    this.rest.navCtrl.navigateForward('modal/manager')
   }
 }

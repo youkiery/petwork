@@ -103,6 +103,11 @@ const routes: Routes = [
     path: 'inout',
     loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
   },
+  {
+    path: 'modal/manager',
+    loadChildren: () => import('./modal/manager/manager.module').then( m => m.ManagerPageModule)
+  },
+
 ];
 
 @NgModule({
