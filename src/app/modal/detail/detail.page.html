@@ -20,10 +20,10 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-toolbar>
-    
+
     <ion-content>
       <p> Thống kê từ {{rest.temp.from}} đến {{rest.temp.end}} </p>
-    
+
       <ion-item>
         Tổng số phiếu thử: {{rest.temp.number}}
       </ion-item>
@@ -33,7 +33,7 @@
       <ion-item>
         Tổng tiền chi: {{rest.temp.total}}
       </ion-item>
-    
+
       <ion-card *ngFor="let item of rest.temp.list">
         <ion-card-header>
           {{item.name}}
@@ -48,28 +48,28 @@
 
   <div *ngIf="rest.action == 'drug'" class="pad">
     <div class="endline-text">
-      <b>Tên:</b>  {{rest.drug.list[rest.temp.index].name}}
+      <div> <b>Tên:</b></div>
+      {{rest.drug.detail.name}}
     </div>
     <div class="endline-text">
-      <b>Liều dùng:</b> <br>
-      {{rest.drug.list[rest.temp.index].limits}}
+      <div> <b>Liều dùng:</b> </div>
+      {{rest.drug.detail.limits}}
     </div>
     <div class="endline-text">
-      <b> Công dụng: </b> <br>
-      {{rest.drug.list[rest.temp.index].effect}}
+      <div> <b> Công dụng: </b> </div>
+      {{rest.drug.detail.effect}}
     </div>
     <div class="endline-text">
-      <b> Tác dụng phụ: </b> <br>
-      {{rest.drug.list[rest.temp.index].sideeffect}}
-    </div>
-    <div class="endline-text end">
-      <b> Cơ chế hoạt động: </b> <br>
-      {{rest.drug.list[rest.temp.index].mechanic}}
+      <div> <b> Tác dụng phụ: </b> </div>
+      {{rest.drug.detail.sideeffect}}
     </div>
     <div class="endline-text">
-      <div *ngIf="rest.drug.list[rest.temp.index].image.length">
-        <img class="thumbnail-sm" *ngFor="let image of rest.drug.list[rest.temp.index].image" [src]="image" (click)="view(image)">
-      </div>
+      <div> <b> Cơ chế hoạt động: </b> </div>
+      {{rest.drug.detail.mechanic}}
+    </div>
+    <div *ngIf="rest.drug.detail.image.length" class="endline-text end">
+      <img class="thumbnail-sm" *ngFor="let image of rest.drug.detail.image" [src]="image"
+        (click)="view(image)">
     </div>
   </div>
 
@@ -79,7 +79,7 @@
       <ion-button size="small" shape="round" slot="start" color="warning" (click)="change(item.module, -1)">
         <ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button size="small" shape="round" slot="end" color="secondary" (click)="change(item.module, 1)"> 
+      <ion-button size="small" shape="round" slot="end" color="secondary" (click)="change(item.module, 1)">
         <ion-icon name="caret-up-circle-outline"></ion-icon>
       </ion-button>
     </ion-item>

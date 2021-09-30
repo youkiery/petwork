@@ -345,7 +345,7 @@ export class ItemPage implements OnInit {
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkSaveSubmit()
         })
       }
@@ -381,7 +381,7 @@ export class ItemPage implements OnInit {
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkupdateSubmit()
         })
       }

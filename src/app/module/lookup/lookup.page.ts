@@ -51,7 +51,7 @@ export class LookupPage implements OnInit {
   }
 
   public async detail(index: number) {
-    this.rest.temp.index = index
+    this.rest.drug.detail = this.rest.drug.list[index]
     this.rest.action = 'drug'
     this.rest.navCtrl.navigateForward('/modal/detail')
   }

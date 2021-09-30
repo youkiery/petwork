@@ -138,7 +138,7 @@ export class UploadPage {
     else this.rest.temp.image.forEach((image, index) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkSaveSubmit()
         })
       }
@@ -156,7 +156,7 @@ export class UploadPage {
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkUpdateSubmit()
         })
       }
@@ -177,8 +177,8 @@ export class UploadPage {
     this.rest.checkpost('spa', 'insert', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.navCtrl.pop()
       this.rest.defreeze()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -189,8 +189,8 @@ export class UploadPage {
     this.rest.checkpost('spa', 'update', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.navCtrl.pop()
       this.rest.defreeze()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -198,13 +198,13 @@ export class UploadPage {
   
   public async drugInsert() {
     this.count = 0
-    this.rest.freeze('Đang tải ảnh...')
+    this.rest.freeze('Đang thêm...')
     
     if (!this.rest.temp.image.length) this.drugInsertSubmit()
-    else this.rest.temp.image.forEach((image, index) => {
+    else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkDrugInsertSubmit()
         })
       }
@@ -214,13 +214,13 @@ export class UploadPage {
   
   public async drugUpdate() {
     this.count = 0
-    this.rest.freeze('Đang tải ảnh...')
+    this.rest.freeze('Đang thêm...')
     
     if (!this.rest.temp.image.length) this.drugUpdateSubmit()
-    else this.rest.temp.image.forEach((image, index) => {
+    else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url.replace('%2F', '@@')
+          this.rest.temp.image[index] = url
           this.checkDrugUpdateSubmit()
         })
       }
@@ -243,27 +243,31 @@ export class UploadPage {
   }
 
   public async drugInsertSubmit() {
-    await this.rest.freeze('Thêm thuốc...')
-    this.rest.temp.name = this.rest.drug.filter.name
-    this.rest.temp.effect = this.rest.drug.filter.effect
+    this.rest.temp.filter = {
+      name: this.rest.drug.filter.name,
+      effect: this.rest.drug.filter.effect
+    }
 
     this.rest.checkpost('drug', 'insert', this.rest.temp).then((response) => {
       this.rest.drug.list = response.list
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
   }
 
   public async drugUpdateSubmit() {
-    await this.rest.freeze('Cập nhật thông tin...')
-    this.rest.temp.name = this.rest.drug.filter.name
-    this.rest.temp.effect = this.rest.drug.filter.effect
+    this.rest.temp.filter = {
+      name: this.rest.drug.filter.name,
+      effect: this.rest.drug.filter.effect
+    }
+
     this.rest.checkpost('drug', 'update', this.rest.temp).then((response) => {
       this.rest.drug.list = response.list
-      this.rest.navCtrl.pop()
+      this.rest.drug.detail = this.rest.temp
       this.rest.defreeze()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

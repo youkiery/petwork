@@ -82,14 +82,13 @@ export class DetailPage {
     if (this.rest.config.drug < 2) this.rest.notify('Không có quyền truy cập')
     else {
       this.rest.temp = {
-        index: this.rest.temp.index,
-        id: this.rest.drug.list[this.rest.temp.index]['id'],
-        name: this.rest.drug.list[this.rest.temp.index]['name'],
-        limits: this.rest.drug.list[this.rest.temp.index]['limits'],
-        effect: this.rest.drug.list[this.rest.temp.index]['effect'],
-        sideeffect: this.rest.drug.list[this.rest.temp.index]['sideeffect'],
-        mechanic: this.rest.drug.list[this.rest.temp.index]['mechanic'],
-        image: this.rest.drug.list[this.rest.temp.index]['image'],
+        id: this.rest.drug.detail['id'],
+        name: this.rest.drug.detail['name'],
+        limits: this.rest.drug.detail['limits'],
+        effect: this.rest.drug.detail['effect'],
+        sideeffect: this.rest.drug.detail['sideeffect'],
+        mechanic: this.rest.drug.detail['mechanic'],
+        image: this.rest.drug.detail['image'],
       }
       this.rest.navCtrl.navigateForward('/modal/upload')
     }
