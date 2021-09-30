@@ -11,8 +11,9 @@
       <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrentItem()">
     </ion-item>
     <div *ngIf="list.length">
-      <ion-item class="underline" *ngFor="let item of list" (click)="selectItem(item.name)">
-        {{item.code}}: - {{item.name}}
+      <ion-item class="underline" *ngFor="let item of list" (click)="selectItem(item.name, item.code)">
+        <span class="left-item" slot="start"> {{item.code}} </span>
+        <span> {{item.name}} </span>
       </ion-item>
     </div>
     <div *ngIf="!list.length" class="text-center">

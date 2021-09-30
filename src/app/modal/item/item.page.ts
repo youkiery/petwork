@@ -30,10 +30,6 @@ export class ItemPage implements OnInit {
     if (this.rest.temp.action == 'position') this.positionInit()
   }
 
-  ionViewWillLeave() {
-    this.rest.temp.prv = false
-  }
-
   public async positionInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'position_init', {}).then(resp => {
@@ -55,7 +51,6 @@ export class ItemPage implements OnInit {
   }
 
   public async transferInit() {
-    if (!this.rest.temp.prv) {
       await this.rest.freeze('Đang tải danh sách...')
       this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
         this.rest.temp.list = resp.list
@@ -63,7 +58,6 @@ export class ItemPage implements OnInit {
       }, () => {
         this.rest.defreeze()
       })
-    }
   }
 
   public async expiredInit() {
@@ -168,42 +162,16 @@ export class ItemPage implements OnInit {
   }
 
   public insertPos(i: number) {
-    this.rest.temp.action = 'inpos'
     this.rest.temp.prv = i
     this.rest.temp.name = this.rest.temp.list[i].name
     this.rest.temp.old = []
     this.rest.temp.selected = []
-  }
-
-  public insertPosItem(i: number) {
-    this.rest.temp.selected.push(this.rest.temp.old[i])
-  }
-
-  public itemPosFilter() {
-    let key = this.key.toLowerCase()
-    this.rest.temp.old = this.rest.item.all.filter((item: any, index: number) => {
-      return item.alias.search(key) >= 0
-    })
+    this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public view(posid: number) {
     this.rest.temp.image = this.rest.item.image[posid]
     this.rest.navCtrl.navigateForward('modal/detail')
-  }
-
-  public async insertPosItemSubmit() {
-    await this.rest.freeze('Đang thêm...')
-    this.rest.checkpost('item', 'inpositem', {
-      list: this.rest.temp.selected,
-      image: this.rest.temp.image,
-      posid: this.rest.temp.list[this.rest.temp.prv].id
-    }).then((resp) => {
-      this.rest.temp.list[this.rest.temp.prv].position = resp.list
-      this.posback()
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
   }
 
   public removePosItem(i: number) {
@@ -459,53 +427,6 @@ export class ItemPage implements OnInit {
       return item.name.search(this.rest.temp.keyword) >= 0 || item.code.search(this.rest.temp.keyword) >= 0
     })
   }
-
-  // public async insertPos(index: number) {
-  //   const alert = await this.alert.create({
-  //     message: 'Nhập vị trí',
-  //     inputs: [
-  //       {
-  //         label: 'Vị trí',
-  //         name: 'pos',
-  //         value: ''
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Trở về',
-  //         role: 'cancel',
-  //       }, {
-  //         text: 'Xác nhận',
-  //         handler: (e) => {
-  //           this.insertPosSubmit(index, e.pos)
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present();
-  // }
-
-  // public async insertPosSubmit(index: number, pos: number) {
-  //   await this.rest.freeze('Đang thêm...')
-  //   let temp = JSON.parse(JSON.stringify(this.rest.temp.list[index].position))
-  //   temp.push(pos)
-  //   this.rest.checkpost('item', 'inpos', {
-  //     id: this.rest.temp.list[index].id,
-  //     pos: temp
-  //   }).then((resp) => {
-  //     this.rest.temp.list[index].position = temp
-  //     // tìm kiếm dữ liệu trong rest.item.all
-  //     this.rest.item.all.forEach((item: any, i: number) => {
-  //       if (item.code == this.rest.temp.list[index].code) {
-  //         this.rest.item.all[i].position = temp
-  //       }
-  //     });
-  //     this.rest.defreeze()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
 
   public async removePos(index: number, itemid: string) {
     await this.rest.freeze('Đang xóa...')

@@ -2,6 +2,11 @@
   <ion-button color="light" fill="clear" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
+
+  <ion-button *ngIf="rest.action == 'item'" slot="end" color="light" fill="clear" (click)="insertPosItemSubmit()">
+    Thêm hàng hóa
+  </ion-button>
+
   <ion-button *ngIf="rest.temp.id" slot="end" (click)="clear()" color="light" fill="clear">
     Hủy
   </ion-button>
@@ -24,6 +29,26 @@
 </ion-toolbar>
 
 <ion-content>
+  <div *ngIf="rest.action == 'item'">
+    <ion-card>
+      <ion-card-content>
+        Vị trí: {{rest.temp.name}} <br>
+        Hàng hóa: <div class="pos" *ngFor="let item of rest.temp.selected; let i = index" (click)="removePosItem(i)">
+          {{item.name}} </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm tên hàng hóa để thêm vào kho </ion-label>
+      <ion-input [(ngModel)]="key"> </ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="itemPosFilter()">
+      Tìm kiếm
+    </ion-button>
+    <div class="stl-card" *ngFor="let item of rest.temp.old; let i = index" (click)="insertPosItem(i)">
+      {{item.name}}
+    </div>
+  </div>
+
   <div *ngIf="rest.action == 'blood'">
     <ion-item>
       <ion-label position="stacked"> Số lượng mẫu </ion-label>

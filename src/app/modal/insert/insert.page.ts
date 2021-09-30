@@ -8,6 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage {
+  public key = ''
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -15,6 +16,37 @@ export class InsertPage {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
+  }
+
+  public async insertPosItemSubmit() {
+    await this.rest.freeze('Đang thêm...')
+    // console.log(this.rest.temp.list, this.rest.temp.prv);
+    this.rest.checkpost('item', 'inpositem', {
+      list: this.rest.temp.selected,
+      image: this.rest.temp.image,
+      posid: this.rest.temp.list[this.rest.temp.prv].id
+    }).then((resp) => {
+      
+      this.rest.temp.list[this.rest.temp.prv].position = resp.list
+      this.rest.back()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public insertPosItem(i: number) {
+    this.rest.temp.selected.push(this.rest.temp.old[i])
+    this.rest.temp.old = this.rest.temp.old.filter((item: any, index: number) => {
+      return index != i
+    })
+  }
+
+  public itemPosFilter() {
+    let key = this.key.toLowerCase()
+    this.rest.temp.old = this.rest.item.all.filter((item: any, index: number) => {
+      return item.alias.search(key) >= 0
+    })
   }
 
   public async insertAdmin(id: number) {
