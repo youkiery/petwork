@@ -8,27 +8,6 @@
 </ion-toolbar>
 
 <ion-content>
-  <div *ngIf="rest.action == 'vaccine'">
-    <div class="stl-card" *ngFor="let item of rest.vaccine.search">
-      <div class="col-xs-6">
-        Tên khách: {{item.name}} <br>
-        Điện thoại: {{item.phone}}
-      </div>
-      <div class="col-xs-6">
-        Tái chủng: {{item.calltime}} <br>
-        Vaccine: {{item.vaccine}} <br>
-        <div class="line">
-          <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
-        </div>
-      </div>
-      <div class="line">
-        <div *ngIf="item.note">
-          Ghi chú: {{item.note}}
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div *ngIf="rest.action == 'spa'">
     <div *ngFor="let item of this.rest.spa.old; let i = index" class="stl-card green">
       <div class="col-xs-6">

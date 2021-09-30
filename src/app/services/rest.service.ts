@@ -16,8 +16,8 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://petcoffee.work/server/index.php?';
   public config: any
@@ -33,14 +33,14 @@ export class RestService {
   public session = ''
   public cart = { list: [], init: false }
   public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], keyword: '' }
-  public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''} }
-  public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {} }
+  public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''}, search: [] }
+  public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
   public schedule = {}
-  public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [] }
+  public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [], toggle: false }
   public target = {}
   public profile = {}
   public admin = { init: false, list: [] }

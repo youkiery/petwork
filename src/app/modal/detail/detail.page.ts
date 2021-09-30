@@ -1,27 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
-
-@Component({
-  selector: 'modal-spa',
-  template: `
-    <ion-toolbar color="success">
-      <ion-button color="light" fill="clear" (click)="modal.dismiss()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-toolbar>
-
-    <ion-content>
-      <img [src]="rest.temp.image">
-    </ion-content>
-  `
-})
-export class DrugModal {
-  constructor(
-    public rest: RestService,
-    public modal: ModalController
-  ) { }
-}
 
 @Component({
   selector: 'app-detail',
@@ -51,7 +30,6 @@ export class DetailPage {
   constructor(
     public rest: RestService,
     public alert: AlertController,
-    public modal: ModalController
   ) { }
 
   ionViewWillEnter() {
@@ -72,10 +50,6 @@ export class DetailPage {
   
   public async view(image: string) {
     this.rest.temp.image = image
-    let modal = await this.modal.create({
-      component: DrugModal
-    })
-    await modal.present()
   }
 
   async drugUpdate() {

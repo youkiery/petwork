@@ -35,6 +35,12 @@ export class InsertPage {
     })
   }
 
+  public removePosItem(i: number) {
+    this.rest.temp.selected = this.rest.temp.selected.filter((item: any, index: number) => {
+      return i !== index
+    })
+  }
+
   public insertPosItem(i: number) {
     this.rest.temp.selected.push(this.rest.temp.old[i])
     this.rest.temp.old = this.rest.temp.old.filter((item: any, index: number) => {

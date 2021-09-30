@@ -81,9 +81,9 @@
     </ion-item>
 
     <div class="stl-card" *ngFor="let user of rest.temp.list">
-      Tài khoản: {{home.username}} <br>
-      Họ tên: {{home.fullname}} <br>
-      <ion-button color="secondary" size="small" (click)="insertAdmin(home.userid)">
+      Tài khoản: {{user.username}} <br>
+      Họ tên: {{user.fullname}} <br>
+      <ion-button color="secondary" size="small" (click)="insertAdmin(user.userid)">
         Thêm người dùng
       </ion-button>
     </div>

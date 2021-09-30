@@ -174,12 +174,6 @@ export class ItemPage implements OnInit {
     this.rest.navCtrl.navigateForward('modal/detail')
   }
 
-  public removePosItem(i: number) {
-    this.rest.temp.selected = this.rest.temp.selected.filter((item: any, index: number) => {
-      return i !== index
-    })
-  }
-
   public async removePosition(index: number) {
     const alert = await this.alert.create({
       message: 'Sau khi xác nhận vị trí sẽ biến mất vĩnh viễn',
