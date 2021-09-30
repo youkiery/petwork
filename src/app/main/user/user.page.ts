@@ -19,6 +19,10 @@ export class UserPage {
     public router: Router
   ) { }
 
+  ionViewWillEnter() {
+    this.rest.action = 'user'
+  }
+
   public async changePassword() {
     if (!this.oldpas.length) this.rest.notify('Mật khẩu cũ trống')
     else if (!this.newpas.length) this.rest.notify('Mật khẩu mới trống')

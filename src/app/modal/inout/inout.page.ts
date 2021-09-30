@@ -19,7 +19,7 @@ export class InoutPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.back()
+    if (!this.rest.action.length) this.rest.root()
   }
 
   public async out() {

@@ -12,7 +12,7 @@ export class FilterPage {
   ) {  }
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/home', {animated: true, animationDirection: 'back'})
+    if (!this.rest.action.length) this.rest.root()
   }
 
   public async detail(image: string) {

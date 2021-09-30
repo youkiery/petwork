@@ -77,7 +77,9 @@ export class AdminPage {
   }
 
   public async detail(index: number) {
-    this.rest.temp.index = index
+    this.rest.temp = {
+      index: index
+    }
     this.rest.action = 'admin'
     this.rest.navCtrl.navigateForward('modal/detail')
   }

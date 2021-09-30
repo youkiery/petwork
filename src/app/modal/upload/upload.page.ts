@@ -21,7 +21,7 @@ export class UploadPage {
   ) { }
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.back()
+    if (!this.rest.action.length) this.rest.root()
     if (this.rest.action == 'spa') {
       this.option = JSON.parse(JSON.stringify(this.rest.spa.type))
       this.rest.temp.option.forEach((id: number) => {

@@ -67,8 +67,8 @@
     <ion-card>
       <ion-card-content>
         Vị trí: {{rest.temp.name}} <br>
-        Hàng hóa: <span class="pos" *ngFor="let item of rest.temp.selected; let i = index" (click)="removePosItem(i)">
-          {{item.name}} </span>
+        Hàng hóa: <div class="pos" *ngFor="let item of rest.temp.selected; let i = index" (click)="removePosItem(i)">
+          {{item.name}} </div>
       </ion-card-content>
     </ion-card>
     <ion-item>
@@ -86,8 +86,8 @@
   <div *ngIf="rest.temp.action == 'position'">
     <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
       Vị trí: {{item.name}} <br>
-      Hàng hóa: <span class="pos" *ngFor="let pos of item.position; let j = index" (click)="removePos(i, pos.id)">
-        {{pos.name}} </span> <span class="pos" (click)="insertPos(i)"> + </span>
+      Hàng hóa: <div class="pos" *ngFor="let pos of item.position; let j = index" (click)="removePos(i, pos.id)">
+        {{pos.name}} </div> <div class="pos" (click)="insertPos(i)"> + </div>
       <div>
         <img class="right icon" src="/assets/icon/update.png" (click)="updatePosition(i)">
         <img class="right icon" src="/assets/icon/delete.png" (click)="removePosition(i)">
@@ -156,7 +156,7 @@
     <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
       Tên hàng: {{item.name}} <br>
       Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
-      Vị trí: <span class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </span>
+      Vị trí: <div class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </div>
     </div>
 
     <ion-item *ngFor="let item of rest.temp.list; let i = index">

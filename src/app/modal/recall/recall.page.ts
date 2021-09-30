@@ -26,7 +26,7 @@ export class RecallPage {
   ) { }
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.back()
+    if (!this.rest.action.length) this.rest.root()
   }
 
   public async done(index: number) {

@@ -17,10 +17,12 @@ export class ItemPage implements OnInit {
   ngOnInit() { }
 
   public async ionViewWillEnter() {
-    this.rest.action = 'item'
-    if (!this.rest.item.init) {
-      this.init()
-    }
+    this.rest.ready().then(() => {
+      this.rest.action = 'item'
+      if (!this.rest.item.init) {
+        this.init()
+      }
+    })
   }
 
   public async init() {
@@ -80,7 +82,7 @@ export class ItemPage implements OnInit {
   }
 
   public view(posid: number) {
-    this.rest.temp.image = this.rest.item.image[posid]
+    this.rest.temp = this.rest.item.image[posid]
     this.rest.navCtrl.navigateForward('modal/detail')
   }
 

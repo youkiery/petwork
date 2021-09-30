@@ -176,7 +176,7 @@ export class RestService {
   }
 
   public root() {
-    this.navCtrl.navigateRoot('/home')
+    this.navCtrl.navigateRoot('/home', {animated: true, animationDirection: 'back'})
   }
 
   public typeIndex(name: string) {

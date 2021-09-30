@@ -17,7 +17,7 @@ export class SuggestPage {
   ) {}
 
   ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.back()
+    if (!this.rest.action.length) this.rest.root()
     if (this.rest.action == 'item') this.input2.setFocus();
     else this.input.setFocus();
   }
