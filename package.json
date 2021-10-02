@@ -30,6 +30,7 @@
     "@capacitor/status-bar": "1.0.2",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage-angular": "^3.0.6",
+    "cordova-browser": "6.0.0",
     "firebase": "^8.7.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
@@ -86,7 +87,8 @@
       "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
