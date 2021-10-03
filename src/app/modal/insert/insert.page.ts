@@ -9,6 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class InsertPage {
   public key = ''
+  public init = false
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -16,6 +17,10 @@ export class InsertPage {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
+    if ((this.rest.action == 'vaccine' || this.rest.action == 'usg' || this.rest.action == 'spa') && !this.rest.temp.id && !this.init) {
+      this.init = true
+      this.suggest()
+    }
   }
 
   public async insertPosItemSubmit() {

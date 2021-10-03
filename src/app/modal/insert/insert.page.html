@@ -92,13 +92,12 @@
   <div *ngIf="rest.action == 'vaccine'">
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>
-      <ion-input [(ngModel)]="rest.temp.phone" [disabled]="rest.temp.id"> </ion-input>
-      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
-        (click)="suggest()">
+      <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
+      <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="suggest()">
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Khách hàng </ion-label>
-      <ion-input [(ngModel)]="rest.temp.name" [disabled]="rest.temp.id"> </ion-input>
+      <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Loại tiêm phòng </ion-label>

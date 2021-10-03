@@ -11,6 +11,16 @@ export class ManagerPage implements OnInit {
   public prv = ''
   public input: any = { }
   public list = []
+  public status_text = {
+    0: 'Chưa nhắc',
+    1: 'Chưa gọi được',
+    2: 'Đã gọi, chưa đến',
+  }
+  public status = {
+    0: 'stl-card white',
+    1: 'stl-card',
+    2: 'stl-card yellow',
+  }
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -23,6 +33,7 @@ export class ManagerPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
+    if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
   }  
 
   public update(index: number) {
@@ -190,17 +201,31 @@ export class ManagerPage implements OnInit {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
 
     let body = new FormData();
-    body.append('file', fileList[0]);
-    body.append('session', this.rest.session);
-    body.append('type', 'vaccine');
-    body.append('action', 'excel');
-
-    this.rest.http.post(this.rest.baseurl, body).toPromise().then((data) => {
-      console.log(data);
-    }, (error) => {
-      console.log(error);
-    })
-  }
+    if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
+    else {
+      body.append('file', fileList[0]);
+      body.append('session', this.rest.session);
+      body.append('type', 'vaccine');
+      body.append('action', 'excel');
+  
+      this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
+        if (resp.overtime) {
+          this.rest.notify("Đã hết thời gian sử dụng")
+          this.rest.root()
+        }
+        else if (resp.nogin) {
+          this.rest.notify("Phiên đăng nhập hết hạn")
+          this.rest.logout()
+        }
+        else {
+          this.rest.vaccine.temp = resp.list
+          this.change('temp')
+        }
+      }, (error) => {
+  
+      })
+    }
+}
 
   public async remove(id: number) {
     const alert = await this.alert.create({
@@ -259,7 +284,11 @@ export class ManagerPage implements OnInit {
       id: id,
       temp: 1
     }).then(resp => {
-      this.rest.vaccine.temp = resp.list
+      this.rest.vaccine.old = resp.old
+      this.rest.vaccine.list = resp.list
+      this.rest.action = 'vaccine'
+      this.rest.temp.prv = 'temp'
+      this.rest.navCtrl.navigateForward('/modal/recall')
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

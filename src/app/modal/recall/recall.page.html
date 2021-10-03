@@ -6,9 +6,13 @@
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
+    <div style="max-width: 400px; margin: auto; text-align: left;">
+      Chủ nuôi: {{rest.temp.name}} <br>
+      Điện thoại: {{rest.temp.phone}} <br>
+    </div>
     <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
       <div>
-        Vaccine: {{item.type}} <br>
+        Vaccine: {{item.vaccine}} <br>
         Ngày tiêm: {{item.cometime}} <br>
         Tái chủng: {{item.calltime}} <br>
         Ghi chú: {{item.note}} <br>

@@ -10,19 +10,13 @@ import { RestService } from 'src/app/services/rest.service';
 export class RecallPage {
   public status_text = {
     0: 'Chưa nhắc',
-    1: 'Đã gọi chưa quá ngày',
-    2: 'Đã gọi đã quá ngày',
-    3: 'Chưa gọi đã quá ngày',
-    4: 'Đã tái chủng',
-    5: 'Không tái chủng',
+    1: 'Chưa gọi được',
+    2: 'Đã gọi, chưa đến',
   }
   public status = {
-    0: 'stl-card',
-    1: 'stl-card green',
+    0: 'stl-card white',
+    1: 'stl-card',
     2: 'stl-card yellow',
-    3: 'stl-card red',
-    4: 'stl-card white',
-    5: 'stl-card white',
   }
   constructor(
     public rest: RestService,
