@@ -80,5 +80,14 @@
     <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
       <img class="thumbnail" [src]="item">
     </div>
+
+    <ion-list>
+      <ion-radio-group [(ngModel)]="rest.temp.uid">
+        <ion-item *ngFor="let doctor of rest.spa.doctor">
+          <ion-label> {{doctor.name}} </ion-label>
+          <ion-radio slot="start" [value]="doctor.userid"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
   </div>
 </ion-content>

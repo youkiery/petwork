@@ -46,7 +46,7 @@
   </div>
 </ion-content>
 
-<ion-toolbar>
+<ion-toolbar *ngIf="rest.isready">
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button (click)="rest.root()">

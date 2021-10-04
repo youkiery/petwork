@@ -129,7 +129,9 @@ export class DonePage implements OnInit {
   }
 
   public async doneSubmit() {
-    this.rest.checkpost('spa', 'report', this.rest.temp).then(() => {
+    this.rest.checkpost('spa', 'report', this.rest.temp).then((resp) => {
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
       this.rest.back()
     }, () => {
@@ -153,7 +155,7 @@ export class DonePage implements OnInit {
   public async rate(id: number, point: number = 0) {
     if (this.rest.config.spa > 1) {
       let alert = await this.alert.create({
-        message: 'Đánh giá '+ point +' sao cho nhân viên?',
+        message: 'Đánh giá ' + point + ' sao cho nhân viên?',
         buttons: [
           {
             text: 'Trở về',
