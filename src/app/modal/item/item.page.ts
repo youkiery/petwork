@@ -321,7 +321,6 @@ export class ItemPage implements OnInit {
 
   public async checkSaveSubmit() {
     this.count++
-    console.log(this.rest.temp);
 
     if (this.rest.temp.image.length == this.count) {
       this.insertSubmit()
@@ -331,7 +330,6 @@ export class ItemPage implements OnInit {
   public async insertItem() {
     this.count = 0
     await this.rest.freeze('Đang tải ảnh...')
-    console.log(this.rest.temp);
     
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên hàng hóa')
     else if (!this.rest.temp.code.length) this.rest.notify('Chưa nhập mã hàng hóa')

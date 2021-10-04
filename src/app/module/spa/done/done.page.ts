@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-done',
@@ -15,6 +17,8 @@ export class DonePage implements OnInit {
   constructor(
     public rest: RestService,
     private storage: AngularFireStorage,
+    public time: TimeService,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
@@ -37,7 +41,7 @@ export class DonePage implements OnInit {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-     await this.rest.freeze('Đang tải...')
+      await this.rest.freeze('Đang tải...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();
@@ -109,34 +113,80 @@ export class DonePage implements OnInit {
   }
 
   public async done() {
-    if (!this.rest.temp.duser && this.rest.spa.doctor.length && !this.rest.temp.uid) {
-      this.rest.notify('Chưa chọn người hoàn thành')
-    }
-    else {
-      this.count = 0
-      await this.rest.freeze('Đang tải ảnh...')
-      
-      if (!this.rest.temp.image.length) this.doneSubmit()
-      else this.rest.temp.image.forEach((image, index) => {
-        if (image.length > 200) {
-          this.uploadImage(image).then((url: string) => {
-            this.rest.temp.image[index] = url
-            this.checkInsertSubmit()
-          })
-        }
-        else this.checkInsertSubmit()
-      });
-    }
+    this.count = 0
+    await this.rest.freeze('Đang tải ảnh...')
+
+    if (!this.rest.temp.image.length) this.doneSubmit()
+    else this.rest.temp.image.forEach((image, index) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.checkInsertSubmit()
+        })
+      }
+      else this.checkInsertSubmit()
+    });
   }
 
   public async doneSubmit() {
-    this.rest.checkpost('spa', this.rest.temp.action, this.rest.temp).then((resp) => {
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
+    this.rest.checkpost('spa', 'report', this.rest.temp).then(() => {
       this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async statisticSubmit() {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('spa', 'statistic', {
+      from: this.time.isodatetodate(this.rest.spa.from),
+      end: this.time.isodatetodate(this.rest.spa.end),
+    }).then((resp) => {
+      this.rest.temp.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async rate(id: number, point: number = 0) {
+    if (this.rest.config.spa > 1) {
+      let alert = await this.alert.create({
+        message: 'Đánh giá '+ point +' sao cho nhân viên?',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: () => {
+              this.rateSubmit(id, point)
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  public async rateSubmit(id: number, point: number = 0) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('spa', 'statrate', {
+      id: id,
+      rate: point,
+      from: this.time.isodatetodate(this.rest.spa.from),
+      end: this.time.isodatetodate(this.rest.spa.end),
+    }).then((resp) => {
+      this.rest.temp.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async detail(image: string) {
+    this.rest.temp = image
+    this.rest.navCtrl.navigateForward('/modal/detail')
   }
 }

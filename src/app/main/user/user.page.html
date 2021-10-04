@@ -11,12 +11,12 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div class="avatar-box">
+  <div class="avatar-box text-center">
     <ion-img src="assets/image/avatar.png"></ion-img>
     <ion-text> {{rest.home.fullname}} </ion-text>
   </div>
   <ion-list>
-    <ion-item class="underline" (click)="password = !password">
+    <ion-item (click)="password = !password">
       Đổi mật khẩu
     </ion-item>
     <div [hidden]="password">
@@ -36,10 +36,10 @@
         Đổi mật khẩu
       </ion-button>
     </div>
-    <ion-item class="underline" *ngIf="rest.home.admin" (click)="rest.navCtrl.navigateForward('admin')"> 
+    <ion-item *ngIf="rest.home.admin" (click)="rest.navCtrl.navigateForward('admin')"> 
       Phân quyền
     </ion-item>
-    <ion-item class="underline" (click)="rest.logout()"> 
+    <ion-item (click)="rest.logout()"> 
       <ion-icon name="exit-outline" color="danger"></ion-icon>
       Đăng xuất
     </ion-item>

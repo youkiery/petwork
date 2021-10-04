@@ -19,7 +19,7 @@
 
   <ion-item color="secondary">
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
-    <ion-input [(ngModel)]="keyword"> </ion-input>
+    <ion-input [(ngModel)]="rest.spa.keyword"> </ion-input>
     <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
   </ion-item>
 
@@ -31,7 +31,7 @@
     <div *ngIf="(!rest.spa.toggle) || (rest.spa.toggle && item.status < 3)" [class]="status[item.status]">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
-        Điện thoại: {{item.phone}} <br>
+        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
         <span *ngIf="item.name2.length"> Người nhận hộ: {{item.name2}} <br> </span>
         <span *ngIf="item.phone2.length"> Điện thoại: {{item.phone2}} <br> </span>
         Cân nặng: {{weight[item.weight]}}
@@ -56,7 +56,8 @@
       <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
       <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
       <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
-      <img class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img class="icon right" src="/assets/icon/update.png" (click)="update(i)">
+      <img class="icon right" src="/assets/icon/report.png" (click)="report(i)">
     </div>
   </div>
 </ion-content>
@@ -74,14 +75,15 @@
         <ion-label> Thêm spa </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button *ngIf="rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
+      <!-- <ion-tab-button *ngIf="rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
         <ion-icon name="ellipsis-vertical-outline"></ion-icon>
         <ion-label> Chưa về </ion-label>
       </ion-tab-button>
-        <ion-tab-button *ngIf="!rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
+
+      <ion-tab-button *ngIf="!rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
         <ion-icon name="apps-outline"></ion-icon>
         <ion-label> Toàn bộ </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
 
       <ion-tab-button (click)="changeDate(-1)">
         <ion-icon name="play-skip-back-circle-outline"></ion-icon>
@@ -96,6 +98,11 @@
       <ion-tab-button (click)="changeDate(1)">
         <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
         <ion-label> Hôm sau </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.spa > 1" (click)="manager()">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <ion-label> Quản lý </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

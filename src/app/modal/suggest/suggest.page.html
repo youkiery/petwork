@@ -11,7 +11,7 @@
       <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrentItem()">
     </ion-item>
     <div *ngIf="list.length">
-      <ion-item class="underline" *ngFor="let item of list" (click)="selectItem(item.name, item.code)">
+      <ion-item *ngFor="let item of list" (click)="selectItem(item.name, item.code)">
         <span class="left-item" slot="start"> {{item.code}} </span>
         <span> {{item.name}} </span>
       </ion-item>
@@ -26,7 +26,7 @@
       <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
     </ion-item>
     <div *ngIf="list.length">
-      <ion-item class="underline" *ngFor="let item of list; let i = index" (click)="select(i)">
+      <ion-item *ngFor="let item of list; let i = index" (click)="select(i)">
         {{item.name}} - {{item.phone}}
       </ion-item>
     </div>

@@ -13,6 +13,7 @@ export class UploadPage {
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public max = 640
   public count = 0
+  public init = false
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -23,6 +24,11 @@ export class UploadPage {
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
     if (this.rest.action == 'spa') {
+      if (!this.rest.temp.id && !this.init) {
+        this.init = true
+        this.suggest()
+      }
+  
       this.option = JSON.parse(JSON.stringify(this.rest.spa.type))
       this.rest.temp.option.forEach((id: number) => {
         this.option.forEach((item, index) => {

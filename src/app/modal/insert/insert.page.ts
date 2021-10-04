@@ -17,7 +17,7 @@ export class InsertPage {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
-    if ((this.rest.action == 'vaccine' || this.rest.action == 'usg' || this.rest.action == 'spa') && !this.rest.temp.id && !this.init) {
+    if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
       this.init = true
       this.suggest()
     }
@@ -25,7 +25,6 @@ export class InsertPage {
 
   public async insertPosItemSubmit() {
     await this.rest.freeze('Đang thêm...')
-    // console.log(this.rest.temp.list, this.rest.temp.prv);
     this.rest.checkpost('item', 'inpositem', {
       list: this.rest.temp.selected,
       image: this.rest.temp.image,
@@ -100,7 +99,7 @@ export class InsertPage {
         this.rest.vaccine.new = resp.new
         if (resp.old.length) {
           this.rest.vaccine.old = resp.old
-          this.rest.navCtrl.navigateForward('/modal/recall')
+          this.rest.navCtrl.navigateForward('/vaccine/recall')
         }
         this.clear()
         this.rest.defreeze()
