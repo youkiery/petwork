@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: VaccinePage
   },
+  {
+    path: 'recall',
+    loadChildren: () => import('./recall/recall.module').then( m => m.RecallPageModule)
+  }
 ];
 
 @NgModule({

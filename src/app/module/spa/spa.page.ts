@@ -157,119 +157,39 @@ export class SpaPage {
   }
 
   public async called(index: number) {
-    let alert = await this.alert.create({
-      message: 'Đã gọi cho khách?',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.calledSubmit(index, e)
-          }
-        }
-      ]
-    });
+    this.rest.temp = this.rest.spa.list[index]
+    this.rest.temp.time = this.rest.spa.time
+    this.rest.temp.ctime = this.rest.spa.init
+    this.rest.temp.image = []
+    if (!this.rest.spa.doctor.length) this.rest.temp.uid = this.rest.home.userid
+    else this.rest.temp.uid = 0
 
-    if (!this.rest.spa.list[index].duser.length) {
-      alert['inputs'] = this.option
-    }
-
-    await alert.present();
-  }
-
-  public async calledSubmit(index: number, uid: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('spa', 'called', {
-      id: this.rest.spa.list[index].id,
-      uid: uid,
-      time: this.rest.spa.time,
-      ctime: this.rest.spa.init
-    }).then((resp) => {
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
+    this.rest.temp.action = 'called'
+    this.rest.navCtrl.navigateForward('spa/done')
   }
 
   public async returned(index: number) {
-    let alert = await this.alert.create({
-      message: 'Thú cưng đã đón về?',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.returnedSubmit(index, e)
-          }
-        }
-      ]
-    });
-    if (!this.rest.spa.list[index].duser.length) {
-      alert['inputs'] = this.option
-    }
+    this.rest.temp = this.rest.spa.list[index]
+    this.rest.temp.time = this.rest.spa.time
+    this.rest.temp.ctime = this.rest.spa.init
+    this.rest.temp.image = []
+    if (!this.rest.spa.doctor.length) this.rest.temp.uid = this.rest.home.userid
+    else this.rest.temp.uid = 0
 
-    await alert.present();
+    this.rest.temp.action = 'returned'
+    this.rest.navCtrl.navigateForward('spa/done')
   }
-
-  public async returnedSubmit(index: number, uid: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('spa', 'returned', {
-      id: this.rest.spa.list[index].id,
-      uid: uid,
-      time: this.rest.spa.time,
-      ctime: this.rest.spa.init
-    }).then((resp) => {
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
+  
   public async done(index: number) {
-    let alert = await this.alert.create({
-      message: 'Hoàn thành mục spa?',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.doneSubmit(index, e)
-          }
-        }
-      ]
-    });
+    this.rest.temp = this.rest.spa.list[index]
+    this.rest.temp.time = this.rest.spa.time
+    this.rest.temp.ctime = this.rest.spa.init
+    this.rest.temp.image = []
+    if (!this.rest.spa.doctor.length) this.rest.temp.uid = this.rest.home.userid
+    else this.rest.temp.uid = 0
 
-    if (!this.rest.spa.list[index].duser.length) {
-      alert['inputs'] = this.option
-    }
-
-    await alert.present();
-  }
-
-  public async doneSubmit(index: number, userid: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('spa', 'done', {
-      id: this.rest.spa.list[index].id,
-      uid: userid,
-      time: this.rest.spa.time,
-      ctime: this.rest.spa.init
-    }).then((resp) => {
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
+    this.rest.temp.action = 'done'
+    this.rest.navCtrl.navigateForward('spa/done')
   }
 
   public async pickDate() {

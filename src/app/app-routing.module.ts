@@ -16,10 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./modal/suggest/suggest.module').then( m => m.SuggestPageModule)
   },
   {
-    path: 'modal/recall',
-    loadChildren: () => import('./modal/recall/recall.module').then( m => m.RecallPageModule)
-  },
-  {
     path: 'modal/detail',
     loadChildren: () => import('./modal/detail/detail.module').then( m => m.DetailPageModule)
   },

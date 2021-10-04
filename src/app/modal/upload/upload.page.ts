@@ -130,7 +130,7 @@ export class UploadPage {
 
   public async insert() {
     this.count = 0
-    this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải ảnh...')
     
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -148,7 +148,7 @@ export class UploadPage {
 
   public async update() {
     this.count = 0
-    this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải ảnh...')
     
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -198,7 +198,7 @@ export class UploadPage {
   
   public async drugInsert() {
     this.count = 0
-    this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang thêm...')
     
     if (!this.rest.temp.image.length) this.drugInsertSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
@@ -214,7 +214,7 @@ export class UploadPage {
   
   public async drugUpdate() {
     this.count = 0
-    this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang thêm...')
     
     if (!this.rest.temp.image.length) this.drugUpdateSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
