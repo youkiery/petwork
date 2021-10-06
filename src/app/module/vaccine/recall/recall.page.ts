@@ -56,6 +56,7 @@ export class RecallPage {
     await this.rest.freeze('Xóa lịch nhắc...')
     this.rest.checkpost('vaccine', 'done', {
       id: this.rest.vaccine.old[index].id,
+      vid: this.rest.temp.vid,
       customerid: this.rest.vaccine.old[index].customerid,
     }).then(resp => {
       this.rest.vaccine.list = resp.list

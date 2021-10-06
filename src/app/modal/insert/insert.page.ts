@@ -96,7 +96,9 @@ export class InsertPage {
       this.rest.temp.typeid = this.rest.vaccine.type[this.rest.temp.vaccine].id
   
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
+        this.rest.temp.vid = resp.vid
         this.rest.vaccine.new = resp.new
+        this.rest.vaccine.list = resp.list
         if (resp.old.length) {
           this.rest.vaccine.old = resp.old
           this.rest.navCtrl.navigateForward('/vaccine/recall')

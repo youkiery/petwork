@@ -29,10 +29,10 @@
       Địa chỉ: {{item.address}}
     </div>
     <div class="col-xs-6">
-      Tái chủng: {{item.calltime}} <br>
-      Ngày tiêm: {{item.cometime}} <br>
-      Vaccine: {{item.vaccine}} <br>
-      <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
+      Ngày nhắc: {{item.calltime}} <br>
+      Ngày đến: {{item.cometime}} <br>
+      Loại nhắc: {{item.vaccine}} <br>
+      <span *ngIf="item.called"> Gọi nhắc cuối: <span class="weight"> {{item.called}} </span> <br> </span>
       Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
     </div>
     <div class="upperline">

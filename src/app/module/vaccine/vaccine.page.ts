@@ -15,8 +15,8 @@ export class VaccinePage {
   }
   public status = {
     0: 'stl-card white',
-    1: 'stl-card',
-    2: 'stl-card yellow',
+    1: 'stl-card yellow',
+    2: 'stl-card green',
   }
   constructor(
     public rest: RestService,
@@ -79,15 +79,13 @@ export class VaccinePage {
   }
 
   public async called(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
-    if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
-      message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
+      message: 'Đã gọi khách hàng, xác nhận?',
       inputs: [{
         type: 'text',
         label: 'Ghi chú',
         name: 'note',
-        value: note
+        value: this.rest.vaccine.list[index].note
       }],
       buttons: [
         {
@@ -120,15 +118,13 @@ export class VaccinePage {
   }
 
   public async uncalled(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
-    if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
-      message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
+      message: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
       inputs: [{
         type: 'text',
         label: 'Ghi chú',
         name: 'note',
-        value: note
+        value: this.rest.vaccine.list[index].note
       }],
       buttons: [
         {
@@ -163,7 +159,7 @@ export class VaccinePage {
   public async done(index: number) {
     const alert = await this.alert.create({
       header: 'Xác nhận tiêm phòng',
-      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa',
+      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
       buttons: [
         {
           text: 'Trở về',
@@ -196,7 +192,7 @@ export class VaccinePage {
   public async dead(index: number) {
     const alert = await this.alert.create({
       header: 'Xác nhận không tiêm phòng',
-      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa',
+      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
