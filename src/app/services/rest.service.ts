@@ -16,12 +16,13 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
   public home = {
+    name: '',
     userid: 0,
     username: '',
     fullname: '',
@@ -39,7 +40,7 @@ export class RestService {
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
-  public schedule = {}
+  public schedule = { time: 0, list: [], except: [], data: [] }
   public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [], keyword: '', toggle: false, from: '', end: '' }
   public target = {}
   public profile = {}

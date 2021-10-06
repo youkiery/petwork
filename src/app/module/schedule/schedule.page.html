@@ -1,9 +1,100 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>schedule</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab>
 
+  <div>
+    Ngày hiện tại: {{time.timetodate(rest.schedule.time)}}
+  </div>
+
+  <table style="font-size: 0.7em;" border="1" *ngIf="rest.config.schedule < 2">
+    <tr>  
+      <td> Thứ </td>
+      <td> Ngày </td>
+      <td> Trực sáng </td>
+      <td> Trực tối </td>
+      <td> Nghỉ sáng </td>
+      <td> Nghỉ chiều </td>
+    </tr>
+    <tr *ngFor="let data of rest.schedule.data; let i = index">
+      <td> {{data.day}} </td>
+      <td> {{data.date}} </td>
+      <td (click)="reg(i, 0)" [class]="data.list[0].color"> {{data.list[0].name}} </td>
+      <td (click)="reg(i, 1)" [class]="data.list[1].color"> {{data.list[1].name}} </td>
+      <td (click)="reg(i, 2)" [class]="data.list[2].color"> {{data.list[2].name}} </td>
+      <td (click)="reg(i, 3)" [class]="data.list[3].color"> {{data.list[3].name}} </td>
+    </tr>
+  </table>
+
+  <table style="font-size: 0.7em;" border="1" *ngIf="rest.config.schedule > 1">
+    <tr class="text-center">
+      <td>  </td>
+      <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
+    </tr>
+    <tr class="text-center">
+      <td style="width: 30%;"> Họ tên </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+      <td> S </td> <td> C </td>
+    </tr>
+    <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
+      <td> {{data.name}} </td>
+      <td *ngFor="let day of data.list; let j = index" (click)="reg2(i, j)" [class]="day"> </td>
+    </tr>
+  </table>
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeWeek(-1)">
+        <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+        <ion-label> Tuần trước </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeWeek(1)">
+        <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+        <ion-label> Tuần sau </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="register()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-label> Đăng ký </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cancel()">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-label> Hủy </ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button (click)="notify()">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-label> Thông báo </ion-label>
+        <ion-badge color="danger" *ngIf="rest.unread.kaizen"> {{rest.unread.kaizen}} </ion-badge>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

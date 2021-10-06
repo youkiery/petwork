@@ -55,9 +55,8 @@ export class SpaPage {
     this.rest.checkpost('spa', 'init', {
       time: this.rest.spa.time,
     }).then((resp) => {
-      let date = new Date(), y = date.getFullYear(), m = date.getMonth();
-      let firstDay = new Date(y, m, 1).getTime();
-      let lastDay = new Date(y, m + 1, 0).getTime();
+      let firstDay = this.time.datetotime(this.rest.home.today);
+      let lastDay = this.time.datetotime(this.rest.home.today);
       this.check = true
       this.rest.spa.from = this.time.timetoisodate(firstDay)
       this.rest.spa.end = this.time.timetoisodate(lastDay)
