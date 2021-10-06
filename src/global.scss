@@ -25,6 +25,21 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.alert-input.sc-ion-alert-md {
+  border-bottom: none !important;
+}
+
+.heading {
+  color: red; font-size: 1.2em; font-weight: bold;
+}
+
+.frame {
+  margin: 5px;
+  padding-right: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
 .weight {
   font-weight: bold;
 }

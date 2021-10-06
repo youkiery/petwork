@@ -45,9 +45,9 @@
     </ion-item>
     
     <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
       <img class="thumbnail" [src]="item">
-    </div>
+    </span>
   </div>
 
   <div *ngIf="rest.action == 'spa'">
@@ -86,9 +86,9 @@
     </ion-item>
   
     <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
       <img class="thumbnail" [src]="item">
-    </div>
+    </span>
     <div></div>
   
     <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">

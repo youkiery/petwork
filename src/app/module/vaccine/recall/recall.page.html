@@ -7,8 +7,8 @@
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
     <div style="max-width: 400px; margin: auto; text-align: left;">
-      Chủ nuôi: {{rest.temp.name}} <br>
-      Điện thoại: {{rest.temp.phone}} <br>
+      Chủ nuôi: {{rest.temp.oname}} <br>
+      Điện thoại: {{rest.temp.ophone}} <br>
     </div>
     <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
       <div>

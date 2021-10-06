@@ -72,16 +72,22 @@
   </div>
 
   <div *ngIf="!rest.temp.manager">
-    <div class="text-center" style="color: red; font-size: 1.2em; font-weight: bold;">
-      Báo cáo Thành quả sau spa
+    <div class="frame">
+      <div class="heading">
+        Báo cáo Thành quả sau spa
+      </div>
+  
+      <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+      <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+        <img class="thumbnail" [src]="item">
+      </span>
     </div>
 
-    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-    <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
-      <img class="thumbnail" [src]="item">
-    </div>
-
-    <ion-list>
+    <ion-list class="frame">
+      <div class="heading">
+        Người thực hiện
+      </div>
+      
       <ion-radio-group [(ngModel)]="rest.temp.uid">
         <ion-item *ngFor="let doctor of rest.spa.doctor">
           <ion-label> {{doctor.name}} </ion-label>
