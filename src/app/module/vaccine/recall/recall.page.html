@@ -6,6 +6,9 @@
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
+    <div class="heading">
+      Xác nhận bỏ lịch nhắc tiêm phòng
+    </div>
     <div style="max-width: 400px; margin: auto; text-align: left;">
       Chủ nuôi: {{rest.temp.oname}} <br>
       Điện thoại: {{rest.temp.ophone}} <br>
@@ -19,7 +22,7 @@
         <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
         Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
       </div>
-      <img src="/assets/icon/done.png" (click)="done(i)">
+      <img src="/assets/icon/delete.png" (click)="done(i)">
     </div>
   </div>
 

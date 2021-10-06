@@ -83,7 +83,6 @@ export class VaccinePage {
       message: 'Đã gọi khách hàng, xác nhận?',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: this.rest.vaccine.list[index].note
       }],
