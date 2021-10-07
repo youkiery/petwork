@@ -16,6 +16,11 @@
     <ion-input [(ngModel)]="rest.vaccine.keyword"> </ion-input>
     <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="filter()">
   </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('gopy')">
     <ion-fab-button>
       Góp ý

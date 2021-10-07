@@ -240,4 +240,11 @@ export class VaccinePage {
     this.rest.action = 'temp'
     this.rest.navCtrl.navigateForward('vaccine/manager')
   }
+
+  public refresh(event: any) {
+    this.rest.vaccine.init = false
+    this.init().then(() => {
+      event.target.complete();
+    })
+  }
 }

@@ -95,9 +95,8 @@ export class RestService {
 
     FCM.subscribeTo({ topic: 'test' })
     .then((r) => {
-      // alert(`subscribed to topic`)
     }).catch(
-      // (err) => console.log(err)
+
     );
     
     PushNotifications.addListener('registration',
@@ -140,7 +139,6 @@ export class RestService {
       this.defreeze()
     }, () => {
       this.isready = true
-      // this.logout()
       this.defreeze()
     })
   }

@@ -106,9 +106,12 @@
     <div class="avatar-box" (click)="upload()">
       <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
     </div>
+    <div *ngIf="name.length" class="text-center">
+      {{name}}
+    </div>
     <div id="pwa" style="display: none;">
       <input type="file" id="pwaphoto" #pwaphoto
-        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" (change)="file()">
     </div>
   </div>
 

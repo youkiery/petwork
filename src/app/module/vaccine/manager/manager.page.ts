@@ -10,7 +10,7 @@ import { TimeService } from 'src/app/services/time.service';
 })
 export class ManagerPage implements OnInit {
   public prv = ''
-  public input: any = { }
+  public input: any = {}
   public list = []
   public status_text = {
     0: 'Chưa nhắc',
@@ -22,6 +22,7 @@ export class ManagerPage implements OnInit {
     1: 'stl-card',
     2: 'stl-card yellow',
   }
+  public name = 'Chưa chọn file'
   public toggle = false
   public selected = {}
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
@@ -34,11 +35,11 @@ export class ManagerPage implements OnInit {
   ngOnInit() {
 
   }
-  
+
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
     if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
-  }  
+  }
 
   public selectbox(id: number) {
     if (this.toggle) {
@@ -67,9 +68,32 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeAll() {
+    let list = this.getselectedid()
+    if (!list.length) this.rest.notify('Chưa chọn danh sách')
+    else {
+      const alert = await this.alert.create({
+        header: 'Xác nhận xóa lịch nhắc',
+        subHeader: 'Sau khi xác nhận lịch nhắc sẽ biến mất',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: (e) => {
+              this.removeAllSubmit(list)
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  public async removeAllSubmit(list: any) {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('vaccine', 'removeall', {
-      list: this.getselectedid(),
+      list: list,
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
       this.rest.defreeze()
@@ -87,26 +111,45 @@ export class ManagerPage implements OnInit {
         list.push(citem.id)
       }
     });
-    if (list.length) {
-      await this.rest.freeze('Đang xác nhận...')
-      this.rest.checkpost('vaccine', 'doneall', {
-        list: list
-      }).then(resp => {
-        this.rest.action = 'vaccine'
-        this.rest.temp.prv = 'temp'
-        this.rest.vaccine.temp = resp.list
-        this.selected = {}
-
-        if (resp.old.length) {
-          this.rest.temp.list = resp.old
-          this.rest.navCtrl.navigateForward('/vaccine/recall')
-        }
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
+    if (!list.length) this.rest.notify('Phiếu nhập thông tin lỗi')
+    else {
+      const alert = await this.alert.create({
+        header: 'Xác nhận tất cả phiếu nhắc?',
+        subHeader: 'Sau khi xác nhận, danh sách sẽ được chuyển vào lịch nhắc',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: (e) => {
+              this.doneAllSubmit(list)
+            }
+          }
+        ]
+      });
+      await alert.present();
     }
+  }
 
+  public async doneAllSubmit(list: any) {
+    await this.rest.freeze('Đang xác nhận...')
+    this.rest.checkpost('vaccine', 'doneall', {
+      list: list
+    }).then(resp => {
+      this.rest.action = 'vaccine'
+      this.rest.temp.prv = 'temp'
+      this.rest.vaccine.temp = resp.list
+      this.selected = {}
+
+      if (resp.old.length) {
+        this.rest.temp.list = resp.old
+        this.rest.navCtrl.navigateForward('/vaccine/recall')
+      }
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public update(index: number) {
@@ -120,7 +163,7 @@ export class ManagerPage implements OnInit {
       cometime: this.time.datetoisodate(this.rest.vaccine.temp[index].cometime),
       calltime: this.time.datetoisodate(this.rest.vaccine.temp[index].calltime),
     }
-    
+
     this.rest.router.navigateByUrl('/modal/insert')
   }
 
@@ -271,18 +314,20 @@ export class ManagerPage implements OnInit {
     this.pwaphoto.nativeElement.click();
   }
 
-  public uploadPWA() {
+  public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
 
     let body = new FormData();
     if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
     else {
+      this.rest.freeze('Đang tải dữ liệu...')
       body.append('file', fileList[0]);
       body.append('session', this.rest.session);
       body.append('type', 'vaccine');
       body.append('action', 'excel');
-  
+
       this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
+        this.rest.defreeze()
         if (resp.overtime) {
           this.rest.notify("Đã hết thời gian sử dụng")
           this.rest.root()
@@ -296,10 +341,17 @@ export class ManagerPage implements OnInit {
           this.change('temp')
         }
       }, (error) => {
-  
+        this.rest.defreeze()
       })
     }
-}
+  }
+
+  public file() {
+    const fileList: FileList = this.pwaphoto.nativeElement.files;
+
+    if (fileList.length) this.name = fileList[0].name
+    else this.name = 'Chưa chọn file'
+  }
 
   public async remove(id: number) {
     const alert = await this.alert.create({
@@ -334,7 +386,7 @@ export class ManagerPage implements OnInit {
 
   public async done(index: number) {
     let data = this.rest.vaccine.temp[index]
-    
+
     if (!data.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!data.phone.length) this.rest.notify('Chưa nhập số điện thoại')
     else if (!this.time.isisodate(this.time.datetoisodate(data.cometime))) this.rest.notify('Chưa nhập ngày đến')
