@@ -50,9 +50,27 @@ export class SuggestPage {
     else {
       this.rest.temp.name = this.list[i].name
       this.rest.temp.phone = this.list[i].phone
+      if (this.rest.action == 'vaccine') {
+        this.searchHistory()
+      }
     }
 
     this.rest.navCtrl.pop()
+  }
+
+  public async searchHistory() {
+    await this.rest.freeze('Đang tìm lịch sử')
+    this.rest.checkpost('vaccine', 'history', {
+      phone: this.rest.temp.phone
+    }).then(resp => {
+      if (resp.old.length) {
+        this.rest.vaccine.old = resp.old
+        this.rest.navCtrl.navigateForward('vaccine/his')
+      }
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
     
   public suggestItem() {

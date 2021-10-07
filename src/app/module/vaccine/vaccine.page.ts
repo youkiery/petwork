@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-vaccine',
@@ -12,15 +13,20 @@ export class VaccinePage {
     0: 'Chưa nhắc',
     1: 'Chưa gọi được',
     2: 'Đã gọi, chưa đến',
+    3: 'Đã tái chủng',
+    4: 'Không tái chủng',
   }
   public status = {
     0: 'stl-card white',
     1: 'stl-card yellow',
     2: 'stl-card green',
+    3: 'stl-card green',
+    4: 'stl-card red',
   }
   constructor(
     public rest: RestService,
-    public alert: AlertController
+    public alert: AlertController,
+    public time: TimeService
   ) { }
 
   public async ionViewDidEnter() {
@@ -61,7 +67,8 @@ export class VaccinePage {
 
   public insert() {
     this.rest.action = 'vaccine'
-    this.rest.temp = { id: 0, name: '', phone: '', vaccine: 0, cometime: this.rest.home.today, calltime: this.rest.home.next }
+    
+    this.rest.temp = { id: 0, name: '', phone: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next) }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
@@ -71,9 +78,9 @@ export class VaccinePage {
       id: this.rest.vaccine.list[index].id,
       name: this.rest.vaccine.list[index].name,
       phone: this.rest.vaccine.list[index].phone,
-      vaccine: Number(this.rest.typeIndex(this.rest.vaccine.list[index].vaccine)),
-      cometime: this.rest.vaccine.list[index].cometime,
-      calltime: this.rest.vaccine.list[index].calltime,
+      typeid: this.rest.vaccine.list[index].typeid,
+      cometime: this.time.datetoisodate(this.rest.vaccine.list[index].cometime),
+      calltime: this.time.datetoisodate(this.rest.vaccine.list[index].calltime),
     }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
@@ -231,6 +238,6 @@ export class VaccinePage {
   public manager() {
     this.rest.temp = {}
     this.rest.action = 'temp'
-    this.rest.navCtrl.navigateForward('modal/manager')
+    this.rest.navCtrl.navigateForward('vaccine/manager')
   }
 }

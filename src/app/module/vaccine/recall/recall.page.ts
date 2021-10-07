@@ -18,6 +18,7 @@ export class RecallPage {
     1: 'stl-card',
     2: 'stl-card yellow',
   }
+  public selected = {}
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -27,55 +28,83 @@ export class RecallPage {
     if (!this.rest.action.length) this.rest.root()
   }
 
-  public async done(index: number) {
-    const alert = await this.alert.create({
-      message: 'Hoàn thành lịch nhắc?',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: () => {
-            switch (this.rest.action) {
-              case 'vaccine':
-                this.doneSubmit(index)
-              break;
-              case 'usg':
-                this.doneUsgSubmit(index)
-              break;
-            }
-          }
-        }
-      ]
-    });
-    await alert.present();
+  public selectbox(id: number) {
+    this.selected[id] = !this.selected[id]
   }
 
-  public async doneSubmit(index: number) {
+  public getselectedid() {
+    let list = []
+    for (const key in this.selected) {
+      if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
+        list.push(this.rest.temp.list[key].id)
+      }
+    }
+    return list
+  }
+
+  public getselectedindex() {
+    let list = []
+    for (const key in this.selected) {
+      if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
+        list.push(key)
+      }
+    }
+    return list
+  }
+
+  public async done() {
+    let index = this.getselectedindex()
+    if (!index.length) this.rest.notify('Chưa chọn danh sách') 
+    else {
+      const alert = await this.alert.create({
+        message: 'Hoàn thành lịch nhắc?',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: () => {
+              switch (this.rest.action) {
+                case 'vaccine':
+                  this.doneSubmit(index)
+                break;
+                case 'usg':
+                  this.doneUsgSubmit(index)
+                break;
+              }
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  public async doneSubmit(index: string[]) {
     await this.rest.freeze('Xóa lịch nhắc...')
-    this.rest.checkpost('vaccine', 'done', {
-      id: this.rest.vaccine.old[index].id,
-      vid: this.rest.temp.vid,
-      customerid: this.rest.vaccine.old[index].customerid,
+    this.rest.checkpost('vaccine', 'donerecall', {
+      list : this.getselectedid(),
     }).then(resp => {
-      this.rest.vaccine.list = resp.list
-      if (resp.old.length) this.rest.vaccine.old = resp.old
-      else this.rest.navCtrl.back()
+      this.rest.temp.list = this.rest.temp.list.filter((item: any, i: string) => {
+        if (index.indexOf(i.toString()) < 0) return true
+      })
+      this.selected = {}
+      
+      if (!this.rest.temp.list.length) {
+        this.rest.navCtrl.back()
+      } 
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  public async doneUsgSubmit(index: number) {
+  public async doneUsgSubmit(index: number[]) {
     await this.rest.freeze('Xóa lịch nhắc...')
     this.rest.checkpost('usg', 'done', {
-      id: this.rest.usg.old[index].id,
-      customerid: this.rest.usg.old[index].customerid,
+      index: this.getselectedid(),
     }).then(resp => {
-      this.rest.usg.list = resp.list
-      this.rest.usg.old = resp.old
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

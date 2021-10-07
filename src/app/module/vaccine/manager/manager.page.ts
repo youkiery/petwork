@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-manager',
@@ -21,20 +22,92 @@ export class ManagerPage implements OnInit {
     1: 'stl-card',
     2: 'stl-card yellow',
   }
+  public toggle = false
+  public selected = {}
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
-    public alert: AlertController
+    public alert: AlertController,
+    public time: TimeService
   ) { }
 
   ngOnInit() {
 
   }
-
+  
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
     if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
   }  
+
+  public selectbox(id: number) {
+    if (this.toggle) {
+      this.selected[id] = !this.selected[id]
+    }
+  }
+
+  public getselectedid() {
+    let list = []
+    for (const key in this.selected) {
+      if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
+        list.push(this.rest.vaccine.temp[key].id)
+      }
+    }
+    return list
+  }
+
+  public getselectedindex() {
+    let list = []
+    for (const key in this.selected) {
+      if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
+        list.push(key)
+      }
+    }
+    return list
+  }
+
+  public async removeAll() {
+    await this.rest.freeze('Đang xóa loại nhắc...')
+    this.rest.checkpost('vaccine', 'removeall', {
+      list: this.getselectedid(),
+    }).then(resp => {
+      this.rest.vaccine.temp = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async doneAll() {
+    let list = []
+    let index = this.getselectedindex()
+    index.forEach(item => {
+      let citem = this.rest.vaccine.temp[item]
+      if (!(!citem.name.length || !citem.phone.length || !this.time.isisodate(this.time.datetoisodate(citem.cometime)) || !this.time.isisodate(this.time.datetoisodate(citem.calltime)))) {
+        list.push(citem.id)
+      }
+    });
+    if (list.length) {
+      await this.rest.freeze('Đang xác nhận...')
+      this.rest.checkpost('vaccine', 'doneall', {
+        list: list
+      }).then(resp => {
+        this.rest.action = 'vaccine'
+        this.rest.temp.prv = 'temp'
+        this.rest.vaccine.temp = resp.list
+        this.selected = {}
+
+        if (resp.old.length) {
+          this.rest.temp.list = resp.old
+          this.rest.navCtrl.navigateForward('/vaccine/recall')
+        }
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+
+  }
 
   public update(index: number) {
     this.rest.action = 'vaccine'
@@ -43,10 +116,11 @@ export class ManagerPage implements OnInit {
       id: this.rest.vaccine.temp[index].id,
       name: this.rest.vaccine.temp[index].name,
       phone: this.rest.vaccine.temp[index].phone,
-      vaccine: Number(this.rest.typeIndex(this.rest.vaccine.temp[index].vaccine)),
-      cometime: this.rest.vaccine.temp[index].cometime,
-      calltime: this.rest.vaccine.temp[index].calltime,
+      typeid: this.rest.vaccine.temp[index].typeid,
+      cometime: this.time.datetoisodate(this.rest.vaccine.temp[index].cometime),
+      calltime: this.time.datetoisodate(this.rest.vaccine.temp[index].calltime),
     }
+    
     this.rest.router.navigateByUrl('/modal/insert')
   }
 
@@ -248,9 +322,8 @@ export class ManagerPage implements OnInit {
 
   public async removeSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('vaccine', 'remove', {
-      id: id,
-      temp: 1
+    this.rest.checkpost('vaccine', 'removetemp', {
+      id: id
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
       this.rest.defreeze()
@@ -259,23 +332,31 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public async done(id: number) {
-    const alert = await this.alert.create({
-      header: 'Xác nhận thêm lịch nhắc',
-      subHeader: 'Sau khi xác nhận lịch nhắc sẽ hiển thị trên danh sách nhắc gọi',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.doneSubmit(id)
+  public async done(index: number) {
+    let data = this.rest.vaccine.temp[index]
+    
+    if (!data.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!data.phone.length) this.rest.notify('Chưa nhập số điện thoại')
+    else if (!this.time.isisodate(this.time.datetoisodate(data.cometime))) this.rest.notify('Chưa nhập ngày đến')
+    else if (!this.time.isisodate(this.time.datetoisodate(data.calltime))) this.rest.notify('Chưa nhập ngày nhắc lại')
+    else {
+      const alert = await this.alert.create({
+        header: 'Xác nhận thêm lịch nhắc',
+        subHeader: 'Sau khi xác nhận lịch nhắc sẽ hiển thị trên danh sách nhắc gọi',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: (e) => {
+              this.doneSubmit(data.id)
+            }
           }
-        }
-      ]
-    });
-    await alert.present();
+        ]
+      });
+      await alert.present();
+    }
   }
 
   public async doneSubmit(id: number) {
@@ -284,11 +365,15 @@ export class ManagerPage implements OnInit {
       id: id,
       temp: 1
     }).then(resp => {
-      this.rest.vaccine.old = resp.old
-      this.rest.vaccine.list = resp.list
-      this.rest.action = 'vaccine'
-      this.rest.temp.prv = 'temp'
-      this.rest.navCtrl.navigateForward('/modal/recall')
+      this.rest.vaccine.temp = resp.temp
+      if (resp.old) {
+        this.rest.temp.list = resp.old
+        this.rest.action = 'vaccine'
+        this.rest.temp.prv = 'temp'
+        this.rest.temp.oname = resp.name
+        this.rest.temp.ophone = resp.phone
+        this.rest.navCtrl.navigateForward('/vaccine/recall')
+      }
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

@@ -2,19 +2,25 @@
   <ion-button color="light" fill="clear" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
+  <ion-button slot="end" color="light" fill="clear" (click)="done()">
+    Xác nhận
+  </ion-button>
 </ion-toolbar>
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
     <div class="heading">
-      Xác nhận bỏ lịch nhắc tiêm phòng
+      Click chọn danh sách phiếu nhắc cần hoàn thành <br>
+      Chọn xác nhận để hoàn tất
     </div>
-    <div style="max-width: 400px; margin: auto; text-align: left;">
-      Chủ nuôi: {{rest.temp.oname}} <br>
-      Điện thoại: {{rest.temp.ophone}} <br>
-    </div>
-    <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
-      <div>
+    <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">
+      <div [class]="selected[i] ? 'tick' : ''"></div>
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>
+        <br>
+      </div>
+      <div class="col-xs-6">
         Loại nhắc: {{item.vaccine}} <br>
         Ngày đến: {{item.cometime}} <br>
         Ngày nhắc: {{item.calltime}} <br>
@@ -22,12 +28,11 @@
         <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
         Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
       </div>
-      <img src="/assets/icon/delete.png" (click)="done(i)">
     </div>
   </div>
 
   <div *ngIf="rest.action == 'usg'">
-    <div class="stl-card" *ngFor="let item of rest.usg.old; let i = index">
+    <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index" (click)="selectbox(i)">
       <div>
         Siêu âm lại: {{item.calltime}} <br>
         Thai dự kiến: {{item.number}} <br>

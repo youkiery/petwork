@@ -6,6 +6,12 @@ import { Injectable } from '@angular/core';
 export class TimeService {
   constructor() { }
 
+  public isisodate(isostring: string = '') {
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(isostring)) return false;
+    var d = new Date(isostring); 
+    return d.toISOString() === isostring;
+  }
+
   public timetodate(time: number) {
     let datetime = new Date(Number(time))
     let date = datetime.getDate().toString()

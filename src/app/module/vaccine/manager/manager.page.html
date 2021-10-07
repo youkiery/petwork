@@ -1,26 +1,46 @@
 <ion-toolbar color="success">
-  <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="light" fill="clear" (click)="rest.navCtrl.pop()">
+  <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="light" fill="clear"
+    (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
 
-  <ion-button *ngIf="rest.action == 'insert-type' || rest.action == 'insert-doctor'" color="light" fill="clear" (click)="back()">
+  <ion-button *ngIf="rest.action == 'insert-type' || rest.action == 'insert-doctor'" color="light" fill="clear"
+    (click)="back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear"
+    (click)="toggle = false; selected = {}">
+    Hủy chọn
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear" (click)="removeAll()">
+    Xóa
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear" (click)="doneAll()">
+    Xác nhận
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'temp' && !toggle" slot="end" color="light" fill="clear" (click)="toggle = true">
+    Chọn nhiều
   </ion-button>
 
   <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="light" fill="clear" (click)="uploadPWA()">
     Tải lên
   </ion-button>
-  <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="light" fill="clear" (click)="insertTypeSubmit()">
+  <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="light" fill="clear"
+    (click)="insertTypeSubmit()">
     Thêm loại nhắc
   </ion-button>
-  <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="light" fill="clear" (click)="updateTypeSubmit()">
+  <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="light" fill="clear"
+    (click)="updateTypeSubmit()">
     Cập nhật
   </ion-button>
 
-  <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="light" fill="clear" (click)="insertDoctorSubmit()">
+  <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="light" fill="clear"
+    (click)="insertDoctorSubmit()">
     Thêm bác sĩ
   </ion-button>
-  <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="light" fill="clear" (click)="updateDoctorSubmit()">
+  <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="light" fill="clear"
+    (click)="updateDoctorSubmit()">
     Cập nhật
   </ion-button>
 </ion-toolbar>
@@ -85,17 +105,20 @@
   <div *ngIf="rest.action == 'vaccine'">
     <div class="avatar-box" (click)="upload()">
       <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
-    </div>  
+    </div>
     <div id="pwa" style="display: none;">
-      <input type="file" id="pwaphoto" #pwaphoto accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+      <input type="file" id="pwaphoto" #pwaphoto
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     </div>
   </div>
 
   <div *ngIf="rest.action == 'uncalled'">
-    <div *ngFor="let item of this.rest.vaccine.over; let i = index" [class]="item.over ? 'stl-card red' : status[item.status]">
+    <div *ngFor="let item of this.rest.vaccine.over; let i = index"
+      [class]="item.over ? 'stl-card red' : status[item.status]">
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
-        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>
+        <br>
         Địa chỉ: {{item.address}}
       </div>
       <div class="col-xs-6">
@@ -117,7 +140,8 @@
   </div>
 
   <div *ngIf="rest.action == 'temp'">
-    <div *ngFor="let item of rest.vaccine.temp; let i = index" class="stl-card">
+    <div *ngFor="let item of rest.vaccine.temp; let i = index" class="stl-card" (click)="selectbox(i)">
+      <div [class]="toggle && selected[i] ? 'tick' : ''"></div>
       <div class="col-xs-6">
         <span [class]="item.name.length ? '' : 'redden'"> Tên khách: {{item.name}} </span> <br>
         <span [class]="item.name.length ? '' : 'redden'"> Điện thoại: {{item.phone}} </span> <br>
@@ -132,7 +156,7 @@
       <div class="upperline">
         Ghi chú: {{item.note}}
       </div>
-      <img class="icon" src="/assets/icon/done.png" (click)="done(item.id)">
+      <img class="icon" src="/assets/icon/done.png" (click)="done(i)">
       <img class="right" src="/assets/icon/update.png" (click)="update(i)">
       <img class="right" src="/assets/icon/delete.png" (click)="remove(i)">
     </div>
@@ -147,27 +171,28 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('temp')">
+      <ion-tab-button (click)="change('temp')" [selected]="rest.action == 'temp'">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Xác nhận </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('uncalled')" *ngIf="rest.config.vaccine > 1">
+      <ion-tab-button (click)="change('uncalled')" [selected]="rest.action == 'uncalled'"
+        *ngIf="rest.config.vaccine > 1">
         <ion-icon name="alert-circle-outline"></ion-icon>
         <ion-label> Chưa tiêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('type')" *ngIf="rest.config.vaccine > 1">
+      <ion-tab-button (click)="change('type')" [selected]="rest.action == 'type'" *ngIf="rest.config.vaccine > 1">
         <ion-icon name="document-text-outline"></ion-icon>
         <ion-label> Loại nhắc </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('doctor')" *ngIf="rest.config.vaccine > 1">
+      <ion-tab-button (click)="change('doctor')" [selected]="rest.action == 'doctor'" *ngIf="rest.config.vaccine > 1">
         <ion-icon name="people-circle-outline"></ion-icon>
         <ion-label> Bác sĩ </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('vaccine')" *ngIf="rest.config.vaccine > 1">
+      <ion-tab-button (click)="change('vaccine')" [selected]="rest.action == 'vaccine'" *ngIf="rest.config.vaccine > 1">
         <ion-icon name="cloud-upload-outline"></ion-icon>
         <ion-label> Import </ion-label>
       </ion-tab-button>

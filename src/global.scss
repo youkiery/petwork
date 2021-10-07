@@ -29,6 +29,16 @@
   border-bottom: none !important;
 }
 
+.tick {
+  background-image: url(/assets/icon/tick.png);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+}
+
 .heading {
   color: red; font-size: 1.2em; font-weight: bold;
 }
@@ -256,6 +266,7 @@ ion-input, ion-textarea, ion-datetime, textarea.alert-input {
   line-height: 18px;
   width: 98%;
   display: inline-block;
+  position: relative;
 }
 .stl-card.green {
   background: #dfd;

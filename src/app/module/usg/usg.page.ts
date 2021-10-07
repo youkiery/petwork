@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-usg',
@@ -16,7 +17,8 @@ export class UsgPage {
   }
   constructor(
     public rest: RestService,
-    public alert: AlertController
+    public alert: AlertController,
+    public time: TimeService
   ) { }
 
 
@@ -97,7 +99,7 @@ export class UsgPage {
 
   public insert() {
     this.rest.action = 'usg'
-    this.rest.temp = { id: 0, name: '', phone: '', number: 0, cometime: this.rest.home.today, calltime: this.rest.home.next }
+    this.rest.temp = { id: 0, name: '', phone: '', number: 0, cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next) }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
@@ -107,8 +109,8 @@ export class UsgPage {
       id: this.rest.usg.list[index].id,
       name: this.rest.usg.list[index].name,
       phone: this.rest.usg.list[index].phone,
-      cometime: this.rest.usg.list[index].cometime,
-      calltime: this.rest.usg.list[index].calltime,
+      cometime: this.time.datetoisodate(this.rest.usg.list[index].cometime),
+      calltime: this.time.datetoisodate(this.rest.usg.list[index].calltime),
       number: this.rest.usg.list[index].number,
     }
     this.rest.navCtrl.navigateForward('/modal/insert')
