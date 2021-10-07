@@ -7,9 +7,10 @@ export class TimeService {
   constructor() { }
 
   public isisodate(isostring: string = '') {
-    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(isostring)) return false;
-    var d = new Date(isostring); 
-    return d.toISOString() === isostring;
+    let date = isostring.split('T')
+    let time = date[0].split('-')
+    if (isFinite(Number(time[0])) && isFinite(Number(time[1])) && isFinite(Number(time[2])) && time[0].length == 4 && time[1].length == 2 && time[2].length == 2) return true
+    return false
   }
 
   public timetodate(time: number) {

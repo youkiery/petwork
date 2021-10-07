@@ -87,7 +87,9 @@ export class VaccinePage {
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      message: 'Đã gọi khách hàng, xác nhận?',
+      header: 'Xác nhận không tiêm phòng',
+      subHeader: 'Đã gọi khách hàng, xác nhận?',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
@@ -125,7 +127,9 @@ export class VaccinePage {
 
   public async uncalled(index: number) {
     const alert = await this.alert.create({
-      message: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
+      header: 'Xác nhận không tiêm phòng',
+      subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         label: 'Ghi chú',

@@ -194,6 +194,8 @@ export class InsertPage {
   }
 
   public checkVaccineData() {
+    console.log(this.rest.temp);
+    
     if (!this.rest.temp.name.length) return 'Chưa nhập tên khách hàng'
     else if (!this.rest.temp.phone.length) return 'Chưa nhập số điện thoại'
     else if (!this.time.isisodate(this.rest.temp.cometime)) return 'Chưa nhập ngày đến'
@@ -202,10 +204,10 @@ export class InsertPage {
   }
 
   public async updateHistorySubmit() {
-    await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
+      await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
       this.rest.checkpost('vaccine', 'updatehistory', this.rest.temp).then(resp => {
         this.rest.temp.oname = this.rest.temp.name
         this.rest.temp.ophone = this.rest.temp.phone
