@@ -15,7 +15,7 @@
       <ion-icon name="close-circle-outline"></ion-icon>
     </ion-button>
     <ion-button *ngIf="rest.config.vaccine > 1 && rest.action == 'temp' && toggle" slot="end" color="light" fill="clear"
-      (click)="tranferAll()">
+      (click)="transferAll()">
       <ion-icon name="receipt-outline"></ion-icon>
     </ion-button>
     <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear" (click)="removeAll()">
@@ -85,6 +85,10 @@
   </div>
 
   <div class="stl-card green" *ngIf="rest.action == 'type'">
+    <ion-refresher slot="fixed" (ionRefresh)="reloadType($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     Danh sách loại nhắc:
     <div class="upperline" *ngFor="let item of rest.vaccine.type; let i = index">
       {{item.code}}: {{item.name}}
@@ -97,6 +101,10 @@
   </div>
 
   <div class="stl-card green" *ngIf="rest.action == 'doctor'">
+    <ion-refresher slot="fixed" (ionRefresh)="reloadDoctor($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     Danh sách bác sĩ:
     <div class="upperline" *ngFor="let item of rest.vaccine.doctor; let i = index">
       {{item.username}}: {{item.name}}
@@ -150,6 +158,10 @@
   </div>
 
   <div *ngIf="rest.action == 'temp'">
+    <ion-refresher slot="fixed" (ionRefresh)="reloadTemp($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
         <ion-label> Chưa xác nhận </ion-label>

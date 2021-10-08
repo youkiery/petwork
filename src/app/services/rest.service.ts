@@ -33,7 +33,7 @@ export class RestService {
   }
   public session = ''
   public cart = { list: [], init: false }
-  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '' }
+  public vaccine = { init: false, list: [[], [], []], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '' }
   public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''}, search: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }

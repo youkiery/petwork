@@ -120,7 +120,6 @@ export class InsertPage {
       this.rest.checkpost('vaccine', 'inserthistory', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
         this.clear()
-
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -159,13 +158,15 @@ export class InsertPage {
   }
 
   public update(index: number) {
+  
     this.rest.temp = {
       id: this.rest.vaccine.new[index].id,
       name: this.rest.vaccine.new[index].name,
       phone: this.rest.vaccine.new[index].phone,
       typeid: this.rest.vaccine.new[index].typeid,
-      cometime: this.rest.vaccine.new[index].cometime,
-      calltime: this.rest.vaccine.new[index].calltime,
+      cometime: this.time.datetoisodate(this.rest.vaccine.new[index].cometime),
+      calltime: this.time.datetoisodate(this.rest.vaccine.new[index].calltime),
+      note: this.rest.vaccine.new[index].note,
     }
   }
 
@@ -177,8 +178,8 @@ export class InsertPage {
       await this.rest.freeze('Cập nhật lịch nhắc...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
+        this.clear()
         this.rest.defreeze()
-        this.rest.back()
       }, () => {
         this.rest.defreeze()
       })
@@ -220,6 +221,7 @@ export class InsertPage {
     this.rest.temp.route = ''
     this.rest.temp.name = ''
     this.rest.temp.phone = ''
+    this.rest.temp.note = ''
   }
 
   public async insertUsgSubmit() {

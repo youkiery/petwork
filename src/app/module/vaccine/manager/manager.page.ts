@@ -83,8 +83,8 @@ export class ManagerPage implements OnInit {
     if (!list.length) this.rest.notify('Chưa chọn danh sách')
     else {
       const alert = await this.alert.create({
-        header: 'Xác nhận xóa lịch nhắc',
-        subHeader: 'Sau khi xác nhận lịch nhắc sẽ biến mất',
+        header: 'Xác nhận chuyển phiếu nhắc',
+        subHeader: 'Tất cả phiếu nhắc được chọn sẽ được chuyển cho nhân viên dưới đây: ',
         inputs: this.option,
         buttons: [
           {
@@ -92,8 +92,9 @@ export class ManagerPage implements OnInit {
             role: 'cancel',
           }, {
             text: 'Xác nhận',
-            handler: (e) => {
-              this.transferAllSubmit(list)
+            handler: (uid) => {
+              if (!uid) this.rest.notify('Chưa chọn danh sách')
+              else this.transferAllSubmit(list, uid)
             }
           }
         ]
@@ -102,11 +103,13 @@ export class ManagerPage implements OnInit {
     }
   }
 
-  public async transferAllSubmit(list: any) {
+  public async transferAllSubmit(list: any, uid: number) {
     await this.rest.freeze('Đang xóa loại nhắc...')
-    this.rest.checkpost('vaccine', 'removeall', {
+    this.rest.checkpost('vaccine', 'transfer', {
       list: list,
+      uid: uid
     }).then(resp => {
+      this.selected = {}
       this.rest.vaccine.temp = resp.list
       this.rest.defreeze()
     }, () => {
@@ -487,5 +490,40 @@ export class ManagerPage implements OnInit {
 
   public back() {
     this.rest.action = this.prv
+  }
+
+  public async reloadTemp(event: any) {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('vaccine', 'tempauto', {}).then(resp => {
+      this.selected = {}
+      this.toggle = false
+      this.rest.vaccine.temp = resp.list
+      event.target.complete();
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async reloadType(event: any) {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('vaccine', 'typeauto', {}).then(resp => {
+      this.rest.vaccine.type = resp.list
+      event.target.complete();
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async reloadDoctor(event: any) {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {
+      this.rest.vaccine.doctor = resp.list
+      event.target.complete();
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

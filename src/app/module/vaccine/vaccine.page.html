@@ -26,13 +26,22 @@
   <div *ngIf="!rest.vaccine.keyword">
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
-        <ion-label> Chưa gọi </ion-label>
+        <ion-label>
+          Chưa gọi
+          <ion-badge color="danger"> {{rest.vaccine.list[0].length}} </ion-badge>
+        </ion-label>
       </ion-segment-button>
       <ion-segment-button value="1">
-        <ion-label>Không gọi được</ion-label>
+        <ion-label>
+          Không nghe
+          <ion-badge color="danger"> {{rest.vaccine.list[1].length}} </ion-badge>
+        </ion-label>
       </ion-segment-button>
       <ion-segment-button value="2">
-        <ion-label> Đã gọi </ion-label>
+        <ion-label>
+          Đã gọi
+          <ion-badge color="danger"> {{rest.vaccine.list[2].length}} </ion-badge>
+        </ion-label>
       </ion-segment-button>
     </ion-segment>
   
@@ -102,7 +111,7 @@
         <ion-icon name="briefcase-outline"></ion-icon>
         <ion-label>
           Quản lý
-          <ion-badge *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp[0].length}} </ion-badge>
+          <ion-badge color="danger" *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp[0].length}} </ion-badge>
         </ion-label>
       </ion-tab-button>
     </ion-tab-bar>

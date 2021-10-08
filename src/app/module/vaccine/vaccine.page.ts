@@ -34,6 +34,7 @@ export class VaccinePage {
   public async ionViewDidEnter() {
     this.key = ''
     this.rest.vaccine.keyword = ''
+    this.rest.vaccine.list = [[], [], []]
     this.rest.ready().then(() => {
       if (this.rest.vaccine.init) this.filter()
       else this.init()
@@ -122,7 +123,6 @@ export class VaccinePage {
       keyword: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
-      this.rest.notify('Đã thay đổi trạng thái')
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -163,7 +163,6 @@ export class VaccinePage {
       keyword: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
-      this.rest.notify('Đã thay đổi trạng thái')
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

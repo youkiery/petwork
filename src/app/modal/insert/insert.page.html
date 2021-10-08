@@ -132,6 +132,10 @@
       <ion-datetime [(ngModel)]="rest.temp.calltime" displayFormat="DD/MM/YYYY" max="2100">
       </ion-datetime>
     </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+    </ion-item>
 
     <div *ngIf="!rest.temp.prv">
       <div class="stl-card" *ngFor="let item of this.rest.vaccine.new; let i = index">
@@ -143,8 +147,11 @@
           Ngày nhắc: {{item.calltime}} <br>
           Loại nhắc: {{item.vaccine}} <br>
         </div>
+        <div class="upperline">
+          Ghi chú: {{item.note}}
+        </div>
         <img src="/assets/icon/delete.png" (click)="remove(i)">
-        <!-- <img src="/assets/icon/update.png" (click)="update(i)"> -->
+        <img src="/assets/icon/update.png" *ngIf="rest.config.vaccine > 1" (click)="update(i)">
       </div>
     </div>
   </div>
