@@ -92,7 +92,8 @@ export class RecallPage {
       this.selected = {}
       
       if (!this.rest.temp.list.length) {
-        this.rest.navCtrl.back()
+        if (this.rest.temp.prv) this.rest.navCtrl.navigateBack('vaccine/manager')
+        else this.rest.navCtrl.back()
       } 
       this.rest.defreeze()
     }, () => {

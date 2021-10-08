@@ -39,6 +39,16 @@
   z-index: 10;
 }
 
+.untick {
+  background-image: url(/assets/icon/untick.png);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+}
+
 .heading {
   color: red; font-size: 1.2em; font-weight: bold;
 }

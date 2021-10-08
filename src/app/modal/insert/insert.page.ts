@@ -100,7 +100,6 @@ export class InsertPage {
         this.rest.temp.ophone = this.rest.temp.phone
         this.rest.temp.vid = resp.vid
         this.rest.vaccine.new = resp.new
-        this.rest.vaccine.list = resp.list
         if (resp.old.length) {
           this.rest.temp.list = resp.old
           this.rest.navCtrl.navigateForward('/vaccine/recall')
@@ -120,7 +119,6 @@ export class InsertPage {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('vaccine', 'inserthistory', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
-        this.rest.vaccine.list = resp.list
         this.clear()
 
         this.rest.defreeze()
@@ -149,19 +147,15 @@ export class InsertPage {
   }
 
   public async removeSubmit(id: number) {
-    let msg = this.checkVaccineData()
-    if (msg) this.rest.notify(msg)
-    else {
-      await this.rest.freeze('Xóa lịch nhắc...')
-      this.rest.checkpost('vaccine', 'remove', {
-        id: id
-      }).then(resp => {
-        this.rest.vaccine.new = resp.new
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
-    }
+    await this.rest.freeze('Xóa lịch nhắc...')
+    this.rest.checkpost('vaccine', 'removevaccine', {
+      id: id
+    }).then(resp => {
+      this.rest.vaccine.new = resp.new
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public update(index: number) {
@@ -183,10 +177,8 @@ export class InsertPage {
       await this.rest.freeze('Cập nhật lịch nhắc...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
-        this.rest.vaccine.list = resp.list
-        this.rest.back()
         this.rest.defreeze()
-        if (this.rest.vaccine.keyword) this.rest.navCtrl.pop()
+        this.rest.back()
       }, () => {
         this.rest.defreeze()
       })
@@ -194,8 +186,6 @@ export class InsertPage {
   }
 
   public checkVaccineData() {
-    console.log(this.rest.temp);
-    
     if (!this.rest.temp.name.length) return 'Chưa nhập tên khách hàng'
     else if (!this.rest.temp.phone.length) return 'Chưa nhập số điện thoại'
     else if (!this.time.isisodate(this.rest.temp.cometime)) return 'Chưa nhập ngày đến'

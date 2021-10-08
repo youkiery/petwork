@@ -25,6 +25,8 @@ export class ManagerPage implements OnInit {
   public name = 'Chưa chọn file'
   public toggle = false
   public selected = {}
+  public segment = "0"
+  public option = []
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -39,6 +41,15 @@ export class ManagerPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
     if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
+    this.rest.vaccine.doctor.forEach(item => {
+      this.option.push({
+        name: 'userid',
+        type: 'radio',
+        label: item.name,
+        value: item.userid,
+        checked: (this.rest.home.userid == item.userid ? true : false)
+      })
+    });
   }
 
   public selectbox(id: number) {
@@ -51,7 +62,7 @@ export class ManagerPage implements OnInit {
     let list = []
     for (const key in this.selected) {
       if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
-        list.push(this.rest.vaccine.temp[key].id)
+        list.push(this.rest.vaccine.temp[this.segment][key].id)
       }
     }
     return list
@@ -65,6 +76,42 @@ export class ManagerPage implements OnInit {
       }
     }
     return list
+  }
+
+  public async transferAll() {
+    let list = this.getselectedid()
+    if (!list.length) this.rest.notify('Chưa chọn danh sách')
+    else {
+      const alert = await this.alert.create({
+        header: 'Xác nhận xóa lịch nhắc',
+        subHeader: 'Sau khi xác nhận lịch nhắc sẽ biến mất',
+        inputs: this.option,
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: (e) => {
+              this.transferAllSubmit(list)
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  public async transferAllSubmit(list: any) {
+    await this.rest.freeze('Đang xóa loại nhắc...')
+    this.rest.checkpost('vaccine', 'removeall', {
+      list: list,
+    }).then(resp => {
+      this.rest.vaccine.temp = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async removeAll() {
@@ -106,7 +153,7 @@ export class ManagerPage implements OnInit {
     let list = []
     let index = this.getselectedindex()
     index.forEach(item => {
-      let citem = this.rest.vaccine.temp[item]
+      let citem = this.rest.vaccine.temp[this.segment][item]
       if (!(!citem.name.length || !citem.phone.length || !this.time.isisodate(this.time.datetoisodate(citem.cometime)) || !this.time.isisodate(this.time.datetoisodate(citem.calltime)))) {
         list.push(citem.id)
       }
@@ -156,12 +203,12 @@ export class ManagerPage implements OnInit {
     this.rest.action = 'vaccine'
     this.rest.temp = {
       prv: 'temp',
-      id: this.rest.vaccine.temp[index].id,
-      name: this.rest.vaccine.temp[index].name,
-      phone: this.rest.vaccine.temp[index].phone,
-      typeid: this.rest.vaccine.temp[index].typeid,
-      cometime: this.time.datetoisodate(this.rest.vaccine.temp[index].cometime),
-      calltime: this.time.datetoisodate(this.rest.vaccine.temp[index].calltime),
+      id: this.rest.vaccine.temp[this.segment][index].id,
+      name: this.rest.vaccine.temp[this.segment][index].name,
+      phone: this.rest.vaccine.temp[this.segment][index].phone,
+      typeid: this.rest.vaccine.temp[this.segment][index].typeid,
+      cometime: this.time.datetoisodate(this.rest.vaccine.temp[this.segment][index].cometime),
+      calltime: this.time.datetoisodate(this.rest.vaccine.temp[this.segment][index].calltime),
     }
 
     this.rest.router.navigateByUrl('/modal/insert')
@@ -385,7 +432,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async done(index: number) {
-    let data = this.rest.vaccine.temp[index]
+    let data = this.rest.vaccine.temp[this.segment][index]
 
     if (!data.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!data.phone.length) this.rest.notify('Chưa nhập số điện thoại')
@@ -417,6 +464,8 @@ export class ManagerPage implements OnInit {
       id: id,
       temp: 1
     }).then(resp => {
+      this.selected = {}
+      this.toggle = false
       this.rest.vaccine.temp = resp.temp
       if (resp.old) {
         this.rest.temp.list = resp.old
@@ -424,7 +473,7 @@ export class ManagerPage implements OnInit {
         this.rest.temp.prv = 'temp'
         this.rest.temp.oname = resp.name
         this.rest.temp.ophone = resp.phone
-        this.rest.navCtrl.navigateForward('/vaccine/recall')
+        if (!this.rest.temp.list.length) this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
       this.rest.defreeze()
     }, () => {

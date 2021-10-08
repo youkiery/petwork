@@ -1,8 +1,10 @@
-<ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.back()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div *ngIf="rest.action == 'item'">
@@ -17,7 +19,7 @@
       </ion-item>
     </div>
     <div *ngIf="!list.length" class="text-center">
-        Nhập tên hàng hóa
+      Nhập tên hàng hóa
     </div>
   </div>
   <div *ngIf="rest.temp.action != 'expire'">
@@ -31,7 +33,8 @@
       </ion-item>
     </div>
     <div *ngIf="!list.length" class="text-center">
-      Nhập số điện thoại tìm kiếm khách hàng, nếu không có, chọn <img class="clear-img" style="width: 16px" src="/assets/icon/select.png">
+      Nhập số điện thoại tìm kiếm khách hàng, nếu không có, chọn <img class="clear-img" style="width: 16px"
+        src="/assets/icon/select.png">
     </div>
   </div>
 </ion-content>

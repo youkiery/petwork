@@ -1,18 +1,21 @@
-<ion-toolbar color="success">
-  <ion-button slot="start" color="light" fill="clear" (click)="rest.back()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-  <!-- <ion-button slot="end" (click)="vaccine()" color="light" fill="clear">
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button slot="start" color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <!-- <ion-button slot="end" (click)="vaccine()" color="light" fill="clear">
     Lọc
   </ion-button> -->
-</ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
 
 <ion-content>
   <div *ngIf="rest.action == 'spa'">
     <div *ngFor="let item of this.rest.spa.old; let i = index" class="stl-card green">
       <div class="quara-left">
         Thời gian: {{item.hour}} <br>
-        Đánh giá: 
+        Đánh giá:
         <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
         <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
         <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>

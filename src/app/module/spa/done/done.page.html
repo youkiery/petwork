@@ -1,12 +1,14 @@
-<ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.back()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
 
-  <ion-button *ngIf="!rest.temp.manager" slot="end" color="light" fill="clear" (click)="done()">
-    Xác nhận
-  </ion-button>
-</ion-toolbar>
+    <ion-button *ngIf="!rest.temp.manager" slot="end" color="light" fill="clear" (click)="done()">
+      Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div id="pwa" style="display: none;">
@@ -76,7 +78,7 @@
       <div class="heading">
         Báo cáo Thành quả sau spa
       </div>
-  
+
       <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
       <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
         <img class="thumbnail" [src]="item">
@@ -87,7 +89,7 @@
       <div class="heading">
         Người thực hiện
       </div>
-      
+
       <ion-radio-group [(ngModel)]="rest.temp.uid">
         <ion-item *ngFor="let doctor of rest.spa.doctor">
           <ion-label> {{doctor.name}} </ion-label>

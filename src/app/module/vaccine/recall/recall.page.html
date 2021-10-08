@@ -1,11 +1,13 @@
-<ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.back()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-  <ion-button slot="end" color="light" fill="clear" (click)="done()">
-    Xác nhận
-  </ion-button>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" color="light" fill="clear" (click)="done()">
+      Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
@@ -14,7 +16,7 @@
       Chọn xác nhận để hoàn tất
     </div>
     <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">
-      <div [class]="selected[i] ? 'tick' : ''"></div>
+      <div [class]="selected[i] ? 'tick' : 'untick'"></div>
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>

@@ -1,39 +1,47 @@
-<ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.back()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
 
-  <ion-button *ngIf="rest.action == 'item'" slot="end" color="light" fill="clear" (click)="insertPosItemSubmit()">
-    Thêm hàng hóa
-  </ion-button>
+    <ion-button *ngIf="rest.action == 'item'" slot="end" color="light" fill="clear" (click)="insertPosItemSubmit()">
+      Thêm hàng hóa
+    </ion-button>
 
-  <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="light" fill="clear">
-    Hủy
-  </ion-button>
-  <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="light" fill="clear">
-    Thêm
-  </ion-button>
-  <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" slot="end" (click)="updateHistorySubmit()" color="light" fill="clear">
-    Cập nhật & Xác nhận
-  </ion-button>
+    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="light" fill="clear">
+      Hủy
+    </ion-button>
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="light"
+      fill="clear">
+      Thêm
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" slot="end"
+      (click)="updateHistorySubmit()" color="light" fill="clear">
+      Cập nhật & Xác nhận
+    </ion-button>
 
-  <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route && !rest.temp.prv" slot="end" (click)="updateSubmit()" color="light" fill="clear">
-    Cập nhật
-  </ion-button>
-  <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route" slot="end" (click)="insertVaccineHistorySubmit()" color="light" fill="clear">
-    Thêm & Xác nhận
-  </ion-button>
-  <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="light" fill="clear">
-    Thêm
-  </ion-button>
-  <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="light" fill="clear">
-    Cập nhật
-  </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route && !rest.temp.prv" slot="end"
+      (click)="updateSubmit()" color="light" fill="clear">
+      Cập nhật
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route" slot="end"
+      (click)="insertVaccineHistorySubmit()" color="light" fill="clear">
+      Thêm & Xác nhận
+    </ion-button>
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="light"
+      fill="clear">
+      Thêm
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="light"
+      fill="clear">
+      Cập nhật
+    </ion-button>
 
-  <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="light" fill="clear">
-    Lưu
-  </ion-button>
-</ion-toolbar>
+    <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="light" fill="clear">
+      Lưu
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div *ngIf="rest.action == 'item'">
@@ -60,20 +68,20 @@
     <ion-item>
       <ion-label position="stacked"> Số lượng mẫu </ion-label>
       <ion-input [(ngModel)]="rest.temp.number" (ionChange)="changeNumber()"></ion-input>
-    </ion-item> 
-  
+    </ion-item>
+
     <ion-item>
       <ion-label position="stacked"> Số đầu </ion-label>
       <ion-input [(ngModel)]="rest.temp.start" readonly="true"></ion-input>
       <ion-icon name="enter-outline" slot="end" (click)="inout('in')"></ion-icon>
     </ion-item>
-  
+
     <ion-item>
       <ion-label position="stacked"> Số cuối </ion-label>
       <ion-input [(ngModel)]="rest.temp.end" readonly="true"></ion-input>
       <ion-icon name="exit-outline" slot="end" (click)="inout('out')"></ion-icon>
     </ion-item>
-  
+
     <ion-item>
       <ion-label position="stacked"> Mục đích </ion-label>
       <ion-input [(ngModel)]="rest.temp.target"></ion-input>

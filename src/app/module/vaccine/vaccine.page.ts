@@ -23,6 +23,8 @@ export class VaccinePage {
     3: 'stl-card green',
     4: 'stl-card red',
   }
+  public segment = '0'
+  public key = ''
   constructor(
     public rest: RestService,
     public alert: AlertController,
@@ -30,34 +32,36 @@ export class VaccinePage {
   ) { }
 
   public async ionViewDidEnter() {
+    this.key = ''
+    this.rest.vaccine.keyword = ''
     this.rest.ready().then(() => {
-      this.init()
+      if (this.rest.vaccine.init) this.filter()
+      else this.init()
     })
   }
 
   public async init() {
-    if (!this.rest.vaccine.init) {
-      await this.rest.freeze('Đang tải danh sách')
-      this.rest.checkpost('vaccine', 'auto', { }).then(resp => {
-        this.rest.vaccine.init = true
-        this.rest.vaccine.new = resp.new
-        this.rest.vaccine.list = resp.list
-        this.rest.vaccine.type = resp.type
-        this.rest.vaccine.temp = resp.temp
-        this.rest.vaccine.doctor = resp.doctor
-        this.rest.vaccine.over = resp.over
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
-    }
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
+      this.rest.vaccine.init = true
+      this.rest.vaccine.new = resp.new
+      this.rest.vaccine.list = resp.list
+      this.rest.vaccine.type = resp.type
+      this.rest.vaccine.temp = resp.temp
+      this.rest.vaccine.doctor = resp.doctor
+      this.rest.vaccine.over = resp.over
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine', 'search', {
-      keyword: this.rest.vaccine.keyword
+      keyword: this.key
     }).then(resp => {
+      this.rest.vaccine.keyword = this.key
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -67,7 +71,7 @@ export class VaccinePage {
 
   public insert() {
     this.rest.action = 'vaccine'
-    
+
     this.rest.temp = { id: 0, name: '', phone: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next) }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
@@ -75,12 +79,12 @@ export class VaccinePage {
   public update(index: number) {
     this.rest.action = 'vaccine'
     this.rest.temp = {
-      id: this.rest.vaccine.list[index].id,
-      name: this.rest.vaccine.list[index].name,
-      phone: this.rest.vaccine.list[index].phone,
-      typeid: this.rest.vaccine.list[index].typeid,
-      cometime: this.time.datetoisodate(this.rest.vaccine.list[index].cometime),
-      calltime: this.time.datetoisodate(this.rest.vaccine.list[index].calltime),
+      id: this.rest.vaccine.list[this.segment][index].id,
+      name: this.rest.vaccine.list[this.segment][index].name,
+      phone: this.rest.vaccine.list[this.segment][index].phone,
+      typeid: this.rest.vaccine.list[this.segment][index].typeid,
+      cometime: this.time.datetoisodate(this.rest.vaccine.list[this.segment][index].cometime),
+      calltime: this.time.datetoisodate(this.rest.vaccine.list[this.segment][index].calltime),
     }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
@@ -93,7 +97,7 @@ export class VaccinePage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.vaccine.list[index].note
+        value: this.rest.vaccine.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -113,7 +117,7 @@ export class VaccinePage {
   public async calledSubmit(index: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'called', {
-      id: this.rest.vaccine.list[index].id,
+      id: this.rest.vaccine.list[this.segment][index].id,
       note: note,
       keyword: this.rest.vaccine.keyword
     }).then(resp => {
@@ -134,7 +138,7 @@ export class VaccinePage {
         type: 'text',
         label: 'Ghi chú',
         name: 'note',
-        value: this.rest.vaccine.list[index].note
+        value: this.rest.vaccine.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -154,7 +158,7 @@ export class VaccinePage {
   public async uncalledSubmit(index: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'uncalled', {
-      id: this.rest.vaccine.list[index].id,
+      id: this.rest.vaccine.list[this.segment][index].id,
       note: note,
       keyword: this.rest.vaccine.keyword
     }).then(resp => {
@@ -189,7 +193,7 @@ export class VaccinePage {
   public async doneSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'done', {
-      id: this.rest.vaccine.list[index].id,
+      id: this.rest.vaccine.list[this.segment][index].id,
       keyword: this.rest.vaccine.keyword
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
@@ -207,7 +211,7 @@ export class VaccinePage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.vaccine.list[index].note
+        value: this.rest.vaccine.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -228,7 +232,7 @@ export class VaccinePage {
   public async deadSubmit(index: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'dead', {
-      id: this.rest.vaccine.list[index].id,
+      id: this.rest.vaccine.list[this.segment][index].id,
       note: note,
       keyword: this.rest.vaccine.keyword
     }).then((resp) => {
