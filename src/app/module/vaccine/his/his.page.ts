@@ -36,6 +36,7 @@ export class HisPage {
       id: v.id,
       name: v.name,
       phone: v.phone,
+      address: v.address,
       typeid: v.typeid,
       cometime: this.time.datetoisodate(this.rest.home.today),
       calltime: this.time.datetoisodate(this.rest.home.next) 

@@ -49,6 +49,7 @@
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+        <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
         Địa chỉ: {{item.address}}
       </div>
       <div class="col-xs-6">
@@ -73,6 +74,7 @@
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+        <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
         Địa chỉ: {{item.address}}
       </div>
       <div class="col-xs-6">
@@ -80,7 +82,8 @@
         Ngày đến: {{item.cometime}} <br>
         Loại nhắc: {{item.vaccine}} <br>
         <span *ngIf="item.called"> Gọi nhắc cuối: <span [class]="item.called == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item.called}} </span> <br> </span>
-        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span> <br>
+        Người tiêm: {{item.doctor}} 
       </div>
       <div class="upperline">
         Ghi chú: {{item.note}}

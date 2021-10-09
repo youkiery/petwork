@@ -187,13 +187,13 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'doneall', {
       list: list
     }).then(resp => {
-      this.rest.action = 'vaccine'
-      this.rest.temp.prv = 'temp'
       this.rest.vaccine.temp = resp.list
       this.selected = {}
 
       if (resp.old.length) {
         this.rest.temp.list = resp.old
+        this.rest.action = 'vaccine'
+        this.rest.temp.prv = 'temp'
         this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
       this.rest.defreeze()
@@ -204,14 +204,19 @@ export class ManagerPage implements OnInit {
 
   public update(index: number) {
     this.rest.action = 'vaccine'
+    let item = this.rest.vaccine.temp[this.segment][index]
+    if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
+    item.cometime = this.time.datetoisodate(item.cometime)
     this.rest.temp = {
       prv: 'temp',
-      id: this.rest.vaccine.temp[this.segment][index].id,
-      name: this.rest.vaccine.temp[this.segment][index].name,
-      phone: this.rest.vaccine.temp[this.segment][index].phone,
-      typeid: this.rest.vaccine.temp[this.segment][index].typeid,
-      cometime: this.time.datetoisodate(this.rest.vaccine.temp[this.segment][index].cometime),
-      calltime: this.time.datetoisodate(this.rest.vaccine.temp[this.segment][index].calltime),
+      id: item.id,
+      name: item.name,
+      phone: item.phone,
+      address: item.address,
+      typeid: item.typeid,
+      cometime: item.cometime,
+      calltime: item.calltime,
+      note: item.note,
     }
 
     this.rest.router.navigateByUrl('/modal/insert')
@@ -470,13 +475,13 @@ export class ManagerPage implements OnInit {
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.temp
-      if (resp.old) {
+      if (resp.old.length) {
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
         this.rest.temp.prv = 'temp'
         this.rest.temp.oname = resp.name
         this.rest.temp.ophone = resp.phone
-        if (!this.rest.temp.list.length) this.rest.navCtrl.navigateForward('/vaccine/recall')
+        this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
       this.rest.defreeze()
     }, () => {

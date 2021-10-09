@@ -31,10 +31,10 @@ export class VaccinePage {
     public time: TimeService
   ) { }
 
-  public async ionViewDidEnter() {
+  public async ionViewWillEnter() {
+    this.rest.vaccine.list = [[], [], []]
     this.key = ''
     this.rest.vaccine.keyword = ''
-    this.rest.vaccine.list = [[], [], []]
     this.rest.ready().then(() => {
       if (this.rest.vaccine.init) this.filter()
       else this.init()
@@ -73,19 +73,22 @@ export class VaccinePage {
   public insert() {
     this.rest.action = 'vaccine'
 
-    this.rest.temp = { id: 0, name: '', phone: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next) }
+    this.rest.temp = { id: 0, name: '', phone: '', address: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
   public update(index: number) {
     this.rest.action = 'vaccine'
+    let item = this.rest.vaccine.list[this.segment][index]
     this.rest.temp = {
-      id: this.rest.vaccine.list[this.segment][index].id,
-      name: this.rest.vaccine.list[this.segment][index].name,
-      phone: this.rest.vaccine.list[this.segment][index].phone,
-      typeid: this.rest.vaccine.list[this.segment][index].typeid,
-      cometime: this.time.datetoisodate(this.rest.vaccine.list[this.segment][index].cometime),
-      calltime: this.time.datetoisodate(this.rest.vaccine.list[this.segment][index].calltime),
+      id: item.id,
+      name: item.name,
+      phone: item.phone,
+      address: item.address,
+      typeid: item.typeid,
+      cometime: this.time.datetoisodate(item.cometime),
+      calltime: this.time.datetoisodate(item.calltime),
+      note: item.note,
     }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }

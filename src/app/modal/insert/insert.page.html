@@ -115,6 +115,10 @@
       <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
     </ion-item>
     <ion-item>
+      <ion-label position="stacked"> Địa chỉ </ion-label>
+      <ion-input [(ngModel)]="rest.temp.address"> </ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label position="stacked"> Loại tiêm phòng </ion-label>
       <ion-select [(ngModel)]="rest.temp.typeid">
         <ion-select-option *ngFor="let item of rest.vaccine.type; let i = index" [value]="item.id">

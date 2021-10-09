@@ -180,6 +180,7 @@ export class InsertPage {
         this.rest.vaccine.new = resp.new
         this.clear()
         this.rest.defreeze()
+        this.rest.back()
       }, () => {
         this.rest.defreeze()
       })
