@@ -188,9 +188,9 @@
       <div class="upperline">
         Ghi chú: {{item.note}}
       </div>
-      <img class="icon" src="/assets/icon/done.png" (click)="done(i)">
-      <img class="right" src="/assets/icon/update.png" (click)="update(i)">
-      <img class="right" src="/assets/icon/delete.png" (click)="remove(i)">
+      <img *ngIf="segment == 0" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="segment == 0" class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="segment == 0" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
     </div>
   </div>
 </ion-content>

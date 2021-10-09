@@ -204,8 +204,9 @@ export class ManagerPage implements OnInit {
 
   public update(index: number) {
     this.rest.action = 'vaccine'
-    let item = this.rest.vaccine.temp[this.segment][index]
+    let item = JSON.parse(JSON.stringify(this.rest.vaccine.temp[this.segment][index])) 
     if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
+    else item.calltime = this.time.datetoisodate(item.calltime)
     item.cometime = this.time.datetoisodate(item.cometime)
     this.rest.temp = {
       prv: 'temp',
@@ -408,7 +409,7 @@ export class ManagerPage implements OnInit {
     else this.name = 'Chưa chọn file'
   }
 
-  public async remove(id: number) {
+  public async remove(index: number) {
     const alert = await this.alert.create({
       header: 'Xác nhận xóa lịch nhắc',
       subHeader: 'Sau khi xác nhận lịch nhắc sẽ biến mất',
@@ -419,7 +420,7 @@ export class ManagerPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.removeSubmit(id)
+            this.removeSubmit(index)
           }
         }
       ]
@@ -427,10 +428,10 @@ export class ManagerPage implements OnInit {
     await alert.present();
   }
 
-  public async removeSubmit(id: number) {
+  public async removeSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'removetemp', {
-      id: id
+      id: this.rest.vaccine.temp[this.segment][index].id
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
       this.rest.defreeze()

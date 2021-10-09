@@ -56,7 +56,8 @@
         Ngày nhắc: {{item.calltime}} <br>
         Ngày đến: {{item.cometime}} <br>
         Loại nhắc: {{item.vaccine}} <br>
-        <span *ngIf="item.called"> Gọi nhắc cuối: <span [class]="item.called == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item.called}} </span> </span>
+        <span *ngIf="item.called"> Gọi nhắc cuối: <span [class]="item.called == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item.called}} </span> <br> </span>
+        Người tiêm: {{item.doctor}} 
       </div>
       <div class="upperline">
         Ghi chú: {{item.note}}
