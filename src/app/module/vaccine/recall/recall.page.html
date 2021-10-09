@@ -19,7 +19,8 @@
       <div [class]="selected[i] ? 'tick' : 'untick'"></div>
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
-        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>
+        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+        <span *ngIf="item.petname"> Tên thú: {{item.petname}} </span>
         <br>
       </div>
       <div class="col-xs-6">
