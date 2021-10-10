@@ -27,6 +27,7 @@ export class ManagerPage implements OnInit {
   public selected = {}
   public segment = "0"
   public option = []
+  public option2 = []
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -41,7 +42,7 @@ export class ManagerPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
     if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
-    this.rest.vaccine.doctor.forEach(item => {
+    this.rest.vaccine.doctor.forEach((item, index) => {
       this.option.push({
         name: 'userid',
         type: 'radio',
@@ -50,6 +51,64 @@ export class ManagerPage implements OnInit {
         checked: (this.rest.home.userid == item.userid ? true : false)
       })
     });
+  }
+
+  public async docs() {
+    let option = []
+    this.rest.vaccine.doctor.forEach((item, index) => {
+      option.push({
+        name: 'check',
+        type: 'checkbox',
+        label: item.name,
+        value: index,
+        checked: (this.rest.vaccine.docs.indexOf(item.userid) >= 0 ? true : false)
+      })
+    })
+    const alert = await this.alert.create({
+      header: 'Lọc nhân viên',
+      inputs: option,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            let cover = []
+            let docs = []
+            e.forEach((index: number) => {
+              cover.push(this.rest.vaccine.doctor[index].name)
+              docs.push(this.rest.vaccine.doctor[index].userid)
+            });
+            
+            this.rest.vaccine.docs = docs
+            this.rest.vaccine.docscover = cover.join(', ')
+            this.filter()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async filter() {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('vaccine', 'tempauto', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
+    }).then(resp => {
+      this.selected = {}
+      this.toggle = false
+      this.rest.vaccine.temp = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public selectbox(id: number) {
@@ -106,6 +165,8 @@ export class ManagerPage implements OnInit {
   public async transferAllSubmit(list: any, uid: number) {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('vaccine', 'transfer', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
       list: list,
       uid: uid
     }).then(resp => {
@@ -143,6 +204,8 @@ export class ManagerPage implements OnInit {
   public async removeAllSubmit(list: any) {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('vaccine', 'removeall', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
       list: list,
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
@@ -185,6 +248,8 @@ export class ManagerPage implements OnInit {
   public async doneAllSubmit(list: any) {
     await this.rest.freeze('Đang xác nhận...')
     this.rest.checkpost('vaccine', 'doneall', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
       list: list
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
@@ -210,6 +275,8 @@ export class ManagerPage implements OnInit {
     item.cometime = this.time.datetoisodate(item.cometime)
     this.rest.temp = {
       prv: 'temp',
+      docs: this.rest.vaccine.docs,
+      time: this.rest.vaccine.time,
       id: item.id,
       petname: item.petname,
       name: item.name,
@@ -382,6 +449,11 @@ export class ManagerPage implements OnInit {
       body.append('session', this.rest.session);
       body.append('type', 'vaccine');
       body.append('action', 'excel');
+      body.append('time', this.rest.vaccine.time);
+
+      this.rest.vaccine.docs.forEach((item: any) => {
+        body.append('docs[]', item)
+      })
 
       this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
         this.rest.defreeze()
@@ -432,6 +504,8 @@ export class ManagerPage implements OnInit {
   public async removeSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'removetemp', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
       id: this.rest.vaccine.temp[this.segment][index].id
     }).then(resp => {
       this.rest.vaccine.temp = resp.list
@@ -471,6 +545,8 @@ export class ManagerPage implements OnInit {
   public async doneSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'confirm', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
       id: id,
       temp: 1
     }).then(resp => {
@@ -483,6 +559,7 @@ export class ManagerPage implements OnInit {
         this.rest.temp.prv = 'temp'
         this.rest.temp.oname = resp.name
         this.rest.temp.ophone = resp.phone
+        this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
       this.rest.defreeze()
@@ -501,7 +578,10 @@ export class ManagerPage implements OnInit {
 
   public async reloadTemp(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('vaccine', 'tempauto', {}).then(resp => {
+    this.rest.checkpost('vaccine', 'tempauto', {
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs,
+    }).then(resp => {
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.list

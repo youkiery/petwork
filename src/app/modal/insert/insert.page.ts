@@ -100,6 +100,7 @@ export class InsertPage {
         this.rest.temp.ophone = this.rest.temp.phone
         this.rest.temp.vid = resp.vid
         this.rest.vaccine.new = resp.new
+        this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         if (resp.old.length) {
           this.rest.temp.list = resp.old
           this.rest.navCtrl.navigateForward('/vaccine/recall')
@@ -207,6 +208,7 @@ export class InsertPage {
         this.rest.temp.ophone = this.rest.temp.phone
         this.rest.vaccine.temp = resp.list
         this.rest.temp.vid = this.rest.temp.id
+        this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         this.rest.back()
         if (resp.old.length) {
           this.rest.temp.list = resp.old

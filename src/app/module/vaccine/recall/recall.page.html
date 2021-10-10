@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-button color="light" fill="clear" (click)="rest.back()">
+    <ion-button *ngIf="!(rest.temp.id && rest.action == 'vaccine' && rest.temp.prv)" color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" color="light" fill="clear" (click)="rest.navCtrl.navigateForward('/vaccine/manager')">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
     <ion-button slot="end" color="light" fill="clear" (click)="done()">
@@ -11,10 +14,33 @@
 
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
+    <div *ngIf="rest.temp.ov.phone.length">
+      <div class="heading">
+        Dữ liệu trước đó
+      </div>
+  
+      <div class="stl-card">
+        <div class="col-xs-6">
+          Thú cưng: {{rest.temp.ov.petname}} <br>
+          Tên khách: {{rest.temp.ov.name}} <br>
+          Điện thoại: <a [href]="'tel:' + rest.temp.ov.phone">{{rest.temp.ov.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+          <span *ngIf="rest.temp.ov.petname"> Tên thú: {{rest.temp.ov.petname}} </span>
+          <br>
+        </div>
+        <div class="col-xs-6">
+          Loại nhắc: {{rest.typeSearch(rest.temp.ov.typeid)}} <br>
+          Ngày đến: {{time.isodatetodate(rest.temp.ov.cometime)}} <br>
+          Ngày nhắc: {{time.isodatetodate(rest.temp.ov.calltime)}} <br>
+          Ghi chú: {{rest.temp.ov.note}} <br>
+        </div>
+      </div>
+    </div>
+
     <div class="heading">
       Click chọn danh sách phiếu nhắc cần hoàn thành <br>
       Chọn xác nhận để hoàn tất
     </div>
+
     <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">
       <div [class]="selected[i] ? 'tick' : 'untick'"></div>
       <div class="col-xs-6">

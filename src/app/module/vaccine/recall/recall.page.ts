@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-recall',
@@ -21,6 +22,7 @@ export class RecallPage {
   public selected = {}
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public alert: AlertController
   ) { }
 

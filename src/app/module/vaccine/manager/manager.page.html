@@ -162,6 +162,19 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
+    <ion-item *ngIf="rest.config.vaccine > 1">
+      <ion-label position="stacked"> Lọc các phiếu thêm trước ngày </ion-label>
+      <ion-datetime [(ngModel)]="rest.vaccine.time" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="filter()"></ion-datetime>
+    </ion-item>
+    <ion-item (click)="docs()" *ngIf="rest.config.vaccine > 1">
+      <span *ngIf="rest.vaccine.docscover.length">
+        Bác sĩ: {{rest.vaccine.docscover}}
+      </span>
+      <span *ngIf="!rest.vaccine.docscover.length">
+        Click lọc theo nhân viên
+      </span>
+    </ion-item>
+
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
         <ion-label> Chưa xác nhận </ion-label>
@@ -174,7 +187,7 @@
     <div *ngFor="let item of rest.vaccine.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
       <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
       <div class="col-xs-6">
-        <span [class]="item.petname.length ? '' : 'redden'"> Thú cưng: {{item.petname}} </span> <br>
+        <span [class]="item.petname.length ? '' : 'pinky'"> Thú cưng: {{item.petname}} </span> <br>
         <span [class]="item.name.length ? '' : 'redden'"> Tên khách: {{item.name}} </span> <br>
         <span [class]="item.name.length ? '' : 'redden'"> Điện thoại: {{item.phone}} </span> <br>
         <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
@@ -187,7 +200,8 @@
         Người làm: {{item.doctor}}
       </div>
       <div class="upperline">
-        Ghi chú: {{item.note}}
+        Ghi chú: {{item.note}} <br>
+        Ngày thêm: {{item.time}} <br>
       </div>
       <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
       <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">

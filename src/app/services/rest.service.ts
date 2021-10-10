@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
 import {
   ActionPerformed,
   PushNotificationSchema,
@@ -33,7 +33,7 @@ export class RestService {
   }
   public session = ''
   public cart = { list: [], init: false }
-  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '' }
+  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
   public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''}, search: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
@@ -87,6 +87,14 @@ export class RestService {
         }
       }, 100)
     })
+  }
+
+  public typeSearch(typeid = 0) {
+    let type = ''
+    this.vaccine.type.forEach(item => {
+      if (item.id == typeid) type = item.name
+    })
+    return type
   }
 
   public async subscribe() {

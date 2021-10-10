@@ -40,7 +40,10 @@ export class VaccinePage {
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('vaccine', 'auto', {}).then(resp => {
+    this.rest.checkpost('vaccine', 'auto', {
+      docs: this.rest.vaccine.docs,
+      time: this.rest.vaccine.time,
+    }).then(resp => {
       this.rest.vaccine.init = true
       this.rest.vaccine.new = resp.new
       this.rest.vaccine.list = resp.list

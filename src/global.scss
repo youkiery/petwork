@@ -116,12 +116,16 @@ ion-badge {
   font-weight: bold;
 }
 
-.redden {
+.redden, .pinky {
   background: red;
   font-weight: bold;
   color: white;
-  padding: 2px;
+  padding: 1px;
   border-radius: 5px;
+}
+
+.pinky {
+  background: #f99;
 }
 
 .bolder {
