@@ -16,10 +16,10 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
+  // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
   public home = {
     name: '',
@@ -43,7 +43,7 @@ export class RestService {
   public schedule = { time: 0, list: [], except: [], data: [] }
   public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [], keyword: '', toggle: false, from: '', end: '' }
   public target = {}
-  public profile = {}
+  public profile = { init: false, page: 1, target: [], data2: {}}
   public admin = { init: false, list: [] }
 
   public action: string = ''

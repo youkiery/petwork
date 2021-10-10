@@ -86,6 +86,7 @@ export class RecallPage {
     this.rest.checkpost('vaccine', 'donerecall', {
       list : this.getselectedid(),
     }).then(resp => {
+      this.rest.vaccine.new = resp.new
       this.rest.temp.list = this.rest.temp.list.filter((item: any, i: string) => {
         if (index.indexOf(i.toString()) < 0) return true
       })

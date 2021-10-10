@@ -22,6 +22,9 @@
       Góp ý
     </ion-fab-button>
   </ion-fab> -->
+  <ion-refresher slot="fixed" (ionRefresh)="filterR($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <div *ngIf="!rest.vaccine.keyword">
     <ion-segment [(ngModel)]="segment">
@@ -47,9 +50,9 @@
   
     <div *ngFor="let item of this.rest.vaccine.list[segment]; let i = index" [class]="item.over ? 'stl-card red' : status[item.status]">
       <div class="col-xs-6">
+        Thú cưng: {{item.petname}} <br>
         Tên khách: {{item.name}} <br>
         Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
-        <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
         Địa chỉ: {{item.address}}
       </div>
       <div class="col-xs-6">

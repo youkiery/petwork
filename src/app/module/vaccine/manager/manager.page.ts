@@ -211,6 +211,7 @@ export class ManagerPage implements OnInit {
     this.rest.temp = {
       prv: 'temp',
       id: item.id,
+      petname: item.petname,
       name: item.name,
       phone: item.phone,
       address: item.address,

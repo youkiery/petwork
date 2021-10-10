@@ -115,6 +115,10 @@
       <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
     </ion-item>
     <ion-item>
+      <ion-label position="stacked"> Thú cưng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.petname"> </ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label position="stacked"> Địa chỉ </ion-label>
       <ion-input [(ngModel)]="rest.temp.address"> </ion-input>
     </ion-item>
@@ -144,6 +148,7 @@
     <div *ngIf="!rest.temp.prv">
       <div class="stl-card" *ngFor="let item of this.rest.vaccine.new; let i = index">
         <div class="col-xs-6">
+          Thú cưng: {{item.petname}} <br>
           Tên khách: {{item.name}} <br>
           Điện thoại: {{item.phone}}
         </div>

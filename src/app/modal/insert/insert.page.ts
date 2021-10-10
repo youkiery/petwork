@@ -158,11 +158,13 @@ export class InsertPage {
   }
 
   public update(index: number) {
-  
     this.rest.temp = {
+      ppv: '1',
       id: this.rest.vaccine.new[index].id,
       name: this.rest.vaccine.new[index].name,
       phone: this.rest.vaccine.new[index].phone,
+      address: this.rest.vaccine.new[index].address,
+      petname: this.rest.vaccine.new[index].petname,
       typeid: this.rest.vaccine.new[index].typeid,
       cometime: this.time.datetoisodate(this.rest.vaccine.new[index].cometime),
       calltime: this.time.datetoisodate(this.rest.vaccine.new[index].calltime),
@@ -178,9 +180,9 @@ export class InsertPage {
       await this.rest.freeze('Cập nhật lịch nhắc...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
-        this.clear()
         this.rest.defreeze()
-        this.rest.back()
+        if (this.rest.temp.ppv) this.clear()
+        else this.rest.back()
       }, () => {
         this.rest.defreeze()
       })
@@ -222,6 +224,7 @@ export class InsertPage {
     this.rest.temp.route = ''
     this.rest.temp.name = ''
     this.rest.temp.phone = ''
+    this.rest.temp.petname = ''
     this.rest.temp.note = ''
   }
 

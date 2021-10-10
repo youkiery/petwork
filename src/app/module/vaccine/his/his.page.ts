@@ -34,10 +34,12 @@ export class HisPage {
     this.rest.temp = { 
       route: 'history',
       id: v.id,
+      petname: v.petname,
       name: v.name,
       phone: v.phone,
       address: v.address,
       typeid: v.typeid,
+      note: v.note,
       cometime: this.time.datetoisodate(this.rest.home.today),
       calltime: this.time.datetoisodate(this.rest.home.next) 
     }

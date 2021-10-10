@@ -32,12 +32,9 @@ export class VaccinePage {
   ) { }
 
   public async ionViewWillEnter() {
-    this.rest.vaccine.list = [[], [], []]
-    this.key = ''
-    this.rest.vaccine.keyword = ''
     this.rest.ready().then(() => {
-      if (this.rest.vaccine.init) this.filter()
-      else this.init()
+      this.key = this.rest.vaccine.keyword
+      if (!this.rest.vaccine.init) this.init()
     })
   }
 
@@ -70,10 +67,24 @@ export class VaccinePage {
     })
   }
 
+  public async filterR(event: any) {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('vaccine', 'search', {
+      keyword: this.key
+    }).then(resp => {
+      event.target.complete();
+      this.rest.vaccine.keyword = this.key
+      this.rest.vaccine.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public insert() {
     this.rest.action = 'vaccine'
 
-    this.rest.temp = { id: 0, name: '', phone: '', address: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
+    this.rest.temp = { id: 0, petname: '', name: '', phone: '', address: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
@@ -82,6 +93,7 @@ export class VaccinePage {
     let item = this.rest.vaccine.list[this.segment][index]
     this.rest.temp = {
       id: item.id,
+      petname: item.petname,
       name: item.name,
       phone: item.phone,
       address: item.address,
@@ -95,7 +107,7 @@ export class VaccinePage {
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      header: 'Xác nhận không tiêm phòng',
+      header: 'Xác nhận Đã gọi',
       subHeader: 'Đã gọi khách hàng, xác nhận?',
       message: 'Ghi chú: ',
       inputs: [{
@@ -134,7 +146,7 @@ export class VaccinePage {
 
   public async uncalled(index: number) {
     const alert = await this.alert.create({
-      header: 'Xác nhận không tiêm phòng',
+      header: 'Xác nhận Không gọi được',
       subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
       message: 'Ghi chú: ',
       inputs: [{
@@ -207,7 +219,7 @@ export class VaccinePage {
 
   public async dead(index: number) {
     const alert = await this.alert.create({
-      header: 'Xác nhận không tiêm phòng',
+      header: 'Xác nhận khách không tiêm phòng',
       subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
       message: 'Ghi chú: ',
       inputs: [{

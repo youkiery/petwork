@@ -14,12 +14,13 @@
   <div class="heading">
     Chọn xác nhận lịch nhắc cũ dể ghi đè
   </div>
-  <div style="max-width: 400px; margin: auto; text-align: left;">
+  <div>
     Chủ nuôi: {{rest.temp.name}} <br>
-    Điện thoại: {{rest.temp.phone}} <br>
+    Điện thoại: {{rest.temp.phone}}
   </div>
   <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
     <div>
+      Thú cưng: {{item.petname}} <br>
       Loại nhắc: {{item.vaccine}} <br>
       Ngày đến: {{item.cometime}} <br>
       Ngày nhắc: {{item.calltime}} <br>
