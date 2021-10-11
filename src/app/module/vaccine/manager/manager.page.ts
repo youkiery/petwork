@@ -28,6 +28,7 @@ export class ManagerPage implements OnInit {
   public segment = "0"
   public option = []
   public option2 = []
+  public page = 1
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -96,12 +97,18 @@ export class ManagerPage implements OnInit {
     await alert.present();
   }
 
+  public moreTemp(event: any) {
+    this.page ++
+    event.target.complete()
+  }
+
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
+      this.page = 1
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.list

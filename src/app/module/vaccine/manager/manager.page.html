@@ -184,12 +184,12 @@
       </ion-segment-button>
     </ion-segment>
 
-    <div *ngFor="let item of rest.vaccine.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
+    <div *ngFor="let item of rest.vaccine.temp[segment] | slice:0:25 * page; let i = index" class="stl-card" (click)="selectbox(i)">
       <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
       <div class="col-xs-6">
         <span [class]="item.petname.length ? '' : 'pinky'"> Thú cưng: {{item.petname}} </span> <br>
-        <span [class]="item.name.length ? '' : 'redden'"> Tên khách: {{item.name}} </span> <br>
-        <span [class]="item.name.length ? '' : 'redden'"> Điện thoại: {{item.phone}} </span> <br>
+        <span [class]="item.phone.length ? '' : 'redden'"> Tên khách: {{item.name}} </span> <br>
+        <span [class]="item.phone.length ? '' : 'redden'"> Điện thoại: {{item.phone}} </span> <br>
         <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
         Địa chỉ: {{item.address}}
       </div>
@@ -207,6 +207,13 @@
       <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">
       <img *ngIf="segment == '0'" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
     </div>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="moreTemp($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Đang tải thêm...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>
 
