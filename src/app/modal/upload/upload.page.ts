@@ -278,4 +278,83 @@ export class UploadPage {
       this.rest.defreeze()
     })
   }
+
+  
+  
+  public async checkupdatePosition() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.updatePositionSubmit()
+    }
+  }
+
+  public async updatePositionCheck() {
+    this.count = 0
+    await this.rest.freeze('Đang tải ảnh...')
+    if (!this.rest.temp.image.length) this.updatePositionSubmit()
+    else this.rest.temp.image.forEach((image: any, index: number) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.updatePositionSubmit()
+        })
+      }
+      else this.updatePositionSubmit()
+    });
+  }
+
+  public async updatePositionSubmit() {
+    this.rest.checkpost('item', 'uppos', {
+      id: this.rest.temp.id,
+      pos: this.rest.temp.pos,
+      image: this.rest.temp.image,
+    }).then((resp) => {
+      this.rest.item.image[this.rest.temp.id] = this.rest.temp.image
+      this.rest.temp.list[this.rest.temp.prv].name = this.rest.temp.pos
+      this.rest.temp.list[this.rest.temp.prv].image = this.rest.temp.image
+      this.rest.defreeze()
+      this.rest.back()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async checkinsertPosition() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.insertPositionSubmit()
+    }
+  }
+
+  public async insertPositionCheck() {
+    this.count = 0
+    await this.rest.freeze('Đang tải ảnh...')
+    if (!this.rest.temp.image.length) this.insertPositionSubmit()
+    else this.rest.temp.image.forEach((image: any, index: number) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.insertPositionSubmit()
+        })
+      }
+      else this.insertPositionSubmit()
+    });
+  }
+
+  public async insertPositionSubmit() {
+    this.rest.checkpost('item', 'inpos', {
+      pos: this.rest.temp.pos,
+      image: this.rest.temp.image,
+    }).then((resp) => {
+      this.rest.item.image[resp.id] = resp.image
+      this.rest.temp.list.push({
+        name: this.rest.temp.pos,
+        list: []
+      })
+      this.rest.defreeze()
+      this.rest.back()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

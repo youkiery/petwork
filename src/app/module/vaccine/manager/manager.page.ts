@@ -215,6 +215,7 @@ export class ManagerPage implements OnInit {
       docs: this.rest.vaccine.docs,
       list: list,
     }).then(resp => {
+      this.selected = {}
       this.rest.vaccine.temp = resp.list
       this.rest.defreeze()
     }, () => {
@@ -451,7 +452,7 @@ export class ManagerPage implements OnInit {
     let body = new FormData();
     if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
     else {
-      this.rest.freeze('Đang tải dữ liệu...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       body.append('file', fileList[0]);
       body.append('session', this.rest.session);
       body.append('type', 'vaccine');

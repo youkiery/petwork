@@ -16,6 +16,9 @@
       Góp ý
     </ion-fab-button>
   </ion-fab> -->
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <div>
     Ngày hiện tại: {{time.timetodate(rest.schedule.time)}}
@@ -40,26 +43,38 @@
     </tr>
   </table>
 
-  <table style="font-size: 0.7em;" border="1" *ngIf="rest.config.schedule > 1">
-    <tr class="text-center">
-      <td>  </td>
-      <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
-    </tr>
-    <tr class="text-center">
-      <td style="width: 30%;"> Họ tên </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-      <td> S </td> <td> C </td>
-    </tr>
-    <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
-      <td> {{data.name}} </td>
-      <td *ngFor="let day of data.list; let j = index" (click)="reg2(i, j)" [class]="day"> </td>
-    </tr>
-  </table>
+  <div *ngIf="rest.config.schedule > 1">
+
+    <table style="font-size: 0.7em;" border="1">
+      <tr class="text-center">
+        <td>  </td>
+        <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
+      </tr>
+      <tr class="text-center">
+        <td style="width: 30%;"> Họ tên </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+        <td> S </td> <td> C </td>
+      </tr>
+      <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
+        <td> {{data.name}} </td>
+        <td *ngFor="let day of data.list; let j = index" (click)="reg2(i, j)" [class]="day"> </td>
+      </tr>
+    </table>
+
+    <ion-button size="small" [color]="rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 1; auto()">
+      <span> Lịch nghỉ </span>
+      <!-- *ngIf="rest.schedule.state" -->
+    </ion-button>
+    <ion-button size="small" [color]="!rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 0; auto()">
+      <span> Lịch trực </span>
+      <!-- *ngIf="!rest.schedule.state" -->
+    </ion-button>
+  </div>
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">

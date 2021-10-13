@@ -25,6 +25,7 @@ export class VaccinePage {
   }
   public segment = '0'
   public key = ''
+  public page = 1
   constructor(
     public rest: RestService,
     public alert: AlertController,
@@ -60,8 +61,11 @@ export class VaccinePage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine', 'search', {
-      keyword: this.key
+      keyword: this.key,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then(resp => {
+      this.page = 1
       this.rest.vaccine.keyword = this.key
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -70,10 +74,17 @@ export class VaccinePage {
     })
   }
 
+  public moreVaccine(event: any) {
+    this.page ++
+    event.target.complete()
+  }
+
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine', 'search', {
-      keyword: this.key
+      keyword: this.key,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then(resp => {
       event.target.complete();
       this.rest.vaccine.keyword = this.key
@@ -82,6 +93,49 @@ export class VaccinePage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async docs() {
+    let option = []
+    this.rest.vaccine.doctor.forEach((item, index) => {
+      option.push({
+        name: 'check',
+        type: 'checkbox',
+        label: item.name,
+        value: index,
+        checked: (this.rest.vaccine.docs.indexOf(item.userid) >= 0 ? true : false)
+      })
+    })
+    const alert = await this.alert.create({
+      header: 'Lọc nhân viên',
+      inputs: option,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            let cover = []
+            let docs = []
+            e.forEach((index: number) => {
+              cover.push(this.rest.vaccine.doctor[index].name)
+              docs.push(this.rest.vaccine.doctor[index].userid)
+            });
+            
+            this.rest.vaccine.docs = docs
+            this.rest.vaccine.docscover = cover.join(', ')
+            this.filter()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public insert() {
@@ -109,6 +163,16 @@ export class VaccinePage {
   }
 
   public async called(index: number) {
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.vaccine.list[index].id
+      note = this.rest.vaccine.list[index].note
+    }
+    else {
+      id = this.rest.vaccine.list[this.segment][index].id
+      note = this.rest.vaccine.list[this.segment][index].note
+    }
     const alert = await this.alert.create({
       header: 'Xác nhận Đã gọi',
       subHeader: 'Đã gọi khách hàng, xác nhận?',
@@ -116,7 +180,7 @@ export class VaccinePage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.vaccine.list[this.segment][index].note
+        value: note
       }],
       buttons: [
         {
@@ -125,7 +189,7 @@ export class VaccinePage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(index, e.note)
+            this.calledSubmit(id, e.note)
           }
         }
       ]
@@ -133,12 +197,14 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async calledSubmit(index: number, note: string) {
+  public async calledSubmit(id: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'called', {
-      id: this.rest.vaccine.list[this.segment][index].id,
+      id: id,
       note: note,
-      keyword: this.rest.vaccine.keyword
+      keyword: this.rest.vaccine.keyword,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -148,6 +214,16 @@ export class VaccinePage {
   }
 
   public async uncalled(index: number) {
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.vaccine.list[index].id
+      note = this.rest.vaccine.list[index].note
+    }
+    else {
+      id = this.rest.vaccine.list[this.segment][index].id
+      note = this.rest.vaccine.list[this.segment][index].note
+    }
     const alert = await this.alert.create({
       header: 'Xác nhận Không gọi được',
       subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
@@ -156,7 +232,7 @@ export class VaccinePage {
         type: 'text',
         label: 'Ghi chú',
         name: 'note',
-        value: this.rest.vaccine.list[this.segment][index].note
+        value: note
       }],
       buttons: [
         {
@@ -165,7 +241,7 @@ export class VaccinePage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.uncalledSubmit(index, e.note)
+            this.uncalledSubmit(id, e.note)
           }
         }
       ]
@@ -173,12 +249,14 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async uncalledSubmit(index: number, note: string) {
+  public async uncalledSubmit(id: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'uncalled', {
-      id: this.rest.vaccine.list[this.segment][index].id,
+      id: id,
       note: note,
-      keyword: this.rest.vaccine.keyword
+      keyword: this.rest.vaccine.keyword,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -188,6 +266,14 @@ export class VaccinePage {
   }
 
   public async done(index: number) {
+    let id = 0
+    if (this.key) {
+      id = this.rest.vaccine.list[index].id
+    }
+    else {
+      id = this.rest.vaccine.list[this.segment][index].id
+    }
+
     const alert = await this.alert.create({
       header: 'Xác nhận tiêm phòng',
       subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
@@ -198,7 +284,7 @@ export class VaccinePage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(index)
+            this.doneSubmit(id)
           }
         }
       ]
@@ -207,11 +293,13 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async doneSubmit(index: number) {
+  public async doneSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'done', {
-      id: this.rest.vaccine.list[this.segment][index].id,
-      keyword: this.rest.vaccine.keyword
+      id: id,
+      keyword: this.rest.vaccine.keyword,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -221,6 +309,17 @@ export class VaccinePage {
   }
 
   public async dead(index: number) {
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.vaccine.list[index].id
+      note = this.rest.vaccine.list[index].note
+    }
+    else {
+      id = this.rest.vaccine.list[this.segment][index].id
+      note = this.rest.vaccine.list[this.segment][index].note
+    }
+
     const alert = await this.alert.create({
       header: 'Xác nhận khách không tiêm phòng',
       subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
@@ -228,7 +327,7 @@ export class VaccinePage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.vaccine.list[this.segment][index].note
+        value: note
       }],
       buttons: [
         {
@@ -237,7 +336,7 @@ export class VaccinePage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(index, e.note)
+            this.deadSubmit(id, e.note)
           }
         }
       ]
@@ -246,12 +345,14 @@ export class VaccinePage {
     await alert.present();
   }
 
-  public async deadSubmit(index: number, note: string = '') {
+  public async deadSubmit(id: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'dead', {
-      id: this.rest.vaccine.list[this.segment][index].id,
+      id: id,
       note: note,
-      keyword: this.rest.vaccine.keyword
+      keyword: this.rest.vaccine.keyword,
+      time: this.rest.vaccine.time,
+      docs: this.rest.vaccine.docs
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()

@@ -25,9 +25,29 @@ export class ItemPage implements OnInit {
     })
   }
 
+  public async reload(event: any) {
+    await this.rest.freeze('Đang tải danh sách...')
+    this.rest.checkpost('item', 'init', {
+      keyword: this.rest.item.keyword
+    }).then(resp => {
+      this.rest.item.init = true
+      this.rest.item.purchase = resp.purchase
+      this.rest.item.transfer = resp.transfer
+      this.rest.item.expired = resp.expired
+      this.rest.item.list = resp.list
+      this.rest.item.all = resp.all
+      this.rest.item.image = resp.image
+      this.rest.item.catlist = resp.catlist
+      event.target.complete()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item','init', {
+    this.rest.checkpost('item', 'init', {
       keyword: this.rest.item.keyword
     }).then(resp => {
       this.rest.item.init = true
@@ -62,7 +82,7 @@ export class ItemPage implements OnInit {
       step: 1,
       list: []
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
   public transfer() {
     this.rest.temp = {
@@ -70,7 +90,7 @@ export class ItemPage implements OnInit {
       step: 1,
       list: []
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
   public expired() {
     this.rest.temp = {
@@ -78,7 +98,7 @@ export class ItemPage implements OnInit {
       step: 1,
       list: []
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
 
   public view(posid: number) {
@@ -96,7 +116,7 @@ export class ItemPage implements OnInit {
       border: 10,
       image: []
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
   public updateItem(index: number) {
     this.rest.temp = {
@@ -108,7 +128,7 @@ export class ItemPage implements OnInit {
       border: this.rest.item.list[index].border,
       image: this.rest.item.list[index].image
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
 
   public async removeItem(id: number) {
@@ -151,7 +171,7 @@ export class ItemPage implements OnInit {
       expire: this.rest.home.today,
       number: 1
     }
-    this.rest.navCtrl.navigateForward('modal/item')
+    this.rest.navCtrl.navigateForward('item/modal')
   }
   public position() {
     if (this.rest.config.item < 2) this.rest.notify('Không có quyền truy cập')
@@ -161,7 +181,7 @@ export class ItemPage implements OnInit {
         keyword: '',
         list: []
       }
-      this.rest.navCtrl.navigateForward('modal/item')
+      this.rest.navCtrl.navigateForward('item/modal')
     }
   }
 }

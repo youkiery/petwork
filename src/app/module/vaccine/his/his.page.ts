@@ -29,6 +29,11 @@ export class HisPage {
     if (!this.rest.action.length) this.rest.root()
   }
 
+  public new() {
+    this.rest.temp.route = 'new-history'
+    this.rest.navCtrl.navigateForward('/modal/insert')
+  }
+
   public async done(index: number) {
     let v = this.rest.vaccine.old[index]
     this.rest.temp = { 

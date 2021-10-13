@@ -60,7 +60,8 @@ export class SchedulePage implements OnInit {
     this.rest.schedule.time = this.time.datetotime(this.rest.home.today)
     this.rest.checkpost('schedule', 'init', {
       time: this.rest.schedule.time,
-      name: this.rest.home.name
+      name: this.rest.home.name,
+      state: this.rest.schedule.state,
     }).then(resp => {
       this.rest.schedule.list = resp.list
       this.rest.schedule.except = resp.except
@@ -121,10 +122,15 @@ export class SchedulePage implements OnInit {
         list: list,
         name: this.rest.home.name,
         time: this.rest.schedule.time,
+        state: this.rest.schedule.state,
       }).then(resp => {
         this.rest.schedule.data = resp.data
       })
     }
+  }
+
+  public num(n: string) {
+    return Number(n)
   }
 
   public async managerRegister() {
@@ -134,7 +140,7 @@ export class SchedulePage implements OnInit {
         if (this.managerAction[color]) list.push({
           uid: data.uid,
           order: Math.floor(index / 2),
-          type: (index % 2) + 2,
+          type: (index % 2),
           action: this.managerAction[color]
         })
       });
@@ -144,6 +150,7 @@ export class SchedulePage implements OnInit {
       this.rest.checkpost('schedule', 'managerreg', {
         list: list,
         time: this.rest.schedule.time,
+        state: this.rest.schedule.state,
       }).then(resp => {
         this.rest.schedule.data = resp.data
       })
@@ -167,12 +174,43 @@ export class SchedulePage implements OnInit {
     await this.rest.freeze('Đang lấy danh sách đăng ký')
     this.rest.checkpost('schedule', 'init', {
       time: time,
-      name: this.rest.home.name
+      name: this.rest.home.name,
+      state: this.rest.schedule.state,
     }).then(resp => {
       this.rest.schedule.data = resp.data
       this.rest.schedule.time = time
       this.rest.defreeze()
     }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async auto() {
+    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    this.rest.checkpost('schedule', 'init', {
+      time: this.rest.schedule.time,
+      name: this.rest.home.name,
+      state: this.rest.schedule.state,
+    }).then(resp => {
+      this.rest.schedule.data = resp.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async reload(event: any) {
+    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    this.rest.checkpost('schedule', 'init', {
+      time: this.rest.schedule.time,
+      name: this.rest.home.name,
+      state: this.rest.schedule.state,
+    }).then(resp => {
+      event.target.complete()
+      this.rest.schedule.data = resp.data
+      this.rest.defreeze()
+    }, () => {
+      event.target.complete()
       this.rest.defreeze()
     })
   }

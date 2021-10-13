@@ -12,6 +12,7 @@ export class ItemPage implements OnInit {
   public key = ''
   public max = 640
   public count = 0
+  public init = false
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -24,15 +25,16 @@ export class ItemPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
-    if (this.rest.temp.action == 'purchase') this.purchaseInit()
-    if (this.rest.temp.action == 'transfer') this.transferInit()
-    if (this.rest.temp.action == 'expired') this.expiredInit()
-    if (this.rest.temp.action == 'position') this.positionInit()
+    if (this.rest.temp.action == 'purchase' && !this.init) this.purchaseInit()
+    if (this.rest.temp.action == 'transfer' && !this.init) this.transferInit()
+    if (this.rest.temp.action == 'expired' && !this.init) this.expiredInit()
+    if (this.rest.temp.action == 'position' && !this.init) this.positionInit()
   }
 
   public async positionInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'position_init', {}).then(resp => {
+      this.init = true
       this.rest.temp.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -43,6 +45,7 @@ export class ItemPage implements OnInit {
   public async purchaseInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'purchase_init', {}).then(resp => {
+      this.init = true
       this.rest.temp.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -53,6 +56,7 @@ export class ItemPage implements OnInit {
   public async transferInit() {
       await this.rest.freeze('Đang tải danh sách...')
       this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
+        this.init = true
         this.rest.temp.list = resp.list
         this.rest.defreeze()
       }, () => {
@@ -63,6 +67,7 @@ export class ItemPage implements OnInit {
   public async expiredInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'expired_init', {}).then(resp => {
+      this.init = true
       this.rest.temp.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -71,102 +76,25 @@ export class ItemPage implements OnInit {
   }
 
   public async updatePosition(i: number) {
-    this.rest.temp.action = 'update'
     this.rest.temp.prv = i
     this.rest.temp.id = this.rest.temp.list[i].id
     this.rest.temp.pos = this.rest.temp.list[i].name
     this.rest.temp.image = [this.rest.temp.list[i].image]
+    this.rest.navCtrl.navigateForward('modal/upload')
   }
   
-  public async checkupdatePosition() {
-    this.count++
-    if (this.rest.temp.image.length == this.count) {
-      this.updatePositionSubmit()
-    }
-  }
-
-  public async updatePositionCheck() {
-    this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
-    if (!this.rest.temp.image.length) this.updatePositionSubmit()
-    else this.rest.temp.image.forEach((image: any, index: number) => {
-      if (image.length > 200) {
-        this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url
-          this.updatePositionSubmit()
-        })
-      }
-      else this.updatePositionSubmit()
-    });
-  }
-
-  public async updatePositionSubmit() {
-    this.rest.checkpost('item', 'uppos', {
-      id: this.rest.temp.id,
-      pos: this.rest.temp.pos,
-      image: this.rest.temp.image,
-    }).then((resp) => {
-      this.rest.item.image[this.rest.temp.id] = this.rest.temp.image
-      this.rest.temp.list[this.rest.temp.prv].name = this.rest.temp.pos
-      this.rest.temp.list[this.rest.temp.prv].image = this.rest.temp.image
-      this.rest.defreeze()
-      this.posback()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async insertPosition() {
-    this.rest.temp.action = 'insert'
-    this.rest.temp.pos = ''
-    this.rest.temp.image = []
-  }
-  
-  public async checkinsertPosition() {
-    this.count++
-    if (this.rest.temp.image.length == this.count) {
-      this.insertPositionSubmit()
-    }
-  }
-
-  public async insertPositionCheck() {
-    this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
-    if (!this.rest.temp.image.length) this.insertPositionSubmit()
-    else this.rest.temp.image.forEach((image: any, index: number) => {
-      if (image.length > 200) {
-        this.uploadImage(image).then((url: string) => {
-          this.rest.temp.image[index] = url
-          this.insertPositionSubmit()
-        })
-      }
-      else this.insertPositionSubmit()
-    });
-  }
-
-  public async insertPositionSubmit() {
-    this.rest.checkpost('item', 'inpos', {
-      pos: this.rest.temp.pos,
-      image: this.rest.temp.image,
-    }).then((resp) => {
-      this.rest.item.image[resp.id] = resp.image
-      this.rest.temp.list.push({
-        name: this.rest.temp.pos,
-        list: []
-      })
-      this.rest.defreeze()
-      this.posback()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
   public insertPos(i: number) {
     this.rest.temp.prv = i
     this.rest.temp.name = this.rest.temp.list[i].name
     this.rest.temp.old = []
     this.rest.temp.selected = []
     this.rest.navCtrl.navigateForward('/modal/insert')
+  }
+
+  public async insertPosition() {
+    this.rest.temp.pos = ''
+    this.rest.temp.image = []
+    this.rest.navCtrl.navigateForward('/modal/upload')
   }
 
   public view(posid: number) {

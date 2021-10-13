@@ -38,7 +38,7 @@ export class RecallPage {
     let list = []
     for (const key in this.selected) {
       if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
-        list.push(this.rest.temp.list[key].id)
+        if (this.selected[key]) list.push(this.rest.temp.list[key].id)
       }
     }
     return list

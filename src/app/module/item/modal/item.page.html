@@ -9,18 +9,6 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.action == 'update'" slot="end" (click)="updatePositionCheck()" color="light"
-      fill="clear">
-      Xác nhận
-    </ion-button>
-    <ion-button *ngIf="rest.temp.action == 'insert'" slot="end" (click)="insertPositionCheck()" color="light"
-      fill="clear">
-      Xác nhận
-    </ion-button>
-
-    <ion-button *ngIf="rest.temp.action == 'position'" slot="end" (click)="insertPosition()" color="light" fill="clear">
-      Thêm vị trí
-    </ion-button>
     <ion-button *ngIf="rest.temp.action == 'expire'" slot="end" (click)="insertExpire()" color="light" fill="clear">
       Thêm
     </ion-button>
@@ -31,6 +19,10 @@
     <ion-button *ngIf="rest.temp.action == 'item' && rest.temp.id" slot="end" (click)="updateItem()" color="light"
       fill="clear">
       Cập nhật
+    </ion-button>
+
+    <ion-button *ngIf="rest.action == 'item' && rest.temp.action == 'position'" slot="end" (click)="insertPosition()" color="light" fill="clear">
+      Thêm vị trí
     </ion-button>
 
     <!-- <ion-button *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 1" slot="end" (click)="purchase()" color="light" fill="clear">
@@ -48,18 +40,6 @@
 <ion-content>
   <div id="pwa" style="display: none;">
     <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
-  </div>
-
-  <div *ngIf="rest.temp.action == 'insert' || rest.temp.action == 'update'">
-    <ion-item>
-      <ion-label position="stacked"> Vị trí </ion-label>
-      <ion-input [(ngModel)]="rest.temp.pos"></ion-input>
-    </ion-item>
-
-    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
-      <img class="thumbnail" [src]="item">
-    </span>
   </div>
 
   <div *ngIf="rest.temp.action == 'position'">

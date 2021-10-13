@@ -15,7 +15,7 @@
 <ion-content>
   <div *ngIf="rest.action == 'vaccine'">
     <div *ngIf="rest.temp.ov && rest.temp.ov.phone.length">
-      <div class="heading">
+      <div class="stl-card blue">
         Dữ liệu trước đó
       </div>
   
@@ -36,9 +36,8 @@
       </div>
     </div>
 
-    <div class="heading">
-      Click chọn danh sách phiếu nhắc cần hoàn thành <br>
-      Chọn xác nhận để hoàn tất
+    <div class="stl-card blue">
+      Chọn thú cưng đến tái chủng
     </div>
 
     <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">

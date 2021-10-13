@@ -28,10 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
   },
   {
-    path: 'modal/item',
-    loadChildren: () => import('./modal/item/item.module').then( m => m.ItemPageModule)
-  },
-  {
     path: 'home',
     loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },

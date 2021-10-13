@@ -20,11 +20,11 @@
       Cập nhật & Xác nhận
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route && !rest.temp.prv" slot="end"
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route.length && !rest.temp.prv" slot="end"
       (click)="updateSubmit()" color="light" fill="clear">
       Cập nhật
     </ion-button>
-    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route" slot="end"
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route == 'history'" slot="end"
       (click)="insertVaccineHistorySubmit()" color="light" fill="clear">
       Thêm & Xác nhận
     </ion-button>

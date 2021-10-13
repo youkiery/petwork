@@ -187,21 +187,21 @@
     <div *ngFor="let item of rest.vaccine.temp[segment] | slice:0:25 * page; let i = index" class="stl-card" (click)="selectbox(i)">
       <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
       <div class="col-xs-6">
-        <span [class]="item.petname.length ? '' : 'pinky'"> Thú cưng: {{item.petname}} </span> <br>
-        <span [class]="item.phone.length ? '' : 'redden'"> Tên khách: {{item.name}} </span> <br>
-        <span [class]="item.phone.length ? '' : 'redden'"> Điện thoại: {{item.phone}} </span> <br>
-        <span *ngIf="item.petname"> Tên thú: {{item.petname}} <br> </span>
-        Địa chỉ: {{item.address}}
+        <span [class]="item['petname'].length ? '' : 'pinky'"> Thú cưng: {{item['petname']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
+        <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
+        Địa chỉ: {{item['address']}}
       </div>
       <div class="col-xs-6">
-        Ngày đến: {{item.cometime}} <br>
-        <span [class]="item.calltime ? '' : 'redden'"> Nhắc lại: {{item.calltime}} </span> <br>
-        Loại nhắc: {{item.vaccine}} <br>
-        Người làm: {{item.doctor}}
+        Ngày đến: {{item['cometime']}} <br>
+        <span [class]="item['calltime'] ? '' : 'redden'"> Nhắc lại: {{item['calltime']}} </span> <br>
+        Loại nhắc: {{item['vaccine']}} <br>
+        Người làm: {{item['doctor']}}
       </div>
       <div class="upperline">
-        Ghi chú: {{item.note}} <br>
-        Ngày thêm: {{item.time}} <br>
+        Ghi chú: {{item['note']}} <br>
+        Ngày thêm: {{item['time']}} <br>
       </div>
       <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
       <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">

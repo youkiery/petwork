@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: ItemPage
-  }
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/item.module').then( m => m.ItemPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -11,7 +11,6 @@ import {
 } from '@capacitor/push-notifications';
 import { FCM } from '@capacitor-community/fcm';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +39,7 @@ export class RestService {
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
-  public schedule = { time: 0, list: [], except: [], data: [] }
+  public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [], keyword: '', toggle: false, from: '', end: '' }
   public target = {}
   public profile = { init: false, page: 1, target: [], data2: {}}

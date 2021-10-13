@@ -16,6 +16,9 @@
       Góp ý
     </ion-fab-button>
   </ion-fab> -->
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>

@@ -96,12 +96,11 @@ export class InsertPage {
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
-        this.rest.temp.oname = this.rest.temp.name
-        this.rest.temp.ophone = this.rest.temp.phone
         this.rest.temp.vid = resp.vid
         this.rest.vaccine.new = resp.new
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
-        if (resp.old.length) {
+        if (this.rest.temp.route == 'new-history') this.rest.back()
+        else if (resp.old.length) {
           this.rest.temp.list = resp.old
           this.rest.navCtrl.navigateForward('/vaccine/recall')
         }
