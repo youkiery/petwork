@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-button color="light" fill="clear" (click)="rest.back()">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="!rest.temp.manager" slot="end" color="light" fill="clear" (click)="done()">
+    <ion-button *ngIf="!rest.temp.manager" slot="end" color="secondary" fill="solid" size="small" (click)="done()">
       Xác nhận
     </ion-button>
   </ion-toolbar>

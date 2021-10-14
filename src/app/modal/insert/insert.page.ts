@@ -203,8 +203,6 @@ export class InsertPage {
     else {
       await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
       this.rest.checkpost('vaccine', 'updatehistory', this.rest.temp).then(resp => {
-        this.rest.temp.oname = this.rest.temp.name
-        this.rest.temp.ophone = this.rest.temp.phone
         this.rest.vaccine.temp = resp.list
         this.rest.temp.vid = this.rest.temp.id
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))

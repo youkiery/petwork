@@ -1,50 +1,50 @@
 <ion-header>
   <ion-toolbar color="success" *ngIf="rest.isready">
-    <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="light" fill="clear"
+    <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="secondary" fill="solid" size="small"
       (click)="rest.navCtrl.pop()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'insert-type' || rest.action == 'insert-doctor'" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'insert-type' || rest.action == 'insert-doctor'" color="secondary" fill="solid" size="small"
       (click)="back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
       (click)="toggle = false; selected = {}">
       <ion-icon name="close-circle-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.config.vaccine > 1 && rest.action == 'temp' && toggle" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.config.vaccine > 1 && rest.action == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
       (click)="transferAll()">
       <ion-icon name="receipt-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear" (click)="removeAll()">
+    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || rest.config.vaccine > 1)" slot="end" color="secondary" fill="solid" size="small" (click)="removeAll()">
       <ion-icon name="trash-bin-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="light" fill="clear" (click)="doneAll()">
+    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || rest.config.vaccine > 1)" slot="end" color="secondary" fill="solid" size="small" (click)="doneAll()">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.action == 'temp' && !toggle" slot="end" color="light" fill="clear" (click)="toggle = true">
+    <ion-button *ngIf="rest.action == 'temp' && !toggle" slot="end" color="secondary" fill="solid" size="small" (click)="toggle = true">
       <ion-icon name="checkbox-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="light" fill="clear" (click)="uploadPWA()">
+    <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="secondary" fill="solid" size="small" (click)="uploadPWA()">
       Tải lên
     </ion-button>
-    <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="secondary" fill="solid" size="small"
       (click)="insertTypeSubmit()">
       Thêm loại nhắc
     </ion-button>
-    <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="secondary" fill="solid" size="small"
       (click)="updateTypeSubmit()">
       Cập nhật
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="secondary" fill="solid" size="small"
       (click)="insertDoctorSubmit()">
       Thêm bác sĩ
     </ion-button>
-    <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="light" fill="clear"
+    <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="secondary" fill="solid" size="small"
       (click)="updateDoctorSubmit()">
       Cập nhật
     </ion-button>

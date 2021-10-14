@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-button *ngIf="!(rest.temp.id && rest.action == 'vaccine' && rest.temp.prv)" color="light" fill="clear" (click)="rest.back()">
-      <ion-icon name="chevron-back-outline"></ion-icon>
+    <ion-button *ngIf="!(rest.temp.id && rest.action == 'vaccine' && rest.temp.prv)" color="secondary" fill="solid" size="small" (click)="rest.back()">
+      Hoàn thành
     </ion-button>
-    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" color="light" fill="clear" (click)="rest.navCtrl.navigateForward('/vaccine/manager')">
-      <ion-icon name="chevron-back-outline"></ion-icon>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" color="secondary" fill="solid" size="small" (click)="rest.navCtrl.navigateForward('/vaccine/manager')">
+      Hoàn thành
     </ion-button>
-    <ion-button slot="end" color="light" fill="clear" (click)="done()">
+    <ion-button slot="end" color="secondary" fill="solid" size="small" (click)="done()">
       Xác nhận
     </ion-button>
   </ion-toolbar>
@@ -16,19 +16,17 @@
   <div *ngIf="rest.action == 'vaccine'">
     <div *ngIf="rest.temp.ov && rest.temp.ov.phone.length">
       <div class="stl-card blue">
-        Dữ liệu trước đó
+        Khách hàng vừa thêm
       </div>
   
       <div class="stl-card">
         <div class="col-xs-6">
           Thú cưng: {{rest.temp.ov.petname}} <br>
           Tên khách: {{rest.temp.ov.name}} <br>
-          Điện thoại: <a [href]="'tel:' + rest.temp.ov.phone">{{rest.temp.ov.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
-          <span *ngIf="rest.temp.ov.petname"> Tên thú: {{rest.temp.ov.petname}} </span>
-          <br>
+          Điện thoại: <a [href]="'tel:' + rest.temp.ov.phone">{{rest.temp.ov.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>
         </div>
         <div class="col-xs-6">
-          Loại nhắc: {{rest.typeSearch(rest.temp.ov.typeid)}} <br>
+          Loại nhắc: {{rest.temp.ov.type}} <br>
           Ngày đến: {{time.isodatetodate(rest.temp.ov.cometime)}} <br>
           Ngày nhắc: {{time.isodatetodate(rest.temp.ov.calltime)}} <br>
           Ghi chú: {{rest.temp.ov.note}} <br>
@@ -37,7 +35,7 @@
     </div>
 
     <div class="stl-card blue">
-      Chọn thú cưng đến tái chủng
+      Thú cưng đã đến trước đó
     </div>
 
     <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">

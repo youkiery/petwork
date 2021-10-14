@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-button slot="start" color="light" fill="clear" (click)="rest.back()">
+    <ion-button slot="start" color="secondary" fill="solid" size="small" (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
     <ion-title *ngIf="rest.action == 'admin'" style="text-align: center;">
       {{username}}
     </ion-title>
-    <ion-button *ngIf="rest.action == 'admin'" slot="end" (click)="save()" color="light" fill="clear">
+    <ion-button *ngIf="rest.action == 'admin'" slot="end" (click)="save()" color="secondary" fill="solid" size="small">
       Lưu
     </ion-button>
-    <ion-button *ngIf="rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="light" fill="clear">
+    <ion-button *ngIf="rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="secondary" fill="solid" size="small">
       Cập nhật
     </ion-button>
   </ion-toolbar>
@@ -18,7 +18,7 @@
 <ion-content>
   <div *ngIf="rest.action == 'blood'">
     <ion-toolbar color="success">
-      <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
+      <ion-button color="secondary" fill="solid" size="small" (click)="this.rest.navCtrl.pop()">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-toolbar>

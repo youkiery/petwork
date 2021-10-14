@@ -264,6 +264,7 @@ export class ManagerPage implements OnInit {
       this.selected = {}
 
       if (resp.old.length) {
+        this.rest.temp.ov = {}
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
         this.rest.temp.prv = 'temp'
@@ -565,8 +566,7 @@ export class ManagerPage implements OnInit {
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
         this.rest.temp.prv = 'temp'
-        this.rest.temp.oname = resp.name
-        this.rest.temp.ophone = resp.phone
+        this.rest.temp.ov = resp.ov
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         this.rest.navCtrl.navigateForward('/vaccine/recall')
       }

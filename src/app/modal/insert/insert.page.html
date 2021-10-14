@@ -1,43 +1,40 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-button color="light" fill="clear" (click)="rest.back()">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'item'" slot="end" color="light" fill="clear" (click)="insertPosItemSubmit()">
+    <ion-button *ngIf="rest.action == 'item'" slot="end" color="secondary" fill="solid" size="small" (click)="insertPosItemSubmit()">
       Thêm hàng hóa
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="light" fill="clear">
+    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="secondary" fill="solid" size="small">
       Hủy
     </ion-button>
-    <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="light"
-      fill="clear">
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="secondary" fill="solid" size="small">
       Thêm
     </ion-button>
     <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" slot="end"
-      (click)="updateHistorySubmit()" color="light" fill="clear">
+      (click)="updateHistorySubmit()" color="secondary" fill="solid" size="small">
       Cập nhật & Xác nhận
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route.length && !rest.temp.prv" slot="end"
-      (click)="updateSubmit()" color="light" fill="clear">
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route && !rest.temp.prv" slot="end"
+      (click)="updateSubmit()" color="secondary" fill="solid" size="small">
       Cập nhật
     </ion-button>
     <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route == 'history'" slot="end"
-      (click)="insertVaccineHistorySubmit()" color="light" fill="clear">
+      (click)="insertVaccineHistorySubmit()" color="secondary" fill="solid" size="small">
       Thêm & Xác nhận
     </ion-button>
-    <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="light"
-      fill="clear">
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="secondary" fill="solid" size="small">
       Thêm
     </ion-button>
-    <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="light"
-      fill="clear">
+    <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="secondary" fill="solid" size="small">
       Cập nhật
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="light" fill="clear">
+    <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="secondary" fill="solid" size="small">
       Lưu
     </ion-button>
   </ion-toolbar>
