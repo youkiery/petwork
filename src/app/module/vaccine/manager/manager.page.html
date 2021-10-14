@@ -10,22 +10,22 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
-      (click)="toggle = false; selected = {}">
-      <ion-icon name="close-circle-outline"></ion-icon>
-    </ion-button>
     <ion-button *ngIf="rest.config.vaccine > 1 && rest.action == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
       (click)="transferAll()">
       <ion-icon name="receipt-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || rest.config.vaccine > 1)" slot="end" color="secondary" fill="solid" size="small" (click)="removeAll()">
+    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || (rest.config.vaccine > 1 && toggle))" slot="end" color="secondary" fill="solid" size="small" (click)="removeAll()">
       <ion-icon name="trash-bin-outline"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || rest.config.vaccine > 1)" slot="end" color="secondary" fill="solid" size="small" (click)="doneAll()">
+    <ion-button *ngIf="rest.action == 'temp' && ((toggle && segment == '0') || (rest.config.vaccine > 1 && toggle))" slot="end" color="secondary" fill="solid" size="small" (click)="doneAll()">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
     </ion-button>
     <ion-button *ngIf="rest.action == 'temp' && !toggle" slot="end" color="secondary" fill="solid" size="small" (click)="toggle = true">
       <ion-icon name="checkbox-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
+      (click)="toggle = false; selected = {}">
+      <ion-icon name="close-circle-outline"></ion-icon>
     </ion-button>
 
     <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="secondary" fill="solid" size="small" (click)="uploadPWA()">

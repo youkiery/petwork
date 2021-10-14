@@ -97,6 +97,7 @@ export class InsertPage {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
         this.rest.temp.vid = resp.vid
+        this.rest.vaccine.list = resp.list
         this.rest.vaccine.new = resp.new
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         if (this.rest.temp.route == 'new-history') this.rest.back()
@@ -179,6 +180,7 @@ export class InsertPage {
     else {
       await this.rest.freeze('Cập nhật lịch nhắc...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
+        this.rest.vaccine.list = resp.list
         this.rest.vaccine.new = resp.new
         this.rest.defreeze()
         if (this.rest.temp.ppv) this.clear()
