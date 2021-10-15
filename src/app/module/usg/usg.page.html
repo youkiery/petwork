@@ -13,8 +13,8 @@
 <ion-content *ngIf="rest.isready">
   <ion-item color="secondary">
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
-    <ion-input [(ngModel)]="key"> </ion-input>
-    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="filter()">
+    <ion-input [(ngModel)]="rest.usg.key"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
   </ion-item>
 
   <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('gopy')">

@@ -24,7 +24,6 @@ export class UsgPage {
     4: 'stl-card red',
   }
   public segment = '0'
-  public key = ''
   public page = 1
   constructor(
     public rest: RestService,
@@ -35,7 +34,7 @@ export class UsgPage {
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'usg'
-      this.key = this.rest.usg.keyword
+      this.rest.usg.key = this.rest.usg.keyword
       if (!this.rest.usg.init) this.init()
     })
   }
@@ -59,15 +58,31 @@ export class UsgPage {
     })
   }
 
+  public async search() {
+    if (!this.rest.usg.key.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
+    else {
+      await this.rest.freeze('Đang tải danh sách')
+      this.rest.checkpost('usg', 'searchcustomer', {
+        keyword: this.rest.usg.key
+      }).then(resp => {
+        this.rest.defreeze()
+        this.rest.temp = resp.list
+        this.rest.navCtrl.navigateForward('usg/usgsearch')
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
-      keyword: this.key,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
       this.page = 1
-      this.rest.usg.keyword = this.key
+      this.rest.usg.keyword = this.rest.usg.key
       this.rest.usg.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -83,12 +98,12 @@ export class UsgPage {
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
-      keyword: this.key,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
       event.target.complete();
-      this.rest.usg.keyword = this.key
+      this.rest.usg.keyword = this.rest.usg.key
       this.rest.usg.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -163,7 +178,7 @@ export class UsgPage {
   public async called(index: number) {
     let note = ''
     let id = 0
-    if (this.key) {
+    if (this.rest.usg.key) {
       id = this.rest.usg.list[index].id
       note = this.rest.usg.list[index].note
     }
@@ -214,7 +229,7 @@ export class UsgPage {
   public async uncalled(index: number) {
     let note = ''
     let id = 0
-    if (this.key) {
+    if (this.rest.usg.key) {
       id = this.rest.usg.list[index].id
       note = this.rest.usg.list[index].note
     }
@@ -265,7 +280,7 @@ export class UsgPage {
 
   public async done(index: number) {
     let id = 0
-    if (this.key) {
+    if (this.rest.usg.key) {
       id = this.rest.usg.list[index].id
     }
     else {
@@ -309,7 +324,7 @@ export class UsgPage {
   public async dead(index: number) {
     let note = ''
     let id = 0
-    if (this.key) {
+    if (this.rest.usg.key) {
       id = this.rest.usg.list[index].id
       note = this.rest.usg.list[index].note
     }
