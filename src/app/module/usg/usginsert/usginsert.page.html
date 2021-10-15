@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="secondary"
+      fill="solid" size="small">
+      Thêm
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="secondary"
+      fill="solid" size="small">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="suggest()">
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-input [(ngModel)]="rest.temp.address"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày siêu âm </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.cometime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày dự sinh </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.calltime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Sô thai dự kiến </ion-label>
+    <ion-input [(ngModel)]="rest.temp.number"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+  </ion-item>
+
+  <div *ngIf="!rest.temp.prv">
+    <div class="stl-card" *ngFor="let item of this.rest.usg.new; let i = index">
+      <div class="col-xs-6">
+        Thú cưng: {{item.petname}} <br>
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}}
+      </div>
+      <div class="col-xs-6">
+        Ngày nhắc: {{item.calltime}} <br>
+        Số thai dự kiến: {{item.number}}
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item.note}}
+      </div>
+      <img src="/assets/icon/delete.png" (click)="remove(i)">
+      <img src="/assets/icon/update.png" *ngIf="rest.config.usg > 1" (click)="update(i)">
+    </div>
+  </div>
+</ion-content>

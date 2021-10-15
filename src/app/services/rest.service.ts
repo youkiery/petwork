@@ -33,7 +33,7 @@ export class RestService {
   public session = ''
   public cart = { list: [], init: false }
   public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
-  public usg = { init: false, list: [], new: [], old: [], filter: {keyword: ''}, search: [] }
+  public usg = { init: false, list: [], new: [], old: [], type: [], temp: [[], []], doctor: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
@@ -142,6 +142,7 @@ export class RestService {
       this.home = resp.data
       this.session = session
       this.vaccine.list = [[], [], []]
+      this.usg.list = [[], [], []]
       
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
@@ -165,8 +166,8 @@ export class RestService {
         this.home = resp.data
         this.session = resp.session
         this.vaccine.list = [[], [], []]
+        this.usg.list = [[], [], []]
         this.storage.set('session', resp.session)
-        
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()
       }, () => {

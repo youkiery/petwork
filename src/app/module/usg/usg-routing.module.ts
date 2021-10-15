@@ -8,6 +8,14 @@ const routes: Routes = [
     path: '',
     component: UsgPage
   },
+  {
+    path: 'insert',
+    loadChildren: () => import('./usginsert/usginsert.module').then( m => m.UsginsertPageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
+  },
 ];
 
 @NgModule({

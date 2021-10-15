@@ -27,13 +27,6 @@
       (click)="insertVaccineHistorySubmit()" color="secondary" fill="solid" size="small">
       Thêm & Xác nhận
     </ion-button>
-    <ion-button *ngIf="!rest.temp.id && rest.action == 'usg'" slot="end" (click)="insertUsgSubmit()" color="secondary" fill="solid" size="small">
-      Thêm
-    </ion-button>
-    <ion-button *ngIf="rest.temp.id && rest.action == 'usg'" slot="end" (click)="updateUsgSubmit()" color="secondary" fill="solid" size="small">
-      Cập nhật
-    </ion-button>
-
     <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="secondary" fill="solid" size="small">
       Lưu
     </ion-button>
@@ -159,45 +152,6 @@
         <img src="/assets/icon/delete.png" (click)="remove(i)">
         <img src="/assets/icon/update.png" *ngIf="rest.config.vaccine > 1" (click)="update(i)">
       </div>
-    </div>
-  </div>
-
-  <div *ngIf="rest.action == 'usg'">
-    <ion-item>
-      <ion-label position="stacked"> Số điện thoại </ion-label>
-      <ion-input [(ngModel)]="rest.temp.phone" [disabled]="rest.temp.id"> </ion-input>
-      <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
-        (click)="suggest()">
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Khách hàng </ion-label>
-      <ion-input [(ngModel)]="rest.temp.name" [disabled]="rest.temp.id"> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Ngày siêu âm </ion-label>
-      <ion-input [(ngModel)]="rest.temp.cometime"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Ngày siêu âm lại </ion-label>
-      <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Số thai dự kiến </ion-label>
-      <ion-input [(ngModel)]="rest.temp.number"></ion-input>
-    </ion-item>
-
-    <div class="stl-card" *ngFor="let item of this.rest.usg.new; let i = index">
-      <div class="col-xs-6">
-        Tên khách: {{item.name}} <br>
-        Điện thoại: {{item.phone}}
-      </div>
-      <div class="col-xs-6">
-        Siêu âm lại: {{item.calltime}} <br>
-        Thai dự kiến: {{item.number}} <br>
-        <span *ngIf="item.recall"> Gọi cuối: {{item.recall}} </span>
-      </div>
-      <img src="/assets/icon/delete.png" (click)="removeUsg(i)">
-      <img src="/assets/icon/update.png" (click)="updateUsg(i)">
     </div>
   </div>
 </ion-content>

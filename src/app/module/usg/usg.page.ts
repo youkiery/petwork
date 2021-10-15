@@ -9,121 +9,174 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./usg.page.scss'],
 })
 export class UsgPage {
-  public status = {
-    0: 'stl-card',
-    1: 'stl-card green',
-    2: 'stl-card yellow',
-    3: 'stl-card red',
+  public status_text = {
+    0: 'Chưa nhắc',
+    1: 'Chưa gọi được',
+    2: 'Đã gọi, chưa đến',
+    3: 'Đã tái chủng',
+    4: 'Không tái chủng',
   }
+  public status = {
+    0: 'stl-card white',
+    1: 'stl-card yellow',
+    2: 'stl-card green',
+    3: 'stl-card green',
+    4: 'stl-card red',
+  }
+  public segment = '0'
+  public key = ''
+  public page = 1
   constructor(
     public rest: RestService,
     public alert: AlertController,
     public time: TimeService
   ) { }
 
-
-  public async ionViewDidEnter() {
+  public async ionViewWillEnter() {
     this.rest.ready().then(() => {
-      this.init()
+      this.rest.action = 'usg'
+      this.key = this.rest.usg.keyword
+      if (!this.rest.usg.init) this.init()
     })
   }
 
   public async init() {
-    if (!this.rest.usg.init) {
-      await this.rest.freeze('Đang tải danh sách')
-      this.rest.checkpost('usg', 'auto', { }).then(resp => {
-        this.rest.usg.init = true
-        this.rest.usg.new = resp.new
-        this.rest.usg.list = resp.list
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
-    }
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('usg', 'auto', {
+      docs: this.rest.usg.docs,
+      time: this.rest.usg.time,
+    }).then(resp => {
+      this.rest.usg.init = true
+      this.rest.usg.new = resp.new
+      this.rest.usg.list = resp.list
+      // this.rest.usg.type = resp.type
+      // this.rest.usg.temp = resp.temp
+      // this.rest.usg.doctor = resp.doctor
+      // this.rest.usg.over = resp.over
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
-
-  // public async birth(id: number) {
-  //   let alert = await this.alert.create({
-  //     message: 'Số lượng con sinh ra',
-  //     inputs: [
-  //       {
-  //         type: 'number',
-  //         name: 'number',
-  //         value: 0
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Bỏ',
-  //         role: 'cancel',
-  //         cssClass: 'default'
-  //       }, {
-  //         text: 'Xác nhận',
-  //         cssClass: 'secondary',
-  //         handler: (e) => {
-  //           this.birthSubmit(id, e['number'])
-  //         }
-  //       }
-  //     ]
-  //   })
-  //   alert.present()
-  // }
-
-  // public async birthSubmit(id: number, number: number) {
-  //   await this.rest.freeze('Đang hoàn thành...')
-  //   this.rest.checkpost('usg', 'birth', {
-  //     action: 'usg-birth',
-  //     id: id,
-  //     number: Number(number),
-  //     keyword: this.rest.usg.filterKey,
-  //     status: this.rest.usg.status
-  //   }).then((response) => {
-  //     this.rest.usg.data = response.data
-  //     this.rest.defreeze()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
-      filter: this.rest.usg.filter
+      keyword: this.key,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
     }).then(resp => {
+      this.page = 1
+      this.rest.usg.keyword = this.key
       this.rest.usg.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public moreusg(event: any) {
+    this.page ++
+    event.target.complete()
+  }
+
+  public async filterR(event: any) {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('usg', 'search', {
+      keyword: this.key,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then(resp => {
+      event.target.complete();
+      this.rest.usg.keyword = this.key
+      this.rest.usg.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async docs() {
+    let option = []
+    this.rest.vaccine.doctor.forEach((item, index) => {
+      option.push({
+        name: 'check',
+        type: 'checkbox',
+        label: item.name,
+        value: index,
+        checked: (this.rest.usg.docs.indexOf(item.userid) >= 0 ? true : false)
+      })
+    })
+    const alert = await this.alert.create({
+      header: 'Lọc nhân viên',
+      inputs: option,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            let cover = []
+            let docs = []
+            e.forEach((index: number) => {
+              cover.push(this.rest.usg.doctor[index].name)
+              docs.push(this.rest.usg.doctor[index].userid)
+            });
+            
+            this.rest.usg.docs = docs
+            this.rest.usg.docscover = cover.join(', ')
+            this.filter()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public insert() {
-    this.rest.action = 'usg'
-    this.rest.temp = { id: 0, name: '', phone: '', number: 0, cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next) }
-    this.rest.navCtrl.navigateForward('/modal/insert')
+    this.rest.temp = { id: 0, number: 0, name: '', phone: '', address: '', cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
+    this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
   public update(index: number) {
-    this.rest.action = 'usg'
+    let item = this.rest.usg.list[this.segment][index]
     this.rest.temp = {
-      id: this.rest.usg.list[index].id,
-      name: this.rest.usg.list[index].name,
-      phone: this.rest.usg.list[index].phone,
-      cometime: this.time.datetoisodate(this.rest.usg.list[index].cometime),
-      calltime: this.time.datetoisodate(this.rest.usg.list[index].calltime),
-      number: this.rest.usg.list[index].number,
+      id: item.id,
+      petname: item.petname,
+      name: item.name,
+      phone: item.phone,
+      address: item.address,
+      typeid: item.typeid,
+      cometime: this.time.datetoisodate(item.cometime),
+      calltime: this.time.datetoisodate(item.calltime),
+      note: item.note,
     }
-    this.rest.navCtrl.navigateForward('/modal/insert')
+    this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
   public async called(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
-    if (this.rest.usg.list[index].note.length) note = this.rest.usg.list[index].note
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.usg.list[index].id
+      note = this.rest.usg.list[index].note
+    }
+    else {
+      id = this.rest.usg.list[this.segment][index].id
+      note = this.rest.usg.list[this.segment][index].note
+    }
     const alert = await this.alert.create({
-      message: 'Đã gọi khách hàng này?',
+      header: 'Xác nhận Đã gọi',
+      subHeader: 'Đã gọi khách hàng, xác nhận?',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: note
       }],
@@ -134,7 +187,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(index, e.note)
+            this.calledSubmit(id, e.note)
           }
         }
       ]
@@ -142,27 +195,37 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async calledSubmit(index: number, note: string) {
+  public async calledSubmit(id: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'called', {
-      id: this.rest.usg.list[index].id,
+      id: id,
       note: note,
-      filter: this.rest.usg.filter
+      keyword: this.rest.usg.keyword,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
     }).then(resp => {
       this.rest.usg.list = resp.list
-      this.rest.notify('Đã thay đổi trạng thái')
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  
   public async uncalled(index: number) {
-    let note = 'Gọi nhắc ngày: ' + this.rest.home.today
-    if (this.rest.usg.list[index].note.length) note = this.rest.usg.list[index].note
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.usg.list[index].id
+      note = this.rest.usg.list[index].note
+    }
+    else {
+      id = this.rest.usg.list[this.segment][index].id
+      note = this.rest.usg.list[this.segment][index].note
+    }
     const alert = await this.alert.create({
-      message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
+      header: 'Xác nhận Không gọi được',
+      subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         label: 'Ghi chú',
@@ -176,7 +239,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.uncalledSubmit(index, e.note)
+            this.uncalledSubmit(id, e.note)
           }
         }
       ]
@@ -184,15 +247,59 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async uncalledSubmit(index: number, note: string) {
+  public async uncalledSubmit(id: number, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'uncalled', {
-      id: this.rest.usg.list[index].id,
+      id: id,
       note: note,
-      filter: this.rest.usg.filter
+      keyword: this.rest.usg.keyword,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
     }).then(resp => {
       this.rest.usg.list = resp.list
-      this.rest.notify('Đã thay đổi trạng thái')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async done(index: number) {
+    let id = 0
+    if (this.key) {
+      id = this.rest.usg.list[index].id
+    }
+    else {
+      id = this.rest.usg.list[this.segment][index].id
+    }
+
+    const alert = await this.alert.create({
+      header: 'Xác nhận tiêm phòng',
+      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(id: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      keyword: this.rest.usg.keyword,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.usg.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -200,13 +307,25 @@ export class UsgPage {
   }
 
   public async dead(index: number) {
+    let note = ''
+    let id = 0
+    if (this.key) {
+      id = this.rest.usg.list[index].id
+      note = this.rest.usg.list[index].note
+    }
+    else {
+      id = this.rest.usg.list[this.segment][index].id
+      note = this.rest.usg.list[this.segment][index].note
+    }
+
     const alert = await this.alert.create({
-      message: 'Hoàn thành siêu âm, lịch nhắc sẽ không xuất hiện nữa',
+      header: 'Xác nhận khách không tiêm phòng',
+      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
-        name: 'number',
-        value: this.rest.usg.list[index].number
+        name: 'note',
+        value: note
       }],
       buttons: [
         {
@@ -215,7 +334,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(index, e.number)
+            this.deadSubmit(id, e.note)
           }
         }
       ]
@@ -224,17 +343,31 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async deadSubmit(index: number, number: string) {
+  public async deadSubmit(id: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'dead', {
-      id: this.rest.usg.list[index].id,
-      number: number,
-      filter: this.rest.usg.filter
+      id: id,
+      note: note,
+      keyword: this.rest.usg.keyword,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
     }).then((resp) => {
       this.rest.usg.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
+    })
+  }
+
+  public manager() {
+    this.rest.temp = {}
+    this.rest.navCtrl.navigateForward('usg/manager')
+  }
+
+  public refresh(event: any) {
+    this.rest.usg.init = false
+    this.init().then(() => {
+      event.target.complete();
     })
   }
 }
