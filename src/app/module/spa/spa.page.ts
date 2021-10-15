@@ -64,9 +64,8 @@ export class SpaPage {
       this.rest.spa.init = new Date().getTime()
       this.rest.spa.list = resp.list
       this.rest.spa.type = resp.type
-      this.rest.spa.doctor = resp.doctor
       this.rest.spa.init = resp.time
-      this.rest.spa.doctor.forEach(item => {
+      this.rest.home.doctor.forEach(item => {
         this.option.push({
           name: 'userid',
           type: 'radio',
@@ -176,7 +175,7 @@ export class SpaPage {
       ]
     });
 
-    if (this.rest.spa.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
+    if (this.rest.home.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
 
     await alert.present();
   }
@@ -248,7 +247,7 @@ export class SpaPage {
       ]
     });
 
-    if (this.rest.spa.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
+    if (this.rest.home.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
 
     await alert.present();
   }
@@ -286,7 +285,7 @@ export class SpaPage {
       ]
     });
 
-    if (this.rest.spa.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
+    if (this.rest.home.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
 
     await alert.present();
   }

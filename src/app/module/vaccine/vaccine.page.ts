@@ -50,7 +50,6 @@ export class VaccinePage {
       this.rest.vaccine.list = resp.list
       this.rest.vaccine.type = resp.type
       this.rest.vaccine.temp = resp.temp
-      this.rest.vaccine.doctor = resp.doctor
       this.rest.vaccine.over = resp.over
       this.rest.defreeze()
     }, () => {
@@ -97,7 +96,7 @@ export class VaccinePage {
 
   public async docs() {
     let option = []
-    this.rest.vaccine.doctor.forEach((item, index) => {
+    this.rest.home.doctor.forEach((item, index) => {
       option.push({
         name: 'check',
         type: 'checkbox',
@@ -123,8 +122,8 @@ export class VaccinePage {
             let cover = []
             let docs = []
             e.forEach((index: number) => {
-              cover.push(this.rest.vaccine.doctor[index].name)
-              docs.push(this.rest.vaccine.doctor[index].userid)
+              cover.push(this.rest.home.doctor[index].name)
+              docs.push(this.rest.home.doctor[index].userid)
             });
             
             this.rest.vaccine.docs = docs

@@ -42,6 +42,7 @@ export class UsgPage {
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'auto', {
+      keyword: this.rest.usg.key,
       docs: this.rest.usg.docs,
       time: this.rest.usg.time,
     }).then(resp => {
@@ -50,7 +51,6 @@ export class UsgPage {
       this.rest.usg.list = resp.list
       // this.rest.usg.type = resp.type
       // this.rest.usg.temp = resp.temp
-      // this.rest.usg.doctor = resp.doctor
       // this.rest.usg.over = resp.over
       this.rest.defreeze()
     }, () => {
@@ -113,7 +113,7 @@ export class UsgPage {
 
   public async docs() {
     let option = []
-    this.rest.vaccine.doctor.forEach((item, index) => {
+    this.rest.home.doctor.forEach((item, index) => {
       option.push({
         name: 'check',
         type: 'checkbox',
@@ -139,8 +139,8 @@ export class UsgPage {
             let cover = []
             let docs = []
             e.forEach((index: number) => {
-              cover.push(this.rest.usg.doctor[index].name)
-              docs.push(this.rest.usg.doctor[index].userid)
+              cover.push(this.rest.home.doctor[index].name)
+              docs.push(this.rest.home.doctor[index].userid)
             });
             
             this.rest.usg.docs = docs

@@ -27,20 +27,21 @@ export class RestService {
     fullname: '',
     admin: 0,
     users: [],
+    doctor: [],
     today: '',
     next: '',
   }
   public session = ''
   public cart = { list: [], init: false }
-  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], doctor: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
-  public usg = { key: '',init: false, list: [], new: [], old: [], type: [], temp: [[], []], doctor: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
+  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
+  public usg = { key: '',init: false, list: [], new: [], old: [], type: [], temp: [[], []], over: [], keyword: '', docs: [], docscover: '', time: '' }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   public work = {}
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
-  public spa = { time: 0, init: 0, list: [], old: [], type: [], doctor: [], keyword: '', toggle: false, from: '', end: '' }
+  public spa = { time: 0, init: 0, list: [], old: [], type: [], keyword: '', toggle: false, from: '', end: '' }
   public target = {}
   public profile = { init: false, page: 1, target: [], data2: {}}
   public admin = { init: false, list: [] }
@@ -142,8 +143,6 @@ export class RestService {
       this.home = resp.data
       this.session = session
       this.vaccine.list = [[], [], []]
-      this.usg.list = [[], [], []]
-      
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
@@ -166,7 +165,6 @@ export class RestService {
         this.home = resp.data
         this.session = resp.session
         this.vaccine.list = [[], [], []]
-        this.usg.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()

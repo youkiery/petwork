@@ -91,7 +91,7 @@
       </div>
 
       <ion-radio-group [(ngModel)]="rest.temp.uid">
-        <ion-item *ngFor="let doctor of rest.spa.doctor">
+        <ion-item *ngFor="let doctor of rest.home.doctor">
           <ion-label> {{doctor.name}} </ion-label>
           <ion-radio slot="start" [value]="doctor.userid"></ion-radio>
         </ion-item>

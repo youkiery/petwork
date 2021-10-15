@@ -43,7 +43,7 @@ export class ManagerPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action) this.rest.root()
     if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
-    this.rest.vaccine.doctor.forEach((item, index) => {
+    this.rest.home.doctor.forEach((item, index) => {
       this.option.push({
         name: 'userid',
         type: 'radio',
@@ -56,7 +56,7 @@ export class ManagerPage implements OnInit {
 
   public async docs() {
     let option = []
-    this.rest.vaccine.doctor.forEach((item, index) => {
+    this.rest.home.doctor.forEach((item, index) => {
       option.push({
         name: 'check',
         type: 'checkbox',
@@ -82,8 +82,8 @@ export class ManagerPage implements OnInit {
             let cover = []
             let docs = []
             e.forEach((index: number) => {
-              cover.push(this.rest.vaccine.doctor[index].name)
-              docs.push(this.rest.vaccine.doctor[index].userid)
+              cover.push(this.rest.home.doctor[index].name)
+              docs.push(this.rest.home.doctor[index].userid)
             });
             
             this.rest.vaccine.docs = docs
@@ -366,10 +366,10 @@ export class ManagerPage implements OnInit {
     this.prv = 'doctor'
     this.rest.action = 'insert-doctor'
     this.input = {
-      id: this.rest.vaccine.doctor[index].id,
-      userid: this.rest.vaccine.doctor[index].userid,
-      username: this.rest.vaccine.doctor[index].username,
-      name: this.rest.vaccine.doctor[index].name
+      id: this.rest.home.doctor[index].id,
+      userid: this.rest.home.doctor[index].userid,
+      username: this.rest.home.doctor[index].username,
+      name: this.rest.home.doctor[index].name
     }
   }
 
@@ -388,7 +388,7 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'removedoctor', {
       id: id,
     }).then(resp => {
-      this.rest.vaccine.doctor = resp.list
+      this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
       this.rest.defreeze()
     }, () => {
@@ -403,7 +403,7 @@ export class ManagerPage implements OnInit {
       user: this.input.userid,
       name: this.input.name
     }).then(resp => {
-      this.rest.vaccine.doctor = resp.list
+      this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
       this.rest.defreeze()
     }, () => {
@@ -417,7 +417,7 @@ export class ManagerPage implements OnInit {
       user: this.input.userid,
       name: this.input.name
     }).then(resp => {
-      this.rest.vaccine.doctor = resp.list
+      this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
       this.rest.defreeze()
     }, () => {
@@ -614,7 +614,7 @@ export class ManagerPage implements OnInit {
   public async reloadDoctor(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {
-      this.rest.vaccine.doctor = resp.list
+      this.rest.home.doctor = resp.list
       event.target.complete();
       this.rest.defreeze()
     }, () => {
