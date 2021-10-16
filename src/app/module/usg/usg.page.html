@@ -59,6 +59,7 @@
     <img *ngIf="item.status < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
     <img class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
     <img class="icon" src="/assets/icon/done.png" (click)="done(i)">
+    <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="moreusg($event)">

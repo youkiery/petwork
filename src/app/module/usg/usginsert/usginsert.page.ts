@@ -87,6 +87,7 @@ export class UsginsertPage implements OnInit {
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
+      keyword: this.rest.usg.keyword
     }
   }
 
@@ -98,7 +99,7 @@ export class UsginsertPage implements OnInit {
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
       this.clear()
-      if (this.rest.usg.keyword) this.rest.navCtrl.pop()
+      if (this.rest.temp.route) this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })

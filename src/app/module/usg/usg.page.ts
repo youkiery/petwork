@@ -191,6 +191,7 @@ export class UsgPage {
   public update(index: number) {
     let item = this.rest.usg.list[index]
     this.rest.temp = {
+      route: true,
       id: item.id,
       number: item.number,
       name: item.name,

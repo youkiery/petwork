@@ -12,7 +12,7 @@
       Cập nhật & Xác nhận
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.id && !rest.temp.route && !rest.temp.prv" slot="end"
+    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end"
       (click)="updateUsgSubmit()" color="secondary" fill="solid" size="small">
       Cập nhật
     </ion-button>
@@ -55,12 +55,11 @@
   <div *ngIf="!rest.temp.prv">
     <div class="stl-card" *ngFor="let item of this.rest.usg.new; let i = index">
       <div class="col-xs-6">
-        Thú cưng: {{item.petname}} <br>
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}}
       </div>
       <div class="col-xs-6">
-        Ngày nhắc: {{item.calltime}} <br>
+        Dự sinh: {{item.calltime}} <br>
         Số thai dự kiến: {{item.number}}
       </div>
       <div class="upperline">
