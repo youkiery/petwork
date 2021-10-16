@@ -7,6 +7,18 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./profdetail/profdetail.module').then( m => m.ProfdetailPageModule)
+  },
+  {
+    path: 'print',
+    loadChildren: () => import('./profprint/profprint.module').then( m => m.ProfprintPageModule)
+  },
+  {
+    path: 'insert',
+    loadChildren: () => import('./profinsert/profinsert.module').then( m => m.ProfinsertPageModule)
   }
 ];
 
