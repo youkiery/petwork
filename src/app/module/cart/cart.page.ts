@@ -33,8 +33,7 @@ export class CartPage {
 
   public detail(index: number) {
     this.rest.temp = index
-    this.rest.action = 'cart';
-    this.rest.navCtrl.navigateForward('/modal/detail')
+    this.rest.navCtrl.navigateForward('/cart/detail')
   }
 
   // public async filter() {

@@ -93,45 +93,4 @@
   <div *ngIf="rest.action == 'item'">
     <img [src]="rest.temp">
   </div>
-
-  <div *ngIf="rest.action == 'cart'">
-    <ion-card>
-      <ion-card-header>
-        <div class="col-xs-6">
-          <b> Tên khách </b>: {{rest.cart.list[this.rest.temp.index].customer}} <br>
-          <b> Điện thoại </b>: {{rest.cart.list[this.rest.temp.index].phone}} <br>
-          <b> Địa chỉ </b>: {{rest.cart.list[this.rest.temp.index].address}} <br>
-          <b> Email </b>: {{rest.cart.list[this.rest.temp.index].mail}}
-        </div>
-        <div class="col-xs-6">
-          <b> Tổng đơn </b>: {{rest.cart.list[this.rest.temp.index].total}} <br>
-          <b> Ngày đặt </b>: {{rest.cart.list[this.rest.temp.index].time}} <br>
-          <b> Trạng thái </b>: {{rest.cart.list[this.rest.temp.index].status}} <br>
-          <b> Thanh toán </b>: {{rest.cart.list[this.rest.temp.index].method}}
-        </div>
-        <div>
-          Ghi chú: {{rest.cart.list[this.rest.temp.index].note}}
-        </div>
-      </ion-card-header>
-
-      <ion-card-content>
-        <img class="icon" src="/assets/icon/pick.png" (click)="cartpick()">
-        <img class="icon" src="/assets/icon/done.png" (click)="cartdonealert()">
-        <table>
-          <tr>
-            <th> Mặt hàng </th>
-            <th> Giá </th>
-            <th> Số lượng </th>
-            <th> Tổng </th>
-          </tr>
-          <tr *ngFor="let item of rest.cart.list[this.rest.temp.index].item">
-            <td> {{item.name}} </td>
-            <td> {{item.price}} </td>
-            <td> {{item.number}} </td>
-            <td> {{item.total}} </td>
-          </tr>
-        </table>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>
