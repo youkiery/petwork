@@ -21,7 +21,7 @@ export class UsginsertPage implements OnInit {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
-    if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
+    if ((this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
       this.init = true
       this.suggest()
     }
@@ -101,6 +101,29 @@ export class UsginsertPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async updateHistorySubmit() {
+    let msg = this.checkusgData()
+    if (msg) this.rest.notify(msg)
+    else {
+      await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
+      this.rest.checkpost('usg', 'updatehistory', this.rest.temp).then(resp => {
+        this.rest.defreeze()
+        this.rest.usg.temp = resp.list
+        this.rest.back()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public checkusgData() {
+    if (!this.rest.temp.name.length) return 'Chưa nhập tên khách hàng'
+    else if (!this.rest.temp.phone.length) return 'Chưa nhập số điện thoại'
+    else if (!this.time.isisodate(this.rest.temp.cometime)) return 'Chưa nhập ngày đến'
+    else if (!this.time.isisodate(this.rest.temp.calltime)) return 'Chưa nhập ngày nhắc lại'
+    return false
   }
 
   public clear() {

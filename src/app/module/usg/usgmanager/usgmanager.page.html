@@ -1,9 +1,174 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>usgmanager</ion-title>
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button *ngIf="!(tab == 'insert-type' || tab == 'insert-doctor')" color="secondary" fill="solid" size="small"
+      (click)="rest.navCtrl.pop()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="tab == 'insert-type' || tab == 'insert-doctor'" color="secondary" fill="solid" size="small"
+      (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="rest.config.usg > 1 && tab == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
+      (click)="transferAll()">
+      <ion-icon name="receipt-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="tab == 'temp' && ((toggle && segment == '0') || (rest.config.usg > 1 && toggle))" slot="end" color="secondary" fill="solid" size="small" (click)="removeAll()">
+      <ion-icon name="trash-bin-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="tab == 'temp' && ((toggle && segment == '0') || (rest.config.usg > 1 && toggle))" slot="end" color="secondary" fill="solid" size="small" (click)="doneAll()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="tab == 'temp' && !toggle" slot="end" color="secondary" fill="solid" size="small" (click)="toggle = true">
+      <ion-icon name="checkbox-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="tab == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
+      (click)="toggle = false; selected = {}">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="tab == 'usg'" slot="end" color="secondary" fill="solid" size="small" (click)="uploadPWA()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="tab == 'insert-type' && !input.id" slot="end" color="secondary" fill="solid" size="small"
+      (click)="insertTypeSubmit()">
+      Thêm loại nhắc
+    </ion-button>
+    <ion-button *ngIf="tab == 'insert-type' && input.id" slot="end" color="secondary" fill="solid" size="small"
+      (click)="updateTypeSubmit()">
+      Cập nhật
+    </ion-button>
+
+    <ion-button *ngIf="tab == 'insert-doctor' && !input.id" slot="end" color="secondary" fill="solid" size="small"
+      (click)="insertDoctorSubmit()">
+      Thêm bác sĩ
+    </ion-button>
+    <ion-button *ngIf="tab == 'insert-doctor' && input.id" slot="end" color="secondary" fill="solid" size="small"
+      (click)="updateDoctorSubmit()">
+      Cập nhật
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="tab == 'usg'">
+    <div class="avatar-box" (click)="upload()">
+      <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+    </div>
+    <div *ngIf="name.length" class="text-center">
+      {{name}}
+    </div>
+    <div id="pwa" style="display: none;">
+      <input type="file" id="pwaphoto" #pwaphoto
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="file()">
+    </div>
+  </div>
 
+  <div *ngIf="tab == 'uncalled'">
+    <div *ngFor="let item of this.rest.usg.over; let i = index"
+      [class]="item.over ? 'stl-card red' : status[item.status]">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: <a [href]="'tel:' + item.phone">{{item.phone}} <img class="icon" src="/assets/icon/tel-xs.png"></a>
+        <br>
+        Địa chỉ: {{item.address}}
+      </div>
+      <div class="col-xs-6">
+        Tái chủng: {{item.calltime}} <br>
+        Ngày tiêm: {{item.cometime}} <br>
+        Người tiêm: {{item.doctor}} <br>
+        usg: {{item.usg}} <br>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item.note}}
+      </div>
+      <!-- <img class="icon" src="/assets/icon/called.png" (click)="called(i)">
+      <img class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+      <img class="icon" *ngIf="rest.config.usg > 1" src="/assets/icon/dead.png" (click)="dead(i)">
+      <img class="right" *ngIf="rest.config.usg > 1" src="/assets/icon/update.png" (click)="update(i)"> -->
+    </div>
+  </div>
+
+  <div *ngIf="tab == 'temp'">
+    <ion-refresher slot="fixed" (ionRefresh)="reloadTemp($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-item *ngIf="rest.config.usg > 1">
+      <ion-label position="stacked"> Lọc các phiếu thêm trước ngày </ion-label>
+      <ion-datetime [(ngModel)]="rest.usg.time" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="filter()"></ion-datetime>
+    </ion-item>
+    <ion-item (click)="docs()" *ngIf="rest.config.usg > 1">
+      <span *ngIf="rest.usg.docscover.length">
+        Bác sĩ: {{rest.usg.docscover}}
+      </span>
+      <span *ngIf="!rest.usg.docscover.length">
+        Click lọc theo nhân viên
+      </span>
+    </ion-item>
+
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label> Chưa xác nhận </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label> Đã xác nhận </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngFor="let item of rest.usg.temp[segment] | slice:0:25 * page; let i = index" class="stl-card" (click)="selectbox(i)">
+      <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
+      <div class="col-xs-6">
+        <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
+        <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
+        Địa chỉ: {{item['address']}}
+      </div>
+      <div class="col-xs-6">
+        Ngày đến: {{item['cometime']}} <br>
+        <span [class]="item['calltime'] ? '' : 'redden'"> Nhắc lại: {{item['calltime']}} </span> <br>
+        Người làm: {{item['doctor']}} <br>
+        Số thai dự kiến: {{item['number']}}
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item['note']}} <br>
+        Ngày thêm: {{item['time']}} <br>
+      </div>
+      <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
+    </div>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="moreTemp($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Đang tải thêm...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('temp')" [selected]="tab == 'temp'">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Xác nhận </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('usg')" [selected]="tab == 'usg'" *ngIf="rest.config.usg > 1">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        <ion-label> Import </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -10,18 +10,26 @@ import { TimeService } from 'src/app/services/time.service';
 })
 export class UsgPage {
   public status_text = {
-    0: 'Chưa nhắc',
-    1: 'Chưa gọi được',
-    2: 'Đã gọi, chưa đến',
-    3: 'Đã tái chủng',
-    4: 'Không tái chủng',
+    0: 'Tư vấn trước sinh',
+    1: 'Hẹn nhắc sa lơ',
+    2: 'Ngày sinh',
+    3: 'Nhắc sổ giun lần 1',
+    4: 'Nhắc sổ giun lần 2',
+    5: 'Nhắc tiêm vaccine',
+    6: 'Đã hoàn thành',
+    7: 'Không theo dõi nữa',
+    8: 'Phiếu tạm',
   }
   public status = {
     0: 'stl-card white',
-    1: 'stl-card yellow',
-    2: 'stl-card green',
-    3: 'stl-card green',
-    4: 'stl-card red',
+    1: 'stl-card white',
+    2: 'stl-card white',
+    3: 'stl-card white',
+    4: 'stl-card white',
+    5: 'stl-card white',
+    6: 'stl-card white',
+    7: 'stl-card white',
+    8: 'stl-card white',
   }
   public segment = '0'
   public page = 1
@@ -50,7 +58,7 @@ export class UsgPage {
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
       // this.rest.usg.type = resp.type
-      // this.rest.usg.temp = resp.temp
+      this.rest.usg.temp = resp.temp
       // this.rest.usg.over = resp.over
       this.rest.defreeze()
     }, () => {
@@ -67,7 +75,7 @@ export class UsgPage {
       }).then(resp => {
         this.rest.defreeze()
         this.rest.temp = resp.list
-        this.rest.navCtrl.navigateForward('usg/usgsearch')
+        this.rest.navCtrl.navigateForward('usg/search')
       }, () => {
         this.rest.defreeze()
       })

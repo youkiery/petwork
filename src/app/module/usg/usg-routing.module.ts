@@ -13,11 +13,11 @@ const routes: Routes = [
     loadChildren: () => import('./usginsert/usginsert.module').then( m => m.UsginsertPageModule)
   },
   {
-    path: 'usgsearch',
+    path: 'search',
     loadChildren: () => import('./usgsearch/usgsearch.module').then( m => m.UsgsearchPageModule)
   },
   {
-    path: 'usgmanager',
+    path: 'manager',
     loadChildren: () => import('./usgmanager/usgmanager.module').then( m => m.UsgmanagerPageModule)
   },
 ];

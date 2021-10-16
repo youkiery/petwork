@@ -143,6 +143,7 @@ export class RestService {
       this.home = resp.data
       this.session = session
       this.vaccine.list = [[], [], []]
+      this.usg.list = [[], [], []]
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
@@ -165,6 +166,7 @@ export class RestService {
         this.home = resp.data
         this.session = resp.session
         this.vaccine.list = [[], [], []]
+        this.usg.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
         this.defreeze()

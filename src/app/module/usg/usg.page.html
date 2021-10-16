@@ -59,7 +59,6 @@
   <div *ngFor="let item of this.rest.usg.list[segment] | slice:0:25 * page; let i = index"
     [class]="item['over'] ? 'stl-card red' : status[item['status']]">
     <div class="col-xs-6">
-      Thú cưng: {{item['petname']}} <br>
       Tên khách: {{item['name']}} <br>
       Điện thoại: <a [href]="'tel:' + item['phone']">{{item['phone']}} <img class="icon"
           src="/assets/icon/tel-xs.png"></a> <br>
