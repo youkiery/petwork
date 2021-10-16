@@ -63,12 +63,12 @@ export class SchedulePage implements OnInit {
       name: this.rest.home.name,
       state: this.rest.schedule.state,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.schedule.list = resp.list
       this.rest.schedule.except = resp.except
       this.rest.schedule.data = resp.data
       // if (this.rest.config.schedule < 2) this.parseData()
       // else this.temp = JSON.parse(JSON.stringify(resp['data']))
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -177,9 +177,9 @@ export class SchedulePage implements OnInit {
       name: this.rest.home.name,
       state: this.rest.schedule.state,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.schedule.data = resp.data
       this.rest.schedule.time = time
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -192,8 +192,8 @@ export class SchedulePage implements OnInit {
       name: this.rest.home.name,
       state: this.rest.schedule.state,
     }).then(resp => {
-      this.rest.schedule.data = resp.data
       this.rest.defreeze()
+      this.rest.schedule.data = resp.data
     }, () => {
       this.rest.defreeze()
     })
@@ -206,9 +206,9 @@ export class SchedulePage implements OnInit {
       name: this.rest.home.name,
       state: this.rest.schedule.state,
     }).then(resp => {
+      this.rest.defreeze()
       event.target.complete()
       this.rest.schedule.data = resp.data
-      this.rest.defreeze()
     }, () => {
       event.target.complete()
       this.rest.defreeze()

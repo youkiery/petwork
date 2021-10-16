@@ -125,12 +125,11 @@
       <div class="col-xs-6">
         <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
         <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
-        <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
         Địa chỉ: {{item['address']}}
       </div>
       <div class="col-xs-6">
         Ngày đến: {{item['cometime']}} <br>
-        <span [class]="item['calltime'] ? '' : 'redden'"> Nhắc lại: {{item['calltime']}} </span> <br>
+        <span [class]="item['calltime'] ? '' : 'redden'"> Dư sinh: {{item['calltime']}} </span> <br>
         Người làm: {{item['doctor']}} <br>
         Số thai dự kiến: {{item['number']}}
       </div>

@@ -19,7 +19,7 @@ export class LoginPage {
     public platform: Platform
   ) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.subscription = this.platform.backButton.subscribe(() => {
       navigator['app'].exitApp();
     });

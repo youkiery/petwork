@@ -23,7 +23,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.ready">
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
     <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>

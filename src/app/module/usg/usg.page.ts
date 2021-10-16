@@ -10,8 +10,8 @@ import { TimeService } from 'src/app/services/time.service';
 })
 export class UsgPage {
   public status_text = {
-    0: 'Tư vấn trước sinh',
-    1: 'Hẹn nhắc sa lơ',
+    0: 'Nhắc tới ngày sa lơ',
+    1: 'Tư vấn trước sinh',
     2: 'Ngày sinh',
     3: 'Nhắc sổ giun lần 1',
     4: 'Nhắc sổ giun lần 2',
@@ -22,16 +22,26 @@ export class UsgPage {
   }
   public status = {
     0: 'stl-card white',
-    1: 'stl-card white',
-    2: 'stl-card white',
-    3: 'stl-card white',
-    4: 'stl-card white',
-    5: 'stl-card white',
-    6: 'stl-card white',
-    7: 'stl-card white',
-    8: 'stl-card white',
+    1: 'stl-card red',
   }
-  public segment = '0'
+  public header = {
+    0: 'Đã hẹn nhắc sa lơ',
+    1: 'Tư vấn trước sinh',
+    2: 'Ngày sinh',
+    3: 'Nhắc sổ giun lần 1',
+    4: 'Nhắc sổ giun lần 2',
+    5: 'Nhắc tiêm vaccine',
+    6: 'Đã hoàn thành',
+    7: 'Không theo dõi nữa',
+    8: 'Phiếu tạm',
+  }
+  public subheader = {
+    0: 'Xác nhận gọi nhắc salơ, phiếu nhắc sẽ được đánh dấu là đã hoàn thành',
+    1: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
+    2: 'Xác nhận đã sinh, phiếu nhắc xổ giun sẽ hiện lại 3 tuần sau khi sinh',
+    3: 'Xác nhận xổ giun lần 1, phiếu nhắc xổ giun lần 2 sẽ hiện lại 5 tuần sau khi sinh',
+    4: 'Xác nhận xổ giun lần 2, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+  }
   public page = 1
   constructor(
     public rest: RestService,
@@ -54,13 +64,13 @@ export class UsgPage {
       docs: this.rest.usg.docs,
       time: this.rest.usg.time,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.usg.init = true
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
       // this.rest.usg.type = resp.type
       this.rest.usg.temp = resp.temp
       // this.rest.usg.over = resp.over
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -89,10 +99,10 @@ export class UsgPage {
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
+      this.rest.defreeze()
       this.page = 1
       this.rest.usg.keyword = this.rest.usg.key
       this.rest.usg.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -111,9 +121,10 @@ export class UsgPage {
       docs: this.rest.usg.docs
     }).then(resp => {
       event.target.complete();
+      this.rest.defreeze()
+      this.page = 1
       this.rest.usg.keyword = this.rest.usg.key
       this.rest.usg.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -168,7 +179,7 @@ export class UsgPage {
   }
 
   public update(index: number) {
-    let item = this.rest.usg.list[this.segment][index]
+    let item = this.rest.usg.list[index]
     this.rest.temp = {
       id: item.id,
       petname: item.petname,
@@ -184,24 +195,14 @@ export class UsgPage {
   }
 
   public async called(index: number) {
-    let note = ''
-    let id = 0
-    if (this.rest.usg.key) {
-      id = this.rest.usg.list[index].id
-      note = this.rest.usg.list[index].note
-    }
-    else {
-      id = this.rest.usg.list[this.segment][index].id
-      note = this.rest.usg.list[this.segment][index].note
-    }
     const alert = await this.alert.create({
-      header: 'Xác nhận Đã gọi',
-      subHeader: 'Đã gọi khách hàng, xác nhận?',
+      header: this.header[this.rest.usg.list[index].status],
+      subHeader: this.subheader[this.rest.usg.list[index].status],
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: note
+        value: this.rest.usg.list[index].note
       }],
       buttons: [
         {
@@ -210,7 +211,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(id, e.note)
+            this.calledSubmit(this.rest.usg.list[index].id, e.note)
           }
         }
       ]
@@ -227,128 +228,22 @@ export class UsgPage {
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.usg.list = resp.list
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async uncalled(index: number) {
-    let note = ''
-    let id = 0
-    if (this.rest.usg.key) {
-      id = this.rest.usg.list[index].id
-      note = this.rest.usg.list[index].note
-    }
-    else {
-      id = this.rest.usg.list[this.segment][index].id
-      note = this.rest.usg.list[this.segment][index].note
-    }
-    const alert = await this.alert.create({
-      header: 'Xác nhận Không gọi được',
-      subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
-      message: 'Ghi chú: ',
-      inputs: [{
-        type: 'text',
-        label: 'Ghi chú',
-        name: 'note',
-        value: note
-      }],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.uncalledSubmit(id, e.note)
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  public async uncalledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('usg', 'uncalled', {
-      id: id,
-      note: note,
-      keyword: this.rest.usg.keyword,
-      time: this.rest.usg.time,
-      docs: this.rest.usg.docs
-    }).then(resp => {
-      this.rest.usg.list = resp.list
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async done(index: number) {
-    let id = 0
-    if (this.rest.usg.key) {
-      id = this.rest.usg.list[index].id
-    }
-    else {
-      id = this.rest.usg.list[this.segment][index].id
-    }
-
-    const alert = await this.alert.create({
-      header: 'Xác nhận tiêm phòng',
-      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.doneSubmit(id)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  public async doneSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('usg', 'done', {
-      id: id,
-      keyword: this.rest.usg.keyword,
-      time: this.rest.usg.time,
-      docs: this.rest.usg.docs
-    }).then((resp) => {
-      this.rest.usg.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
 
   public async dead(index: number) {
-    let note = ''
-    let id = 0
-    if (this.rest.usg.key) {
-      id = this.rest.usg.list[index].id
-      note = this.rest.usg.list[index].note
-    }
-    else {
-      id = this.rest.usg.list[this.segment][index].id
-      note = this.rest.usg.list[this.segment][index].note
-    }
-
     const alert = await this.alert.create({
-      header: 'Xác nhận khách không tiêm phòng',
-      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa, xác nhận?',
+      header: 'Xác nhận không theo dõi',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: note
+        value: this.rest.usg.list[index].note
       }],
       buttons: [
         {
@@ -357,7 +252,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(id, e.note)
+            this.deadSubmit(this.rest.usg.list[index].id, e.note)
           }
         }
       ]
@@ -375,8 +270,8 @@ export class UsgPage {
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
-      this.rest.usg.list = resp.list
       this.rest.defreeze()
+      this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -385,12 +280,5 @@ export class UsgPage {
   public manager() {
     this.rest.temp = {}
     this.rest.navCtrl.navigateForward('usg/manager')
-  }
-
-  public refresh(event: any) {
-    this.rest.usg.init = false
-    this.init().then(() => {
-      event.target.complete();
-    })
   }
 }

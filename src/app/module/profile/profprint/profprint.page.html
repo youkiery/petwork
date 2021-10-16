@@ -10,7 +10,7 @@
   </ion-button>
 </ion-toolbar>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div id="printable">
     <div [innerHTML]="html" ></div>
   </div>

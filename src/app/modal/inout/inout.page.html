@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.temp.action == 'in'">
     <ion-item>
       <ion-label position="stacked"> Lyse: {{rest.blood.current[1]}} (ML) </ion-label>

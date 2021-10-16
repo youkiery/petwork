@@ -12,7 +12,7 @@ export class CartPage {
     public alert: AlertController
   ) { }
 
-  public async ionViewDidEnter() {
+  public async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.init()
     })
@@ -22,9 +22,9 @@ export class CartPage {
     if (!this.rest.cart.init) {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('cart', 'auto', { }).then(resp => {
+        this.rest.defreeze()
         this.rest.cart.init = true
         this.rest.cart.list = resp.list
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })

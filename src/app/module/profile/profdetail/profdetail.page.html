@@ -4,7 +4,7 @@
   </ion-button>
 </ion-toolbar>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <p class="underline">
     <b> Chỉ tiêu: </b>  {{rest.profile.data2.name}}
   </p>

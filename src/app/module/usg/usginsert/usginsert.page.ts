@@ -19,7 +19,7 @@ export class UsginsertPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
     if ((this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
       this.init = true
@@ -37,9 +37,9 @@ export class UsginsertPage implements OnInit {
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('usg', 'insert', this.rest.temp).then(resp => {
+        this.rest.defreeze()
         this.rest.usg.new = resp.new
         this.clear()
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -69,8 +69,8 @@ export class UsginsertPage implements OnInit {
     this.rest.checkpost('usg', 'remove', {
       id: id
     }).then(resp => {
-      this.rest.usg.new = resp.new
       this.rest.defreeze()
+      this.rest.usg.new = resp.new
     }, () => {
       this.rest.defreeze()
     })
@@ -93,9 +93,9 @@ export class UsginsertPage implements OnInit {
     await this.rest.freeze('Thêm lịch nhắc...')
     this.rest.temp.filter = this.rest.usg.keyword
     this.rest.checkpost('usg', 'update', this.rest.temp).then(resp => {
+      this.rest.defreeze()
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
-      this.rest.defreeze()
       this.clear()
       if (this.rest.usg.keyword) this.rest.navCtrl.pop()
     }, () => {

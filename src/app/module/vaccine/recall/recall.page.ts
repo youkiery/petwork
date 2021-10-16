@@ -26,7 +26,7 @@ export class RecallPage {
     public alert: AlertController
   ) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
   }
 
@@ -88,6 +88,7 @@ export class RecallPage {
     this.rest.checkpost('vaccine', 'donerecall', {
       list : this.getselectedid(),
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.new = resp.new
       this.rest.temp.list = this.rest.temp.list.filter((item: any, i: string) => {
         if (index.indexOf(i.toString()) < 0) return true
@@ -98,7 +99,6 @@ export class RecallPage {
         if (this.rest.temp.prv) this.rest.navCtrl.navigateBack('vaccine/manager')
         else this.rest.navCtrl.back()
       } 
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

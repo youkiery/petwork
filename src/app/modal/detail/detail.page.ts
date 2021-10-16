@@ -41,8 +41,8 @@ export class DetailPage {
   public async bloodInit() {
     await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.checkpost('blood', 'statistic', { }).then(response => {
-      this.rest.temp = response.data
       this.rest.defreeze()
+      this.rest.temp = response.data
     }, () => {
       this.rest.defreeze()
     })
@@ -74,9 +74,9 @@ export class DetailPage {
       module: this.module,
       id: this.rest.admin.list[this.rest.temp.index].userid
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.admin.list[this.rest.temp.index].module = this.module
       this.rest.config = resp.config
-      this.rest.defreeze()
       this.rest.navCtrl.back()
     }, () => {
       this.rest.defreeze()

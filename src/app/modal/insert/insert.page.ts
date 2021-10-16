@@ -17,7 +17,7 @@ export class InsertPage {
     public time: TimeService
   ) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
     if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
       this.init = true
@@ -32,10 +32,9 @@ export class InsertPage {
       image: this.rest.temp.image,
       posid: this.rest.temp.list[this.rest.temp.prv].id
     }).then((resp) => {
-
+      this.rest.defreeze()
       this.rest.temp.list[this.rest.temp.prv].position = resp.list
       this.rest.back()
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -67,8 +66,8 @@ export class InsertPage {
       id: id,
       key: this.rest.temp.key
     }).then(resp => {
-      this.rest.temp.list = resp.list
       this.rest.defreeze()
+      this.rest.temp.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -79,8 +78,8 @@ export class InsertPage {
     this.rest.checkpost('admin', 'filter', {
       key: this.rest.temp.key
     }).then(resp => {
-      this.rest.temp.list = resp.list
       this.rest.defreeze()
+      this.rest.temp.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -96,6 +95,7 @@ export class InsertPage {
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
+        this.rest.defreeze()
         this.rest.temp.vid = resp.vid
         this.rest.vaccine.list = resp.list
         this.rest.vaccine.new = resp.new
@@ -106,7 +106,6 @@ export class InsertPage {
           this.rest.navCtrl.navigateForward('/vaccine/recall')
         }
         this.clear()
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -119,9 +118,9 @@ export class InsertPage {
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
       this.rest.checkpost('vaccine', 'inserthistory', this.rest.temp).then(resp => {
+        this.rest.defreeze()
         this.rest.vaccine.new = resp.new
         this.clear()
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -151,8 +150,8 @@ export class InsertPage {
     this.rest.checkpost('vaccine', 'removevaccine', {
       id: id
     }).then(resp => {
-      this.rest.vaccine.new = resp.new
       this.rest.defreeze()
+      this.rest.vaccine.new = resp.new
     }, () => {
       this.rest.defreeze()
     })
@@ -180,9 +179,9 @@ export class InsertPage {
     else {
       await this.rest.freeze('Cập nhật lịch nhắc...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
+        this.rest.defreeze()
         this.rest.vaccine.list = resp.list
         this.rest.vaccine.new = resp.new
-        this.rest.defreeze()
         if (this.rest.temp.ppv) this.clear()
         else this.rest.back()
       }, () => {
@@ -205,6 +204,7 @@ export class InsertPage {
     else {
       await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
       this.rest.checkpost('vaccine', 'updatehistory', this.rest.temp).then(resp => {
+        this.rest.defreeze()
         this.rest.vaccine.temp = resp.list
         this.rest.temp.vid = this.rest.temp.id
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
@@ -213,7 +213,6 @@ export class InsertPage {
           this.rest.temp.list = resp.old
           this.rest.navCtrl.navigateForward('vaccine/recall')
         }
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -244,12 +243,12 @@ export class InsertPage {
       'number': this.rest.temp.number,
       'target': this.rest.temp.target,
     }).then(response => {
+      this.rest.defreeze()
       this.rest.temp.number = 1
       this.rest.temp.total = Number(response.number)
       this.rest.temp.start = this.rest.temp.total
       this.rest.temp.end = this.rest.temp.total - 1
       this.rest.temp.target = ''
-      this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()

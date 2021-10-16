@@ -85,9 +85,9 @@ export class ProfilePage {
       id: this.rest.profile.target[i].id,
       key: this.rest.profile.key
     }).then(response => {
+      this.rest.defreeze()
       this.rest.notify('Đã xóa chỉ tiêu')
       this.rest.profile.target = response.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -119,8 +119,8 @@ export class ProfilePage {
     this.rest.checkpost('target', 'update', {
       id: this.rest.profile.target[index].id
     }).then(response => {
-      this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
       this.rest.defreeze()
+      this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
     }, () => {
       this.rest.defreeze()
     })
@@ -153,8 +153,8 @@ export class ProfilePage {
       id: this.rest.profile.target[index].id,
       key: this.rest.profile.key
     }).then(response => {
-      this.rest.profile.target[index].number = 0
       this.rest.defreeze()
+      this.rest.profile.target[index].number = 0
     }, () => {
       this.rest.defreeze()
     })
@@ -169,6 +169,7 @@ export class ProfilePage {
       this.rest.checkpost('profile', 'print', {
         id: id
       }).then(response => {
+        this.rest.defreeze()
         let html = response.html
         let winPrint = window.open();
         winPrint.focus()
@@ -178,7 +179,6 @@ export class ProfilePage {
           winPrint.print()
           winPrint.close()
         }, 300)
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -223,8 +223,8 @@ export class ProfilePage {
       key: this.rest.profile.key,
       page: this.rest.profile.page
     }).then(response => {
-      this.rest.profile.list = response.list
       this.rest.defreeze()
+      this.rest.profile.list = response.list
     }, () => {
       this.rest.defreeze()
     })
@@ -244,11 +244,11 @@ export class ProfilePage {
       // action: 'profile-get',
       id: id
     }).then(response => {
+      this.rest.defreeze()
       this.rest.profile.id = id
       // this.rest.profile.data = response.data
       this.rest.profile.print = response.html
       this.rest.router.navigateByUrl('profile/print')
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

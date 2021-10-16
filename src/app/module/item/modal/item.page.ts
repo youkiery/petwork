@@ -34,9 +34,9 @@ export class ItemPage implements OnInit {
   public async positionInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'position_init', {}).then(resp => {
+      this.rest.defreeze()
       this.init = true
       this.rest.temp.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -45,9 +45,9 @@ export class ItemPage implements OnInit {
   public async purchaseInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'purchase_init', {}).then(resp => {
+      this.rest.defreeze()
       this.init = true
       this.rest.temp.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -56,9 +56,9 @@ export class ItemPage implements OnInit {
   public async transferInit() {
       await this.rest.freeze('Đang tải danh sách...')
       this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
+        this.rest.defreeze()
         this.init = true
         this.rest.temp.list = resp.list
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })
@@ -67,9 +67,9 @@ export class ItemPage implements OnInit {
   public async expiredInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'expired_init', {}).then(resp => {
+      this.rest.defreeze()
       this.init = true
       this.rest.temp.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -126,10 +126,10 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'position_remove', {
       id: this.rest.temp.list[index].id,
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.temp.list = this.rest.temp.list.filter((item: any, i: number) => {
         return i !== index
       })
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -163,9 +163,9 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'expire_done', {
       id: id,
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.temp.list = resp.list
       this.rest.item.expired = resp.expired
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -277,9 +277,9 @@ export class ItemPage implements OnInit {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.keyword = this.rest.item.keyword    
     this.rest.checkpost('item', 'insert', temp).then(resp => {
+      this.rest.defreeze()
       this.rest.item.list = resp.list
       this.rest.navCtrl.pop()
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -313,9 +313,9 @@ export class ItemPage implements OnInit {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.keyword = this.rest.item.keyword    
     this.rest.checkpost('item', 'update', temp).then(resp => {
+      this.rest.defreeze()
       this.rest.item.list = resp.list
       this.rest.navCtrl.pop()
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -329,6 +329,7 @@ export class ItemPage implements OnInit {
     await this.rest.freeze('Đang thêm...')
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     this.rest.checkpost('item', 'expire', temp).then(() => {
+      this.rest.defreeze()
       this.rest.temp = {
         action: 'expire',
         name: '',
@@ -336,7 +337,6 @@ export class ItemPage implements OnInit {
         expire: this.rest.home.today,
         Number: 1
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -354,8 +354,8 @@ export class ItemPage implements OnInit {
       itemid: itemid,
       posid: this.rest.temp.list[index].id,
     }).then((resp) => {
-      this.rest.temp.list[index].position = resp.list
       this.rest.defreeze()
+      this.rest.temp.list[index].position = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -392,9 +392,9 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'incat', {
       cat: cat
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.item.catlist = resp.catlist
       this.rest.temp.cat = resp.cat.toString()
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

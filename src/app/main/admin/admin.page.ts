@@ -14,7 +14,7 @@ export class AdminPage {
     public alert: AlertController
   ) { }
 
-  public async ionViewDidEnter() {
+  public async ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/home', {animated: true, animationDirection: 'back'})
     else this.init()
   }
@@ -25,9 +25,9 @@ export class AdminPage {
       this.rest.checkpost('admin', 'auto', {
         action: 'admin-user',
       }).then(resp => {
+        this.rest.defreeze()
         this.rest.admin.init = true
         this.rest.admin.list = resp.list
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })

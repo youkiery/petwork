@@ -16,7 +16,7 @@ export class SuggestPage {
     public rest: RestService
   ) {}
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
     if (this.rest.action == 'item') this.input2.setFocus();
     else this.input.setFocus();
@@ -64,11 +64,11 @@ export class SuggestPage {
     this.rest.checkpost('vaccine', 'history', {
       phone: this.rest.temp.phone
     }).then(resp => {
+      this.rest.defreeze()
       if (resp.old.length) {
         this.rest.vaccine.old = resp.old
         this.rest.navCtrl.navigateForward('vaccine/his')
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

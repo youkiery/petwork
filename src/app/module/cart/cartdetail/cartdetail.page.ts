@@ -26,9 +26,9 @@ export class CartdetailPage implements OnInit {
     this.rest.checkpost('cart', 'pick', {
       id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.cart.list[this.rest.temp].status = resp.status
       this.rest.cart.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -57,8 +57,8 @@ export class CartdetailPage implements OnInit {
     this.rest.checkpost('cart', 'done', {
       id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {
-      this.rest.cart.list = resp.list
       this.rest.defreeze()
+      this.rest.cart.list = resp.list
       this.rest.navCtrl.back()
     }, () => {
       this.rest.defreeze()

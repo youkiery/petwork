@@ -48,8 +48,8 @@ export class ProfprintPage implements OnInit {
     this.rest.checkpost('profile', 'download', {
       id: this.rest.profile.id
     }).then(response => {
-      window.open(response.link)
       this.rest.defreeze()
+      window.open(response.link)
     }, () => {
       this.rest.defreeze()
     })

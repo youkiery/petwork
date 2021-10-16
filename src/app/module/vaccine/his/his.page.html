@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div class="stl-card">
     Chủ nuôi: {{rest.temp.name}} <br>
     Điện thoại: {{rest.temp.phone}}

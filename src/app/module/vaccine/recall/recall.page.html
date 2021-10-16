@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'vaccine'">
     <div *ngIf="rest.temp.ov && rest.temp.ov.phone">
       <div class="stl-card blue">

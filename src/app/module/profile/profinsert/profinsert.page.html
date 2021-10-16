@@ -13,7 +13,7 @@
   </ion-button>
 </ion-toolbar>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action = 'profile'">
     <ion-item (click)="suggest()">
       <ion-label position="stacked"> Số điện thoại </ion-label>

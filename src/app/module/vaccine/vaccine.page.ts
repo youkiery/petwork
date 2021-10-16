@@ -45,13 +45,13 @@ export class VaccinePage {
       docs: this.rest.vaccine.docs,
       time: this.rest.vaccine.time,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.init = true
       this.rest.vaccine.new = resp.new
       this.rest.vaccine.list = resp.list
       this.rest.vaccine.type = resp.type
       this.rest.vaccine.temp = resp.temp
       this.rest.vaccine.over = resp.over
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -64,10 +64,10 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
+      this.rest.defreeze()
       this.page = 1
       this.rest.vaccine.keyword = this.key
       this.rest.vaccine.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -85,10 +85,11 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
+      this.rest.defreeze()
       event.target.complete();
+      this.page = 1
       this.rest.vaccine.keyword = this.key
       this.rest.vaccine.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -205,8 +206,8 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
-      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
+      this.rest.vaccine.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -257,8 +258,8 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
-      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
+      this.rest.vaccine.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -300,8 +301,8 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then((resp) => {
-      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
+      this.rest.vaccine.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -353,8 +354,8 @@ export class VaccinePage {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then((resp) => {
-      this.rest.vaccine.list = resp.list
       this.rest.defreeze()
+      this.rest.vaccine.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -364,12 +365,5 @@ export class VaccinePage {
     this.rest.temp = {}
     this.rest.action = 'temp'
     this.rest.navCtrl.navigateForward('vaccine/manager')
-  }
-
-  public refresh(event: any) {
-    this.rest.vaccine.init = false
-    this.init().then(() => {
-      event.target.complete();
-    })
   }
 }

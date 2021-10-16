@@ -9,13 +9,14 @@
     <ion-button *ngIf="rest.action == 'admin'" slot="end" (click)="save()" color="secondary" fill="solid" size="small">
       Lưu
     </ion-button>
-    <ion-button *ngIf="rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="secondary" fill="solid" size="small">
+    <ion-button *ngIf="rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="secondary" fill="solid"
+      size="small">
       Cập nhật
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'blood'">
     <ion-toolbar color="success">
       <ion-button color="secondary" fill="solid" size="small" (click)="this.rest.navCtrl.pop()">
@@ -23,29 +24,27 @@
       </ion-button>
     </ion-toolbar>
 
-    <ion-content>
-      <p> Thống kê từ {{rest.temp.from}} đến {{rest.temp.end}} </p>
+    <p> Thống kê từ {{rest.temp.from}} đến {{rest.temp.end}} </p>
 
-      <ion-item>
-        Tổng số phiếu thử: {{rest.temp.number}}
-      </ion-item>
-      <ion-item>
-        Tổng số mẫu thử: {{rest.temp.sample}}
-      </ion-item>
-      <ion-item>
-        Tổng tiền chi: {{rest.temp.total}}
-      </ion-item>
+    <ion-item>
+      Tổng số phiếu thử: {{rest.temp.number}}
+    </ion-item>
+    <ion-item>
+      Tổng số mẫu thử: {{rest.temp.sample}}
+    </ion-item>
+    <ion-item>
+      Tổng tiền chi: {{rest.temp.total}}
+    </ion-item>
 
-      <ion-card *ngFor="let item of rest.temp.list">
-        <ion-card-header>
-          {{item.name}}
-        </ion-card-header>
-        <ion-card-content>
-          <p> Số lần xét nghiệm: {{item.number}} </p>
-          <p> Số mẫu xét nghiệm: {{item.sample}} </p>
-        </ion-card-content>
-      </ion-card>
-    </ion-content>
+    <ion-card *ngFor="let item of rest.temp.list">
+      <ion-card-header>
+        {{item.name}}
+      </ion-card-header>
+      <ion-card-content>
+        <p> Số lần xét nghiệm: {{item.number}} </p>
+        <p> Số mẫu xét nghiệm: {{item.sample}} </p>
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <div *ngIf="rest.action == 'drug'" class="pad">

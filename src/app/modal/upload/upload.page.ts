@@ -21,7 +21,7 @@ export class UploadPage {
     private storage: AngularFireStorage,
   ) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
     if (this.rest.action == 'spa') {
       if (!this.rest.temp.id && !this.init) {
@@ -181,9 +181,9 @@ export class UploadPage {
   public async insertSubmit() {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa', 'insert', this.rest.temp).then(resp => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -193,9 +193,9 @@ export class UploadPage {
   public async updateSubmit() {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa', 'update', this.rest.temp).then(resp => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -255,8 +255,8 @@ export class UploadPage {
     }
 
     this.rest.checkpost('drug', 'insert', this.rest.temp).then((response) => {
-      this.rest.drug.list = response.list
       this.rest.defreeze()
+      this.rest.drug.list = response.list
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -270,9 +270,9 @@ export class UploadPage {
     }
 
     this.rest.checkpost('drug', 'update', this.rest.temp).then((response) => {
+      this.rest.defreeze()
       this.rest.drug.list = response.list
       this.rest.drug.detail = this.rest.temp
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -309,10 +309,10 @@ export class UploadPage {
       pos: this.rest.temp.pos,
       image: this.rest.temp.image,
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.item.image[this.rest.temp.id] = this.rest.temp.image
       this.rest.temp.list[this.rest.temp.prv].name = this.rest.temp.pos
       this.rest.temp.list[this.rest.temp.prv].image = this.rest.temp.image
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -346,12 +346,12 @@ export class UploadPage {
       pos: this.rest.temp.pos,
       image: this.rest.temp.image,
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.item.image[resp.id] = resp.image
       this.rest.temp.list.push({
         name: this.rest.temp.pos,
         list: []
       })
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()

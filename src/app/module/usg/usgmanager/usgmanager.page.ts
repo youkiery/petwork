@@ -108,11 +108,11 @@ export class UsgmanagerPage implements OnInit {
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
+      this.rest.defreeze()
       this.page = 1
       this.selected = {}
       this.toggle = false
       this.rest.usg.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -177,9 +177,9 @@ export class UsgmanagerPage implements OnInit {
       list: list,
       uid: uid
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.rest.usg.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -215,9 +215,9 @@ export class UsgmanagerPage implements OnInit {
       docs: this.rest.usg.docs,
       list: list,
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.rest.usg.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -260,6 +260,7 @@ export class UsgmanagerPage implements OnInit {
       docs: this.rest.usg.docs,
       list: list
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.usg.temp = resp.list
       this.selected = {}
 
@@ -270,7 +271,6 @@ export class UsgmanagerPage implements OnInit {
         this.rest.temp.prv = 'temp'
         this.rest.navCtrl.navigateForward('/usg/recall')
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -378,8 +378,8 @@ export class UsgmanagerPage implements OnInit {
       docs: this.rest.usg.docs,
       id: this.rest.usg.temp[this.segment][index].id
     }).then(resp => {
-      this.rest.usg.temp = resp.list
       this.rest.defreeze()
+      this.rest.usg.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -420,6 +420,7 @@ export class UsgmanagerPage implements OnInit {
       id: id,
       temp: 1
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.toggle = false
       this.rest.usg.temp = resp.temp
@@ -431,7 +432,6 @@ export class UsgmanagerPage implements OnInit {
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         this.rest.navCtrl.navigateForward('/usg/recall')
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -447,11 +447,12 @@ export class UsgmanagerPage implements OnInit {
       time: this.rest.usg.time,
       docs: this.rest.usg.docs,
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.toggle = false
       this.rest.usg.temp = resp.list
       event.target.complete();
-      this.rest.defreeze()
+      this.page = 1
     }, () => {
       this.rest.defreeze()
     })

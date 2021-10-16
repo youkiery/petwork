@@ -33,7 +33,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'item'">
     <ion-card>
       <ion-card-content>

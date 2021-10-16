@@ -35,10 +35,10 @@ export class UserPage {
         old: this.oldpas,
         new: this.newpas
       }).then(data => {
+        this.rest.defreeze()
         this.oldpas = ''
         this.newpas = ''
         this.verpas = ''
-        this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
       })

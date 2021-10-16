@@ -13,7 +13,7 @@ export class FilterPage {
     public alert: AlertController,
   ) {  }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
   }
 
@@ -49,8 +49,8 @@ export class FilterPage {
       rate: point,
       keyword: this.rest.spa.keyword
     }).then((resp) => {
-      this.rest.spa.old = resp.list
       this.rest.defreeze()
+      this.rest.spa.old = resp.list
     }, () => {
       this.rest.defreeze()
     })

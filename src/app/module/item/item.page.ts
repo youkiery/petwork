@@ -30,6 +30,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'init', {
       keyword: this.rest.item.keyword
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.item.init = true
       this.rest.item.purchase = resp.purchase
       this.rest.item.transfer = resp.transfer
@@ -39,7 +40,6 @@ export class ItemPage implements OnInit {
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
       event.target.complete()
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -50,6 +50,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'init', {
       keyword: this.rest.item.keyword
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.item.init = true
       this.rest.item.purchase = resp.purchase
       this.rest.item.transfer = resp.transfer
@@ -58,7 +59,6 @@ export class ItemPage implements OnInit {
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -69,8 +69,8 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'filter', {
       keyword: this.rest.item.keyword
     }).then(resp => {
-      this.rest.item.list = resp.list
       this.rest.defreeze()
+      this.rest.item.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -156,8 +156,8 @@ export class ItemPage implements OnInit {
       id: id,
       keyword: this.rest.item.keyword
     }).then((resp) => {
-      this.rest.item.list = resp.list
       this.rest.defreeze()
+      this.rest.item.list = resp.list
     }, () => {
       this.rest.defreeze()
     })

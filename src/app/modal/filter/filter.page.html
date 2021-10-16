@@ -9,8 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'spa'">
     <div *ngFor="let item of this.rest.spa.old; let i = index" class="stl-card green">
       <div class="quara-left">

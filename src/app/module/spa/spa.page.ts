@@ -33,7 +33,7 @@ export class SpaPage {
     public alert: AlertController
   ) { }
 
-  async ionViewDidEnter() {
+  async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'spa'
       this.autoload = setInterval(() => {
@@ -98,9 +98,9 @@ export class SpaPage {
     this.rest.checkpost('spa', 'filter', {
       time: this.rest.spa.time,
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.init = resp.time
       this.rest.spa.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -111,9 +111,9 @@ export class SpaPage {
     this.rest.checkpost('spa', 'search', {
       keyword: this.rest.spa.keyword
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.old = resp.list
       this.rest.navCtrl.navigateForward('modal/filter')
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -188,9 +188,9 @@ export class SpaPage {
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -222,9 +222,9 @@ export class SpaPage {
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -260,10 +260,10 @@ export class SpaPage {
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
       this.report(index)
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -298,9 +298,9 @@ export class SpaPage {
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

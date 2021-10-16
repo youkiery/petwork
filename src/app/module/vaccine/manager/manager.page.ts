@@ -108,11 +108,11 @@ export class ManagerPage implements OnInit {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs
     }).then(resp => {
+      this.rest.defreeze()
       this.page = 1
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -177,9 +177,9 @@ export class ManagerPage implements OnInit {
       list: list,
       uid: uid
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.rest.vaccine.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -215,9 +215,9 @@ export class ManagerPage implements OnInit {
       docs: this.rest.vaccine.docs,
       list: list,
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.rest.vaccine.temp = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -260,6 +260,7 @@ export class ManagerPage implements OnInit {
       docs: this.rest.vaccine.docs,
       list: list
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.temp = resp.list
       this.selected = {}
 
@@ -270,7 +271,6 @@ export class ManagerPage implements OnInit {
         this.rest.temp.prv = 'temp'
         this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -325,9 +325,9 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'remove', {
       id: id,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.type = resp.list
       this.rest.action = 'type'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -340,9 +340,9 @@ export class ManagerPage implements OnInit {
       code: this.input.code,
       name: this.input.name
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.type = resp.list
       this.rest.action = 'type'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -354,9 +354,9 @@ export class ManagerPage implements OnInit {
       code: this.input.code,
       name: this.input.name
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.type = resp.list
       this.rest.action = 'type'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -388,9 +388,9 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'removedoctor', {
       id: id,
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -403,9 +403,9 @@ export class ManagerPage implements OnInit {
       user: this.input.userid,
       name: this.input.name
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -417,9 +417,9 @@ export class ManagerPage implements OnInit {
       user: this.input.userid,
       name: this.input.name
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.home.doctor = resp.list
       this.rest.action = 'doctor'
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -430,8 +430,8 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'searchdoctor', {
       keyword: this.input.username
     }).then(resp => {
-      this.list = resp.list
       this.rest.defreeze()
+      this.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -517,8 +517,8 @@ export class ManagerPage implements OnInit {
       docs: this.rest.vaccine.docs,
       id: this.rest.vaccine.temp[this.segment][index].id
     }).then(resp => {
-      this.rest.vaccine.temp = resp.list
       this.rest.defreeze()
+      this.rest.vaccine.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -559,6 +559,7 @@ export class ManagerPage implements OnInit {
       id: id,
       temp: 1
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.temp
@@ -570,7 +571,6 @@ export class ManagerPage implements OnInit {
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         this.rest.navCtrl.navigateForward('/vaccine/recall')
       }
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -590,11 +590,12 @@ export class ManagerPage implements OnInit {
       time: this.rest.vaccine.time,
       docs: this.rest.vaccine.docs,
     }).then(resp => {
+      this.rest.defreeze()
       this.selected = {}
       this.toggle = false
       this.rest.vaccine.temp = resp.list
       event.target.complete();
-      this.rest.defreeze()
+      this.page = 1
     }, () => {
       this.rest.defreeze()
     })
@@ -603,9 +604,9 @@ export class ManagerPage implements OnInit {
   public async reloadType(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'typeauto', {}).then(resp => {
+      this.rest.defreeze()
       this.rest.vaccine.type = resp.list
       event.target.complete();
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
@@ -614,9 +615,9 @@ export class ManagerPage implements OnInit {
   public async reloadDoctor(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {
+      this.rest.defreeze()
       this.rest.home.doctor = resp.list
       event.target.complete();
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

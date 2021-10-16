@@ -25,7 +25,7 @@ export class HisPage {
     public time: TimeService
   ) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
   }
 

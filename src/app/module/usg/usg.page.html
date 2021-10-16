@@ -35,51 +35,28 @@
     </span>
   </ion-item>
 
-  <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="0">
-      <ion-label>
-        Chưa gọi
-        <ion-badge color="danger"> {{rest.usg.list[0].length}} </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="1">
-      <ion-label>
-        Không nghe
-        <ion-badge color="danger"> {{rest.usg.list[1].length}} </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="2">
-      <ion-label>
-        Đã gọi
-        <ion-badge color="danger"> {{rest.usg.list[2].length}} </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
-  <div *ngFor="let item of this.rest.usg.list[segment] | slice:0:25 * page; let i = index"
-    [class]="item['over'] ? 'stl-card red' : status[item['status']]">
+  <div *ngFor="let item of this.rest.usg.list | slice:0:25 * page; let i = index" [class]="status[item['over']]">
     <div class="col-xs-6">
       Tên khách: {{item['name']}} <br>
-      Điện thoại: <a [href]="'tel:' + item['phone']">{{item['phone']}} <img class="icon"
-          src="/assets/icon/tel-xs.png"></a> <br>
+      Điện thoại:
+      <a [href]="'tel:' + item['phone']">
+        {{item['phone']}}
+        <img class="icon" src="/assets/icon/tel-xs.png">
+      </a> <br>
       Địa chỉ: {{item['address']}}
     </div>
     <div class="col-xs-6">
-      Ngày nhắc: {{item['calltime']}} <br>
       Ngày đến: {{item['cometime']}} <br>
-      Loại nhắc: {{item['usg']}} <br>
-      <span *ngIf="item['called']"> Gọi nhắc cuối: <span
-          [class]="item['called'] == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item['called']}} </span> <br> </span>
+      Dự sinh: {{item['calltime']}} <br>
+      Ngày nhắc kế: {{item['recall']}} <br>
+      Sự kiện: <span class="bold"> {{status_text[item['status']]}} </span> <br>
       Người tiêm: {{item['doctor']}}
     </div>
     <div class="upperline">
       Ghi chú: {{item['note']}}
     </div>
-    <img class="icon" src="/assets/icon/called.png" (click)="called(i)">
-    <img class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
-    <!-- <img class="icon" *ngIf="rest.config.usg > 1" src="/assets/icon/done.png" (click)="done(i)"> -->
+    <img *ngIf="item.status < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
     <img class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
-    <img class="right" *ngIf="rest.config.usg > 1" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="moreusg($event)">

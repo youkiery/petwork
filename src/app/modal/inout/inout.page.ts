@@ -28,9 +28,9 @@ export class InoutPage implements OnInit {
     this.rest.checkpost('blood', 'out', {
       number: this.number2
     }).then(response => {
+      this.rest.defreeze()
       this.rest.temp.start = response.number
       this.rest.temp.end = response.number - 1
-      this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
@@ -43,11 +43,11 @@ export class InoutPage implements OnInit {
       number: this.number,
       total: this.total,
     }).then(response => {
+      this.rest.defreeze()
       this.rest.blood.current = response.current
       this.rest.blood.total = Number(response.total)
       this.rest.temp.start = response.total
       this.rest.temp.end = response.total - response.total
-      this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()

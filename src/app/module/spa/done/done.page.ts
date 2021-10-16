@@ -130,9 +130,9 @@ export class DonePage implements OnInit {
 
   public async doneSubmit() {
     this.rest.checkpost('spa', 'report', this.rest.temp).then((resp) => {
+      this.rest.defreeze()
       this.rest.spa.list = resp.list
       this.rest.spa.init = resp.time
-      this.rest.defreeze()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -145,8 +145,8 @@ export class DonePage implements OnInit {
       from: this.time.isodatetodate(this.rest.spa.from),
       end: this.time.isodatetodate(this.rest.spa.end),
     }).then((resp) => {
-      this.rest.temp.list = resp.list
       this.rest.defreeze()
+      this.rest.temp.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -180,8 +180,8 @@ export class DonePage implements OnInit {
       from: this.time.isodatetodate(this.rest.spa.from),
       end: this.time.isodatetodate(this.rest.spa.end),
     }).then((resp) => {
-      this.rest.temp.list = resp.list
       this.rest.defreeze()
+      this.rest.temp.list = resp.list
     }, () => {
       this.rest.defreeze()
     })

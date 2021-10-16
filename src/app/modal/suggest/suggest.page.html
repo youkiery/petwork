@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'item'">
     <ion-item>
       <ion-input [(ngModel)]="key" (keyup)="suggestItem()" #input2> </ion-input>
