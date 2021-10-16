@@ -50,13 +50,15 @@
       Dự sinh: {{item['calltime']}} <br>
       Ngày nhắc kế: {{item['recall']}} <br>
       Sự kiện: <span class="bold"> {{status_text[item['status']]}} </span> <br>
-      Người tiêm: {{item['doctor']}}
+      Số thai: {{item['number']}} <br>
+      Bác sĩ: {{item['doctor']}}
     </div>
     <div class="upperline">
       Ghi chú: {{item['note']}}
     </div>
     <img *ngIf="item.status < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
     <img class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img class="icon" src="/assets/icon/done.png" (click)="done(i)">
   </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="moreusg($event)">

@@ -77,15 +77,16 @@ export class UsginsertPage implements OnInit {
   }
 
   public update(index: number) {
+    let item = this.rest.usg.new[index]
     this.rest.temp = {
-      id: this.rest.usg.new[index].id,
-      name: this.rest.usg.new[index].name,
-      phone: this.rest.usg.new[index].phone,
-      address: this.rest.usg.new[index].address,
-      cometime: this.time.datetoisodate(this.rest.usg.new[index].cometime),
-      calltime: this.time.datetoisodate(this.rest.usg.new[index].calltime),
-      number: this.rest.usg.new[index].number,
-      note: this.rest.usg.new[index].note,
+      id: item.id,
+      number: item.number,
+      name: item.name,
+      phone: item.phone,
+      address: item.address,
+      cometime: this.time.datetoisodate(item.cometime),
+      calltime: this.time.datetoisodate(item.calltime),
+      note: item.note,
     }
   }
 

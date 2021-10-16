@@ -174,7 +174,17 @@ export class UsgPage {
   }
 
   public insert() {
-    this.rest.temp = { id: 0, number: 0, name: '', phone: '', address: '', cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
+    this.rest.temp = {
+      id: 0,
+      number: 0,
+      name: '',
+      phone: '',
+      address: '',
+      cometime: this.time.datetoisodate(this.rest.home.today),
+      calltime: this.time.datetoisodate(this.rest.home.next),
+      note: '',
+      keyword: this.rest.usg.keyword
+    }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
@@ -182,14 +192,14 @@ export class UsgPage {
     let item = this.rest.usg.list[index]
     this.rest.temp = {
       id: item.id,
-      petname: item.petname,
+      number: item.number,
       name: item.name,
       phone: item.phone,
       address: item.address,
-      typeid: item.typeid,
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
+      keyword: this.rest.usg.keyword
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
@@ -264,6 +274,48 @@ export class UsgPage {
   public async deadSubmit(id: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'dead', {
+      id: id,
+      note: note,
+      keyword: this.rest.usg.keyword,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async done(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      message: 'Ghi chú: ',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[index].note
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(this.rest.usg.list[index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
       keyword: this.rest.usg.keyword,
