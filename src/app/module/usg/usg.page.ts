@@ -52,7 +52,7 @@ export class UsgPage {
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'usg'
-      this.rest.usg.key = this.rest.usg.keyword
+      this.rest.usg.key = this.rest.usg.key
       if (!this.rest.usg.init) this.init()
     })
   }
@@ -101,7 +101,7 @@ export class UsgPage {
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
-      this.rest.usg.keyword = this.rest.usg.key
+      this.rest.usg.key = this.rest.usg.key
       this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
@@ -123,7 +123,7 @@ export class UsgPage {
       event.target.complete();
       this.rest.defreeze()
       this.page = 1
-      this.rest.usg.keyword = this.rest.usg.key
+      this.rest.usg.key = this.rest.usg.key
       this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
@@ -183,7 +183,7 @@ export class UsgPage {
       cometime: this.time.datetoisodate(this.rest.home.today),
       calltime: this.time.datetoisodate(this.rest.home.next),
       note: '',
-      keyword: this.rest.usg.keyword
+      keyword: this.rest.usg.key
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
@@ -200,7 +200,7 @@ export class UsgPage {
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
-      keyword: this.rest.usg.keyword
+      keyword: this.rest.usg.key
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
@@ -235,7 +235,7 @@ export class UsgPage {
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
-      keyword: this.rest.usg.keyword,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
@@ -277,7 +277,7 @@ export class UsgPage {
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
-      keyword: this.rest.usg.keyword,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
@@ -319,7 +319,49 @@ export class UsgPage {
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
-      keyword: this.rest.usg.keyword,
+      keyword: this.rest.usg.key,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async reprenag(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận thai đã chết',
+      subHeader: 'Thai đã chết nhưng vẫn nhắc lại 5 tháng sau có thể phối',
+      message: 'Ghi chú: ',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[index].note
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.reprenagSubmit(this.rest.usg.list[index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async reprenagSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'reprenag', {
+      id: id,
+      note: note,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {

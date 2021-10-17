@@ -25,7 +25,7 @@
     </div>
     <div class="col-xs-6">
       Ngày đến: {{item['cometime']}} <br>
-      Dự sinh: {{item['calltime']}} <br>
+      <span *ngIf="number > 0"> Dự sinh: {{item['calltime']}} <br> </span>
       Ngày nhắc kế: {{item['recall']}} <br>
       Sự kiện: <span class="bold"> {{status_text[item['status']]}} </span> <br>
       Số thai: {{item['number']}} <br>
@@ -34,8 +34,10 @@
     <div class="upperline">
       Ghi chú: {{item['note']}}
     </div>
-    <img *ngIf="item.status < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
-    <img class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img *ngIf="item['status'] < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img *ngIf="item['status'] >= 5" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img *ngIf="item['status'] >= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+    <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="moreVaccine($event)">

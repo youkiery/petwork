@@ -5,11 +5,6 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="tab == 'insert-type' || tab == 'insert-doctor'" color="secondary" fill="solid" size="small"
-      (click)="back()">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-    </ion-button>
-
     <ion-button *ngIf="rest.config.usg > 1 && tab == 'temp' && toggle" slot="end" color="secondary" fill="solid" size="small"
       (click)="transferAll()">
       <ion-icon name="receipt-outline"></ion-icon>
@@ -30,23 +25,6 @@
 
     <ion-button *ngIf="tab == 'usg'" slot="end" color="secondary" fill="solid" size="small" (click)="uploadPWA()">
       Tải lên
-    </ion-button>
-    <ion-button *ngIf="tab == 'insert-type' && !input.id" slot="end" color="secondary" fill="solid" size="small"
-      (click)="insertTypeSubmit()">
-      Thêm loại nhắc
-    </ion-button>
-    <ion-button *ngIf="tab == 'insert-type' && input.id" slot="end" color="secondary" fill="solid" size="small"
-      (click)="updateTypeSubmit()">
-      Cập nhật
-    </ion-button>
-
-    <ion-button *ngIf="tab == 'insert-doctor' && !input.id" slot="end" color="secondary" fill="solid" size="small"
-      (click)="insertDoctorSubmit()">
-      Thêm bác sĩ
-    </ion-button>
-    <ion-button *ngIf="tab == 'insert-doctor' && input.id" slot="end" color="secondary" fill="solid" size="small"
-      (click)="updateDoctorSubmit()">
-      Cập nhật
     </ion-button>
   </ion-toolbar>
 </ion-header>

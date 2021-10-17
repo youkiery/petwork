@@ -73,13 +73,13 @@ export class UsgsearchPage implements OnInit {
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      header: this.header[this.rest.usg.list[index].status],
-      subHeader: this.subheader[this.rest.usg.list[index].status],
+      header: this.header[this.rest.temp[index].status],
+      subHeader: this.subheader[this.rest.temp[index].status],
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.temp[index].note
       }],
       buttons: [
         {
@@ -88,7 +88,7 @@ export class UsgsearchPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(this.rest.usg.list[index].id, e.note)
+            this.calledSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -101,12 +101,12 @@ export class UsgsearchPage implements OnInit {
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
-      keyword: this.rest.usg.keyword,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -120,7 +120,7 @@ export class UsgsearchPage implements OnInit {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.temp[index].note
       }],
       buttons: [
         {
@@ -129,7 +129,7 @@ export class UsgsearchPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(this.rest.usg.list[index].id, e.note)
+            this.deadSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -143,12 +143,12 @@ export class UsgsearchPage implements OnInit {
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
-      keyword: this.rest.usg.keyword,
+      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })

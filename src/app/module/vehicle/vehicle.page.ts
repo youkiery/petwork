@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-vehicle',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehiclePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public rest: RestService
+  ) { }
 
   ngOnInit() {
   }
