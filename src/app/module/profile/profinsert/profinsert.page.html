@@ -5,12 +5,12 @@
   <ion-button *ngIf="rest.temp.act == 'profile'" slot="end" (click)="insert()" color="secondary" fill="solid" size="small">
     Thêm
   </ion-button>
-  <!-- <ion-button *ngIf="rest.temp.act == 'type' && rest.temp.id > 0" slot="end" (click)="update()" color="secondary" fill="solid" size="small">
+  <ion-button *ngIf="rest.temp.act == 'target' && rest.temp.id > 0" slot="end" (click)="updateTarget()" color="secondary" fill="solid" size="small">
     Cập nhật
   </ion-button>
-  <ion-button *ngIf="rest.temp.act == 'type' && rest.temp.id < 1" slot="end" (click)="insert()" color="secondary" fill="solid" size="small">
+  <ion-button *ngIf="rest.temp.act == 'target' && rest.temp.id < 1" slot="end" (click)="insertTarget()" color="secondary" fill="solid" size="small">
     Thêm
-  </ion-button> -->
+  </ion-button>
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
@@ -106,7 +106,7 @@
     </ion-item>
   </div>
 
-  <div *ngIf="rest.temp.action == 'type'">
+  <div *ngIf="rest.temp.act == 'target'">
     <ion-item>
       <ion-label position="stacked"> Chỉ tiêu </ion-label>
       <ion-textarea autoGrow="true" [(ngModel)]="rest.temp.name">  </ion-textarea>

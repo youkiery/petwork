@@ -46,22 +46,23 @@ export class ProfilePage {
   }
 
   public info(index: number) {
-    this.rest.profile.data2 = this.rest.profile.target[index]
+    this.rest.temp = this.rest.profile.target[index]
     this.rest.router.navigateByUrl('/profile/detail')
   }
 
   public updateTarget(index: number) {
-    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      this.rest.profile.data2 = this.rest.profile.target[index]
-      this.rest.router.navigateByUrl('/profile/insert')
-    }
+    this.rest.temp = this.rest.profile.target[index]
+    this.rest.temp.act = 'target'
+    this.rest.temp.key = this.rest.profile.key2
+    this.rest.router.navigateByUrl('/profile/insert')
   }
 
   public async insertTarget() {
     if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.profile.data2 = {
+      this.rest.temp = {
+        act: 'target',
+        key: this.rest.profile.key2,
         id: 0,
         name: '',
         intro: '',
@@ -72,7 +73,7 @@ export class ProfilePage {
         disease: '',
         aim: ''
       }
-      this.rest.router.navigateByUrl('profile/update')
+      this.rest.router.navigateByUrl('profile/insert')
     }
   }
 
@@ -105,7 +106,7 @@ export class ProfilePage {
     await this.rest.freeze('Đang xóa chỉ tiêu...')
     this.rest.checkpost('target', 'remove', {
       id: this.rest.profile.target[i].id,
-      key: this.rest.profile.key
+      key: this.rest.profile.key2
     }).then(response => {
       this.rest.defreeze()
       this.rest.notify('Đã xóa chỉ tiêu')
@@ -171,7 +172,7 @@ export class ProfilePage {
 
   public async resetSubmit(index: number) {
     await this.rest.freeze('Cài lại...')
-    this.rest.checkpost('target', 'reset', {
+    this.rest.checkpost('target', 'res', {
       id: this.rest.profile.target[index].id,
       key: this.rest.profile.key
     }).then(response => {

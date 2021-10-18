@@ -25,28 +25,27 @@ export class ProfinsertPage implements OnInit {
     if (!this.rest.action.length) this.rest.root()
   }
 
-  // public async update() {
-  //   await this.rest.freeze('Đang cập nhật...')
-  //   this.rest.checkpost('target', 'update', this.rest.temp).then(response => {
-  //     this.rest.defreeze()
-  //     this.rest.profile.target = response.list
-  //     this.rest.navCtrl.pop()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async updateTarget() {
+    await this.rest.freeze('Đang cập nhật...')
+    this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(response => {
+      this.rest.defreeze()
+      this.rest.profile.target = response.list
+      this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public async insert() {
-  //   await this.rest.freeze('Đang thêm...')
-  //   this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
-  //     this.rest.defreeze()
-  //     this.rest.profile.serial = resp.serial
-  //     this.rest.profile.target = resp.list
-  //     this.rest.navCtrl.pop()
-  //   }, () => { 
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async insertTarget() {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
+      this.rest.defreeze()
+      this.rest.profile.target = resp.list
+      this.rest.navCtrl.pop()
+    }, () => { 
+      this.rest.defreeze()
+    })
+  }
 
   public async insert() {
     await this.rest.freeze('Đang thêm...')
