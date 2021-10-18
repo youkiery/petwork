@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,16 +12,37 @@ export class ProfilePage {
   public segment = '1'
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public modal: ModalController,
     public alert: AlertController,
     public platform: Platform
   ) { }
 
-  ngOnInit() {
-    if (!this.rest.profile.init) {
-      this.getData()
-      this.rest.profile.page ++
-    }
+  public async ionViewWillEnter() {
+    this.rest.action = 'profile'
+    this.rest.ready().then(() => {
+      if (!this.rest.profile.init) {
+        this.init()
+      }
+    })
+  }
+
+  public async init() {
+    await this.rest.freeze('Đang lấy danh sách...')
+    this.rest.checkpost('profile', 'init', {
+      key: this.rest.profile.key,
+      page: this.rest.profile.page,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.profile.list = resp.list
+      this.rest.profile.serial = resp.serial
+      this.rest.profile.sampletype = resp.type
+      this.rest.profile.species = resp.species
+      this.rest.profile.target = resp.target
+      this.rest.profile.init = true
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public info(index: number) {
@@ -160,29 +182,23 @@ export class ProfilePage {
     })
   }
 
-  public print(id: number) {
-    if (this.platform.platforms().indexOf('mobile') >= 0) {
-      // mobile
-      this.rest.notify('Không tìm thấy máy in')
-    }
-    else {
-      this.rest.checkpost('profile', 'print', {
-        id: id
-      }).then(response => {
-        this.rest.defreeze()
-        let html = response.html
-        let winPrint = window.open();
-        winPrint.focus()
-        winPrint.document.write(html);
-        // if (!prev) {
-        setTimeout(() => {
-          winPrint.print()
-          winPrint.close()
-        }, 300)
-      }, () => {
-        this.rest.defreeze()
-      })
-    }
+  public async print(id: number) {
+    await this.rest.freeze('Đang tải bản in...')
+    this.rest.checkpost('profile', 'printword', {
+      id: id
+    }).then(response => {
+      this.rest.defreeze()
+      let html = response.html
+      let winPrint = window.open();
+      winPrint.focus()
+      winPrint.document.write(html);
+      setTimeout(() => {
+        winPrint.print()
+        winPrint.close()
+      }, 300)
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public search() {
@@ -194,26 +210,23 @@ export class ProfilePage {
   }
 
   public async remove(id: number) {
-    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      const alert = await this.alert.create({
-        header: 'Chú ý!!!',
-        message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
-        buttons: [
-          {
-            text: 'Trở về',
-            role: 'cancel',
-          }, {
-            text: 'Xác nhận',
-            handler: () => {
-              this.removeSubmit(id)
-            }
+    const alert = await this.alert.create({
+      header: 'Chú ý!!!',
+      message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.removeSubmit(id)
           }
-        ]
-      });
+        }
+      ]
+    });
 
-      await alert.present();
-    }
+    await alert.present();
   }
 
   public async removeSubmit(id: number) {
@@ -224,6 +237,7 @@ export class ProfilePage {
       page: this.rest.profile.page
     }).then(response => {
       this.rest.defreeze()
+      this.rest.profile.page = 1
       this.rest.profile.list = response.list
     }, () => {
       this.rest.defreeze()
@@ -232,15 +246,37 @@ export class ProfilePage {
 
   public async insert() {
     this.rest.temp = {
+      act: 'profile',
       name: '',
-      phone: ''
+      phone: '',
+      address: '',
+      petname: '',
+      weight: '',
+      age: '1',
+      gender: '0',
+      species: (this.rest.profile.species.length ? this.rest.profile.species[0].id : '0'),
+      serial: this.rest.profile.serial,
+      sampletype: (this.rest.profile.sampletype.length ? this.rest.profile.sampletype[0].id : '0'),
+      samplenumber: this.rest.profile.serial,
+      samplesymbol: this.rest.profile.serial,
+      samplestatus: '1',
+      symptom: '',
+      target: this.temptarget(),
     }
-    this.rest.navCtrl.navigateForward('modal/suggest')
+    this.rest.navCtrl.navigateForward('profile/insert')
+  }
+
+  public temptarget() {
+    let target = {}
+    this.rest.profile.target.forEach(item => {
+      target[item.id] = ''
+    })
+    return target
   }
 
   public async detail(id: number) {
     await this.rest.freeze('Đang lấy dữ liệu...')
-    this.rest.checkpost('profile', 'print', {
+    this.rest.checkpost('profile', 'printword', {
       // action: 'profile-get',
       id: id
     }).then(response => {
@@ -255,30 +291,34 @@ export class ProfilePage {
   }
 
   public async loadData(event: any) {
-    this.rest.profile.page ++
+    this.rest.profile.page++
+    await this.rest.freeze('Đang lấy danh sách...')
     this.getData().then(() => {
-      event.target.complete ()
+      event.target.complete()
     })
   }
 
-  public filter() {
+  public async filter() {
     this.rest.profile.page = 1
     this.rest.profile.list = []
+    await this.rest.freeze('Đang lấy danh sách...')
     this.getData()
   }
 
   public async getData() {
     return new Promise(resolve => {
-      this.rest.checkpost('profile', 'init', {
+      this.rest.checkpost('profile', 'auto', {
         key: this.rest.profile.key,
         page: this.rest.profile.page,
       }).then(response => {
+        this.rest.defreeze()
         this.rest.profile.list = this.rest.profile.list.concat(response.list)
         this.rest.profile.init = true
         resolve(true)
       }, () => {
+        this.rest.defreeze()
         resolve(true)
       })
-    }) 
+    })
   }
 }

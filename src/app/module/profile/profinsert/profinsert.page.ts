@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -7,9 +8,14 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./profinsert.page.scss'],
 })
 export class ProfinsertPage implements OnInit {
+  public header = {
+    'sampletype': 'Nhập tên Loại mẫu',
+    'species': 'Nhập tên Loại thú cưng'
+  }
   public serial = 0
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
@@ -19,18 +25,83 @@ export class ProfinsertPage implements OnInit {
     if (!this.rest.action.length) this.rest.root()
   }
 
-  public update() {
-    this.rest.checkpost('target', 'update', this.rest.temp).then(response => {
-      this.rest.profile.target = response.list
-      this.rest.notify('Đã cập nhật thông tin')
-      // this.rest.navCtrl.pop()
-    }, () => { })
+  // public async update() {
+  //   await this.rest.freeze('Đang cập nhật...')
+  //   this.rest.checkpost('target', 'update', this.rest.temp).then(response => {
+  //     this.rest.defreeze()
+  //     this.rest.profile.target = response.list
+  //     this.rest.navCtrl.pop()
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  // public async insert() {
+  //   await this.rest.freeze('Đang thêm...')
+  //   this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
+  //     this.rest.defreeze()
+  //     this.rest.profile.serial = resp.serial
+  //     this.rest.profile.target = resp.list
+  //     this.rest.navCtrl.pop()
+  //   }, () => { 
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  public async insert() {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('profile', 'insert', this.rest.temp).then(resp => {
+      this.rest.defreeze()
+      this.rest.profile.page = 1
+      this.rest.profile.serial = resp.serial
+      this.rest.profile.list.push(resp.list)
+      this.rest.navCtrl.pop()
+    }, () => { 
+      this.rest.defreeze()
+    })
   }
 
-  public insert() {
-    this.rest.checkpost('target', 'insert', this.rest.temp).then(response => {
-      this.rest.profile.target = response.list
-      this.rest.navCtrl.pop()
-    }, () => { })
+  public async insertSelect(type: string = 'sampletype') {
+    let alert = await this.alert.create({
+      header: this.header[type],
+      inputs: [
+        {
+          name: 'type',
+          value: ''
+        }
+      ],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'danger',
+          handler: (e) => {
+            this.insertSelectSubmit(type, e.type)
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  public async insertSelectSubmit(type: string, typevalue: string) {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('profile', 'insertselect', {
+      typename: type,
+      typevalue: typevalue,
+    }).then(response => {
+      this.rest.defreeze()
+      this.rest.profile[type] = response.list
+      this.rest.temp[type] = this.rest.profile[type][this.rest.profile[type].length - 1].id
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public suggest() {
+    this.rest.navCtrl.navigateForward('/modal/suggest')
   }
 }

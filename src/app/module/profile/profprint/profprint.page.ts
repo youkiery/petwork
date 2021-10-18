@@ -27,20 +27,14 @@ export class ProfprintPage implements OnInit {
   }
 
   public print() {
-    if (this.platform.platforms().indexOf('mobile') >= 0) {
-      // mobile
-      this.rest.notify('Không tìm thấy máy in')
-    }
-    else {
-      // browser
-      let winPrint = window.open();
-      winPrint.focus()
-      winPrint.document.write(this.rest.profile.print);
-      setTimeout(() => {
-        winPrint.print()
-        winPrint.close()
-      }, 300)
-    }
+    // browser
+    let winPrint = window.open();
+    winPrint.focus()
+    winPrint.document.write(this.rest.profile.print);
+    setTimeout(() => {
+      winPrint.print()
+      winPrint.close()
+    }, 300)
   }
 
   public async download() {

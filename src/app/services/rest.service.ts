@@ -43,7 +43,7 @@ export class RestService {
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public spa = { time: 0, init: 0, list: [], old: [], type: [], keyword: '', toggle: false, from: '', end: '' }
   public target = {}
-  public profile = { init: false, page: 1, target: [], data2: {}, key: '', list: [], id: 0, print: ''}
+  public profile = { init: false, page: 1, target: [], data2: {}, key: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public admin = { init: false, list: [] }
 
   public action: string = ''
