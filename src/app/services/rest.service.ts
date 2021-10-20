@@ -151,15 +151,33 @@ export class RestService {
     })
   }
 
-  public async login(username: string, password: string) {
-    if (!username || !username.length) this.notify('Tên tài khoản trống')
-    else if (!password || !password.length) this.notify('Mật khẩu trống')
+  public async login(user: any) {
+    if (!user.username || !user.username.length) this.notify('Nhập tên tài khoản')
+    else if (!user.password || !user.password.length) this.notify('Nhập mật khẩu!')
     else {
       await this.freeze('Đăng nhập...')
-      this.checkpost('user', 'login', {
-        username: username,
-        password: password,
-      }).then(resp => {
+      this.checkpost('user', 'login', user).then(resp => {
+        this.config = resp.config
+        this.home = resp.data
+        this.session = resp.session
+        this.vaccine.list = [[], [], []]
+        this.storage.set('session', resp.session)
+        this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
+        this.defreeze()
+      }, () => {
+        this.defreeze()
+      })
+    }
+  }
+
+  public async signup(user: any) {
+    if (!user.username || !user.username.length) this.notify('Nhập tên tài khoản!')
+    else if (!user.password || !user.password.length) this.notify('Nhập mật khẩu!')
+    else if (!user.vpassword || !user.vpassword.length) this.notify('Nhập mật khẩu xác nhận!')
+    else if (user.password !== user.vpassword) this.notify('Mật khẩu xác nhận không trùng nhau!')
+    else {
+      await this.freeze('Đăng ký...')
+      this.checkpost('user', 'signin', user).then(resp => {
         this.config = resp.config
         this.home = resp.data
         this.session = resp.session

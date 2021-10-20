@@ -7,16 +7,46 @@
         <h3> Hệ thống quản lý </h3>
       </ion-text>
     </div>
-    <form (ngSubmit)="rest.login(username, password)">
+    <form *ngIf="log">
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
-        <ion-input [(ngModel)]="username" name="username" placeholder="Tài khoản"></ion-input>
+        <ion-input [(ngModel)]="user.username" name="username" placeholder="Tài khoản"></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-        <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Mật khẩu"></ion-input>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" placeholder="Mật khẩu"></ion-input>
       </ion-item>
-      <ion-button color="success" expand="block" shape="round" (click)="rest.login(username, password)"> Đăng nhập </ion-button>
+      <ion-button color="success" expand="block" shape="round" (click)="rest.login(user)"> Đăng nhập </ion-button>
     </form>
+    <form *ngIf="!log">
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.lastname" name="lastname" placeholder="Họ"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.firstname" name="firstname" placeholder="Tên"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.username" name="username" placeholder="Tài khoản"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" placeholder="Mật khẩu"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input type="password" [(ngModel)]="user.vpassword" name="vpassword" placeholder="Xác nhận mật khẩu"></ion-input>
+      </ion-item>
+      <ion-button color="success" expand="block" shape="round" (click)="rest.signup(user)"> Đăng ký </ion-button>
+    </form>
+    <div *ngIf="!log">
+      Đã có tài khoản  <ion-button color="secondary" shape="round" (click)="log = 1"> Đăng nhập ngay! </ion-button>
+    </div>
+    <div *ngIf="log">
+      Chưa có tài khoản <ion-button color="secondary" shape="round" (click)="log = 0"> Đăng ký ngay! </ion-button>
+    </div>
+
   </div>
 </ion-content>

@@ -9,8 +9,14 @@ import { RestService } from '../../services/rest.service';
 })
 export class LoginPage {
   public logo = 'assets/image/logo.png'
-  public username: string
-  public password: string
+  public log = 1
+  public user = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    password: '',
+    vpassword: '',
+  }
   private subscription: any
   private version: string = '0.0.1'
   constructor(
