@@ -154,6 +154,48 @@ export class UsgsearchPage implements OnInit {
     })
   }
 
+  public async done(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      message: 'Ghi chú: ',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[index].note
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(this.rest.temp[index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      note: note,
+      keyword: this.rest.usg.key,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.temp = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public moreVaccine(event: any) {
     this.page ++
     event.target.complete()

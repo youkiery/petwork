@@ -47,7 +47,7 @@
     </div>
     <div class="col-xs-6">
       Ngày đến: {{item['cometime']}} <br>
-      <span *ngIf="number > 0"> Dự sinh: {{item['calltime']}} <br> </span>
+      <span *ngIf="item['number'] > 0"> Dự sinh: {{item['calltime']}} <br> </span>
       Ngày nhắc kế: {{item['recall']}} <br>
       Sự kiện: <span class="bold"> {{status_text[item['status']]}} </span> <br>
       Số thai: {{item['number']}} <br>
