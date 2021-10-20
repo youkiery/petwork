@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+  
+  <ion-item>
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.from" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.end" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+  
+  <div *ngFor="let item of rest.his.list; let i = index" [class]="insult[item.insult]">
+    <div class="row">
+      <div class="col-xs-6">
+        Khách hàng: {{item.customer}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Thú cưng: {{item.pet}}
+      </div>
+      <div class="col-xs-6">
+        Người nhận: {{item.doctor}} <br>
+        Ngày nhận: {{item.time}} <br>
+        Tình trạng bệnh: {{status[item.status].name}}
+      </div>
+      <div>
+        Tình trạng xuất viện: <span class="bold"> {{insult_text[item.insult]}} </span> 
+      </div>
+      <div>
+        Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)" *ngIf="item.insult < 1">
+      </div>
+      <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i, j)">
+        {{detail.time}}
+      </span>
+      <img src="/assets/icon/insert-xs.png" (click)="insertDetail(i)" *ngIf="item.insult < 1">
+      <div>
+        <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="item.insult < 1">
+        <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="item.insult < 1">
+        <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
