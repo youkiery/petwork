@@ -9,13 +9,13 @@
 <ion-content *ngIf="rest.isready">
   <ion-item>
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="filter.from" displayFormat="DD/MM/YYYY" max="2100">
+    <ion-datetime [(ngModel)]="rest.his.from" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="filter.end" displayFormat="DD/MM/YYYY" max="2100">
+    <ion-datetime [(ngModel)]="rest.his.end" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
   </ion-item>
 

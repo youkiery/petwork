@@ -35,6 +35,8 @@ export class HisPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
+      this.rest.his.from = this.time.timetoisodate(this.time.datetotime(this.rest.home.today) - 60 * 60 * 24 * 21 * 1000)
+      this.rest.his.end = this.time.datetoisodate(this.rest.home.today)
       if (!this.rest.his.init) {
         this.rest.action = 'his'
         this.filter()

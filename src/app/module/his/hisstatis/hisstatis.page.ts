@@ -26,12 +26,14 @@ export class HisstatisPage implements OnInit {
 
   ionViewDidEnter() {
     if (!this.rest.action.length) this.rest.root()
+    else this.statistic()
   }
 
   public async statistic() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'statistic', {
-      filter: this.filter
+      from: this.rest.his.from,
+      end: this.rest.his.end,
     }).then((resp) => {
       this.data = resp.data
       this.rest.defreeze()
