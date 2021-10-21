@@ -21,24 +21,42 @@ export class HisdetailPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWDidEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action) this.rest.root()
-    })
+  ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.root()
   }
 
-  public update() {
+  public update(i: number) {
     this.rest.temp = {
-      id: this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].id,
-      name: this.rest.his.list[this.rest.temp.i].customer,
-      phone: this.rest.his.list[this.rest.temp.i].phone,
-      petlist: [],
-      pet: this.rest.his.list[this.rest.temp.i].petid,
-      eye: this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].eye,
-      temperate: this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].temperate,
-      other: this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].other,
-      treat: this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].treat,
-      status: Number(this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].status),
+      id: this.rest.detail.id,
+      detailid: this.rest.detail.detail[i].id,
+      name: this.rest.detail.customer,  
+      phone: this.rest.detail.phone,
+      petname: this.rest.detail.pet,
+      eye: this.rest.detail.detail[i].eye,
+      temperate: this.rest.detail.detail[i].temperate,
+      other: this.rest.detail.detail[i].other,
+      treat: this.rest.detail.detail[i].treat,
+      status: Number(this.rest.detail.detail[i].status),
+      from: this.rest.his.from,
+      end: this.rest.his.end,
+    }
+    
+    this.rest.navCtrl.navigateForward('his/insert')
+  }
+
+  public insert() {
+    this.rest.temp = {
+      id: this.rest.detail.id,
+      name: this.rest.detail.customer,  
+      phone: this.rest.detail.phone,
+      petname: this.rest.detail.pet,
+      eye: '',
+      temperate: '',
+      other: '',
+      treat: '',
+      status: Number(this.rest.detail.status),
+      from: this.rest.his.from,
+      end: this.rest.his.end,
     }
     
     this.rest.navCtrl.navigateForward('his/insert')

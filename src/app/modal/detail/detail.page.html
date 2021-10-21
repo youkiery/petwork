@@ -19,7 +19,7 @@
 <ion-content *ngIf="rest.isready">
   <div *ngIf="rest.action == 'blood'">
     <ion-toolbar color="success">
-      <ion-button color="secondary" fill="solid" size="small" (click)="this.rest.navCtrl.pop()">
+      <ion-button color="secondary" fill="solid" size="small" (click)="this.rest.back()">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-toolbar>

@@ -19,14 +19,13 @@
   
   <ion-item>
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.his.filter.from" displayFormat="DD/MM/YYYY" max="2100">
+    <ion-datetime [(ngModel)]="rest.his.from" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.his.filter.end" displayFormat="DD/MM/YYYY" max="2100">
-    </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.his.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
 
   <ion-button expand="full" (click)="filter()">
@@ -54,8 +53,8 @@
       <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i, j)">
         {{detail.time}}
       </span>
-      <img src="/assets/icon/insert-xs.png" (click)="insertDetail(i)" *ngIf="item.insult < 1">
       <div>
+        <img class="right icon" src="/assets/icon/info.png" (click)="view(i)">
         <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="item.insult < 1">
         <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="item.insult < 1">
         <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
@@ -67,7 +66,7 @@
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.pop()">
+      <ion-tab-button (click)="rest.back()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>

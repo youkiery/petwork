@@ -31,7 +31,7 @@ export class InoutPage implements OnInit {
       this.rest.defreeze()
       this.rest.temp.start = response.number
       this.rest.temp.end = response.number - 1
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -48,7 +48,7 @@ export class InoutPage implements OnInit {
       this.rest.blood.total = Number(response.total)
       this.rest.temp.start = response.total
       this.rest.temp.end = response.total - response.total
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

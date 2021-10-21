@@ -99,7 +99,7 @@ export class UsginsertPage implements OnInit {
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
       this.clear()
-      if (this.rest.temp.route) this.rest.navCtrl.pop()
+      if (this.rest.temp.route) this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

@@ -15,7 +15,7 @@ export class HisstatisPage implements OnInit {
   public filter = {
     from: null,
     end: null,
-  } 
+  }
   public data = []
   constructor(
     public rest: RestService
@@ -25,10 +25,7 @@ export class HisstatisPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action) this.rest.root()
-      this.statistic()
-    })
+    if (!this.rest.action.length) this.rest.root()
   }
 
   public async statistic() {

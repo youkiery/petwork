@@ -249,7 +249,7 @@ export class InsertPage {
       this.rest.temp.start = this.rest.temp.total
       this.rest.temp.end = this.rest.temp.total - 1
       this.rest.temp.target = ''
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

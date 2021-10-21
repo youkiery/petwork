@@ -9,15 +9,15 @@ const routes: Routes = [
     component: HisPage
   },
   {
-    path: 'his/insert',
+    path: 'insert',
     loadChildren: () => import('./hisinsert/hisinsert.module').then( m => m.HisinsertPageModule)
   },
   {
-    path: 'his/insert',
-    loadChildren: () => import('./hisinsert/hisinsert.module').then( m => m.HisinsertPageModule)
+    path: 'detail',
+    loadChildren: () => import('./hisdetail/hisdetail.module').then( m => m.HisdetailPageModule)
   },
   {
-    path: 'his/statis',
+    path: 'statis',
     loadChildren: () => import('./hisstatis/hisstatis.module').then( m => m.HisstatisPageModule)
   }
 ];

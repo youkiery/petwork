@@ -279,7 +279,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'insert', temp).then(resp => {
       this.rest.defreeze()
       this.rest.item.list = resp.list
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -315,7 +315,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'update', temp).then(resp => {
       this.rest.defreeze()
       this.rest.item.list = resp.list
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

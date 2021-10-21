@@ -1,40 +1,48 @@
-<ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-  <ion-button slot="end" (click)="update()" color="light" fill="clear" *ngIf="rest.his.list[rest.tam.i].insult < 1">
-    Cập nhật
-  </ion-button>
-</ion-toolbar>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <!-- <ion-button slot="end" (click)="update()" color="light" fill="clear" *ngIf="rest.detail.insult < 1">
+      Cập nhật
+    </ion-button> -->
+    <ion-button slot="end" (click)="insert()" color="light" fill="clear" *ngIf="rest.detail.insult < 1">
+      Thêm liệu trình
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content>
-  <ion-card>
-    <ion-card-content>
-      <div class="col-xs-6">
-        Khách hàng: {{rest.his.list[rest.tam.i].customer}} <br>
-        Điện thoại: {{rest.his.list[rest.tam.i].phone}} <br>
-        Thú cưng: {{rest.his.list[rest.tam.i].pet}}
-      </div>
-      <div class="col-xs-6">
-        Người điều trị: {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].doctor}} <br>
-        Ngày điều trị: {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].time}} <br>
-        Tình trạng bệnh: {{status[rest.his.list[rest.tam.i].detail[this.rest.tam.j].status].name}}
-      </div>
-      <div>
-        Tiền sử bệnh: {{rest.his.list[rest.tam.i].his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis()">
-      </div>
-      <div class="endline-text">
-        <b>Niêm mạc: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].eye}}
-      </div>
-      <div class="endline-text">
-        <b>Nhiệt độ: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].temperate}}
-      </div>
-      <div class="endline-text">
-        <b>Triệu chứng: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].other}}
-      </div>
-      <div class="endline-text last">
-        <b>Thuốc điều trị: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].treat}}
-      </div>
-    </ion-card-content>
-  </ion-card>
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card">
+    <div class="col-xs-6">
+      Khách hàng: {{rest.detail.customer}} <br>
+      Điện thoại: {{rest.detail.phone}} <br>
+      Thú cưng: {{rest.detail.pet}}
+    </div>
+    <div class="col-xs-6">
+      Người nhận: {{rest.detail.doctor}} <br>
+      Ngày nhận: {{rest.detail.time}} <br>
+      Tình trạng bệnh: {{status[rest.detail.status].name}}
+    </div>
+    <div class="upperline">
+      Tiền sử bệnh: {{rest.detail.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis()">
+    </div>
+  </div>
+
+  <div class="stl-card" *ngFor="let detail of rest.detail.detail; let i = index">
+    <div class="col-xs-6">
+      Người làm: {{detail.doctor}} <br>
+      Ngày làm: {{detail.time}} <br>
+      Tình trạng: {{status[detail.status].name}}
+    </div>
+    <div class="col-xs-6">
+      <b>Niêm mạc: </b> {{detail.eye}} <br>
+      <b>Nhiệt độ: </b> {{detail.temperate}} <br>
+      <b>Triệu chứng: </b> {{detail.other}} <br>
+      <b>Thuốc điều trị: </b> {{detail.treat}}
+    </div>
+    <div class="upperline">
+      <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/update.png" (click)="update(i)">
+    </div>
+  </div>
 </ion-content>

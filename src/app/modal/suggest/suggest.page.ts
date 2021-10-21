@@ -39,7 +39,7 @@ export class SuggestPage {
   public selectcurrent() {
     if (this.rest.temp.param) this.rest.temp.phone2 = this.key
     else this.rest.temp.phone = this.key
-    this.rest.navCtrl.pop()
+    this.rest.back()
   } 
 
   public select(i: number) {
@@ -56,7 +56,7 @@ export class SuggestPage {
       }
     }
 
-    this.rest.navCtrl.pop()
+    this.rest.back()
   }
 
   public async searchHistory() {
@@ -90,12 +90,12 @@ export class SuggestPage {
 
   public selectcurrentItem() {
     this.rest.temp.name = this.key
-    this.rest.navCtrl.pop()
+    this.rest.back()
   } 
 
   public selectItem(name:string, code: string) {
     this.rest.temp.name = name
     this.rest.temp.code = code
-    this.rest.navCtrl.pop()
+    this.rest.back()
   }
 }

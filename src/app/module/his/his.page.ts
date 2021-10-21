@@ -34,13 +34,12 @@ export class HisPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.action = 'his'
-    if (!this.rest.his.init) {
-      let time = this.time.datetotime(this.rest.home.today)
-      this.rest.his.from = this.time.timetoisodate(time + 60 * 60 * 24 * 30 * 1000),
-      this.rest.his.end = this.time.timetoisodate(time)
-      this.filter()
-    }
+    this.rest.ready().then(() => {
+      if (!this.rest.his.init) {
+        this.rest.action = 'his'
+        this.filter()
+      }
+    })
   }
 
   public async filter() {
@@ -58,7 +57,7 @@ export class HisPage implements OnInit {
   }
 
   public statistic() {
-    this.rest.navCtrl.navigateForward('/his/statistic')
+    this.rest.navCtrl.navigateForward('/his/statis')
   }
 
   public async insertDetail(i: number) {
@@ -211,10 +210,9 @@ export class HisPage implements OnInit {
     })
   }
 
-  public view(i: number, j: number) {
-    this.rest.temp = {
-      i: i, j: j
-    }
+  public view(i: number) {
+    this.rest.id = i
+    this.rest.detail = this.rest.his.list[i]
     this.rest.navCtrl.navigateForward('his/detail')
   }
 
@@ -222,7 +220,7 @@ export class HisPage implements OnInit {
     this.rest.temp = {
       name: '',
       phone: '',
-      petlist: [],
+      petname: '',
       pet: 0,
       eye: '',
       temperate: '',
@@ -232,5 +230,4 @@ export class HisPage implements OnInit {
     }
     this.rest.navCtrl.navigateForward('his/insert')
   }
-
 }

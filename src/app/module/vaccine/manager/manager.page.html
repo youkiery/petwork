@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="success" *ngIf="rest.isready">
     <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="secondary" fill="solid" size="small"
-      (click)="rest.navCtrl.pop()">
+      (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
@@ -220,7 +220,7 @@
 <ion-toolbar *ngIf="rest.isready">
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.pop()">
+      <ion-tab-button (click)="rest.back()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>

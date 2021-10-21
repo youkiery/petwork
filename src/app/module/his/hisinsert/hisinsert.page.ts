@@ -17,19 +17,12 @@ export class HisinsertPage implements OnInit {
   constructor(
     public rest: RestService,
     public alert: AlertController
-  ) {
-    
-    console.log(this.rest.temp);
-   }
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
   
-  ionViewWDidEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action) this.rest.root()
-    })
+  ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.root()
   }
 
   public suggest() {
@@ -44,7 +37,7 @@ export class HisinsertPage implements OnInit {
     this.rest.checkpost('his', 'insert', this.rest.temp).then((resp) => {
       this.rest.his.list = resp.list
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -53,12 +46,10 @@ export class HisinsertPage implements OnInit {
   public async update() {
     await this.rest.freeze('Đang cập nhật dữ liệu')
     this.rest.checkpost('his', 'update', this.rest.temp).then((resp) => {
-      this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].eye = this.rest.temp.eye
-      this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].temperate = this.rest.temp.temperate
-      this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].other = this.rest.temp.other
-      this.rest.his.list[this.rest.temp.i].detail[this.rest.temp.j].treat = this.rest.temp.treat
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.rest.detail = resp.data[0]
+      this.rest.his.list[this.rest.id] = resp.data[0]
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -67,9 +58,10 @@ export class HisinsertPage implements OnInit {
   public async insertDetail() {
     await this.rest.freeze('Đang thêm dữ liệu')
     this.rest.checkpost('his', 'detail', this.rest.temp).then((resp) => {
-      this.rest.his.list[this.rest.temp.index].detail.push(resp.data)
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.rest.detail = resp.data[0]
+      this.rest.his.list[this.rest.id] = resp.data[0]
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

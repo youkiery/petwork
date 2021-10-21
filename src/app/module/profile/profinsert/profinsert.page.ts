@@ -30,7 +30,7 @@ export class ProfinsertPage implements OnInit {
     this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(response => {
       this.rest.defreeze()
       this.rest.profile.target = response.list
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
@@ -41,7 +41,7 @@ export class ProfinsertPage implements OnInit {
     this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.profile.target = resp.list
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => { 
       this.rest.defreeze()
     })
@@ -54,7 +54,7 @@ export class ProfinsertPage implements OnInit {
       this.rest.profile.page = 1
       this.rest.profile.serial = resp.serial
       this.rest.profile.list.push(resp.list)
-      this.rest.navCtrl.pop()
+      this.rest.back()
     }, () => { 
       this.rest.defreeze()
     })

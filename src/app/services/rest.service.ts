@@ -48,6 +48,8 @@ export class RestService {
 
   public action: string = ''
   public isready: boolean = false
+  public id: number = 0
+  public detail: any = {}
   public temp: any = {}
   public toast: any
   public load: any = []
