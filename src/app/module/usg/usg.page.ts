@@ -9,6 +9,7 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./usg.page.scss'],
 })
 export class UsgPage {
+  public segment = '0'
   public status_text = {
     0: 'Nhắc tới ngày sa lơ',
     1: 'Tư vấn trước sinh',
@@ -189,7 +190,7 @@ export class UsgPage {
   }
 
   public update(index: number) {
-    let item = this.rest.usg.list[index]
+    let item = this.rest.usg.list[index][this.segment]
     this.rest.temp = {
       route: true,
       id: item.id,
@@ -207,13 +208,13 @@ export class UsgPage {
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      header: this.header[this.rest.usg.list[index].status],
-      subHeader: this.subheader[this.rest.usg.list[index].status],
+      header: this.header[this.rest.usg.list[index][this.segment].status],
+      subHeader: this.subheader[this.rest.usg.list[index][this.segment].status],
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.usg.list[index][this.segment].note
       }],
       buttons: [
         {
@@ -222,7 +223,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(this.rest.usg.list[index].id, e.note)
+            this.calledSubmit(this.rest.usg.list[index][this.segment].id, e.note)
           }
         }
       ]
@@ -254,7 +255,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.usg.list[index][this.segment].note
       }],
       buttons: [
         {
@@ -263,7 +264,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(this.rest.usg.list[index].id, e.note)
+            this.deadSubmit(this.rest.usg.list[index][this.segment].id, e.note)
           }
         }
       ]
@@ -296,7 +297,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.usg.list[index][this.segment].note
       }],
       buttons: [
         {
@@ -305,7 +306,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(this.rest.usg.list[index].id, e.note)
+            this.doneSubmit(this.rest.usg.list[index][this.segment].id, e.note)
           }
         }
       ]
@@ -338,7 +339,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.usg.list[index][this.segment].note
       }],
       buttons: [
         {
@@ -347,7 +348,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.reprenagSubmit(this.rest.usg.list[index].id, e.note)
+            this.reprenagSubmit(this.rest.usg.list[index][this.segment].id, e.note)
           }
         }
       ]

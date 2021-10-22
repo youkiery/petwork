@@ -162,7 +162,7 @@ export class UsgsearchPage implements OnInit {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index].note
+        value: this.rest.temp[index].note
       }],
       buttons: [
         {

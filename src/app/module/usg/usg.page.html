@@ -35,7 +35,23 @@
     </span>
   </ion-item>
 
-  <div *ngFor="let item of this.rest.usg.list | slice:0:25 * page; let i = index" [class]="status[item['over']]">
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="0">
+      <ion-label>
+        Chưa sinh
+        <ion-badge color="danger"> {{rest.usg.list[0].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Đã sinh
+        <ion-badge color="danger"> {{rest.usg.list[1].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngFor="let item of this.rest.usg.list[segment]; let i = index"
+    [class]="status[item['over']]">
     <div class="col-xs-6">
       Tên khách: {{item['name']}} <br>
       Điện thoại:

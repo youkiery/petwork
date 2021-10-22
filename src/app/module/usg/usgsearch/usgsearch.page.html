@@ -13,7 +13,7 @@
     <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
   </ion-item>
 
-  <div *ngFor="let item of this.rest.temp| slice:0:25 * page; let i = index" [class]="status[item['over']]">
+  <div *ngFor="let item of this.rest.temp; let i = index" [class]="status[item['over']]">
     <div class="col-xs-6">
       Tên khách: {{item['name']}} <br>
       Điện thoại:

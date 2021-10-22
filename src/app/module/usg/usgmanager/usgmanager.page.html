@@ -98,7 +98,7 @@
       </ion-segment-button>
     </ion-segment>
 
-    <div *ngFor="let item of rest.usg.temp[segment] | slice:0:25 * page; let i = index" class="stl-card" (click)="selectbox(i)">
+    <div *ngFor="let item of rest.usg.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
       <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
       <div class="col-xs-6">
         <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
