@@ -38,7 +38,7 @@ export class UsgPage {
   public subheader = {
     0: 'Xác nhận gọi nhắc salơ, phiếu nhắc sẽ được đánh dấu là đã hoàn thành',
     1: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
-    2: 'Xác nhận đã sinh, phiếu nhắc xổ giun sẽ hiện lại 3 tuần sau khi sinh',
+    2: 'Xác nhận đã sinh, phiếu nhắc xổ giun sẽ hiện lại 4 tuần sau khi sinh',
     3: 'Xác nhận xổ giun lần 1, phiếu nhắc xổ giun lần 2 sẽ hiện lại 5 tuần sau khi sinh',
     4: 'Xác nhận xổ giun lần 2, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
   }

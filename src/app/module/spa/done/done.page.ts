@@ -188,7 +188,7 @@ export class DonePage implements OnInit {
   }
 
   public async detail(image: string) {
-    this.rest.temp = image
+    this.rest.temp.image = image
     this.rest.navCtrl.navigateForward('/modal/detail')
   }
 }

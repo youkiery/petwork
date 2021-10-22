@@ -12,10 +12,6 @@ export class HisstatisPage implements OnInit {
     1: 'stl-card green',
     2: 'stl-card red',
   }
-  public filter = {
-    from: null,
-    end: null,
-  }
   public data = []
   constructor(
     public rest: RestService
