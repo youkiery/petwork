@@ -48,6 +48,12 @@
         <ion-badge color="danger"> {{rest.usg.list[1].length}} </ion-badge>
       </ion-label>
     </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>
+        Không có thai
+        <ion-badge color="danger"> {{rest.usg.list[2].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
   </ion-segment>
 
   <div *ngFor="let item of this.rest.usg.list[segment]; let i = index"
@@ -72,9 +78,14 @@
     <div class="upperline">
       Ghi chú: {{item['note']}}
     </div>
-    <img *ngIf="item['status'] < 5" class="icon" src="/assets/icon/called.png" (click)="called(i)">
-    <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)">
-    <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/reprenag.png" (click)="reprenag(i)">
+    <img *ngIf="item['status'] == 0" class="icon" src="/assets/icon/prenant.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 1" class="icon" src="/assets/icon/resound.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 3" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm2.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="called(i)">
+    <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
+    <img *ngIf="item['status'] <= 5 && item['status'] != 0" class="icon" src="/assets/icon/reprenag.png" (click)="reprenag(i)">
     <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
     <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
   </div>

@@ -61,7 +61,6 @@ export class UsgPage {
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'auto', {
-      keyword: this.rest.usg.key,
       docs: this.rest.usg.docs,
       time: this.rest.usg.time,
     }).then(resp => {
@@ -96,7 +95,6 @@ export class UsgPage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
@@ -117,7 +115,6 @@ export class UsgPage {
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
@@ -184,13 +181,12 @@ export class UsgPage {
       cometime: this.time.datetoisodate(this.rest.home.today),
       calltime: this.time.datetoisodate(this.rest.home.next),
       note: '',
-      keyword: this.rest.usg.key
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
   public update(index: number) {
-    let item = this.rest.usg.list[index][this.segment]
+    let item = this.rest.usg.list[this.segment][index]
     this.rest.temp = {
       route: true,
       id: item.id,
@@ -201,20 +197,19 @@ export class UsgPage {
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
-      keyword: this.rest.usg.key
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      header: this.header[this.rest.usg.list[index][this.segment].status],
-      subHeader: this.subheader[this.rest.usg.list[index][this.segment].status],
+      header: this.header[this.rest.usg.list[this.segment][index].status],
+      subHeader: this.subheader[this.rest.usg.list[this.segment][index].status],
       message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index][this.segment].note
+        value: this.rest.usg.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -223,7 +218,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(this.rest.usg.list[index][this.segment].id, e.note)
+            this.calledSubmit(this.rest.usg.list[this.segment][index].id, e.note)
           }
         }
       ]
@@ -236,7 +231,6 @@ export class UsgPage {
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
@@ -255,7 +249,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index][this.segment].note
+        value: this.rest.usg.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -264,7 +258,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(this.rest.usg.list[index][this.segment].id, e.note)
+            this.deadSubmit(this.rest.usg.list[this.segment][index].id, e.note)
           }
         }
       ]
@@ -278,7 +272,6 @@ export class UsgPage {
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
@@ -297,7 +290,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index][this.segment].note
+        value: this.rest.usg.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -306,7 +299,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(this.rest.usg.list[index][this.segment].id, e.note)
+            this.doneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
           }
         }
       ]
@@ -320,7 +313,6 @@ export class UsgPage {
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
@@ -339,7 +331,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[index][this.segment].note
+        value: this.rest.usg.list[this.segment][index].note
       }],
       buttons: [
         {
@@ -348,7 +340,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.reprenagSubmit(this.rest.usg.list[index][this.segment].id, e.note)
+            this.reprenagSubmit(this.rest.usg.list[this.segment][index].id, e.note)
           }
         }
       ]
@@ -362,7 +354,6 @@ export class UsgPage {
     this.rest.checkpost('usg', 'reprenag', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {

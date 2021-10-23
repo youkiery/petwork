@@ -50,7 +50,7 @@
       <div>
         Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)" *ngIf="item.insult < 1">
       </div>
-      <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i, j)">
+      <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i)">
         {{detail.time}}
       </span>
       <div class="upperline">
