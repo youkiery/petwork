@@ -26,23 +26,23 @@
     <div class="col-xs-6">
       Ngày đến: {{item['cometime']}} <br>
       <span *ngIf="item['number'] > 0"> Dự sinh: {{item['calltime']}} <br> </span>
-      Ngày nhắc kế: {{item['recall']}} <br>
-      Sự kiện: <span class="bold"> {{status_text[item['status']]}} </span> <br>
-      Số thai: {{item['number']}} <br>
-      Bác sĩ: {{item['doctor']}} <br>
+      <span *ngIf="item['status'] != 6 || item['status'] != 1"> Ngày nhắc kế: {{item['recall']}} <br> </span>
+      Sự kiện: <span class="bold"> {{header[item['status']]}} </span> <br>
+      <span *ngIf="item['number'] == 0"> Số thai: {{item['number']}} <br> </span>
+      Bác sĩ: {{item['doctor']}}
     </div>
     <div class="upperline">
       Ghi chú: {{item['note']}}
     </div>
-    <img *ngIf="item['status'] == 0" class="icon" src="/assets/icon/prenant.png" (click)="called(i)">
-    <img *ngIf="item['status'] == 1" class="icon" src="/assets/icon/resound.png" (click)="called(i)">
-    <img *ngIf="item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="called(i)">
-    <img *ngIf="item['status'] == 3" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
-    <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm2.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 0" class="icon" src="/assets/icon/pregnant.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 1" class="icon" src="/assets/icon/progesterone.png" (click)="progesterone(i)">
+    <img *ngIf="item['status'] == 2" class="icon" src="/assets/icon/resound.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 3" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
+    <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
     <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="called(i)">
     <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
-    <img *ngIf="item['status'] <= 5 && item['status'] != 0" class="icon" src="/assets/icon/reprenag.png" (click)="reprenag(i)">
-    <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png" (click)="repregnant()">
+    <img *ngIf="item['status'] <= 6" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
     <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 

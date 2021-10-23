@@ -8,38 +8,29 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./usgsearch.page.scss'],
 })
 export class UsgsearchPage implements OnInit {
-  public status_text = {
-    0: 'Nhắc tới ngày sa lơ',
-    1: 'Tư vấn trước sinh',
-    2: 'Ngày sinh',
-    3: 'Nhắc sổ giun lần 1',
-    4: 'Nhắc sổ giun lần 2',
+  public header = {
+    0: 'Nhắc tiêm phòng trước salơ',
+    1: 'Nhắc test Progesterone',
+    2: 'Tư vấn trước sinh',
+    3: 'Ngày sinh',
+    4: 'Nhắc sổ giun lần 1',
     5: 'Nhắc tiêm vaccine',
-    6: 'Đã hoàn thành',
-    7: 'Không theo dõi nữa',
-    8: 'Phiếu tạm',
+    6: 'Đã nhắc tiêm vaccine',
+    7: 'Đã hoàn thành',
+    8: 'Không theo dõi nữa',
+    9: 'Phiếu tạm',
   }
   public status = {
     0: 'stl-card white',
     1: 'stl-card red',
   }
-  public header = {
-    0: 'Đã hẹn nhắc sa lơ',
-    1: 'Tư vấn trước sinh',
-    2: 'Ngày sinh',
-    3: 'Nhắc sổ giun lần 1',
-    4: 'Nhắc sổ giun lần 2',
-    5: 'Nhắc tiêm vaccine',
-    6: 'Đã hoàn thành',
-    7: 'Không theo dõi nữa',
-    8: 'Phiếu tạm',
-  }
   public subheader = {
-    0: 'Xác nhận gọi nhắc salơ, phiếu nhắc sẽ được đánh dấu là đã hoàn thành',
-    1: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
-    2: 'Xác nhận đã sinh, phiếu nhắc xổ giun sẽ hiện lại 3 tuần sau khi sinh',
-    3: 'Xác nhận xổ giun lần 1, phiếu nhắc xổ giun lần 2 sẽ hiện lại 5 tuần sau khi sinh',
-    4: 'Xác nhận xổ giun lần 2, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+    0: 'Xác nhận gọi nhắc tiêm phòng trước salơ, phiếu nhắc test progesterone sẽ hiện lại sau 1 tháng nữa',
+    1: '',
+    2: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
+    3: 'Xác nhận đã sinh, phiếu nhắc xổ giun lần 1 sẽ hiện lại 5 tuần sau khi sinh',
+    4: 'Xác nhận đã xổ giun, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+    5: 'Xác nhận đã tiêm vaccine',
   }
   public page = 1
   constructor(

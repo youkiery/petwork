@@ -263,14 +263,6 @@ export class UsgmanagerPage implements OnInit {
       this.rest.defreeze()
       this.rest.usg.temp = resp.list
       this.selected = {}
-
-      if (resp.old.length) {
-        this.rest.temp.ov = {}
-        this.rest.temp.list = resp.old
-        this.rest.action = 'usg'
-        this.rest.temp.prv = 'temp'
-        this.rest.navCtrl.navigateForward('/usg/recall')
-      }
     }, () => {
       this.rest.defreeze()
     })
@@ -424,14 +416,6 @@ export class UsgmanagerPage implements OnInit {
       this.selected = {}
       this.toggle = false
       this.rest.usg.temp = resp.temp
-      if (resp.old.length) {
-        this.rest.temp.list = resp.old
-        this.rest.action = 'usg'
-        this.rest.temp.prv = 'temp'
-        this.rest.temp.ov = resp.ov
-        this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
-        this.rest.navCtrl.navigateForward('/usg/recall')
-      }
     }, () => {
       this.rest.defreeze()
     })

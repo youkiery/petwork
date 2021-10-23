@@ -10,38 +10,29 @@ import { TimeService } from 'src/app/services/time.service';
 })
 export class UsgPage {
   public segment = '0'
-  public status_text = {
-    0: 'Nhắc tới ngày sa lơ',
-    1: 'Tư vấn trước sinh',
-    2: 'Ngày sinh',
-    3: 'Nhắc sổ giun lần 1',
-    4: 'Nhắc sổ giun lần 2',
+  public header = {
+    0: 'Nhắc tiêm phòng trước salơ',
+    1: 'Nhắc test Progesterone',
+    2: 'Tư vấn trước sinh',
+    3: 'Ngày sinh',
+    4: 'Nhắc sổ giun lần 1',
     5: 'Nhắc tiêm vaccine',
-    6: 'Đã hoàn thành',
-    7: 'Không theo dõi nữa',
-    8: 'Phiếu tạm',
+    6: 'Đã nhắc tiêm vaccine',
+    7: 'Đã hoàn thành',
+    8: 'Không theo dõi nữa',
+    9: 'Phiếu tạm',
   }
   public status = {
     0: 'stl-card white',
     1: 'stl-card red',
   }
-  public header = {
-    0: 'Đã hẹn nhắc sa lơ',
-    1: 'Tư vấn trước sinh',
-    2: 'Ngày sinh',
-    3: 'Nhắc sổ giun lần 1',
-    4: 'Nhắc sổ giun lần 2',
-    5: 'Nhắc tiêm vaccine',
-    6: 'Đã hoàn thành',
-    7: 'Không theo dõi nữa',
-    8: 'Phiếu tạm',
-  }
   public subheader = {
-    0: 'Xác nhận gọi nhắc salơ, phiếu nhắc sẽ được đánh dấu là đã hoàn thành',
-    1: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
-    2: 'Xác nhận đã sinh, phiếu nhắc xổ giun sẽ hiện lại 4 tuần sau khi sinh',
-    3: 'Xác nhận xổ giun lần 1, phiếu nhắc xổ giun lần 2 sẽ hiện lại 5 tuần sau khi sinh',
-    4: 'Xác nhận xổ giun lần 2, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+    0: 'Xác nhận gọi nhắc tiêm phòng trước salơ, phiếu nhắc test progesterone sẽ hiện lại sau 1 tháng nữa',
+    1: '',
+    2: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
+    3: 'Xác nhận đã sinh, phiếu nhắc xổ giun lần 1 sẽ hiện lại 5 tuần sau khi sinh',
+    4: 'Xác nhận đã xổ giun, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+    5: 'Xác nhận đã tiêm vaccine',
   }
   public page = 1
   constructor(
@@ -201,15 +192,72 @@ export class UsgPage {
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
 
+  public async birth(index: number) {
+    let current = this.rest.usg.list[this.segment][index].calltime.split('/')
+    let target = current[2] + '-' + current[1] + '-' + current[0]
+
+    const alert = await this.alert.create({
+      header: this.header[this.rest.usg.list[this.segment][index].status],
+      subHeader: this.subheader[this.rest.usg.list[this.segment][index].status],
+      inputs: [{
+        type: 'number',
+        name: 'number',
+        value: this.rest.usg.list[this.segment][index].number,
+        placeholder: 'Số thai'
+      },
+      {
+        type: 'date',
+        name: 'calltime',
+        value: target,
+        placeholder: 'Ngày sinh'
+      },
+      {
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e.number, e.calltime, e.note)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async birthSubmit(id: number, number: number, calltime: string, note: string) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'birth', {
+      id: id,
+      note: note,
+      number: number,
+      calltime: calltime,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async called(index: number) {
     const alert = await this.alert.create({
       header: this.header[this.rest.usg.list[this.segment][index].status],
       subHeader: this.subheader[this.rest.usg.list[this.segment][index].status],
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -245,11 +293,11 @@ export class UsgPage {
     const alert = await this.alert.create({
       header: 'Xác nhận không theo dõi',
       subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -286,11 +334,11 @@ export class UsgPage {
     const alert = await this.alert.create({
       header: 'Xác nhận đã hoàn thành',
       subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -323,15 +371,15 @@ export class UsgPage {
     })
   }
 
-  public async reprenag(index: number) {
+  public async progesterone(index: number) {
     const alert = await this.alert.create({
-      header: 'Xác nhận thai đã chết',
-      subHeader: 'Thai đã chết nhưng vẫn nhắc lại 5 tháng sau có thể phối',
-      message: 'Ghi chú: ',
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -340,7 +388,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.reprenagSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.progesteroneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
           }
         }
       ]
@@ -349,9 +397,50 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async reprenagSubmit(id: number, note: string = '') {
+  public async progesteroneSubmit(id: number, note: string = '') {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('usg', 'reprenag', {
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async repregnant(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận thai đã chết',
+      subHeader: 'Thai đã chết nhưng vẫn nhắc lại 5 tháng sau có thể phối',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.repregnantSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async repregnantSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'repregnant', {
       id: id,
       note: note,
       time: this.rest.usg.time,

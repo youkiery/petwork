@@ -29,8 +29,21 @@ ion-badge {
   font-size: 0.8em;
 }
 
+.alert-input-group {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-inline-start: 10px !important;
+  padding-inline-end: 10px !important;
+}
+
+.alert-input-wrapper {
+  padding: 5px;
+  margin: 5px;
+}
+
 .alert-input.sc-ion-alert-md {
   border-bottom: none !important;
+  padding: 0px;
 }
 
 .tick {
