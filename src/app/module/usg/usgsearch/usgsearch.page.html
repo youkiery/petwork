@@ -41,15 +41,8 @@
     <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
     <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="called(i)">
     <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
-    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png" (click)="repregnant()">
+    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png" (click)="repregnant(i)">
     <img *ngIf="item['status'] <= 6" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
-    <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
+    <!-- <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)"> -->
   </div>
-
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="moreVaccine($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Đang tải thêm...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

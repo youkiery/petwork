@@ -1,8 +1,20 @@
-<ion-header>
+<ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
     <ion-title style="text-align: center;">
       THANHXUANPET
     </ion-title>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="notify()">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>
+        <ion-badge color="danger" *ngIf="rest.home.notify"> {{rest.home.notify}} </ion-badge>
+      </ion-label>
+    </ion-button>
+
+    <!-- <ion-button slot="end" color="light" fill="clear" (click)="notify()">
+      <ion-badge color="danger"> {{rest.home.notify}} </ion-badge>
+      <ion-icon name="notifications-outline"></ion-icon>
+    </ion-button> -->
   </ion-toolbar>
 </ion-header>
 

@@ -112,12 +112,6 @@
       <img class="right" *ngIf="rest.config.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
     </div>
   </div>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="moreVaccine($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Đang tải thêm...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">

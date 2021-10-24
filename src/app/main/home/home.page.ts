@@ -15,6 +15,10 @@ export class HomePage {
     public platform: Platform
   ) { }
 
+  public notify() {
+    this.rest.navCtrl.navigateForward('/notify')
+  }
+
   ionViewWillEnter(){
     this.subscription = this.platform.backButton.subscribe(()=>{
       navigator['app'].exitApp();

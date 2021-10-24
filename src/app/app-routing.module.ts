@@ -98,7 +98,11 @@ const routes: Routes = [
   {
     path: 'inout',
     loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
+  },  {
+    path: 'notify',
+    loadChildren: () => import('./main/notify/notify.module').then( m => m.NotifyPageModule)
   },
+
 ];
 
 @NgModule({

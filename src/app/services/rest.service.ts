@@ -21,6 +21,7 @@ export class RestService {
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
   public home = {
+    notify: 0,
     name: '',
     userid: 0,
     username: '',
@@ -49,6 +50,7 @@ export class RestService {
   public action: string = ''
   public isready: boolean = false
   public id: number = 0
+  public notification = []
   public detail: any = {}
   public temp: any = {}
   public toast: any
@@ -144,7 +146,9 @@ export class RestService {
       this.config = resp.config
       this.home = resp.data
       this.session = session
-      this.vaccine.list = [[], [], []]
+      this.notification = resp.notification
+      this.home.notify = resp.notify
+    this.vaccine.list = [[], [], []]
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
@@ -163,6 +167,8 @@ export class RestService {
         this.config = resp.config
         this.home = resp.data
         this.session = resp.session
+        this.notification = resp.notification
+        this.home.notify = resp.notify
         this.vaccine.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
@@ -184,6 +190,8 @@ export class RestService {
         this.config = resp.config
         this.home = resp.data
         this.session = resp.session
+        this.notification = resp.notification
+        this.home.notify = resp.notify
         this.vaccine.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })

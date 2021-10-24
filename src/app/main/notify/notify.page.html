@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button slot="start" color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item *ngFor="let item of rest.notification" (click)="rest.navCtrl.navigateForward(item.module)">
+    {{item.content}}
+  </ion-item>  
+</ion-content>

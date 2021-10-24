@@ -61,16 +61,72 @@ export class UsgsearchPage implements OnInit {
     }
   }
 
+  public async birth(index: number) {
+    let current = this.rest.temp[index].calltime.split('/')
+    let target = current[2] + '-' + current[1] + '-' + current[0]
+
+    const alert = await this.alert.create({
+      header: this.header[this.rest.temp[index].status],
+      subHeader: this.subheader[this.rest.temp[index].status],
+      inputs: [{
+        type: 'number',
+        name: 'number',
+        value: this.rest.temp[index].number,
+        placeholder: 'Số thai'
+      },
+      {
+        type: 'date',
+        name: 'calltime',
+        value: target,
+        placeholder: 'Ngày sinh'
+      },
+      {
+        type: 'text',
+        name: 'note',
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.birthSubmit(this.rest.temp[index].id, e.number, e.calltime, e.note)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async birthSubmit(id: number, number: number, calltime: string, note: string) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'birth', {
+      id: id,
+      note: note,
+      number: number,
+      calltime: calltime,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
   public async called(index: number) {
     const alert = await this.alert.create({
       header: this.header[this.rest.temp[index].status],
       subHeader: this.subheader[this.rest.temp[index].status],
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.temp[index].note
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -92,12 +148,11 @@ export class UsgsearchPage implements OnInit {
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.temp = resp.list
+      this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -107,11 +162,11 @@ export class UsgsearchPage implements OnInit {
     const alert = await this.alert.create({
       header: 'Xác nhận không theo dõi',
       subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.temp[index].note
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -134,12 +189,11 @@ export class UsgsearchPage implements OnInit {
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.temp = resp.list
+      this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -149,11 +203,11 @@ export class UsgsearchPage implements OnInit {
     const alert = await this.alert.create({
       header: 'Xác nhận đã hoàn thành',
       subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
-      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.temp[index].note
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
       }],
       buttons: [
         {
@@ -176,12 +230,93 @@ export class UsgsearchPage implements OnInit {
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
-      keyword: this.rest.usg.key,
       time: this.rest.usg.time,
       docs: this.rest.usg.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.temp = resp.list
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async progesterone(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.progesteroneSubmit(this.rest.temp[index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async progesteroneSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async repregnant(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận thai đã chết',
+      subHeader: 'Thai đã chết nhưng vẫn nhắc lại 5 tháng sau có thể phối',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.temp[index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.repregnantSubmit(this.rest.temp[index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async repregnantSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'repregnant', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.usg.docs
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
