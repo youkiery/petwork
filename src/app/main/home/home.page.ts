@@ -20,6 +20,7 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
+    this.rest.action = 'home'
     this.subscription = this.platform.backButton.subscribe(()=>{
       navigator['app'].exitApp();
     });

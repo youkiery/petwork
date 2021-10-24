@@ -421,6 +421,12 @@ export class UsgmanagerPage implements OnInit {
     })
   }
 
+  public cleardocs() {
+    this.rest.vaccine.docs = []
+    this.rest.vaccine.docscover = ''
+    this.filter()
+  }
+
   public change(type: string = 'type') {
     this.tab = type
   }

@@ -612,6 +612,12 @@ export class ManagerPage implements OnInit {
     })
   }
 
+  public cleardocs() {
+    this.rest.vaccine.docs = []
+    this.rest.vaccine.docscover = ''
+    this.filter()
+  }
+
   public async reloadDoctor(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {

@@ -134,7 +134,7 @@ export class SpaPage {
       note: '',
       weight: 0,
       image: [],
-      option: [],
+      option: [3],
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }

@@ -26,13 +26,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-item (click)="docs()" *ngIf="rest.config.usg > 1">
-    <span *ngIf="rest.usg.docscover.length">
-      Bác sĩ: {{rest.usg.docscover}}
+  <ion-item *ngIf="rest.config.vaccine > 1">
+    <span (click)="docs()" *ngIf="rest.vaccine.docscover.length">
+      Bác sĩ: {{rest.vaccine.docscover}}
     </span>
-    <span *ngIf="!rest.usg.docscover.length">
+    <span (click)="docs()" *ngIf="!rest.vaccine.docscover.length">
       Click lọc theo nhân viên
     </span>
+    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
   </ion-item>
 
   <ion-segment [(ngModel)]="segment">
@@ -56,8 +57,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <div *ngFor="let item of this.rest.usg.list[segment]; let i = index"
-    [class]="status[item['over']]">
+  <div *ngFor="let item of this.rest.usg.list[segment]; let i = index" [class]="status[item['over']]">
     <div class="col-xs-6">
       Tên khách: {{item['name']}} <br>
       Điện thoại:
@@ -85,7 +85,8 @@
     <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
     <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="called(i)">
     <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
-    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png" (click)="repregnant(i)">
+    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png"
+      (click)="repregnant(i)">
     <img *ngIf="item['status'] <= 6" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
     <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
   </div>

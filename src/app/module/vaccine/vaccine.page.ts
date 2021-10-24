@@ -41,6 +41,8 @@ export class VaccinePage {
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
+    this.rest.vaccine.docs.push(this.rest.home.userid)
+    this.rest.vaccine.docscover = this.rest.home.fullname
     this.rest.checkpost('vaccine', 'auto', {
       docs: this.rest.vaccine.docs,
       time: this.rest.vaccine.time,
@@ -55,6 +57,12 @@ export class VaccinePage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public cleardocs() {
+    this.rest.vaccine.docs = []
+    this.rest.vaccine.docscover = ''
+    this.filter()
   }
 
   public async filter() {

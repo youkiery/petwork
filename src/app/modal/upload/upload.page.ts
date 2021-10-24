@@ -179,15 +179,20 @@ export class UploadPage {
   }
 
   public async insertSubmit() {
-    this.rest.temp.option = this.checkOption()
-    this.rest.checkpost('spa', 'insert', this.rest.temp).then(resp => {
-      this.rest.defreeze()
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
-      this.rest.back()
-    }, () => {
-      this.rest.defreeze()
-    })
+    let temp = JSON.parse(JSON.stringify(this.rest.temp))
+    temp.option = this.checkOption()
+    console.log(temp);
+    if (!temp.option.length) this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
+    else {
+      this.rest.checkpost('spa', 'insert', temp).then(resp => {
+        this.rest.defreeze()
+        this.rest.spa.list = resp.list
+        this.rest.spa.init = resp.time
+        this.rest.back()
+      }, () => {
+        this.rest.defreeze()
+      })
+    } 
   }
 
   public async updateSubmit() {

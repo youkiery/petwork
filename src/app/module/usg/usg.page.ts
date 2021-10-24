@@ -51,6 +51,8 @@ export class UsgPage {
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
+    this.rest.usg.docs.push(this.rest.home.userid)
+    this.rest.usg.docscover = this.rest.home.fullname
     this.rest.checkpost('usg', 'auto', {
       docs: this.rest.usg.docs,
       time: this.rest.usg.time,
@@ -81,6 +83,12 @@ export class UsgPage {
         this.rest.defreeze()
       })
     }
+  }
+
+  public cleardocs() {
+    this.rest.vaccine.docs = []
+    this.rest.vaccine.docscover = ''
+    this.filter()
   }
 
   public async filter() {

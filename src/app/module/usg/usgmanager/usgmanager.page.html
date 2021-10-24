@@ -80,15 +80,16 @@
       <ion-label position="stacked"> Lọc các phiếu thêm trước ngày </ion-label>
       <ion-datetime [(ngModel)]="rest.usg.time" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="filter()"></ion-datetime>
     </ion-item>
-    <ion-item (click)="docs()" *ngIf="rest.config.usg > 1">
-      <span *ngIf="rest.usg.docscover.length">
-        Bác sĩ: {{rest.usg.docscover}}
+    <ion-item *ngIf="rest.config.vaccine > 1">
+      <span (click)="docs()" *ngIf="rest.vaccine.docscover.length">
+        Bác sĩ: {{rest.vaccine.docscover}}
       </span>
-      <span *ngIf="!rest.usg.docscover.length">
+      <span (click)="docs()" *ngIf="!rest.vaccine.docscover.length">
         Click lọc theo nhân viên
       </span>
+    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
     </ion-item>
-
+  
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
         <ion-label> Chưa xác nhận </ion-label>
