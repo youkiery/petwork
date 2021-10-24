@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" *ngIf="!rest.temp.id" color="secondary" fill="solid" size="small" (click)="insert()">
+      Thêm
+    </ion-button>
+    <ion-button slot="end" *ngIf="rest.temp.id" color="secondary" fill="solid" size="small" (click)="update()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên hàng hóa </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name">  </ion-input>
+  </ion-item>
+  <div *ngFor="let item of rest.temp.detail; let i = index">
+    <ion-item class="item-label-class">
+      <ion-icon color="danger" name="close-circle" (click)="remove(i)"></ion-icon>
+      <ion-label position="stacked"> Số lượng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.detail[i].name">  </ion-input>
+    </ion-item>
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Tìm kiếm hàng hóa </ion-label>
+      <ion-input [(ngModel)]="rest.temp.detail[i].price">  </ion-input>
+    </ion-item>
+  </div>
+  <ion-icon name="add-circle" (click)="add()"></ion-icon>
+</ion-content>

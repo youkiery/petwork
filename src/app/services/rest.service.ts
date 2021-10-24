@@ -46,6 +46,7 @@ export class RestService {
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public his = { init: false, from: '', end: '', list: [] }
   public admin = { init: false, list: [] }
+  public price = { init: false, list: [], keyword: '' }
 
   public action: string = ''
   public isready: boolean = false
