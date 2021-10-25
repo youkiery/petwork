@@ -47,6 +47,7 @@ export class RestService {
   public his = { init: false, from: '', end: '', list: [] }
   public admin = { init: false, list: [] }
   public price = { init: false, list: [], keyword: '' }
+  public transport = { init: false, list: [], keyword: '' }
 
   public action: string = ''
   public isready: boolean = false
