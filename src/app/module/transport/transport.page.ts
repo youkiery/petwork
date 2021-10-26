@@ -36,7 +36,9 @@ export class TransportPage implements OnInit {
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('transport', 'init', {}).then(resp => {
+    this.rest.checkpost('transport', 'init', {
+      keyword: this.rest.transport.keyword
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.transport.list = resp.list
     }, () => {
@@ -49,17 +51,20 @@ export class TransportPage implements OnInit {
       name: '',
       phone: '',
       address: '',
-      d: []
+      detail: [{name: ''}],
+      keyword: this.rest.transport.keyword
     }
     this.rest.navCtrl.navigateForward('transport/insert')
   }
 
   public update(i: number) {
     this.rest.temp = {
+      id: this.rest.transport.list[i].id,
       name: this.rest.transport.list[i].name,
       phone: this.rest.transport.list[i].phone,
       address: this.rest.transport.list[i].address,
-      d: this.rest.transport.list[i].d,
+      detail: this.rest.transport.list[i].detail,
+      keyword: this.rest.transport.keyword
     }
     this.rest.navCtrl.navigateForward('transport/insert')
   }
@@ -87,6 +92,7 @@ export class TransportPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('transport', 'remove', {
       id: id,
+      keyword: this.rest.transport.keyword
     }).then(resp => {
       this.rest.defreeze()
       this.rest.transport.list = resp.list

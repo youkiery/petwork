@@ -45,7 +45,7 @@ export class PriceinsertPage implements OnInit {
     this.rest.temp.price = this.rest.temp.detail.filter((item: any, index: number) => {
       return index !== i
     })
-    if (!this.rest.temp.length) this.add()
+    if (!this.rest.temp.detail.length) this.add()
   }
 
   public add() {

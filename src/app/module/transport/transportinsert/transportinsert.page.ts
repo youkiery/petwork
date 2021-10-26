@@ -42,13 +42,13 @@ export class TransportinsertPage implements OnInit {
   }
 
   public remove(i: number) {
-    this.rest.temp.transport = this.rest.temp.d.filter((item: any, index: number) => {
+    this.rest.temp.transport = this.rest.temp.detail.filter((item: any, index: number) => {
       return index !== i
     })
-    if (!this.rest.temp.length) this.add()
+    if (!this.rest.temp.detail.length) this.add()
   }
 
   public add() {
-    this.rest.temp.d.push('')
+    this.rest.temp.detail.push({name: ''})
   }
 }

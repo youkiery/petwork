@@ -26,11 +26,11 @@
     <ion-label position="stacked"> Địa chỉ </ion-label>
     <ion-textarea [(ngModel)]="rest.temp.address"></ion-textarea>
   </ion-item>
-  <div *ngFor="let item of rest.temp.d; let i = index">
+  <div *ngFor="let item of rest.temp.detail; let i = index">
     <ion-item>
       <ion-icon color="danger" name="close-circle" (click)="remove(i)"></ion-icon>
-      <ion-label position="stacked"> Số lượng </ion-label>
-      <ion-input [(ngModel)]="rest.temp.d[i]">  </ion-input>
+      <ion-label position="stacked"> Gửi đến </ion-label>
+      <ion-input [(ngModel)]="rest.temp.detail[i].name">  </ion-input>
     </ion-item>
   </div>
   <ion-icon name="add-circle" (click)="add()"></ion-icon>
