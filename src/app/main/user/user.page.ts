@@ -31,7 +31,6 @@ export class UserPage {
     else {
       await this.rest.freeze('Đang đổi mật khẩu')
       this.rest.checkpost('user', 'password', {
-        action: 'user-change-password',
         old: this.oldpas,
         new: this.newpas
       }).then(data => {
@@ -43,5 +42,10 @@ export class UserPage {
         this.rest.defreeze()
       })
     }
+  }
+
+  public change(action: string) {
+    this.rest.action = action
+    this.rest.navCtrl.navigateForward('manager')
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import {
   ActionPerformed,
   PushNotificationSchema,
@@ -31,12 +31,13 @@ export class RestService {
     doctor: [],
     today: '',
     next: '',
+    type: [],
     usg: {c: 0, t: 0},
     vaccine: {c: 0, t: 0}
   }
   public session = ''
   public cart = { list: [], init: false }
-  public vaccine = { init: false, list: [], new: [], old: [], type: [], temp: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
+  public vaccine = { init: false, list: [], new: [], old: [], temp: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
   public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], docs: [], docscover: '', time: '' }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
@@ -99,7 +100,7 @@ export class RestService {
 
   public typeSearch(typeid = 0) {
     let type = ''
-    this.vaccine.type.forEach(item => {
+    this.home.type.forEach(item => {
       if (item.id == typeid) type = item.name
     })
     return type
@@ -152,12 +153,11 @@ export class RestService {
       this.session = session
       this.notification = resp.notification
       this.home.notify = resp.notify
-    this.vaccine.list = [[], [], []]
+      this.vaccine.list = [[], [], []]
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.defreeze()
     }, () => {
       this.isready = true
-      this.logout()
       this.defreeze()
     })
   }
@@ -221,9 +221,9 @@ export class RestService {
 
   public typeIndex(name: string) {
     let check = '0'
-    for (const key in this.vaccine.type) {
-      if (Object.prototype.hasOwnProperty.call(this.vaccine.type, key)) {
-        const item = this.vaccine.type[key];
+    for (const key in this.home.type) {
+      if (Object.prototype.hasOwnProperty.call(this.home.type, key)) {
+        const item = this.home.type[key];
         if (item['name'] == name) check = key
       }
     }
@@ -265,7 +265,7 @@ export class RestService {
         }
         else if (data['nogin']) {
           this.notify("Phiên đăng nhập hết hạn")
-          this.logout()
+          this.navCtrl.navigateBack('/login')
           reject(data)
         }
         else {

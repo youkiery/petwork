@@ -110,6 +110,10 @@ const routes: Routes = [
     path: 'transport',
     loadChildren: () => import('./module/transport/transport.module').then( m => m.TransportPageModule)
   },
+  {
+    path: 'manager',
+    loadChildren: () => import('./main/manager/manager.module').then( m => m.ManagerPageModule)
+  },
 
 ];
 

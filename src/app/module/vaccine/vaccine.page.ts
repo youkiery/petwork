@@ -51,7 +51,7 @@ export class VaccinePage {
       this.rest.vaccine.init = true
       this.rest.vaccine.new = resp.new
       this.rest.vaccine.list = resp.list
-      this.rest.vaccine.type = resp.type
+      this.rest.home.type = resp.type
       this.rest.vaccine.temp = resp.temp
       this.rest.vaccine.over = resp.over
     }, () => {
@@ -149,7 +149,7 @@ export class VaccinePage {
   public insert() {
     this.rest.action = 'vaccine'
 
-    this.rest.temp = { id: 0, petname: '', name: '', phone: '', address: '', typeid: (this.rest.vaccine.type.length ? this.rest.vaccine.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
+    this.rest.temp = { id: 0, petname: '', name: '', phone: '', address: '', typeid: (this.rest.home.type.length ? this.rest.home.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '' }
     this.rest.navCtrl.navigateForward('/modal/insert')
   }
 
