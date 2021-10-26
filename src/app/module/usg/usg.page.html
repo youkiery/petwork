@@ -26,11 +26,11 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-item *ngIf="rest.config.vaccine > 1">
-    <span (click)="docs()" *ngIf="rest.vaccine.docscover.length">
-      Bác sĩ: {{rest.vaccine.docscover}}
+  <ion-item *ngIf="rest.config.usg > 1">
+    <span (click)="docs()" *ngIf="rest.usg.docscover.length">
+      Bác sĩ: {{rest.usg.docscover}}
     </span>
-    <span (click)="docs()" *ngIf="!rest.vaccine.docscover.length">
+    <span (click)="docs()" *ngIf="!rest.usg.docscover.length">
       Click lọc theo nhân viên
     </span>
     <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
@@ -72,7 +72,7 @@
       <span *ngIf="item['number'] > 0"> Dự sinh: {{item['calltime']}} <br> </span>
       <span *ngIf="item['status'] != 6 || item['status'] != 1"> Ngày nhắc kế: {{item['recall']}} <br> </span>
       Sự kiện: <span class="bold"> {{header[item['status']]}} </span> <br>
-      <span *ngIf="item['number'] == 0"> Số thai: {{item['number']}} <br> </span>
+      <span *ngIf="item['number'] > 0"> Số thai: {{item['number']}} <br> </span>
       Bác sĩ: {{item['doctor']}}
     </div>
     <div class="upperline">

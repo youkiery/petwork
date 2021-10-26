@@ -10,11 +10,6 @@
         <ion-badge color="danger" *ngIf="rest.home.notify"> {{rest.home.notify}} </ion-badge>
       </ion-label>
     </ion-button>
-
-    <!-- <ion-button slot="end" color="light" fill="clear" (click)="notify()">
-      <ion-badge color="danger"> {{rest.home.notify}} </ion-badge>
-      <ion-icon name="notifications-outline"></ion-icon>
-    </ion-button> -->
   </ion-toolbar>
 </ion-header>
 
@@ -27,6 +22,7 @@
   </div>
 
   <div *ngIf="rest.config.vaccine > 0" class="box" (click)="rest.navCtrl.navigateForward('vaccine')">
+    <span class="redbadge"> <span *ngIf="rest.home.vaccine.c"><ion-img class="inline" src="assets/icon/called-xs.png"></ion-img> {{rest.home.vaccine.c}}</span> <span *ngIf="rest.home.vaccine.t"> <ion-img class="inline" src="assets/icon/done-xs.png"></ion-img> {{rest.home.vaccine.t}} </span> </span>
     <ion-img src="assets/image/vaccine.png" class="box-image"></ion-img>
     <div class="box-title">
       Quản lý vaccine
@@ -34,6 +30,7 @@
   </div>
 
   <div *ngIf="rest.config.usg > 0" class="box" (click)="rest.navCtrl.navigateForward('usg')">
+    <span class="redbadge"> <span *ngIf="rest.home.usg.c"><ion-img class="inline" src="assets/icon/called-xs.png"></ion-img> {{rest.home.usg.c}}</span> <span *ngIf="rest.home.usg.t"> <ion-img class="inline" src="assets/icon/done-xs.png"></ion-img> {{rest.home.usg.t}} </span> </span>
     <ion-img src="assets/image/usg.png" class="box-image"></ion-img>
     <div class="box-title">
       Quản lý siêu âm

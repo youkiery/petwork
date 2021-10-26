@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-notify',
@@ -9,7 +10,8 @@ import { RestService } from 'src/app/services/rest.service';
 export class NotifyPage implements OnInit {
 
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public time: TimeService
   ) { }
 
   ngOnInit() {

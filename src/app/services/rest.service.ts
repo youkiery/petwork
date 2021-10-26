@@ -31,6 +31,8 @@ export class RestService {
     doctor: [],
     today: '',
     next: '',
+    usg: {c: 0, t: 0},
+    vaccine: {c: 0, t: 0}
   }
   public session = ''
   public cart = { list: [], init: false }

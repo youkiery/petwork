@@ -422,8 +422,8 @@ export class UsgmanagerPage implements OnInit {
   }
 
   public cleardocs() {
-    this.rest.vaccine.docs = []
-    this.rest.vaccine.docscover = ''
+    this.rest.usg.docs = []
+    this.rest.usg.docscover = ''
     this.filter()
   }
 

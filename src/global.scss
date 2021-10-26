@@ -29,6 +29,24 @@ ion-badge {
   font-size: 0.8em;
 }
 
+.inline {
+  display: inline-block;
+}
+
+.time {
+  float: right;
+  font-size: 0.7em;
+  margin-top: 10px;
+}
+
+.redbadge {
+  color: red;
+  font-weight: bold;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
 .alert-input-group {
   padding-top: 10px !important;
   padding-bottom: 10px !important;

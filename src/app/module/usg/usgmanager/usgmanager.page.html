@@ -80,11 +80,11 @@
       <ion-label position="stacked"> Lọc các phiếu thêm trước ngày </ion-label>
       <ion-datetime [(ngModel)]="rest.usg.time" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="filter()"></ion-datetime>
     </ion-item>
-    <ion-item *ngIf="rest.config.vaccine > 1">
-      <span (click)="docs()" *ngIf="rest.vaccine.docscover.length">
-        Bác sĩ: {{rest.vaccine.docscover}}
+    <ion-item *ngIf="rest.config.usg > 1">
+      <span (click)="docs()" *ngIf="rest.usg.docscover.length">
+        Bác sĩ: {{rest.usg.docscover}}
       </span>
-      <span (click)="docs()" *ngIf="!rest.vaccine.docscover.length">
+      <span (click)="docs()" *ngIf="!rest.usg.docscover.length">
         Click lọc theo nhân viên
       </span>
     <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
@@ -136,10 +136,10 @@
         <ion-label> Xác nhận </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="change('usg')" [selected]="tab == 'usg'" *ngIf="rest.config.usg > 1">
+      <!-- <ion-tab-button (click)="change('usg')" [selected]="tab == 'usg'" *ngIf="rest.config.usg > 1">
         <ion-icon name="cloud-upload-outline"></ion-icon>
         <ion-label> Import </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>
