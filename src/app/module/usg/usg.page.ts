@@ -51,10 +51,9 @@ export class UsgPage {
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.usg.docs.push(this.rest.home.userid)
-    this.rest.usg.docscover = this.rest.home.fullname
     this.rest.checkpost('usg', 'auto', {
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       time: this.rest.usg.time,
     }).then(resp => {
       this.rest.defreeze()
@@ -86,8 +85,8 @@ export class UsgPage {
   }
 
   public cleardocs() {
-    this.rest.usg.docs = []
-    this.rest.usg.docscover = ''
+    this.rest.home.default.docs = []
+    this.rest.home.default.docscover = ''
     this.filter()
   }
 
@@ -95,7 +94,8 @@ export class UsgPage {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
@@ -115,7 +115,8 @@ export class UsgPage {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('usg', 'search', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       event.target.complete();
       this.rest.defreeze()
@@ -135,7 +136,7 @@ export class UsgPage {
         type: 'checkbox',
         label: item.name,
         value: index,
-        checked: (this.rest.usg.docs.indexOf(item.userid) >= 0 ? true : false)
+        checked: (this.rest.home.default.docs.indexOf(item.userid) >= 0 ? true : false)
       })
     })
     const alert = await this.alert.create({
@@ -159,8 +160,8 @@ export class UsgPage {
               docs.push(this.rest.home.doctor[index].userid)
             });
             
-            this.rest.usg.docs = docs
-            this.rest.usg.docscover = cover.join(', ')
+            this.rest.home.default.docs = docs
+            this.rest.home.default.docscover = cover.join(', ')
             this.filter()
           }
         }
@@ -180,6 +181,8 @@ export class UsgPage {
       cometime: this.time.datetoisodate(this.rest.home.today),
       calltime: this.time.datetoisodate(this.rest.home.next),
       note: '',
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
@@ -196,6 +199,8 @@ export class UsgPage {
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }
     this.rest.navCtrl.navigateForward('/usg/insert')
   }
@@ -248,7 +253,8 @@ export class UsgPage {
       number: number,
       calltime: calltime,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -288,7 +294,8 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -329,7 +336,8 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -370,7 +378,8 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -411,7 +420,8 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -452,7 +462,8 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list

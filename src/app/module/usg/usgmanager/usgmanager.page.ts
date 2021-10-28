@@ -62,7 +62,7 @@ export class UsgmanagerPage implements OnInit {
         type: 'checkbox',
         label: item.name,
         value: index,
-        checked: (this.rest.usg.docs.indexOf(item.userid) >= 0 ? true : false)
+        checked: (this.rest.home.default.docs.indexOf(item.userid) >= 0 ? true : false)
       })
     })
     const alert = await this.alert.create({
@@ -86,8 +86,8 @@ export class UsgmanagerPage implements OnInit {
               docs.push(this.rest.home.doctor[index].userid)
             });
 
-            this.rest.usg.docs = docs
-            this.rest.usg.docscover = cover.join(', ')
+            this.rest.home.default.docs = docs
+            this.rest.home.default.docscover = cover.join(', ')
             this.filter()
           }
         }
@@ -106,7 +106,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('usg', 'tempauto', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
@@ -173,7 +174,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('usg', 'transfer', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list,
       uid: uid
     }).then(resp => {
@@ -212,7 +214,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('usg', 'removeall', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list,
     }).then(resp => {
       this.rest.defreeze()
@@ -257,7 +260,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang xác nhận...')
     this.rest.checkpost('usg', 'doneall', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list
     }).then(resp => {
       this.rest.defreeze()
@@ -276,7 +280,8 @@ export class UsgmanagerPage implements OnInit {
     item.cometime = this.time.datetoisodate(item.cometime)
     this.rest.temp = {
       prv: 'temp',
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       time: this.rest.usg.time,
       id: item.id,
       name: item.name,
@@ -313,7 +318,7 @@ export class UsgmanagerPage implements OnInit {
       body.append('action', 'excel');
       body.append('time', this.rest.usg.time);
 
-      this.rest.usg.docs.forEach((item: any) => {
+      this.rest.home.default.docs.forEach((item: any) => {
         body.append('docs[]', item)
       })
 
@@ -367,7 +372,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'removetemp', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       id: this.rest.usg.temp[this.segment][index].id
     }).then(resp => {
       this.rest.defreeze()
@@ -408,7 +414,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'confirm', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       id: id,
       temp: 1
     }).then(resp => {
@@ -422,8 +429,8 @@ export class UsgmanagerPage implements OnInit {
   }
 
   public cleardocs() {
-    this.rest.usg.docs = []
-    this.rest.usg.docscover = ''
+    this.rest.home.default.docs = []
+    this.rest.home.default.docscover = ''
     this.filter()
   }
 
@@ -435,7 +442,8 @@ export class UsgmanagerPage implements OnInit {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('usg', 'tempauto', {
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}

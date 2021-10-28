@@ -15,8 +15,8 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = '/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
@@ -34,13 +34,18 @@ export class RestService {
     today: '',
     next: '',
     usg: {c: 0, t: 0},
-    vaccine: {c: 0, t: 0}
+    vaccine: {c: 0, t: 0},
+    default: {
+      spa: [],
+      docs: [],
+      docscover: ''
+    }
   }
   public session = ''
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, from: '', end: '' }
-  public vaccine = { init: false, list: [], new: [], old: [], temp: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
-  public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], docs: [], docscover: '', time: '' }
+  public vaccine = { init: false, list: [], new: [], old: [], temp: [], over: [], keyword: '', time: '' }
+  public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
@@ -193,9 +198,9 @@ export class RestService {
       await this.freeze('Đăng ký...')
       this.checkpost('user', 'signin', user).then(resp => {
         this.config = resp.config
-        this.home = resp.data
         this.session = resp.session
         this.notification = resp.notification
+        this.home = resp.data
         this.home.notify = resp.notify
         this.vaccine.list = [[], [], []]
         this.storage.set('session', resp.session)

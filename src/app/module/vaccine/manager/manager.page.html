@@ -64,10 +64,10 @@
     </ion-item>
     
     <ion-item *ngIf="rest.config.vaccine > 1">
-      <span (click)="docs()" *ngIf="rest.vaccine.docscover.length">
-        Bác sĩ: {{rest.vaccine.docscover}}
+      <span (click)="docs()" *ngIf="rest.home.default.docscover.length">
+        Bác sĩ: {{rest.home.default.docscover}}
       </span>
-      <span (click)="docs()" *ngIf="!rest.vaccine.docscover.length">
+      <span (click)="docs()" *ngIf="!rest.home.default.docscover.length">
         Click lọc theo nhân viên
       </span>
       <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>

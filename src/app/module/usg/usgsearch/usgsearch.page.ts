@@ -42,7 +42,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('usg')
   }
 
   public async search() {
@@ -109,7 +109,7 @@ export class UsgsearchPage implements OnInit {
       number: number,
       calltime: calltime,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -149,7 +149,7 @@ export class UsgsearchPage implements OnInit {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -190,7 +190,7 @@ export class UsgsearchPage implements OnInit {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -231,7 +231,7 @@ export class UsgsearchPage implements OnInit {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -272,7 +272,7 @@ export class UsgsearchPage implements OnInit {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
@@ -313,7 +313,7 @@ export class UsgsearchPage implements OnInit {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.usg.docs
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list

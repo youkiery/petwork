@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'manager',
     loadChildren: () => import('./manager/manager.module').then( m => m.ManagerPageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./vaccinesearch/vaccinesearch.module').then( m => m.VaccinesearchPageModule)
   }
 ];
 

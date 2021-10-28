@@ -62,7 +62,7 @@ export class ManagerPage implements OnInit {
         type: 'checkbox',
         label: item.name,
         value: index,
-        checked: (this.rest.vaccine.docs.indexOf(item.userid) >= 0 ? true : false)
+        checked: (this.rest.home.default.docs.indexOf(item.userid) >= 0 ? true : false)
       })
     })
     const alert = await this.alert.create({
@@ -86,8 +86,8 @@ export class ManagerPage implements OnInit {
               docs.push(this.rest.home.doctor[index].userid)
             });
             
-            this.rest.vaccine.docs = docs
-            this.rest.vaccine.docscover = cover.join(', ')
+            this.rest.home.default.docs = docs
+            this.rest.home.default.docscover = cover.join(', ')
             this.filter()
           }
         }
@@ -106,7 +106,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'tempauto', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
@@ -173,7 +174,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('vaccine', 'transfer', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list,
       uid: uid
     }).then(resp => {
@@ -212,7 +214,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang xóa loại nhắc...')
     this.rest.checkpost('vaccine', 'removeall', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list,
     }).then(resp => {
       this.rest.defreeze()
@@ -257,7 +260,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang xác nhận...')
     this.rest.checkpost('vaccine', 'doneall', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       list: list
     }).then(resp => {
       this.rest.defreeze()
@@ -284,7 +288,8 @@ export class ManagerPage implements OnInit {
     item.cometime = this.time.datetoisodate(item.cometime)
     this.rest.temp = {
       prv: 'temp',
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       time: this.rest.vaccine.time,
       id: item.id,
       petname: item.petname,
@@ -323,7 +328,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'removetemp', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       id: this.rest.vaccine.temp[this.segment][index].id
     }).then(resp => {
       this.rest.defreeze()
@@ -364,7 +370,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine', 'confirm', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
       id: id,
       temp: 1
     }).then(resp => {
@@ -397,7 +404,8 @@ export class ManagerPage implements OnInit {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('vaccine', 'tempauto', {
       time: this.rest.vaccine.time,
-      docs: this.rest.vaccine.docs,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}
@@ -411,8 +419,8 @@ export class ManagerPage implements OnInit {
   }
 
   public cleardocs() {
-    this.rest.vaccine.docs = []
-    this.rest.vaccine.docscover = ''
+    this.rest.home.default.docs = []
+    this.rest.home.default.docscover = ''
     this.filter()
   }
 

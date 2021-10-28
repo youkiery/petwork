@@ -114,7 +114,7 @@
     <div></div>
 
     <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">
-      <ion-label> {{item.value}} </ion-label>
+      <ion-label> {{item.name}} </ion-label>
       <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>
     </ion-item>
   </div>

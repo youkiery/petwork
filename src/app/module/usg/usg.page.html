@@ -27,10 +27,10 @@
   </ion-refresher>
 
   <ion-item *ngIf="rest.config.usg > 1">
-    <span (click)="docs()" *ngIf="rest.usg.docscover.length">
-      Bác sĩ: {{rest.usg.docscover}}
+    <span (click)="docs()" *ngIf="rest.home.default.docscover.length">
+      Bác sĩ: {{rest.home.default.docscover}}
     </span>
-    <span (click)="docs()" *ngIf="!rest.usg.docscover.length">
+    <span (click)="docs()" *ngIf="!rest.home.default.docscover.length">
       Click lọc theo nhân viên
     </span>
     <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>

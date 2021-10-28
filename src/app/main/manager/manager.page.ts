@@ -36,13 +36,55 @@ export class ManagerPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.insertSpaSubmit(e)
+            this.insertSpaSubmit(e.name)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async toggleDefault(id: number, value: string) {
+    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    this.rest.checkpost('spa', 'toggletype', {
+      id: id,
+      value: value,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+      this.rest.home.default.spa = resp.default
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async upspa(id: number, id2: number) {
+    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    this.rest.checkpost('spa', 'uptype', {
+      id: id,
+      id2: id2,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+      this.rest.home.default.spa = resp.default
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async downspa(id: number, id2: number) {
+    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    this.rest.checkpost('spa', 'downtype', {
+      id: id,
+      id2: id2,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+      this.rest.home.default.spa = resp.default
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async updateSpa(index: number) {
@@ -56,7 +98,7 @@ export class ManagerPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.updateSpaSubmit(index, e)
+            this.updateSpaSubmit(this.rest.home.spa[index].id, e.name)
           }
         }
       ]
@@ -77,10 +119,10 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public async updateSpaSubmit(index: number, name: string) {
+  public async updateSpaSubmit(id: number, name: string) {
     await this.rest.freeze('Đang thêm dữ liệu...')
     this.rest.checkpost('spa', 'updatetype', {
-      id: this.rest.home.spa[index].id,
+      id: id,
       name: name,
     }).then(resp => {
       this.rest.defreeze()
@@ -90,7 +132,7 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public async removeSpa(index: number) {
+  public async removeSpa(id: number) {
     let alert = await this.alert.create({
       message: 'Xóa dịch vụ Spa',
       buttons: [
@@ -98,7 +140,7 @@ export class ManagerPage implements OnInit {
         {
           text: 'Xác nhận',
           handler: (e) => {
-            this.removeSpaSubmit(index)
+            this.removeSpaSubmit(id)
           }
         }
       ]
@@ -107,10 +149,10 @@ export class ManagerPage implements OnInit {
     await alert.present();
   }
 
-  public async removeSpaSubmit(index: number) {
+  public async removeSpaSubmit(id: number) {
     await this.rest.freeze('Đang xóa dữ liệu...')
     this.rest.checkpost('spa', 'removetype', {
-      id: this.rest.home.spa[index].id,
+      id: id,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
@@ -280,7 +322,7 @@ export class ManagerPage implements OnInit {
       body.append('action', 'excel');
       body.append('time', this.rest.vaccine.time);
 
-      this.rest.vaccine.docs.forEach((item: any) => {
+      this.rest.home.default.docs.forEach((item: any) => {
         body.append('docs[]', item)
       })
 
