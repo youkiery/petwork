@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class UploadPage {
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
-    public alert: AlertController,
     private storage: AngularFireStorage,
   ) { }
 
@@ -28,8 +26,8 @@ export class UploadPage {
         this.init = true
         this.suggest()
       }
-  
-      this.option = JSON.parse(JSON.stringify(this.rest.spa.type))
+
+      this.option = JSON.parse(JSON.stringify(this.rest.home.spa))
       this.rest.temp.option.forEach((id: number) => {
         this.option.forEach((item, index) => {
           if (this.option[index].id == id) this.option[index].check = 1
@@ -56,7 +54,7 @@ export class UploadPage {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-     await this.rest.freeze('Đang tải...')
+      await this.rest.freeze('Đang tải...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();
@@ -137,7 +135,7 @@ export class UploadPage {
   public async insert() {
     this.count = 0
     await this.rest.freeze('Đang tải ảnh...')
-    
+
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else if (!this.rest.temp.image.length) this.insertSubmit()
@@ -155,7 +153,7 @@ export class UploadPage {
   public async update() {
     this.count = 0
     await this.rest.freeze('Đang tải ảnh...')
-    
+
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else if (!this.rest.temp.image.length) this.updateSubmit()
@@ -181,8 +179,10 @@ export class UploadPage {
   public async insertSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.option = this.checkOption()
-    console.log(temp);
-    if (!temp.option.length) this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
+    if (!temp.option.length) {
+      this.rest.defreeze()
+      this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
+    }
     else {
       this.rest.checkpost('spa', 'insert', temp).then(resp => {
         this.rest.defreeze()
@@ -192,25 +192,32 @@ export class UploadPage {
       }, () => {
         this.rest.defreeze()
       })
-    } 
+    }
   }
 
   public async updateSubmit() {
-    this.rest.temp.option = this.checkOption()
-    this.rest.checkpost('spa', 'update', this.rest.temp).then(resp => {
+    let temp = JSON.parse(JSON.stringify(this.rest.temp))
+    temp.option = this.checkOption()
+    if (!temp.option.length) {
       this.rest.defreeze()
-      this.rest.spa.list = resp.list
-      this.rest.spa.init = resp.time
-      this.rest.back()
-    }, () => {
-      this.rest.defreeze()
-    })
+      this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
+    }
+    else {
+      this.rest.checkpost('spa', 'update', this.rest.temp).then(resp => {
+        this.rest.defreeze()
+        this.rest.spa.list = resp.list
+        this.rest.spa.init = resp.time
+        this.rest.back()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
   }
-  
+
   public async drugInsert() {
     this.count = 0
     await this.rest.freeze('Đang thêm...')
-    
+
     if (!this.rest.temp.image.length) this.drugInsertSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
@@ -222,11 +229,11 @@ export class UploadPage {
       else this.checkDrugInsertSubmit()
     });
   }
-  
+
   public async drugUpdate() {
     this.count = 0
     await this.rest.freeze('Đang thêm...')
-    
+
     if (!this.rest.temp.image.length) this.drugUpdateSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
@@ -245,7 +252,7 @@ export class UploadPage {
       this.drugInsertSubmit()
     }
   }
-  
+
   public async checkDrugUpdateSubmit() {
     this.count++
     if (this.rest.temp.image.length == this.count) {
@@ -284,8 +291,8 @@ export class UploadPage {
     })
   }
 
-  
-  
+
+
   public async checkupdatePosition() {
     this.count++
     if (this.rest.temp.image.length == this.count) {

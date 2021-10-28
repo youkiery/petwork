@@ -63,7 +63,6 @@ export class SpaPage {
       
       this.rest.spa.init = new Date().getTime()
       this.rest.spa.list = resp.list
-      this.rest.spa.type = resp.type
       this.rest.spa.init = resp.time
       this.rest.home.doctor.forEach(item => {
         this.option.push({

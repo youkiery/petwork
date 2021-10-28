@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ManagerPage implements OnInit {
   public list = []
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
@@ -21,6 +23,100 @@ export class ManagerPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
+  }
+
+  public async insertSpa() {
+    let alert = await this.alert.create({
+      message: 'Thêm dịch vụ Spa',
+      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: ''}],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.insertSpaSubmit(e)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async updateSpa(index: number) {
+    let alert = await this.alert.create({
+      message: 'Cập nhật dịch vụ Spa',
+      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.rest.home.spa[index].name}],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.updateSpaSubmit(index, e)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async insertSpaSubmit(name: string) {
+    await this.rest.freeze('Đang thêm dữ liệu...')
+    this.rest.checkpost('spa', 'inserttype', {
+      name: name,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async updateSpaSubmit(index: number, name: string) {
+    await this.rest.freeze('Đang thêm dữ liệu...')
+    this.rest.checkpost('spa', 'updatetype', {
+      id: this.rest.home.spa[index].id,
+      name: name,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async removeSpa(index: number) {
+    let alert = await this.alert.create({
+      message: 'Xóa dịch vụ Spa',
+      buttons: [
+        { text: 'Trở về', role: 'cancel', },
+        {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removeSpaSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removeSpaSubmit(index: number) {
+    await this.rest.freeze('Đang xóa dữ liệu...')
+    this.rest.checkpost('spa', 'removetype', {
+      id: this.rest.home.spa[index].id,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.spa = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public updateType(index: number) {

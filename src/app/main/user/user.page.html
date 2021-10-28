@@ -42,6 +42,11 @@
       Phân quyền
     </ion-item>
 
+    <ion-item *ngIf="rest.home.admin" (click)="change('spa')">
+      <ion-icon name="document-text-outline"></ion-icon>
+      Dịch vụ SPA
+    </ion-item>
+
     <ion-item *ngIf="rest.home.admin" (click)="change('type')">
       <ion-icon name="document-text-outline"></ion-icon>
       Loại nhắc vaccine

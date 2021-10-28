@@ -15,8 +15,8 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
@@ -29,28 +29,29 @@ export class RestService {
     admin: 0,
     users: [],
     doctor: [],
+    type: [],
+    spa: [],
     today: '',
     next: '',
-    type: [],
     usg: {c: 0, t: 0},
     vaccine: {c: 0, t: 0}
   }
   public session = ''
-  public cart = { list: [], init: false }
+  public admin = { init: false, list: [] }
+  public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, from: '', end: '' }
   public vaccine = { init: false, list: [], new: [], old: [], temp: [], over: [], keyword: '', docs: [], docscover: '', time: '' }
   public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], docs: [], docscover: '', time: '' }
+  public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
+  public cart = { list: [], init: false }
+  public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public blood = { init: false, page: 1, list: [], total: 0, number: [0, 0, 0], current: [0, 0, 0], start: '', end: '' }
-  public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
-  public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
-  public work = {}
-  public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
-  public spa = { time: 0, init: 0, list: [], old: [], type: [], keyword: '', toggle: false, from: '', end: '' }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public his = { init: false, from: '', end: '', list: [] }
-  public admin = { init: false, list: [] }
   public price = { init: false, list: [], keyword: '' }
   public transport = { init: false, list: [], keyword: '' }
+  // public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
+  // public work = {}
 
   public action: string = ''
   public isready: boolean = false
