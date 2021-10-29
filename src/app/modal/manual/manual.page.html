@@ -7,6 +7,47 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.temp.action == 'vaccine'">
+    <p id="vaccine"> <b> Mục lục </b> </p>
+    <div (click)="scrollto('vaccinea')"> Quy trình sử dụng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine1')"> 1. Thêm thông tin <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine2')"> 2. Xác nhận hoàn thành <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine3')"> 3. Gọi điện thoại khách <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine4')"> 4. Quản lý, đánh giá <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine5')"> 5. Lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
+
+    <p id="vaccinea"> <b> Quy trình sử dụng </b> </p>
+    <div> B1. Quản lý import thông tin từ Kiotviet </div>
+    <div> B2. Xác nhận thông tin tiêm phòng </div>
+    <div> B3. Gọi nhắc tiêm phòng </div>
+    <div> B4. Lịch sử tiêm vaccine </div>
+
+    <p id="vaccine1" (click)="scrollto('vaccine')"> <b> 1. Quản lý import thông tin từ Kiotviet </b> <img
+        src="/assets/icon/up-xs.png"> </p>
+    <div> - Đăng nhập Kiotviet, chọn "Giao dịch" > "Hóa đơn" </div>
+    <div> - Chọn Thời gian > Ngày hôm nay </div>
+    <img class="thumb" src="/assets/manual/vaccine/1.png">
+    <div> - Click xổ xuống khung tìm kiếm, nhập "txp" hoặc "bệnh" vào khung "theo mã, tên hàng", nhấn "Enter" hoặc click
+      "Tìm kiếm" (bước này có thể bỏ qua) </div>
+    <img class="thumb" src="/assets/manual/vaccine/2.png">
+    <div> - Click "File" > "Xuất file danh sách chi tiết", chờ đến khi xuất file xong click "Nhấn vào đây để tải xuống"
+    </div>
+    <img class="thumb" src="/assets/manual/vaccine/3.png">
+    <div> - Mở file vừa tải về lên, chọn "Enable Editing", nhấn tổ hợp phím Ctrl + S để lưu file </div>
+    <img class="thumb" src="/assets/manual/vaccine/4.png">
+    <div> - Đăng nhập App Thanhxuanpet, chọn <ion-icon name="person-circle-outline"></ion-icon>, kéo xuống dưới chọn Import </div>
+    <div> - Click <img src="/assets/image/excel.png"> chọn file Excel vừa tải về, chọn "Tải lên", thông báo "Đã chuyển dữ liệu Excel thành phiếu nhắc" sẽ hiển thị sau khi hoàn tất </div>
+    <img class="thumb" src="/assets/manual/vaccine/5.png">
+
+    <p id="vaccine2" (click)="scrollto('vaccine')"> <b> 1. Xác nhận thông tin khách hàng </b> <img
+      src="/assets/icon/up-xs.png"> </p>
+    <div> - Tại chức năng Vaccine, chọn "Cần xác nhận" tại thanh công cụ </div>
+    <div> - Nếu thông tin bị bôi đỏ, hoặc thông tin sai, chọn <img src="/assets/icon/update.png"> để chỉnh sửa thông tin </div>
+    <div> - Click <img src="/assets/icon/customer-search.png"> để thêm số khách </div>
+    <div> - Nhập tên thú cưng (nếu có), click ngày đến, ngày đến nếu sai, chọn "Cập nhật & xác nhận" để hoàn tất </div>
+    <div> - Nếu thông tin đã đúng, chọn </div>
+  </div>
+
   <div *ngIf="rest.temp.action == 'spa'">
     <p id="spa"> <b> Mục lục </b> </p>
     <div (click)="scrollto('spaa')"> Quy trình sử dụng <img src="/assets/icon/down-xs.png"> </div>
@@ -16,7 +57,7 @@
     <div (click)="scrollto('spa4')"> 4. Quản lý, đánh giá <img src="/assets/icon/down-xs.png"> </div>
     <div (click)="scrollto('spa5')"> 5. Lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
 
-    <p id="spaa" (click)="scrollto('spa')"> <b> Quy trình sử dụng </b> <img src="/assets/icon/up-xs.png"> </p>
+    <p id="spaa"> <b> Quy trình sử dụng </b> </p>
     <div> B1. Lấy thông tin khách hàng, dịch vụ, hình ảnh thú cưng </div>
     <div> B2. Làm xong, xác nhận hoàn thành </div>
     <div> B3. Gọi điện cho khách </div>
@@ -64,5 +105,4 @@
     <div> - Các thẻ hiển thị thông tin ngày nhận, người làm, dịch vụ, hình ảnh </div>
     <div> - Quản lý có thể đánh giá kết quả tại đây </div>
   </div>
-
 </ion-content>
