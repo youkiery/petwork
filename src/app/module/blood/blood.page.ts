@@ -44,12 +44,14 @@ export class BloodPage implements OnInit {
   }
 
   public async ionViewWillEnter() {
-    this.rest.action = 'blood'
     this.rest.ready().then(() => {
-      if (!this.rest.blood.init) {
-        this.rest.blood.page = 1
-        this.init()
-      }
+      this.rest.action = 'blood'
+      this.rest.ready().then(() => {
+        if (!this.rest.blood.init) {
+          this.rest.blood.page = 1
+          this.init()
+        }
+      })
     })
   }
 

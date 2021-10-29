@@ -17,9 +17,11 @@ export class SuggestPage {
   ) {}
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    else if (this.rest.action == 'item') this.input2.setFocus();
-    else this.input.setFocus();
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()
+      else if (this.rest.action == 'item') this.input2.setFocus();
+      else this.input.setFocus();
+    })
   }
     
   public suggest() {

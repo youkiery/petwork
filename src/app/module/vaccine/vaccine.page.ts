@@ -33,10 +33,12 @@ export class VaccinePage {
   ) { }
 
   public async ionViewWillEnter() {
-    this.rest.action = 'vaccine'
     this.rest.ready().then(() => {
-      this.key = this.rest.vaccine.keyword
-      if (!this.rest.vaccine.init) this.init()
+      this.rest.action = 'vaccine'
+      this.rest.ready().then(() => {
+        this.key = this.rest.vaccine.keyword
+        if (!this.rest.vaccine.init) this.init()
+      })
     })
   }
 

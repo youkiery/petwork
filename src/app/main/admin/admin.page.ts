@@ -15,8 +15,10 @@ export class AdminPage {
   ) { }
 
   public async ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    else this.init()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()
+      else this.init()
+    })
   }
 
   public async init() {

@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-profdetail',
-  templateUrl: './profdetail.page.html',
-  styleUrls: ['./profdetail.page.scss'],
+  selector: 'app-manual',
+  templateUrl: './manual.page.html',
+  styleUrls: ['./manual.page.scss'],
 })
-export class ProfdetailPage implements OnInit {
-
+export class ManualPage implements OnInit {
   constructor(
     public rest: RestService
   ) { }
@@ -17,8 +16,7 @@ export class ProfdetailPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()      
+      if (!this.rest.temp) this.rest.root()
     })
   }
-
 }

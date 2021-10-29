@@ -114,6 +114,10 @@ const routes: Routes = [
     path: 'manager',
     loadChildren: () => import('./main/manager/manager.module').then( m => m.ManagerPageModule)
   },
+  {
+    path: 'manual',
+    loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
+  },
 
 ];
 

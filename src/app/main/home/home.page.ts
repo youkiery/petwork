@@ -19,14 +19,14 @@ export class HomePage {
     this.rest.navCtrl.navigateForward('/notify')
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.rest.action = 'home'
-    this.subscription = this.platform.backButton.subscribe(()=>{
+    this.subscription = this.platform.backButton.subscribe(() => {
       navigator['app'].exitApp();
     });
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.subscription.unsubscribe();
   }
 }

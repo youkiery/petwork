@@ -22,28 +22,11 @@ export class ManagerPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()      
+    })
   }
 
-  public async insertSpa() {
-    let alert = await this.alert.create({
-      message: 'Thêm dịch vụ Spa',
-      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: ''}],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.insertSpaSubmit(e.name)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
 
   public async toggleDefault(id: number, value: string) {
     await this.rest.freeze('Đang cập nhật dữ liệu...')
@@ -85,6 +68,26 @@ export class ManagerPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async insertSpa() {
+    let alert = await this.alert.create({
+      message: 'Thêm dịch vụ Spa',
+      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: ''}],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.insertSpaSubmit(e.name)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public async updateSpa(index: number) {
@@ -156,6 +159,100 @@ export class ManagerPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async insertUsg() {
+    let alert = await this.alert.create({
+      message: 'Thêm mã siêu âm',
+      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Mã siêu âm', value: ''}],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.insertUsgSubmit(e.name)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async insertUsgSubmit(name: string) {
+    await this.rest.freeze('Đang thêm dữ liệu...')
+    this.rest.checkpost('usg', 'inserttype', {
+      name: name,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.usg = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async updateUsg(index: number) {
+    let alert = await this.alert.create({
+      message: 'Cập nhật mã siêu âm',
+      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Mã siêu âm', value: this.rest.home.usgcode[index].name}],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.updateUsgSubmit(this.rest.home.usgcode[index].id, e.name)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async updateUsgSubmit(id: number, name: string) {
+    await this.rest.freeze('Đang thêm dữ liệu...')
+    this.rest.checkpost('usg', 'updatetype', {
+      id: id,
+      name: name,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.usgcode = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async removeUsg(id: number) {
+    let alert = await this.alert.create({
+      message: 'Xóa mã siêu âm',
+      buttons: [
+        { text: 'Trở về', role: 'cancel', },
+        {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removeUsgSubmit(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removeUsgSubmit(id: number) {
+    await this.rest.freeze('Đang xóa dữ liệu...')
+    this.rest.checkpost('usg', 'removetype', {
+      id: id,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.home.usgcode = resp.list
     }, () => {
       this.rest.defreeze()
     })

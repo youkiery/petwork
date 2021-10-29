@@ -20,9 +20,11 @@ export class HisstatisPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    else this.statistic()
+  ionViewWillEnter() {
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()
+      else this.statistic()
+    })
   }
 
   public async statistic() {

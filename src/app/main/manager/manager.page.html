@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="rest.isready">
   <ion-toolbar color="success" *ngIf="rest.isready">
     <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
@@ -75,6 +75,18 @@
     </div>
     <div class="upperline">
       <img class="icon" src="/assets/icon/insert-xs.png" (click)="insertSpa()">
+    </div>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'usg'">
+    Mã siêu âm:
+    <div class="upperline" *ngFor="let item of rest.home.usgcode; let i = index">
+      {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="updateUsg(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="removeusg(item.id)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="insertUsg()">
     </div>
   </div>
 

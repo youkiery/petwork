@@ -20,21 +20,23 @@ export class UploadPage {
   ) { }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    if (this.rest.action == 'spa') {
-      if (!this.rest.temp.id && !this.init) {
-        this.init = true
-        this.suggest()
-      }
-
-      this.option = JSON.parse(JSON.stringify(this.rest.home.spa))
-      this.rest.temp.option.forEach((id: number) => {
-        this.option.forEach((item, index) => {
-          console.log(this.option[index].id, id);
-          if (this.option[index].id == id) this.option[index].check = 1
-        })
-      });
-    }
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()
+      if (this.rest.action == 'spa') {
+        if (!this.rest.temp.id && !this.init) {
+          this.init = true
+          this.suggest()
+        }
+  
+        this.option = JSON.parse(JSON.stringify(this.rest.home.spa))
+        this.rest.temp.option.forEach((id: number) => {
+          this.option.forEach((item, index) => {
+            console.log(this.option[index].id, id);
+            if (this.option[index].id == id) this.option[index].check = 1
+          })
+        });
+      }      
+    })
   }
 
   public suggest(param: number = 0) {

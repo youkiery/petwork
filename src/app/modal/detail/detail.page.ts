@@ -33,9 +33,11 @@ export class DetailPage {
   ) { }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    if (this.rest.action == 'admin') this.module = this.rest.admin.list[this.rest.temp.index].module
-    if (this.rest.action == 'blood') this.bloodInit()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()
+      if (this.rest.action == 'admin') this.module = this.rest.admin.list[this.rest.temp.index].module
+      if (this.rest.action == 'blood') this.bloodInit()
+    })
   }
 
   public async bloodInit() {

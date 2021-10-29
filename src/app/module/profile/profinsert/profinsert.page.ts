@@ -22,7 +22,9 @@ export class ProfinsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()      
+    })
   }
 
   public async updateTarget() {

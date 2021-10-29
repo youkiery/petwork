@@ -19,8 +19,8 @@ export class ProfilePage {
   ) { }
 
   public async ionViewWillEnter() {
-    this.rest.action = 'profile'
     this.rest.ready().then(() => {
+      this.rest.action = 'profile'
       if (!this.rest.profile.init) {
         this.init()
       }

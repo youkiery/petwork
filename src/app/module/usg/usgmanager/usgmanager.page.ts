@@ -42,16 +42,18 @@ export class UsgmanagerPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action) this.rest.root()
-    this.rest.home.doctor.forEach((item, index) => {
-      this.option.push({
-        name: 'userid',
-        type: 'radio',
-        label: item.name,
-        value: item.userid,
-        checked: (this.rest.home.userid == item.userid ? true : false)
-      })
-    });
+    this.rest.ready().then(() => {
+      if (!this.rest.action) this.rest.root()
+      this.rest.home.doctor.forEach((item, index) => {
+        this.option.push({
+          name: 'userid',
+          type: 'radio',
+          label: item.name,
+          value: item.userid,
+          checked: (this.rest.home.userid == item.userid ? true : false)
+        })
+      });
+    })
   }
 
   public async docs() {

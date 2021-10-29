@@ -34,6 +34,7 @@ export class RestService {
     today: '',
     next: '',
     usg: {c: 0, t: 0},
+    usgcode: [],
     vaccine: {c: 0, t: 0},
     default: {
       spa: [],
@@ -146,6 +147,11 @@ export class RestService {
         // alert('Push action performed: ' + JSON.stringify(notification));
       }
     );
+  }
+
+  public manual(page: string) {
+    this.temp = page
+    this.navCtrl.navigateForward('modal/manual')
   }
 
   public async sess(session: string) {

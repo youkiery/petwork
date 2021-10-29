@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
     <ion-title style="text-align: center;">
       THANHXUANPET
@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
   <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
     <ion-fab-button>
       Góp ý

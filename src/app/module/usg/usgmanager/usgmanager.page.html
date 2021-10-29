@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="rest.isready">
   <ion-toolbar color="success" *ngIf="rest.isready">
     <ion-button *ngIf="!(tab == 'insert-type' || tab == 'insert-doctor')" color="secondary" fill="solid" size="small"
       (click)="rest.back()">

@@ -25,7 +25,9 @@ export class DonePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.root()      
+    })
   }
 
   public upload() {

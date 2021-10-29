@@ -20,7 +20,9 @@ export class UserPage {
   ) { }
 
   ionViewWillEnter() {
-    this.rest.action = 'user'
+    this.rest.ready().then(() => {
+      this.rest.action = 'user'      
+    })
   }
 
   public async changePassword() {

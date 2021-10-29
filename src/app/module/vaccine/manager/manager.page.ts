@@ -41,17 +41,19 @@ export class ManagerPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action) this.rest.root()
-    if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
-    this.rest.home.doctor.forEach((item, index) => {
-      this.option.push({
-        name: 'userid',
-        type: 'radio',
-        label: item.name,
-        value: item.userid,
-        checked: (this.rest.home.userid == item.userid ? true : false)
-      })
-    });
+    this.rest.ready().then(() => {
+      if (!this.rest.action) this.rest.root()
+      if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
+      this.rest.home.doctor.forEach((item, index) => {
+        this.option.push({
+          name: 'userid',
+          type: 'radio',
+          label: item.name,
+          value: item.userid,
+          checked: (this.rest.home.userid == item.userid ? true : false)
+        })
+      });
+    })
   }
 
   public async docs() {
