@@ -98,7 +98,8 @@ const routes: Routes = [
   {
     path: 'inout',
     loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
-  },  {
+  },
+  {
     path: 'notify',
     loadChildren: () => import('./main/notify/notify.module').then( m => m.NotifyPageModule)
   },
@@ -115,7 +116,7 @@ const routes: Routes = [
     loadChildren: () => import('./main/manager/manager.module').then( m => m.ManagerPageModule)
   },
   {
-    path: 'manual',
+    path: 'modal/manual',
     loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
   },
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./manual.page.scss'],
 })
 export class ManualPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
   constructor(
     public rest: RestService
   ) { }
@@ -16,7 +18,12 @@ export class ManualPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.temp) this.rest.root()
+      if (!this.rest.temp.action) this.rest.root()
     })
+  }
+
+  public scrollto(element: string) {
+    let yOffset = document.getElementById(element).offsetTop;
+    this.content.scrollToPoint(0, yOffset, 1000)
   }
 }

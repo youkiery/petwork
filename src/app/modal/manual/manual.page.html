@@ -7,8 +7,62 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.temp == 'spa'">
+  <div *ngIf="rest.temp.action == 'spa'">
+    <p id="spa"> <b> Mục lục </b> </p>
+    <div (click)="scrollto('spaa')"> Quy trình sử dụng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('spa1')"> 1. Thêm thông tin <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('spa2')"> 2. Xác nhận hoàn thành <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('spa3')"> 3. Gọi điện thoại khách <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('spa4')"> 4. Quản lý, đánh giá <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('spa5')"> 5. Lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
 
+    <p id="spaa" (click)="scrollto('spa')"> <b> Quy trình sử dụng </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> B1. Lấy thông tin khách hàng, dịch vụ, hình ảnh thú cưng </div>
+    <div> B2. Làm xong, xác nhận hoàn thành </div>
+    <div> B3. Gọi điện cho khách </div>
+    <div> B4. Xác nhận số điện thoại khách trước khi trả thú cưng </div>
+    <div> B5. Quản lý theo dõi, đánh giá công việc </div>
+    <p id="spa1" (click)="scrollto('spa')"> <b> 1. Thêm thông tin </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Chọn "Thêm" dưới thanh công cụ </div>
+    <img class="thumb" src="/assets/manual/spa/1.png">
+    <div> - Nhập số điện thoại khách, nếu có số điện thoại trong gợi ý, nhấn chọn để điền nhanh thông tin </div>
+    <div> - Nếu khách không có trong danh sách gợi ý, chọn <img src="/assets/icon/select.png">, rồi nhập tên khách
+    </div>
+    <img src="/assets/manual/spa/2.png">
+    <div> - Nếu khách hàng cung cấp số điện thoại người nhận thay, chọn <img src="/assets/icon/customer-search.png"> để
+      thêm số khách </div>
+    <div> - Nhập chọn cân nặng, ghi chú và tick các dịch vụ bên dưới (phải nhập ít nhất 1 dịch vụ) </div>
+    <div> - Chọn <img src="/assets/image/insert.png"> để thêm hình ảnh (nếu có) </div>
+    <div> - Chọn Thêm tại góc trên để hoàn tất </div>
+    <img class="thumb" src="/assets/manual/spa/3.png">
+    <p id="spa2" (click)="scrollto('spa')"> <b> 2. Xác nhận hoàn thành </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Chọn <img src="/assets/icon/done.png"> để xác nhận hoàn thành </div>
+    <div> - Nếu là quản lý, app sẽ hiển thị mục xác nhận nhân viên </div>
+    <img class="thumb" src="/assets/manual/spa/4.png">
+    <div> - Sau khi xác nhận hoàn thành, ứng dụng sẽ chuyển sang trang báo cáo </div>
+    <div> - Chọn <img src="/assets/image/insert.png"> để thêm ảnh </div>
+    <div> - Chọn Xác nhận trên góc để xác nhận </div>
+    <div> - Để mở lại mục báo cáo, chọn <img src="/assets/icon/report.png"> </div>
+    <img class="thumb" src="/assets/manual/spa/5.png">
+    <p id="spa3" (click)="scrollto('spa')"> <b> 3. Gọi điện cho khách hàng </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Ngoài danh sách sẽ cung cấp thông tin khách hàng, số điện thoại, thời gian nhận, người làm,... </div>
+    <div> - Chọn <img src="/assets/icon/tel-xs.png"> để quay số nhanh trên điện thoại </div>
+    <div> - Thẻ thông tin gồm 3 trạng thái: trắng (đã nhận nhưng chưa làm), xanh lá (đã hoàn thành), vàng (đã gọi), đỏ
+      (đã trả về). Trong đó khách đã về sẽ được chuyển xuống dưới cùng </div>
+    <div> - Chọn <img src="/assets/icon/called.png"> để xác nhận đã gọi </div>
+    <div> - Chọn <img src="/assets/icon/return.png"> để xác nhận đã trả về </div>
+    <img class="thumb" src="/assets/manual/spa/6.png">
+    <p id="spa4" (click)="scrollto('spa')"> <b> 4. Quản lý, đánh giá </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Chọn "Quản lý" từ thanh công cụ </div>
+    <img class="thumb" src="/assets/manual/spa/7.png">
+    <div> - Chọn thời gian spa, chọn [Lọc dữ liệu] </div>
+    <div> - Các thẻ hiển thị thông tin ngày nhận, người làm, dịch vụ, hình ảnh </div>
+    <div> - Chọn số sao để đánh giá </div>
+    <img class="thumb" src="/assets/manual/spa/8.png">
+    <p id="spa5" (click)="scrollto('spa')"> <b> 5. Lịch sử spa khách hàng </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Nhập số điện thoại khách vào khung tìm kiếm, chọn <img src="/assets/icon/customer-search.png"> </div>
+    <div> - Các thẻ hiển thị thông tin ngày nhận, người làm, dịch vụ, hình ảnh </div>
+    <div> - Quản lý có thể đánh giá kết quả tại đây </div>
   </div>
 
 </ion-content>

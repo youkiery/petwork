@@ -150,7 +150,7 @@ export class RestService {
   }
 
   public manual(page: string) {
-    this.temp = page
+    this.temp.action = page
     this.navCtrl.navigateForward('modal/manual')
   }
 
