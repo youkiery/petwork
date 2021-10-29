@@ -7,6 +7,10 @@
     <ion-buttons slot="start">
       <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
     </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.manual('vaccine')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -105,7 +109,7 @@
       <ion-tab-button (click)="manager()">
         <ion-icon name="briefcase-outline"></ion-icon>
         <ion-label>
-          Quản lý
+          Cần xác nhận
           <ion-badge color="danger" *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp[0].length}} </ion-badge>
         </ion-label>
       </ion-tab-button>
