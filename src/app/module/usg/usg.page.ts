@@ -73,7 +73,10 @@ export class UsgPage {
     else {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('usg', 'searchcustomer', {
-        keyword: this.rest.usg.key
+        keyword: this.rest.usg.key,
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+        time: this.rest.usg.time,
       }).then(resp => {
         this.rest.defreeze()
         this.rest.temp = resp.list

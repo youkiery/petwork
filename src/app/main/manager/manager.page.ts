@@ -229,7 +229,7 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public async removeUsg(id: number) {
+  public async removeusg(id: number) {
     let alert = await this.alert.create({
       message: 'Xóa mã siêu âm',
       buttons: [

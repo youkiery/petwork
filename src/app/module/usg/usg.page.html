@@ -7,6 +7,10 @@
     <ion-buttons slot="start">
       <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
     </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.manual('usg')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -51,7 +55,7 @@
     </ion-segment-button>
     <ion-segment-button value="2">
       <ion-label>
-        Không có thai
+        Không thai
         <ion-badge color="danger"> {{rest.usg.list[2].length}} </ion-badge>
       </ion-label>
     </ion-segment-button>

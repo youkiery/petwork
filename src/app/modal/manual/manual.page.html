@@ -10,10 +10,11 @@
   <div *ngIf="rest.temp.action == 'vaccine'">
     <p id="vaccine"> <b> Mục lục </b> </p>
     <div (click)="scrollto('vaccinea')"> Quy trình sử dụng <img src="/assets/icon/down-xs.png"> </div>
-    <div (click)="scrollto('vaccine1')"> 1. Thêm thông tin <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine1')"> 1. Quản lý import thông tin từ Kiotviet <img src="/assets/icon/down-xs.png">
+    </div>
     <div (click)="scrollto('vaccine2')"> 2. Xác nhận hoàn thành <img src="/assets/icon/down-xs.png"> </div>
-    <div (click)="scrollto('vaccine3')"> 3. Gọi điện thoại khách <img src="/assets/icon/down-xs.png"> </div>
-    <div (click)="scrollto('vaccine5')"> 4. Tìm lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine3')"> 3. Xác nhận thông tin khách hàng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine5')"> 4. Tìm lịch sử tiêm phòng <img src="/assets/icon/down-xs.png"> </div>
 
     <p id="vaccinea"> <b> Quy trình sử dụng </b> </p>
     <div> B1. Quản lý import thông tin từ Kiotviet </div>
@@ -33,29 +34,39 @@
     <img class="thumb" src="/assets/manual/vaccine/3.png">
     <div> - Mở file vừa tải về lên, chọn "Enable Editing", nhấn tổ hợp phím Ctrl + S để lưu file </div>
     <img class="thumb" src="/assets/manual/vaccine/4.png">
-    <div> - Đăng nhập App Thanhxuanpet, chọn <ion-icon name="person-circle-outline"></ion-icon>, kéo xuống dưới chọn Import </div>
-    <div> - Click <img src="/assets/image/excel.png"> chọn file Excel vừa tải về, chọn "Tải lên", thông báo "Đã chuyển dữ liệu Excel thành phiếu nhắc" sẽ hiển thị sau khi hoàn tất </div>
+    <div> - Đăng nhập App Thanhxuanpet, chọn <ion-icon name="person-circle-outline"></ion-icon>, kéo xuống dưới chọn
+      Import </div>
+    <div> - Click <img src="/assets/image/excel.png"> chọn file Excel vừa tải về, chọn "Tải lên", thông báo "Đã chuyển
+      dữ liệu Excel thành phiếu nhắc" sẽ hiển thị sau khi hoàn tất </div>
+    <div> (Bước này giống cũng sẽ thêm phiếu siêu âm trong hóa đơn) </div>
     <img class="thumb" src="/assets/manual/vaccine/5.png">
 
     <p id="vaccine2" (click)="scrollto('vaccine')"> <b> 2. Xác nhận thông tin khách hàng </b> <img
-      src="/assets/icon/up-xs.png"> </p>
+        src="/assets/icon/up-xs.png"> </p>
     <div> - Tại chức năng Vaccine, chọn "Cần xác nhận" tại thanh công cụ </div>
     <img class="thumb" src="/assets/manual/vaccine/6.png">
-    <div> - Nếu thông tin bị bôi đỏ, hoặc thông tin sai, chọn <img src="/assets/icon/update.png"> để chỉnh sửa thông tin </div>
+    <div> - Nếu thông tin bị bôi đỏ, hoặc thông tin sai, chọn <img src="/assets/icon/update.png"> để chỉnh sửa thông tin
+    </div>
     <div> - Click <img src="/assets/icon/customer-search.png"> để thêm số khách </div>
     <div> - Nhập tên thú cưng (nếu có), click ngày đến, ngày đến nếu sai, chọn "Cập nhật & xác nhận" để hoàn tất </div>
     <div> - Nếu thông tin đã đúng, chọn <img src="/assets/icon/done.png"> để xác nhận từng phiếu </div>
-    <div> - Chọn <img src="/assets/icon/untick.png">, đánh dấu những phiếu đúng, chọn <ion-icon name="checkmark-circle-outline"></ion-icon> để xác nhận hàng loạt, chọn <ion-icon name="trash-bin-outline"></ion-icon> để xóa, chọn <ion-icon name="receipt-outline"></ion-icon> để thay đổi người làm, chọn <ion-icon name="close-circle-outline"></ion-icon> </div>
+    <div> - Chọn <img src="/assets/icon/untick.png">, đánh dấu những phiếu đúng, chọn <ion-icon
+        name="checkmark-circle-outline"></ion-icon> để xác nhận hàng loạt, chọn <ion-icon name="trash-bin-outline">
+      </ion-icon> để xóa, chọn <ion-icon name="receipt-outline"></ion-icon> để thay đổi người làm, chọn <ion-icon
+        name="close-circle-outline"></ion-icon>
+    </div>
     <img class="thumb" src="/assets/manual/vaccine/7.png">
-    <div> - Sau khi xác nhận, hệ thống sẽ liệt kê các mũi đã tiêm trước đó của khách. Dựa vào tên thú cưng, ngày tái chủng, loại tái chủng để đánh dấu những phiếu nhắc của thú cưng hiện tại. </div>
+    <div> - Sau khi xác nhận, hệ thống sẽ liệt kê các mũi đã tiêm trước đó của khách. Dựa vào tên thú cưng, ngày tái
+      chủng, loại tái chủng để đánh dấu những phiếu nhắc của thú cưng hiện tại. </div>
     <div> - Chọn [Xác nhận] để loại phiếu nhắc đã tiêm trước đó </div>
     <div> - Chọn [Hoàn thành] để trở về danh sách cần xác nhận </div>
     <img class="thumb" src="/assets/manual/vaccine/8.png">
-    
-    <p id="vaccine3" (click)="scrollto('vaccine')"> <b> 3. Gọi nhắc tiêm phòng </b> <img
-      src="/assets/icon/up-xs.png"> </p>
+
+    <p id="vaccine3" (click)="scrollto('vaccine')"> <b> 3. Gọi nhắc tiêm phòng </b> <img src="/assets/icon/up-xs.png">
+    </p>
     <div> - Tại chức năng Vaccine có 3 tab: Chưa gọi, Không gọi được và đã gọi </div>
-    <div> - Tại mục Chưa gọi, phiếu nhắc sẽ xuất hiện trước ngày tái chủng 3 ngày, những ngày tái chủng qua ngày sẽ hiện màu đỏ </div>
+    <div> - Tại mục Chưa gọi, phiếu nhắc sẽ xuất hiện trước ngày tái chủng 3 ngày, những ngày tái chủng qua ngày sẽ hiện
+      màu đỏ </div>
     <div> - Danh sách sẽ cung cấp thông tin khách hàng, số điện thoại, ngày tiêm phòng, loại tái chủng,... </div>
     <div> - Chọn <img src="/assets/icon/tel-xs.png"> để quay số nhanh trên điện thoại </div>
     <div> - Nếu đã gọi được cho khách, chọn <img src="/assets/icon/called.png"> </div>
@@ -63,9 +74,91 @@
     <div> - Nếu khách báo thú cưng đã bán hoặc đã chết, chọn <img src="/assets/icon/dead.png"> </div>
 
     <p id="vaccine3" (click)="scrollto('vaccine')"> <b> 4. Tìm lịch sử tiêm phòng </b> <img
-      src="/assets/icon/up-xs.png"> </p>
-    <div> - Tại chức năng Vaccine, nhập số điện thoại khách vào tường tìm kiếm, chọn <img src="/assets/icon/customer-search.png"> để tìm kiếm khách hàng </div>
-    <div> - Các chức năng <img src="/assets/icon/called.png"> <img src="/assets/icon/uncalled.png"> <img src="/assets/icon/dead.png">  </div>
+        src="/assets/icon/up-xs.png"> </p>
+    <div> - Tại chức năng Vaccine, nhập số điện thoại khách vào tường tìm kiếm, chọn <img
+        src="/assets/icon/customer-search.png"> để tìm kiếm khách hàng </div>
+    <div> - Các chức năng <img src="/assets/icon/called.png"> <img src="/assets/icon/uncalled.png"> <img
+        src="/assets/icon/dead.png"> </div>
+    <img class="thumb" src="/assets/manual/vaccine/9.png">
+  </div>
+
+  <div *ngIf="rest.temp.action == 'usg'">
+    <p id="usg"> <b> Mục lục </b> </p>
+    <div (click)="scrollto('usga')"> Quy trình sử dụng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('usg1')"> 1. Quản lý import thông tin từ Kiotviet <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('usg2')"> 2. Xác nhận hoàn thành <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('usg3')"> 3. Gọi điện thoại khách <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('usg5')"> 4. Tìm lịch sử siêu âm <img src="/assets/icon/down-xs.png"> </div>
+
+    <p id="usga"> <b> Quy trình sử dụng </b> </p>
+    <div> B1. Quản lý import thông tin từ Kiotviet </div>
+    <div> B2. Xác nhận thông tin siêu âm </div>
+    <div> B3. Gọi nhắc siêu âm </div>
+
+    <p id="usg1" (click)="scrollto('usg')"> <b> 1. Quản lý import thông tin từ Kiotviet </b> <img
+        src="/assets/icon/up-xs.png"> </p>
+    <div> - Đăng nhập Kiotviet, chọn "Giao dịch" > "Hóa đơn" </div>
+    <div> - Chọn Thời gian > Ngày hôm nay </div>
+    <img class="thumb" src="/assets/manual/vaccine/1.png">
+    <div> - Click xổ xuống khung tìm kiếm, nhập "txp" hoặc "bệnh" vào khung "theo mã, tên hàng", nhấn "Enter" hoặc click
+      "Tìm kiếm" (bước này có thể bỏ qua) </div>
+    <img class="thumb" src="/assets/manual/vaccine/2.png">
+    <div> - Click "File" > "Xuất file danh sách chi tiết", chờ đến khi xuất file xong click "Nhấn vào đây để tải xuống"
+    </div>
+    <img class="thumb" src="/assets/manual/vaccine/3.png">
+    <div> - Mở file vừa tải về lên, chọn "Enable Editing", nhấn tổ hợp phím Ctrl + S để lưu file </div>
+    <img class="thumb" src="/assets/manual/vaccine/4.png">
+    <div> - Đăng nhập App Thanhxuanpet, chọn <ion-icon name="person-circle-outline"></ion-icon>, kéo xuống dưới chọn
+      Import </div>
+    <div> - Click <img src="/assets/image/excel.png"> chọn file Excel vừa tải về, chọn "Tải lên", thông báo "Đã chuyển
+      dữ liệu Excel thành phiếu nhắc" sẽ hiển thị sau khi hoàn tất </div>
+    <div> (Bước này giống cũng sẽ thêm phiếu vaccine trong hóa đơn) </div>
+    <img class="thumb" src="/assets/manual/vaccine/5.png">
+
+    <p id="usg2" (click)="scrollto('usg')"> <b> 2. Xác nhận thông tin khách hàng </b> <img src="/assets/icon/up-xs.png">
+    </p>
+    <div> - Tại chức năng siêu âm, chọn "Cần xác nhận" tại thanh công cụ </div>
+    <img class="thumb" src="/assets/manual/vaccine/6.png">
+    <div> - Nếu thông tin bị bôi đỏ, hoặc thông tin sai, chọn <img src="/assets/icon/update.png"> để chỉnh sửa thông tin
+    </div>
+    <div> - Click <img src="/assets/icon/customer-search.png"> để thêm số khách </div>
+    <div> - Nhập tên thú cưng (nếu có), click ngày đến, ngày đến nếu sai, chọn "Cập nhật & xác nhận" để hoàn tất </div>
+    <div> - Nếu thông tin đã đúng, chọn <img src="/assets/icon/done.png"> để xác nhận từng phiếu </div>
+    <div> - Chọn <img src="/assets/icon/untick.png">, đánh dấu những phiếu đúng, chọn <ion-icon
+        name="checkmark-circle-outline"></ion-icon> để xác nhận hàng loạt, chọn <ion-icon name="trash-bin-outline">
+      </ion-icon> để xóa, chọn <ion-icon name="receipt-outline"></ion-icon> để thay đổi người làm, chọn <ion-icon
+        name="close-circle-outline"></ion-icon>
+    </div>
+    <img class="thumb" src="/assets/manual/usg/7.png">
+
+    <p id="usg3" (click)="scrollto('usg')"> <b> 3. Gọi nhắc siêu âm </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Danh sách sẽ cung cấp thông tin khách hàng, số điện thoại, ngày tiêm phòng, loại tái chủng,... </div>
+    <div> - Chọn <img src="/assets/icon/tel-xs.png"> để quay số nhanh trên điện thoại </div>
+    <div> - Tại chức năng siêu có 3 tab: Chưa sinh, Đã sinh, Không thai </div>
+    <div> - Tại tab Chưa sinh sẽ có các loại nhắc: </div>
+    <div> + <img src="/assets/icon/resound.png"> gọi tư vấn trước khi sinh, phiếu sẽ hiển thị 7 ngày trước khi sinh
+    </div>
+    <div> + <img src="/assets/icon/birth.png"> gọi xác nhận thú cưng đã sinh chưa, dòng đầu tiên là số con, dòng thứ 2
+      là ngày sinh, dòng thứ 3 là ghi chú, phiếu sẽ hiển thị 1 ngày trước khi sinh, nếu thai đã mất hoặc chó mẹ chết,
+      chọn <img src="/assets/icon/repregnant.png"> để chuyển khách sang tab "Không thai" </div>
+    <div> - Tại tab Đã sinh sẽ có các loại nhắc: </div>
+    <div> + <img src="/assets/icon/deworm.png"> gọi nhắc xổ giun, phiếu sẽ hiển thị 5 tuần sau khi sinh
+    </div>
+    <div> + <img src="/assets/icon/vaccine.png"> gọi xác nhận khách tiêm vaccine, phiếu sẽ hiển thị 6 tuần sau khi sinh
+    </div>
+    <div> - Tại tab Không thai sẽ có các loại nhắc: </div>
+    <div> + <img src="/assets/icon/progesterone.png"> gọi nhắc khách đã đến ngày salơ, tư vấn khách xét nghiệm
+      progesterone
+    </div>
+    <div> - Nếu thú cưng đã chết hoặc bán, chọn <img src="/assets/icon/dead.png"> </div>
+    <img class="thumb" src="/assets/manual/usg/8.png">
+
+
+    <p id="usg3" (click)="scrollto('usg')"> <b> 4. Tìm lịch sử tiêm phòng </b> <img src="/assets/icon/up-xs.png"> </p>
+    <div> - Tại chức năng usg, nhập số điện thoại khách vào tường tìm kiếm, chọn <img
+        src="/assets/icon/customer-search.png"> để tìm kiếm khách hàng </div>
+    <div> - Các chức năng <img src="/assets/icon/called.png"> <img src="/assets/icon/uncalled.png"> <img
+        src="/assets/icon/dead.png"> </div>
     <img class="thumb" src="/assets/manual/vaccine/9.png">
   </div>
 
