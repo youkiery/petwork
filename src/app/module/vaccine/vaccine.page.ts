@@ -66,7 +66,10 @@ export class VaccinePage {
     else {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('vaccine', 'searchcustomer', {
-        keyword: this.rest.vaccine.keyword
+        keyword: this.rest.vaccine.keyword,
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+        time: this.rest.vaccine.time,
       }).then(resp => {
         this.rest.defreeze()
         this.rest.detail.list = resp.list
