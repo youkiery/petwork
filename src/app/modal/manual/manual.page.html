@@ -13,14 +13,12 @@
     <div (click)="scrollto('vaccine1')"> 1. Thêm thông tin <img src="/assets/icon/down-xs.png"> </div>
     <div (click)="scrollto('vaccine2')"> 2. Xác nhận hoàn thành <img src="/assets/icon/down-xs.png"> </div>
     <div (click)="scrollto('vaccine3')"> 3. Gọi điện thoại khách <img src="/assets/icon/down-xs.png"> </div>
-    <div (click)="scrollto('vaccine4')"> 4. Quản lý, đánh giá <img src="/assets/icon/down-xs.png"> </div>
-    <div (click)="scrollto('vaccine5')"> 5. Lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
+    <div (click)="scrollto('vaccine5')"> 4. Tìm lịch sử spa khách hàng <img src="/assets/icon/down-xs.png"> </div>
 
     <p id="vaccinea"> <b> Quy trình sử dụng </b> </p>
     <div> B1. Quản lý import thông tin từ Kiotviet </div>
     <div> B2. Xác nhận thông tin tiêm phòng </div>
     <div> B3. Gọi nhắc tiêm phòng </div>
-    <div> B4. Lịch sử tiêm vaccine </div>
 
     <p id="vaccine1" (click)="scrollto('vaccine')"> <b> 1. Quản lý import thông tin từ Kiotviet </b> <img
         src="/assets/icon/up-xs.png"> </p>
@@ -39,13 +37,36 @@
     <div> - Click <img src="/assets/image/excel.png"> chọn file Excel vừa tải về, chọn "Tải lên", thông báo "Đã chuyển dữ liệu Excel thành phiếu nhắc" sẽ hiển thị sau khi hoàn tất </div>
     <img class="thumb" src="/assets/manual/vaccine/5.png">
 
-    <p id="vaccine2" (click)="scrollto('vaccine')"> <b> 1. Xác nhận thông tin khách hàng </b> <img
+    <p id="vaccine2" (click)="scrollto('vaccine')"> <b> 2. Xác nhận thông tin khách hàng </b> <img
       src="/assets/icon/up-xs.png"> </p>
     <div> - Tại chức năng Vaccine, chọn "Cần xác nhận" tại thanh công cụ </div>
+    <img class="thumb" src="/assets/manual/vaccine/6.png">
     <div> - Nếu thông tin bị bôi đỏ, hoặc thông tin sai, chọn <img src="/assets/icon/update.png"> để chỉnh sửa thông tin </div>
     <div> - Click <img src="/assets/icon/customer-search.png"> để thêm số khách </div>
     <div> - Nhập tên thú cưng (nếu có), click ngày đến, ngày đến nếu sai, chọn "Cập nhật & xác nhận" để hoàn tất </div>
-    <div> - Nếu thông tin đã đúng, chọn </div>
+    <div> - Nếu thông tin đã đúng, chọn <img src="/assets/icon/done.png"> để xác nhận từng phiếu </div>
+    <div> - Chọn <img src="/assets/icon/untick.png">, đánh dấu những phiếu đúng, chọn <ion-icon name="checkmark-circle-outline"></ion-icon> để xác nhận hàng loạt, chọn <ion-icon name="trash-bin-outline"></ion-icon> để xóa, chọn <ion-icon name="receipt-outline"></ion-icon> để thay đổi người làm, chọn <ion-icon name="close-circle-outline"></ion-icon> </div>
+    <img class="thumb" src="/assets/manual/vaccine/7.png">
+    <div> - Sau khi xác nhận, hệ thống sẽ liệt kê các mũi đã tiêm trước đó của khách. Dựa vào tên thú cưng, ngày tái chủng, loại tái chủng để đánh dấu những phiếu nhắc của thú cưng hiện tại. </div>
+    <div> - Chọn [Xác nhận] để loại phiếu nhắc đã tiêm trước đó </div>
+    <div> - Chọn [Hoàn thành] để trở về danh sách cần xác nhận </div>
+    <img class="thumb" src="/assets/manual/vaccine/8.png">
+    
+    <p id="vaccine3" (click)="scrollto('vaccine')"> <b> 3. Gọi nhắc tiêm phòng </b> <img
+      src="/assets/icon/up-xs.png"> </p>
+    <div> - Tại chức năng Vaccine có 3 tab: Chưa gọi, Không gọi được và đã gọi </div>
+    <div> - Tại mục Chưa gọi, phiếu nhắc sẽ xuất hiện trước ngày tái chủng 3 ngày, những ngày tái chủng qua ngày sẽ hiện màu đỏ </div>
+    <div> - Danh sách sẽ cung cấp thông tin khách hàng, số điện thoại, ngày tiêm phòng, loại tái chủng,... </div>
+    <div> - Chọn <img src="/assets/icon/tel-xs.png"> để quay số nhanh trên điện thoại </div>
+    <div> - Nếu đã gọi được cho khách, chọn <img src="/assets/icon/called.png"> </div>
+    <div> - Nếu đã gọi khách nhưng không ai nghe, chọn <img src="/assets/icon/uncalled.png"> </div>
+    <div> - Nếu khách báo thú cưng đã bán hoặc đã chết, chọn <img src="/assets/icon/dead.png"> </div>
+
+    <p id="vaccine3" (click)="scrollto('vaccine')"> <b> 4. Tìm lịch sử tiêm phòng </b> <img
+      src="/assets/icon/up-xs.png"> </p>
+    <div> - Tại chức năng Vaccine, nhập số điện thoại khách vào tường tìm kiếm, chọn <img src="/assets/icon/customer-search.png"> để tìm kiếm khách hàng </div>
+    <div> - Các chức năng <img src="/assets/icon/called.png"> <img src="/assets/icon/uncalled.png"> <img src="/assets/icon/dead.png">  </div>
+    <img class="thumb" src="/assets/manual/vaccine/9.png">
   </div>
 
   <div *ngIf="rest.temp.action == 'spa'">
