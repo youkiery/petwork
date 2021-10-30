@@ -100,7 +100,7 @@ export class ItemPage implements OnInit {
   }
 
   public view(posid: number) {
-    this.rest.temp.image = this.rest.item.image[posid]
+    this.rest.temp = this.rest.item.image[posid]
     this.rest.navCtrl.navigateForward('modal/detail')
   }
 
