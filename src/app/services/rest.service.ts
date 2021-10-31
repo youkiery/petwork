@@ -15,9 +15,9 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
   public home = {
@@ -163,7 +163,7 @@ export class RestService {
     this.checkpost('user', 'session', {
       sess: session
     }).then(resp => {
-      this.isready = true
+      this.defreeze()
       this.config = resp.config
       this.home = resp.data
       this.session = session
@@ -171,10 +171,11 @@ export class RestService {
       this.home.notify = resp.notify
       this.vaccine.list = [[], [], []]
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      this.defreeze()
-    }, () => {
       this.isready = true
+    }, () => {
       this.defreeze()
+      this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'forward' })
+      this.isready = true
     })
   }
 

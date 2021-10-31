@@ -12,16 +12,17 @@ export class DetailPage {
     work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, item: 0, blood: 0, usg: 0, drug: 0, profile: 0,
   }
   public list = [
-    {name: 'Quản lý công việc', module: 'work'},
-    {name: 'Kaizen', module: 'kaizen'},
-    {name: 'Đăng ký lịch', module: 'schedule'},
-    {name: 'Quản lý vaccine', module: 'vaccine'},
+    {name: 'Chung', module: 'manager'},
     {name: 'Lịch spa', module: 'spa'},
+    {name: 'Quản lý vaccine', module: 'vaccine'},
+    {name: 'Quản lý siêu âm', module: 'usg'},
+    {name: 'Đăng ký lịch', module: 'schedule'},
     {name: 'Quản lý hàng hóa', module: 'item'},
     {name: 'Quản lý xét nghiệm', module: 'blood'},
-    {name: 'Quản lý siêu âm', module: 'usg'},
     {name: 'Tra cứu thuốc', module: 'drug'},
     {name: 'Quản lý sinh hóa', module: 'profile'},
+    {name: 'Quản lý công việc', module: 'work'},
+    {name: 'Kaizen', module: 'kaizen'},
   ]
   public level = {
     '-1': '', '0': 'Không phận sự', '1': 'Nhân viên', '2': 'Quản lý', '3': ''
