@@ -21,6 +21,11 @@ export class PriceinsertPage implements OnInit {
     })
   }
 
+  public change(index: number) {
+    let temp = this.rest.temp.detail[index].price.replace(/,/g, '')
+    this.rest.temp.detail[index].price = this.rest.comma(temp)
+  }
+
   public async insert() {
     await this.rest.freeze('Đang thêm dữ liệu...')
     this.rest.checkpost('price', 'insert', this.rest.temp).then((resp) => {
@@ -44,7 +49,7 @@ export class PriceinsertPage implements OnInit {
   }
 
   public remove(i: number) {
-    this.rest.temp.price = this.rest.temp.detail.filter((item: any, index: number) => {
+    this.rest.temp.detail = this.rest.temp.detail.filter((item: any, index: number) => {
       return index !== i
     })
     if (!this.rest.temp.detail.length) this.add()

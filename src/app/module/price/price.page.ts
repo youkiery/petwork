@@ -50,6 +50,7 @@ export class PricePage implements OnInit {
   public insert() {
     this.rest.temp = {
       name: '',
+      unit: '',
       detail: [{
         name: '',
         price: ''
@@ -62,6 +63,7 @@ export class PricePage implements OnInit {
     this.rest.temp = {
       id: this.rest.price.list[i].id,
       name: this.rest.price.list[i].name,
+      unit: this.rest.price.list[i].unit,
       detail: this.rest.price.list[i].detail
     }
     this.rest.navCtrl.navigateForward('price/insert')

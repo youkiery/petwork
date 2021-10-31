@@ -56,7 +56,8 @@ export class ProfinsertPage implements OnInit {
       this.rest.profile.page = 1
       this.rest.profile.serial = resp.serial
       let temp = [resp.data]
-      this.rest.profile.list = temp.concat(this.rest.profile.list)
+      temp = temp.concat(this.rest.profile.list)
+      this.rest.profile.list = temp
       this.rest.back()
     }, () => { 
       this.rest.defreeze()

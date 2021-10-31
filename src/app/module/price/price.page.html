@@ -20,7 +20,7 @@
   <div class="stl-card" *ngFor="let item of rest.price.list; let i = index">
     Hàng hóa: {{item.name}}
     <div class="upperline" *ngFor="let detail of item.detail">
-      {{detail.name}}: {{detail.price}}
+      Số lượng <b>{{detail.name}}</b>{{item.unit.length ? ' ' + item.unit : ''}}: <b class="boldred">{{rest.comma(detail.price)}}</b> 
     </div>
     <div class="upperline">
       <img class="icon" src="/assets/icon/delete.png" (click)="remove(i)">
