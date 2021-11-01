@@ -15,9 +15,9 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
   public home = {
@@ -40,7 +40,7 @@ export class RestService {
       spa: [],
       docs: [],
       docscover: ''
-    }
+    },
   }
   public session = ''
   public admin = { init: false, list: [] }
@@ -59,6 +59,8 @@ export class RestService {
   // public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   // public work = {}
 
+  public version = 2
+  public link = ''
   public action: string = ''
   public isready: boolean = false
   public id: number = 0
@@ -161,7 +163,8 @@ export class RestService {
   public async sess(session: string) {
     await this.freeze('Kiểm tra thông tin người dùng...')
     this.checkpost('user', 'session', {
-      sess: session
+      sess: session,
+      version: this.version
     }).then(resp => {
       this.defreeze()
       this.config = resp.config
@@ -274,6 +277,7 @@ export class RestService {
       param['type'] = type
       param['action'] = action
       param['session'] = this.session
+      param['version'] = this.version
       this.http.post(this.baseurl, JSON.stringify(param)).toPromise().then((data) => {
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")
@@ -284,6 +288,11 @@ export class RestService {
           this.notify("Phiên đăng nhập hết hạn")
           this.navCtrl.navigateBack('/login')
           reject(data)
+        }
+        else if (data['outdate']) {
+          this.link = data['link']
+          this.navCtrl.navigateRoot('/update')
+          this.defreeze()
         }
         else {
           if (data['messenger']) this.notify(data['messenger'])

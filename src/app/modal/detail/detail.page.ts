@@ -12,7 +12,7 @@ export class DetailPage {
     work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, item: 0, blood: 0, usg: 0, drug: 0, profile: 0,
   }
   public list = [
-    {name: 'Chung', module: 'manager'},
+    {name: 'Chung', module: 'admin'},
     {name: 'Lịch spa', module: 'spa'},
     {name: 'Quản lý vaccine', module: 'vaccine'},
     {name: 'Quản lý siêu âm', module: 'usg'},
@@ -87,6 +87,8 @@ export class DetailPage {
   }
 
   public change(module: string, increase: number) {
+    if (!this.module[module]) this.module[module] = 0
+    
     this.module[module] = Number(this.module[module]) + increase
     if (this.module[module] < 0) this.module[module] = 0
     else if (this.module[module] > 2) this.module[module] = 2

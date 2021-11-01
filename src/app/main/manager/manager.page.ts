@@ -417,6 +417,7 @@ export class ManagerPage implements OnInit {
       body.append('session', this.rest.session);
       body.append('type', 'vaccine');
       body.append('action', 'excel');
+      body.append('version', this.rest.version.toString());
       body.append('time', this.rest.vaccine.time);
 
       this.rest.home.default.docs.forEach((item: any) => {

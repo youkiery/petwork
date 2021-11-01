@@ -118,7 +118,11 @@ const routes: Routes = [
   {
     path: 'modal/manual',
     loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
+  },  {
+    path: 'update',
+    loadChildren: () => import('./main/update/update.module').then( m => m.UpdatePageModule)
   },
+
 
 ];
 
