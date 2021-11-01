@@ -22,7 +22,7 @@
     <div class="upperline" *ngFor="let detail of item.detail">
       Số lượng <b>{{detail.name}}</b>{{item.unit.length ? ' ' + item.unit : ''}}: <b class="boldred">{{rest.comma(detail.price)}}</b> 
     </div>
-    <div class="upperline">
+    <div *ngIf="rest.config.price > 1" class="upperline">
       <img class="icon" src="/assets/icon/delete.png" (click)="remove(i)">
       <img class="icon" src="/assets/icon/update.png" (click)="update(i)">
     </div>

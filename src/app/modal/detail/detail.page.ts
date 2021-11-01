@@ -20,8 +20,10 @@ export class DetailPage {
     {name: 'Quản lý hàng hóa', module: 'item'},
     {name: 'Quản lý xét nghiệm', module: 'blood'},
     {name: 'Tra cứu thuốc', module: 'drug'},
+    {name: 'Giá sỉ', module: 'price'},
+    // {name: 'Quản lý xe', module: 'ride'},
     {name: 'Quản lý sinh hóa', module: 'profile'},
-    {name: 'Quản lý công việc', module: 'work'},
+    // {name: 'Quản lý công việc', module: 'work'},
     {name: 'Kaizen', module: 'kaizen'},
   ]
   public level = {

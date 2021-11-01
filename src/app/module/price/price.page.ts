@@ -48,15 +48,18 @@ export class PricePage implements OnInit {
   }
 
   public insert() {
-    this.rest.temp = {
-      name: '',
-      unit: '',
-      detail: [{
+    if (this.rest.config.price < 2) this.rest.notify('Tài khoản không có quyền truy cập') 
+    else {
+      this.rest.temp = {
         name: '',
-        price: ''
-      }]
+        unit: '',
+        detail: [{
+          name: '',
+          price: ''
+        }]
+      }
+      this.rest.navCtrl.navigateForward('price/insert')
     }
-    this.rest.navCtrl.navigateForward('price/insert')
   }
 
   public update(i: number) {
