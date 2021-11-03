@@ -21,6 +21,18 @@ export class RidePage implements OnInit {
     })
   }
 
+  public insertPay() {
+
+  }
+
+  public insertRide() {
+
+  }
+
+  public filter() {
+
+  }
+
   public async init() {
     await this.rest.freeze('Đang lấy danh sách..')
     this.rest.checkpost('ride', 'init', { }).then(resp => {
