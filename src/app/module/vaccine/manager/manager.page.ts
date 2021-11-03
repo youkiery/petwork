@@ -12,6 +12,7 @@ export class ManagerPage implements OnInit {
   public prv = ''
   public input: any = {}
   public list = []
+  public type = 'vaccine'
   public status_text = {
     0: 'Chưa nhắc',
     1: 'Chưa gọi được',
@@ -42,7 +43,7 @@ export class ManagerPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action) this.rest.root()
+      if (!this.rest.action) this.rest.navCtrl.navigateBack('/vaccine')
       if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
       this.rest.home.doctor.forEach((item, index) => {
         this.option.push({
@@ -99,14 +100,9 @@ export class ManagerPage implements OnInit {
     await alert.present();
   }
 
-  public moreTemp(event: any) {
-    this.page ++
-    event.target.complete()
-  }
-
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('vaccine', 'tempauto', {
+    this.rest.checkpost(this.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -115,10 +111,15 @@ export class ManagerPage implements OnInit {
       this.page = 1
       this.selected = {}
       this.toggle = false
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public changeType() {
+    this.selected = {}
+    this.toggle = false
   }
 
   public selectbox(id: number) {
@@ -131,7 +132,7 @@ export class ManagerPage implements OnInit {
     let list = []
     for (const key in this.selected) {
       if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
-        list.push(this.rest.vaccine.temp[this.segment][key].id)
+        list.push(this.rest[this.type].temp[this.segment][key].id)
       }
     }
     return list
@@ -174,7 +175,7 @@ export class ManagerPage implements OnInit {
 
   public async transferAllSubmit(list: any, uid: number) {
     await this.rest.freeze('Đang xóa loại nhắc...')
-    this.rest.checkpost('vaccine', 'transfer', {
+    this.rest.checkpost(this.type, 'transfer', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -183,7 +184,7 @@ export class ManagerPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -214,7 +215,7 @@ export class ManagerPage implements OnInit {
 
   public async removeAllSubmit(list: any) {
     await this.rest.freeze('Đang xóa loại nhắc...')
-    this.rest.checkpost('vaccine', 'removeall', {
+    this.rest.checkpost(this.type, 'removeall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -222,7 +223,7 @@ export class ManagerPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -232,7 +233,7 @@ export class ManagerPage implements OnInit {
     let list = []
     let index = this.getselectedindex()
     index.forEach(item => {
-      let citem = this.rest.vaccine.temp[this.segment][item]
+      let citem = this.rest[this.type].temp[this.segment][item]
       if (!(!citem.name.length || !citem.phone.length || !this.time.isisodate(this.time.datetoisodate(citem.cometime)) || !this.time.isisodate(this.time.datetoisodate(citem.calltime)))) {
         list.push(citem.id)
       }
@@ -260,17 +261,17 @@ export class ManagerPage implements OnInit {
 
   public async doneAllSubmit(list: any) {
     await this.rest.freeze('Đang xác nhận...')
-    this.rest.checkpost('vaccine', 'doneall', {
+    this.rest.checkpost(this.type, 'doneall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
       list: list
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
       this.selected = {}
 
-      if (resp.old.length) {
+      if (resp.old.length && this.type == 'vaccine') {
         this.rest.temp.ov = {}
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
@@ -283,28 +284,50 @@ export class ManagerPage implements OnInit {
   }
 
   public update(index: number) {
-    this.rest.action = 'vaccine'
-    let item = JSON.parse(JSON.stringify(this.rest.vaccine.temp[this.segment][index])) 
-    if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
-    else item.calltime = this.time.datetoisodate(item.calltime)
-    item.cometime = this.time.datetoisodate(item.cometime)
-    this.rest.temp = {
-      prv: 'temp',
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-      time: this.rest.vaccine.time,
-      id: item.id,
-      petname: item.petname,
-      name: item.name,
-      phone: item.phone,
-      address: item.address,
-      typeid: item.typeid,
-      cometime: item.cometime,
-      calltime: item.calltime,
-      note: item.note,
+    if (this.type == 'vaccine') {
+      this.rest.action = 'vaccine'
+      let item = JSON.parse(JSON.stringify(this.rest.vaccine.temp[this.segment][index])) 
+      if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
+      else item.calltime = this.time.datetoisodate(item.calltime)
+      item.cometime = this.time.datetoisodate(item.cometime)
+      this.rest.temp = {
+        prv: 'temp',
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+        time: this.rest.vaccine.time,
+        id: item.id,
+        petname: item.petname,
+        name: item.name,
+        phone: item.phone,
+        address: item.address,
+        typeid: item.typeid,
+        cometime: item.cometime,
+        calltime: item.calltime,
+        note: item.note,
+      }
     }
-
-    this.rest.router.navigateByUrl('/modal/insert')
+    else {
+      this.rest.action = 'usg'
+      let item = JSON.parse(JSON.stringify(this.rest.usg.temp[this.segment][index]))
+      if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
+      else item.calltime = this.time.datetoisodate(item.calltime)
+      item.cometime = this.time.datetoisodate(item.cometime)
+      this.rest.temp = {
+        prv: 'temp',
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+        time: this.rest.usg.time,
+        id: item.id,
+        name: item.name,
+        phone: item.phone,
+        address: item.address,
+        number: item.number,
+        cometime: item.cometime,
+        calltime: item.calltime,
+        note: item.note,
+      }
+    }
+    this.rest.router.navigateByUrl(this.type + '/insert')
   }
 
   public async remove(index: number) {
@@ -328,14 +351,14 @@ export class ManagerPage implements OnInit {
 
   public async removeSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('vaccine', 'removetemp', {
+    this.rest.checkpost(this.type, 'removetemp', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
-      id: this.rest.vaccine.temp[this.segment][index].id
+      id: this.rest[this.type].temp[this.segment][index].id
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -370,7 +393,7 @@ export class ManagerPage implements OnInit {
 
   public async doneSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('vaccine', 'confirm', {
+    this.rest.checkpost(this.type, 'confirm', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -380,8 +403,8 @@ export class ManagerPage implements OnInit {
       this.rest.defreeze()
       this.selected = {}
       this.toggle = false
-      this.rest.vaccine.temp = resp.temp
-      if (resp.old.length) {
+      this.rest[this.type].temp = resp.temp
+      if (this.type == 'vaccine' && resp.old.length) {
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
         this.rest.temp.prv = 'temp'
@@ -394,17 +417,9 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public change(type: string = 'type') {
-    this.rest.action = type
-  }
-
-  public back() {
-    this.rest.action = this.prv
-  }
-
   public async reloadTemp(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('vaccine', 'tempauto', {
+    this.rest.checkpost(this.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -412,7 +427,7 @@ export class ManagerPage implements OnInit {
       this.rest.defreeze()
       this.selected = {}
       this.toggle = false
-      this.rest.vaccine.temp = resp.list
+      this.rest[this.type].temp = resp.list
       event.target.complete();
       this.page = 1
     }, () => {

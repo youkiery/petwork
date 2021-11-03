@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./vaccinesearch/vaccinesearch.module').then( m => m.VaccinesearchPageModule)
+  },
+  {
+    path: 'insert',
+    loadChildren: () => import('./vaccineinsert/vaccineinsert.module').then( m => m.VaccineinsertPageModule)
   }
 ];
 

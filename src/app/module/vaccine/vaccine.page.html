@@ -180,7 +180,7 @@
         <ion-icon name="briefcase-outline"></ion-icon>
         <ion-label>
           Cần xác nhận
-          <ion-badge color="danger" *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp[0].length}} </ion-badge>
+          <ion-badge color="danger" *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp[0].length + rest.usg.temp[0].length}} </ion-badge>
         </ion-label>
       </ion-tab-button>
     </ion-tab-bar>

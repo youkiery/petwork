@@ -48,36 +48,81 @@
     <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
   </ion-item>
 
-  <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="0">
-      <ion-label> Chưa xác nhận </ion-label>
+  <ion-segment [(ngModel)]="type" (click)="changeType()">
+    <ion-segment-button value="vaccine">
+      <ion-label>
+        Vaccine 
+        <ion-badge color="danger"> {{rest.vaccine.temp[0].length}} </ion-badge>
+      </ion-label>
     </ion-segment-button>
-    <ion-segment-button value="1">
-      <ion-label> Đã xác nhận </ion-label>
+    <ion-segment-button value="usg">
+      <ion-label>
+        Siêu âm
+        <ion-badge color="danger"> {{rest.usg.temp[0].length}} </ion-badge>
+      </ion-label>
     </ion-segment-button>
   </ion-segment>
 
-  <div *ngFor="let item of rest.vaccine.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
-    <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
-    <div class="col-xs-6">
-      <span [class]="item['petname'].length ? '' : 'pinky'"> Thú cưng: {{item['petname']}} </span> <br>
-      <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
-      <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
-      <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
-      Địa chỉ: {{item['address']}}
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="0">
+      <ion-label>
+        Chưa xác nhận
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Đã xác nhận
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="type == 'vaccine'">
+    <div *ngFor="let item of rest.vaccine.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
+      <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
+      <div class="col-xs-6">
+        <span [class]="item['petname'].length ? '' : 'pinky'"> Thú cưng: {{item['petname']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
+        <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
+        Địa chỉ: {{item['address']}}
+      </div>
+      <div class="col-xs-6">
+        Ngày đến: {{item['cometime']}} <br>
+        <span [class]="item['calltime'] ? '' : 'redden'"> Nhắc lại: {{item['calltime']}} </span> <br>
+        Loại nhắc: {{item['vaccine']}} <br>
+        Người làm: {{item['doctor']}}
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item['note']}} <br>
+        Ngày thêm: {{item['time']}} <br>
+      </div>
+      <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
     </div>
-    <div class="col-xs-6">
-      Ngày đến: {{item['cometime']}} <br>
-      <span [class]="item['calltime'] ? '' : 'redden'"> Nhắc lại: {{item['calltime']}} </span> <br>
-      Loại nhắc: {{item['vaccine']}} <br>
-      Người làm: {{item['doctor']}}
+  </div>
+
+  <div *ngIf="type == 'usg'">
+    <div *ngFor="let item of rest.usg.temp[segment]; let i = index" class="stl-card" (click)="selectbox(i)">
+      <div [class]="toggle && selected[i] ? 'tick' : (toggle && !selected[i] ? 'untick' : '') "></div>
+      <div class="col-xs-6">
+        <span [class]="item['phone'].length ? '' : 'redden'"> Tên khách: {{item['name']}} </span> <br>
+        <span [class]="item['phone'].length ? '' : 'redden'"> Điện thoại: {{item['phone']}} </span> <br>
+        Địa chỉ: {{item['address']}}
+      </div>
+      <div class="col-xs-6">
+        Ngày đến: {{item['cometime']}} <br>
+        <span [class]="item['calltime'] ? '' : 'redden'"> Dư sinh: {{item['calltime']}} </span> <br>
+        Người làm: {{item['doctor']}} <br>
+        Số thai dự kiến: {{item['number']}}
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item['note']}} <br>
+        Ngày thêm: {{item['time']}} <br>
+      </div>
+      <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="segment == '0'" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
     </div>
-    <div class="upperline">
-      Ghi chú: {{item['note']}} <br>
-      Ngày thêm: {{item['time']}} <br>
-    </div>
-    <img *ngIf="segment == '0'" class="icon" src="/assets/icon/done.png" (click)="done(i)">
-    <img *ngIf="segment == '0'" class="right" src="/assets/icon/update.png" (click)="update(i)">
-    <img *ngIf="segment == '0'" class="right" src="/assets/icon/delete.png" (click)="remove(i)">
   </div>
 </ion-content>

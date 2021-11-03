@@ -45,7 +45,7 @@ export class RestService {
   public session = ''
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, from: '', end: '' }
-  public vaccine = { init: false, list: [], new: [], old: [], temp: [], over: [], keyword: '', time: '' }
+  public vaccine = { init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '' }
   public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }

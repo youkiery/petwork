@@ -445,7 +445,7 @@ export class VaccinePage {
   public manager() {
     this.rest.temp = {}
     this.rest.action = 'temp'
-    this.rest.navCtrl.navigateForward(this.type + '/manager')
+    this.rest.navCtrl.navigateForward('vaccine/manager')
   }
 
   public async birth(index: number) {
