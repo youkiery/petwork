@@ -228,6 +228,12 @@ export class UsgPage {
         placeholder: 'Ngày sinh'
       },
       {
+        type: 'date',
+        name: 'repregnant',
+        value: '',
+        placeholder: 'Ngày nhắc salơ chó mẹ'
+      },
+      {
         type: 'text',
         name: 'note',
         value: this.rest.usg.list[this.segment][index].note,
@@ -240,7 +246,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e.number, e.calltime, e.note)
+            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e)
           }
         }
       ]
@@ -248,13 +254,14 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async birthSubmit(id: number, number: number, calltime: string, note: string) {
+  public async birthSubmit(id: number, data: any) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'birth', {
       id: id,
-      note: note,
-      number: number,
-      calltime: calltime,
+      note: data['note'],
+      number: data['number'],
+      calltime: data['calltime'],
+      repregnant: data['repregnant'],
       time: this.rest.usg.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
