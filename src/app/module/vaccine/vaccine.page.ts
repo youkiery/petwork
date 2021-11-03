@@ -72,7 +72,7 @@ export class VaccinePage {
         time: this.rest.vaccine.time,
       }).then(resp => {
         this.rest.defreeze()
-        this.rest.detail.list = resp.list
+        this.rest.temp = resp.list
         this.rest.navCtrl.navigateForward('vaccine/search')
       }, () => {
         this.rest.defreeze()

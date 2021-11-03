@@ -53,7 +53,7 @@ export class VaccinesearchPage implements OnInit {
         time: this.rest.vaccine.time,
       }).then(resp => {
         this.rest.defreeze()
-        this.rest.detail.list = resp.list
+        this.rest.temp = resp.list
       }, () => {
         this.rest.defreeze()
       })
@@ -63,8 +63,8 @@ export class VaccinesearchPage implements OnInit {
   public async called(index: number) {
     let note = ''
     let id = 0
-    id = this.rest.detail.list[index].id
-    note = this.rest.detail.list[index].note
+    id = this.rest.temp[index].id
+    note = this.rest.temp[index].note
     const alert = await this.alert.create({
       header: 'Xác nhận Đã gọi',
       subHeader: 'Đã gọi khách hàng, xác nhận?',
@@ -99,7 +99,7 @@ export class VaccinesearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.detail.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -108,8 +108,8 @@ export class VaccinesearchPage implements OnInit {
   public async uncalled(index: number) {
     let note = ''
     let id = 0
-    id = this.rest.detail.list[index].id
-    note = this.rest.detail.list[index].note
+    id = this.rest.temp[index].id
+    note = this.rest.temp[index].note
     const alert = await this.alert.create({
       header: 'Xác nhận Không gọi được',
       subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
@@ -145,7 +145,7 @@ export class VaccinesearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.detail.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -153,7 +153,7 @@ export class VaccinesearchPage implements OnInit {
 
   public async done(index: number) {
     let id = 0
-    id = this.rest.detail.list[index].id
+    id = this.rest.temp[index].id
 
     const alert = await this.alert.create({
       header: 'Xác nhận tiêm phòng',
@@ -183,7 +183,7 @@ export class VaccinesearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.detail.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -192,8 +192,8 @@ export class VaccinesearchPage implements OnInit {
   public async dead(index: number) {
     let note = ''
     let id = 0
-    id = this.rest.detail.list[index].id
-    note = this.rest.detail.list[index].note
+    id = this.rest.temp[index].id
+    note = this.rest.temp[index].note
 
     const alert = await this.alert.create({
       header: 'Xác nhận khách không tiêm phòng',
@@ -230,7 +230,7 @@ export class VaccinesearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.detail.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })

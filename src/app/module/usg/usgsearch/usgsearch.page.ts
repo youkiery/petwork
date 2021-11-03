@@ -117,7 +117,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -157,7 +157,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -198,7 +198,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -239,7 +239,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -280,7 +280,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -321,7 +321,7 @@ export class UsgsearchPage implements OnInit {
       docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })

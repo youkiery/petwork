@@ -190,7 +190,7 @@ export class ManagerPage implements OnInit {
       name: name,
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.home.usg = resp.list
+      this.rest.home.usgcode = resp.list
     }, () => {
       this.rest.defreeze()
     })
