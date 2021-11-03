@@ -23,6 +23,31 @@ export class VaccinePage {
     3: 'stl-card green',
     4: 'stl-card red',
   }
+  public uheader = {
+    0: 'Nhắc tiêm phòng trước salơ',
+    1: 'Nhắc test Progesterone',
+    2: 'Tư vấn trước sinh',
+    3: 'Ngày sinh',
+    4: 'Nhắc sổ giun lần 1',
+    5: 'Nhắc tiêm vaccine',
+    6: 'Đã nhắc tiêm vaccine',
+    7: 'Đã hoàn thành',
+    8: 'Không theo dõi nữa',
+    9: 'Phiếu tạm',
+  }
+  public ustatus = {
+    0: 'stl-card white',
+    1: 'stl-card red',
+  }
+  public usubheader = {
+    0: 'Xác nhận gọi nhắc tiêm phòng trước salơ, phiếu nhắc test progesterone sẽ hiện lại sau 1 tháng nữa',
+    1: '',
+    2: 'Xác nhận tư vấn trước sinh, phiếu nhắc sinh sẽ hiện lại 1 ngày sau khi sinh',
+    3: 'Xác nhận đã sinh, phiếu nhắc xổ giun lần 1 sẽ hiện lại 5 tuần sau khi sinh',
+    4: 'Xác nhận đã xổ giun, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
+    5: 'Xác nhận đã tiêm vaccine',
+  }
+  public type = 'vaccine'
   public segment = '0'
   public key = ''
   public page = 1
@@ -51,11 +76,13 @@ export class VaccinePage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.vaccine.init = true
-      this.rest.vaccine.new = resp.new
-      this.rest.vaccine.list = resp.list
-      this.rest.home.type = resp.type
-      this.rest.vaccine.temp = resp.temp
-      this.rest.vaccine.over = resp.over
+      this.rest.usg.new = resp.usg.new
+      this.rest.usg.list = resp.usg.list
+      this.rest.usg.temp = resp.usg.temp
+      this.rest.vaccine.new = resp.vaccine.new
+      this.rest.vaccine.list = resp.vaccine.list
+      this.rest.vaccine.temp = resp.vaccine.temp
+      this.rest.vaccine.over = resp.vaccine.over
     }, () => {
       this.rest.defreeze()
     })
@@ -65,7 +92,7 @@ export class VaccinePage {
     if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
       await this.rest.freeze('Đang tải danh sách')
-      this.rest.checkpost('vaccine', 'searchcustomer', {
+      this.rest.checkpost(this.type, 'searchcustomer', {
         keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
         docscover: this.rest.home.default.docscover,
@@ -73,7 +100,8 @@ export class VaccinePage {
       }).then(resp => {
         this.rest.defreeze()
         this.rest.temp = resp.list
-        this.rest.navCtrl.navigateForward('vaccine/search')
+        this.rest.action = this.type
+        this.rest.navCtrl.navigateForward(this.type + '/search')
       }, () => {
         this.rest.defreeze()
       })
@@ -88,39 +116,31 @@ export class VaccinePage {
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('vaccine', 'search', {
-      keyword: this.key,
+    this.rest.checkpost(this.type, 'search', {
+      keyword: this.rest.vaccine.keyword,
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
-      this.rest.vaccine.keyword = this.key
-      this.rest.vaccine.list = resp.list
+      this.rest[this.type].list = resp.list
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  public moreVaccine(event: any) {
-    this.page++
-    event.target.complete()
-  }
-
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('vaccine', 'search', {
-      keyword: this.key,
+    this.rest.checkpost(this.type, 'search', {
+      keyword: this.rest.vaccine.keyword,
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       event.target.complete();
-      this.page = 1
-      this.rest.vaccine.keyword = this.key
-      this.rest.vaccine.list = resp.list
+      this.rest[this.type].list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -172,29 +192,72 @@ export class VaccinePage {
   public insert() {
     this.rest.action = 'vaccine'
 
-    this.rest.temp = { id: 0, petname: '', name: '', phone: '', address: '', typeid: (this.rest.home.type.length ? this.rest.home.type[0].id : '0'), cometime: this.time.datetoisodate(this.rest.home.today), calltime: this.time.datetoisodate(this.rest.home.next), note: '', 
-    docs: this.rest.home.default.docs,
-    docscover: this.rest.home.default.docscover }
-    this.rest.navCtrl.navigateForward('/modal/insert')
+    if (this.rest.action == 'vaccine') {
+      this.rest.temp = {
+        id: 0,
+        petname: '',
+        name: '',
+        phone: '',
+        address: '',
+        typeid: (this.rest.home.type.length ? this.rest.home.type[0].id : '0'),
+        cometime: this.time.datetoisodate(this.rest.home.today),
+        calltime: this.time.datetoisodate(this.rest.home.next),
+        note: '',
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover
+      }
+    }
+    else {
+      this.rest.temp = {
+        id: 0,
+        number: 0,
+        name: '',
+        phone: '',
+        address: '',
+        cometime: this.time.datetoisodate(this.rest.home.today),
+        calltime: this.time.datetoisodate(this.rest.home.next),
+        note: '',
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+      }
+    }
+    this.rest.navCtrl.navigateForward('/'+ this.type +'/insert')
   }
 
   public update(index: number) {
-    this.rest.action = 'vaccine'
-    let item = this.rest.vaccine.list[this.segment][index]
-    this.rest.temp = {
-      id: item.id,
-      petname: item.petname,
-      name: item.name,
-      phone: item.phone,
-      address: item.address,
-      typeid: item.typeid,
-      cometime: this.time.datetoisodate(item.cometime),
-      calltime: this.time.datetoisodate(item.calltime),
-      note: item.note,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+    this.rest.action = this.type
+    let item = this.rest[this.type].list[this.segment][index]
+    if (this.type == 'vaccine') {
+      this.rest.temp = {
+        id: item.id,
+        petname: item.petname,
+        name: item.name,
+        phone: item.phone,
+        address: item.address,
+        typeid: item.typeid,
+        cometime: this.time.datetoisodate(item.cometime),
+        calltime: this.time.datetoisodate(item.calltime),
+        note: item.note,
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+      }
     }
-    this.rest.navCtrl.navigateForward('/modal/insert')
+    else {
+      this.rest.temp = {
+        route: true,
+        id: item.id,
+        number: item.number,
+        name: item.name,
+        phone: item.phone,
+        address: item.address,
+        cometime: this.time.datetoisodate(item.cometime),
+        calltime: this.time.datetoisodate(item.calltime),
+        note: item.note,
+        docs: this.rest.home.default.docs,
+        docscover: this.rest.home.default.docscover,
+      }
+    }
+    this.rest.navCtrl.navigateForward('/'+ this.type +'/insert')
   }
 
   public async called(index: number) {
@@ -382,6 +445,280 @@ export class VaccinePage {
   public manager() {
     this.rest.temp = {}
     this.rest.action = 'temp'
-    this.rest.navCtrl.navigateForward('vaccine/manager')
+    this.rest.navCtrl.navigateForward(this.type + '/manager')
+  }
+
+  public async birth(index: number) {
+    let current = this.rest.usg.list[this.segment][index].calltime.split('/')
+    let target = current[2] + '-' + current[1] + '-' + current[0]
+
+    const alert = await this.alert.create({
+      header: this.uheader[this.rest.usg.list[this.segment][index].status],
+      subHeader: this.usubheader[this.rest.usg.list[this.segment][index].status],
+      inputs: [{
+        type: 'number',
+        name: 'number',
+        value: this.rest.usg.list[this.segment][index].number,
+        placeholder: 'Số thai'
+      },
+      {
+        type: 'date',
+        name: 'calltime',
+        value: target,
+        placeholder: 'Ngày sinh'
+      },
+      {
+        type: 'date',
+        name: 'repregnant',
+        value: '',
+        placeholder: 'Ngày nhắc salơ chó mẹ'
+      },
+      {
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async birthSubmit(id: number, data: any) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'birth', {
+      id: id,
+      note: data['note'],
+      number: data['number'],
+      calltime: data['calltime'],
+      repregnant: data['repregnant'],
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async ucalled(index: number) {
+    const alert = await this.alert.create({
+      header: this.uheader[this.rest.usg.list[this.segment][index].status],
+      subHeader: this.usubheader[this.rest.usg.list[this.segment][index].status],
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.ucalledSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async ucalledSubmit(id: number, note: string) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'called', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async udead(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận không theo dõi',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.udeadSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async udeadSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'dead', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async udone(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.udoneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async udoneSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async progesterone(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận đã hoàn thành',
+      subHeader: 'Sau khi xác nhận phiếu siêu âm sẽ không nhắc lại nữa',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.progesteroneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async progesteroneSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'done', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async repregnant(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận thai đã chết',
+      subHeader: 'Thai đã chết nhưng vẫn nhắc lại 5 tháng sau có thể phối',
+      inputs: [{
+        type: 'text',
+        name: 'note',
+        value: this.rest.usg.list[this.segment][index].note,
+        placeholder: 'Ghi chú'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.repregnantSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async repregnantSubmit(id: number, note: string = '') {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('usg', 'repregnant', {
+      id: id,
+      note: note,
+      time: this.rest.usg.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }
