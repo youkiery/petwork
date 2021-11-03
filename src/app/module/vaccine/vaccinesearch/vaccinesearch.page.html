@@ -34,7 +34,7 @@
     </div>
     <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
     <img *ngIf="item.status == 1" class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
     <!-- <img class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/done.png" (click)="done(i)"> -->
-    <img *ngIf="item.status < 2" class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/dead.png" (click)="dead(i)">
   </div>
 </ion-content>
