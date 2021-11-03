@@ -33,9 +33,9 @@ export class RestService {
     spa: [],
     today: '',
     next: '',
-    usg: {c: 0, t: 0},
     usgcode: [],
-    vaccine: {c: 0, t: 0},
+    vaccine: 0,
+    usg: 0,
     default: {
       spa: [],
       docs: [],

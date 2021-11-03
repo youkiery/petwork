@@ -14,8 +14,7 @@ export class DetailPage {
   public list = [
     {name: 'Chung', module: 'admin'},
     {name: 'Lịch spa', module: 'spa'},
-    {name: 'Quản lý vaccine', module: 'vaccine'},
-    {name: 'Quản lý siêu âm', module: 'usg'},
+    {name: 'Quản lý nhắc gọi', module: 'vaccine'},
     {name: 'Đăng ký lịch', module: 'schedule'},
     {name: 'Quản lý hàng hóa', module: 'item'},
     {name: 'Quản lý xét nghiệm', module: 'blood'},

@@ -40,11 +40,15 @@ ion-badge {
 }
 
 .redbadge {
+  background: white;
   color: red;
   font-weight: bold;
   position: absolute;
   top: 5px;
   right: 5px;
+  padding: 2px;
+  border-radius: 10px;
+  opacity: 0.95;
 }
 
 .alert-input-group {
