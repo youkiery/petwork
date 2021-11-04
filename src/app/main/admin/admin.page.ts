@@ -36,6 +36,49 @@ export class AdminPage {
     }
   }
 
+  public async toggleDoctor(userid: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'doctor', {
+      userid: userid,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.config = resp.config
+      this.rest.admin.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async toggleManager(userid: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'manager', {
+      userid: userid,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.config = resp.config
+      this.rest.admin.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async toggleAdmin(userid: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'admin', {
+      userid: userid,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.config = resp.config
+      this.rest.admin.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public isNumber(number: number) {
+    return Number(number)
+  }
+
   public async remove(userid: number) {
     let alert = await this.alert.create({
       message: 'Xóa nhân viên?',
@@ -59,7 +102,7 @@ export class AdminPage {
   public async removeSubmit(userid: number) {
     await this.rest.freeze('Đang xóa...')
     this.rest.checkpost('admin', 'remove', {
-      id: userid
+      userid: userid
     }).then(resp => {
       this.rest.defreeze()
       this.rest.admin.list = resp.list
@@ -80,7 +123,9 @@ export class AdminPage {
 
   public async detail(index: number) {
     this.rest.temp = {
-      index: index
+      index: index,
+      name: this.rest.admin.list[index].name,
+      fullname: this.rest.admin.list[index].fullname,
     }
     this.rest.action = 'admin'
     this.rest.navCtrl.navigateForward('modal/detail')

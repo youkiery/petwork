@@ -62,14 +62,15 @@ export class InsertPage {
     })
   }
 
-  public async insertAdmin(id: number) {
+  public async insertAdmin(userid: number) {
     await this.rest.freeze('Đang thêm...')
     this.rest.checkpost('admin', 'insert', {
-      id: id,
+      userid: userid,
       key: this.rest.temp.key
     }).then(resp => {
       this.rest.defreeze()
       this.rest.temp.list = resp.list
+      this.rest.admin.list = resp.admin
     }, () => {
       this.rest.defreeze()
     })

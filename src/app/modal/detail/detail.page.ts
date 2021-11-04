@@ -11,8 +11,9 @@ export class DetailPage {
   public module = {
     work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, item: 0, blood: 0, usg: 0, drug: 0, profile: 0,
   }
+  public name = ''
+  public fullname = ''
   public list = [
-    {name: 'Chung', module: 'admin'},
     {name: 'Lịch spa', module: 'spa'},
     {name: 'Quản lý nhắc gọi', module: 'vaccine'},
     {name: 'Đăng ký lịch', module: 'schedule'},
@@ -76,10 +77,12 @@ export class DetailPage {
     await this.rest.freeze('Đang lưu dữ liệu')
     this.rest.checkpost('admin', 'update', {
       module: this.module,
-      id: this.rest.admin.list[this.rest.temp.index].userid
+      name: this.rest.temp.name,
+      fullname: this.rest.temp.fullname,
+      userid: this.rest.admin.list[this.rest.temp.index].userid
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.admin.list[this.rest.temp.index].module = this.module
+      this.rest.admin.list = resp.list
       this.rest.config = resp.config
       this.rest.navCtrl.back()
     }, () => {

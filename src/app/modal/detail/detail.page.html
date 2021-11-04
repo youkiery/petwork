@@ -74,6 +74,14 @@
   </div>
 
   <div *ngIf="rest.action == 'admin'">
+    <ion-item>
+      <ion-label position="stacked"> Họ và tên </ion-label>
+      <ion-input [(ngModel)]="rest.temp.fullname">  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tên hiển thị </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name">  </ion-input>
+    </ion-item>
     <ion-item *ngFor="let item of list">
       {{item.name}}: {{level[module[item.module]]}}
       <ion-button size="small" shape="round" slot="start" color="warning" (click)="change(item.module, -1)">

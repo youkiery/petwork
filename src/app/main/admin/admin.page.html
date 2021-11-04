@@ -14,10 +14,17 @@
   </ion-fab>
 
   <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+    Tên hiển thị: {{user.name}} <br>
+    Họ và tên: {{user.fullname}} <br>
     Tài khoản: {{user.username}} <br>
-    Họ tên: {{user.fullname}} <br>
     <img class="icon" src="/assets/icon/update.png" (click)="detail(i)">
     <img class="icon" src="/assets/icon/delete.png" (click)="remove(user.userid)">
+    <img class="icon" *ngIf="user.module.doctor == '1'" src="/assets/icon/doctor-on.png" (click)="toggleDoctor(user.userid)">
+    <img class="icon" *ngIf="!isNumber(user.module.doctor)" src="/assets/icon/doctor-off.png" (click)="toggleDoctor(user.userid)">
+    <img class="icon" *ngIf="user.module.manager == '1'" src="/assets/icon/manager-on.png" (click)="toggleManager(user.userid)">
+    <img class="icon" *ngIf="!isNumber(user.module.manager)" src="/assets/icon/manager-off.png" (click)="toggleManager(user.userid)">
+    <img class="icon" *ngIf="user.module.admin == '1'" src="/assets/icon/admin-on.png" (click)="toggleAdmin(user.userid)">
+    <img class="icon" *ngIf="!isNumber(user.module.admin)" src="/assets/icon/admin-off.png" (click)="toggleAdmin(user.userid)">
   </div>
 </ion-content>
 
