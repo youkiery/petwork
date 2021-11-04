@@ -28,7 +28,7 @@ export class RecallPage {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()      
+      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')    
     })
   }
 
@@ -89,6 +89,8 @@ export class RecallPage {
     await this.rest.freeze('Xóa lịch nhắc...')
     this.rest.checkpost('vaccine', 'donerecall', {
       list : this.getselectedid(),
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.vaccine.new = resp.new
