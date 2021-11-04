@@ -112,7 +112,7 @@
       </div>
       <div class="col-xs-6">
         Ngày đến: {{item['cometime']}} <br>
-        <span [class]="item['calltime'] ? '' : 'redden'"> Dư sinh: {{item['calltime']}} </span> <br>
+        <span *ngIf="item['number'] != '0'" [class]="item['calltime'] ? '' : 'redden'"> Dự sinh: {{item['calltime']}} <br> </span>
         Người làm: {{item['doctor']}} <br>
         Số thai dự kiến: {{item['number']}}
       </div>

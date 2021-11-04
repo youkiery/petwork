@@ -142,7 +142,7 @@ export class ManagerPage implements OnInit {
     let list = []
     for (const key in this.selected) {
       if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
-        list.push(key)
+        if (this.selected[key]) list.push(key)
       }
     }
     return list
@@ -232,12 +232,14 @@ export class ManagerPage implements OnInit {
   public async doneAll() {
     let list = []
     let index = this.getselectedindex()
+    
     index.forEach(item => {
       let citem = this.rest[this.type].temp[this.segment][item]
       if (!(!citem.name.length || !citem.phone.length || !this.time.isisodate(this.time.datetoisodate(citem.cometime)) || !this.time.isisodate(this.time.datetoisodate(citem.calltime)))) {
         list.push(citem.id)
       }
     });
+
     if (!list.length) this.rest.notify('Phiếu nhập thông tin lỗi')
     else {
       const alert = await this.alert.create({
@@ -365,7 +367,9 @@ export class ManagerPage implements OnInit {
   }
 
   public async done(index: number) {
-    let data = this.rest.vaccine.temp[this.segment][index]
+    let data = this.rest[this.type].temp[this.segment][index]
+    console.log();
+    
 
     if (!data.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!data.phone.length) this.rest.notify('Chưa nhập số điện thoại')
