@@ -61,7 +61,6 @@ export class VaccinePage {
     this.rest.ready().then(() => {
       this.rest.action = 'vaccine'
       this.rest.ready().then(() => {
-        this.key = this.rest.vaccine.keyword
         if (!this.rest.vaccine.init) this.init()
       })
     })
@@ -116,8 +115,7 @@ export class VaccinePage {
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost(this.type, 'search', {
-      keyword: this.rest.vaccine.keyword,
+    this.rest.checkpost(this.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -132,8 +130,7 @@ export class VaccinePage {
 
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost(this.type, 'search', {
-      keyword: this.rest.vaccine.keyword,
+    this.rest.checkpost(this.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
