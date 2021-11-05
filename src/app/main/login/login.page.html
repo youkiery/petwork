@@ -21,11 +21,11 @@
     <form *ngIf="!log">
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
-        <ion-input [(ngModel)]="user.lastname" name="lastname" placeholder="Họ"></ion-input>
+        <ion-input [(ngModel)]="user.fullname" name="fullname" placeholder="Họ và tên"></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
-        <ion-input [(ngModel)]="user.firstname" name="firstname" placeholder="Tên"></ion-input>
+        <ion-input [(ngModel)]="user.name" name="name" placeholder="Tên hiển thị"></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>

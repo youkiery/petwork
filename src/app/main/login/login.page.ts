@@ -11,8 +11,8 @@ export class LoginPage {
   public logo = 'assets/image/logo.png'
   public log = 1
   public user = {
-    firstname: '',
-    lastname: '',
+    fullname: '',
+    name: '',
     username: '',
     password: '',
     vpassword: '',

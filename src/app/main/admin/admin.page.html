@@ -13,7 +13,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+  <div class="stl-card white" style="width: 50%" *ngFor="let user of rest.admin.list; let i = index">
     Tên hiển thị: {{user.name}} <br>
     Họ và tên: {{user.fullname}} <br>
     Tài khoản: {{user.username}} <br>
@@ -25,6 +25,11 @@
     <img class="icon" *ngIf="!isNumber(user.module.manager)" src="/assets/icon/manager-off.png" (click)="toggleManager(user.userid)">
     <img class="icon" *ngIf="user.module.admin == '1'" src="/assets/icon/admin-on.png" (click)="toggleAdmin(user.userid)">
     <img class="icon" *ngIf="!isNumber(user.module.admin)" src="/assets/icon/admin-off.png" (click)="toggleAdmin(user.userid)">
+  </div>
+  <div>
+    <img class="icon" src="/assets/icon/doctor-on.png"> Nhân viên được liệt kê vào danh sách bác sĩ <br>
+    <img class="icon" src="/assets/icon/manager-on.png"> Nhân viên không hạn chế đăng ký lịch nghỉ <br>
+    <img class="icon" src="/assets/icon/admin-on.png"> Nhân viên có khả năng cấp quyền nhân viên khác
   </div>
 </ion-content>
 
