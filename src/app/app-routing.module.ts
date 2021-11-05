@@ -126,7 +126,11 @@ const routes: Routes = [
   {
     path: 'ride',
     loadChildren: () => import('./module/ride/ride.module').then( m => m.RidePageModule)
+  },  {
+    path: 'physical',
+    loadChildren: () => import('./module/physical/physical.module').then( m => m.PhysicalPageModule)
   },
+
 ];
 
 @NgModule({
