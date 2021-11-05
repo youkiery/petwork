@@ -44,8 +44,17 @@
   </table>
 
   <div *ngIf="rest.config.schedule > 1">
-
     <table style="font-size: 0.7em;" border="1">
+      <tr class="text-center">
+        <td>  </td>
+        <td colspan="2"> Thứ 2 </td>
+        <td colspan="2"> Thứ 3 </td>
+        <td colspan="2"> Thứ 4</td>
+        <td colspan="2"> Thứ 5 </td>
+        <td colspan="2"> Thứ 6 </td>
+        <td colspan="2"> Thứ 7 </td>
+        <td colspan="2"> CN </td>
+      </tr>
       <tr class="text-center">
         <td>  </td>
         <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
