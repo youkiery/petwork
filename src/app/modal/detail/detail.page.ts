@@ -23,6 +23,7 @@ export class DetailPage {
     {name: 'Giá sỉ', module: 'price'},
     // {name: 'Quản lý xe', module: 'ride'},
     {name: 'Quản lý sinh hóa', module: 'profile'},
+    {name: 'Quản lý sinh lý', module: 'physical'},
     // {name: 'Quản lý công việc', module: 'work'},
     {name: 'Kaizen', module: 'kaizen'},
   ]

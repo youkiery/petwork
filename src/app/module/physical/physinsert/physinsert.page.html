@@ -2,7 +2,7 @@
   <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="rest.temp.act == 'profile'" slot="end" (click)="insert()" color="secondary" fill="solid" size="small">
+  <ion-button *ngIf="rest.temp.act == 'physical'" slot="end" (click)="insert()" color="secondary" fill="solid" size="small">
     Thêm
   </ion-button>
   <ion-button *ngIf="rest.temp.act == 'target' && rest.temp.id > 0" slot="end" (click)="updateTarget()" color="secondary" fill="solid" size="small">
@@ -14,7 +14,7 @@
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.temp.act == 'profile'">
+  <div *ngIf="rest.temp.act == 'physical'">
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>
       <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
@@ -54,7 +54,7 @@
     <ion-item>
       <ion-label position="stacked"> Loài động vật </ion-label>
       <ion-select [(ngModel)]="rest.temp.species">
-        <ion-select-option *ngFor="let species of rest.profile.species" [value]="species.id">
+        <ion-select-option *ngFor="let species of rest.physical.species" [value]="species.id">
           {{species.name}}
         </ion-select-option>
       </ion-select>
@@ -69,7 +69,7 @@
     <ion-item>
       <ion-label position="stacked"> Loại mẫu </ion-label>
       <ion-select [(ngModel)]="rest.temp.sampletype">
-        <ion-select-option *ngFor="let type of rest.profile.sampletype" [value]="type.id">
+        <ion-select-option *ngFor="let type of rest.physical.sampletype" [value]="type.id">
           {{type.name}}
         </ion-select-option>
       </ion-select>
@@ -100,7 +100,7 @@
       <ion-label position="stacked"> Triệu chứng </ion-label>
       <ion-input [(ngModel)]="rest.temp.symptom">  </ion-input>
     </ion-item>
-    <ion-item *ngFor="let item of rest.profile.target">
+    <ion-item *ngFor="let item of rest.physical.target">
       <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>
       <ion-input [(ngModel)]="rest.temp.target[item.id]"></ion-input>
     </ion-item>

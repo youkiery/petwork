@@ -32,6 +32,7 @@ export class ProfilePage {
     this.rest.checkpost('profile', 'init', {
       key: this.rest.profile.key,
       page: this.rest.profile.page,
+      module: this.rest.action
     }).then(resp => {
       this.rest.defreeze()
       this.rest.profile.list = resp.list
@@ -53,6 +54,7 @@ export class ProfilePage {
   public updateTarget(index: number) {
     this.rest.temp = this.rest.profile.target[index]
     this.rest.temp.act = 'target'
+    this.rest.temp.module = this.rest.action
     this.rest.temp.key = this.rest.profile.key2
     this.rest.router.navigateByUrl('/profile/insert')
   }
@@ -62,6 +64,7 @@ export class ProfilePage {
     else {
       this.rest.temp = {
         act: 'target',
+        module: this.rest.action,
         key: this.rest.profile.key2,
         id: 0,
         name: '',
@@ -235,7 +238,8 @@ export class ProfilePage {
     this.rest.checkpost('profile', 'remove', {
       id: id,
       key: this.rest.profile.key,
-      page: this.rest.profile.page
+      page: this.rest.profile.page,
+      module: this.rest.action
     }).then(response => {
       this.rest.defreeze()
       this.rest.profile.page = 1
@@ -311,6 +315,7 @@ export class ProfilePage {
       this.rest.checkpost('profile', 'auto', {
         key: this.rest.profile.key,
         page: this.rest.profile.page,
+        module: this.rest.action
       }).then(response => {
         this.rest.defreeze()
         this.rest.profile.list = this.rest.profile.list.concat(response.list)

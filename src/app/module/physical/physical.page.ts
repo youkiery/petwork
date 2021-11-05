@@ -20,8 +20,8 @@ export class PhysicalPage {
 
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
-      this.rest.action = 'profile'
-      if (!this.rest.profile.init) {
+      this.rest.action = 'physical'
+      if (!this.rest.physical.init) {
         this.init()
       }
     })
@@ -29,40 +29,43 @@ export class PhysicalPage {
 
   public async init() {
     await this.rest.freeze('Đang lấy danh sách...')
-    this.rest.checkpost('profile', 'init', {
-      key: this.rest.profile.key,
-      page: this.rest.profile.page,
+    this.rest.checkpost('physical', 'init', {
+      key: this.rest.physical.key,
+      page: this.rest.physical.page,
+      module: this.rest.action
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.profile.list = resp.list
-      this.rest.profile.serial = resp.serial
-      this.rest.profile.sampletype = resp.type
-      this.rest.profile.species = resp.species
-      this.rest.profile.target = resp.target
-      this.rest.profile.init = true
+      this.rest.physical.list = resp.list
+      this.rest.physical.serial = resp.serial
+      this.rest.physical.sampletype = resp.type
+      this.rest.physical.species = resp.species
+      this.rest.physical.target = resp.target
+      this.rest.physical.init = true
     }, () => {
       this.rest.defreeze()
     })
   }
 
   public info(index: number) {
-    this.rest.temp = this.rest.profile.target[index]
-    this.rest.router.navigateByUrl('/profile/detail')
+    this.rest.temp = this.rest.physical.target[index]
+    this.rest.router.navigateByUrl('/physical/detail')
   }
 
   public updateTarget(index: number) {
-    this.rest.temp = this.rest.profile.target[index]
+    this.rest.temp = this.rest.physical.target[index]
     this.rest.temp.act = 'target'
-    this.rest.temp.key = this.rest.profile.key2
-    this.rest.router.navigateByUrl('/profile/insert')
+    this.rest.temp.module = this.rest.action
+    this.rest.temp.key = this.rest.physical.key2
+    this.rest.router.navigateByUrl('/physical/insert')
   }
 
   public async insertTarget() {
-    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.physical < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.temp = {
         act: 'target',
-        key: this.rest.profile.key2,
+        module: this.rest.action,
+        key: this.rest.physical.key2,
         id: 0,
         name: '',
         intro: '',
@@ -73,12 +76,12 @@ export class PhysicalPage {
         disease: '',
         aim: ''
       }
-      this.rest.router.navigateByUrl('profile/insert')
+      this.rest.router.navigateByUrl('physical/insert')
     }
   }
 
   public async removeTarget(i: number) {
-    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.physical < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alert.create({
         header: 'Xóa chỉ tiêu',
@@ -105,12 +108,12 @@ export class PhysicalPage {
   public async removeTargetSubmit(i: number) {
     await this.rest.freeze('Đang xóa chỉ tiêu...')
     this.rest.checkpost('target', 'remove', {
-      id: this.rest.profile.target[i].id,
-      key: this.rest.profile.key2
+      id: this.rest.physical.target[i].id,
+      key: this.rest.physical.key2
     }).then(response => {
       this.rest.defreeze()
       this.rest.notify('Đã xóa chỉ tiêu')
-      this.rest.profile.target = response.list
+      this.rest.physical.target = response.list
     }, () => {
       this.rest.defreeze()
     })
@@ -140,10 +143,10 @@ export class PhysicalPage {
   public async updateSubmit(index: number) {
     await this.rest.freeze('Cập nhật...')
     this.rest.checkpost('target', 'update', {
-      id: this.rest.profile.target[index].id
+      id: this.rest.physical.target[index].id
     }).then(response => {
       this.rest.defreeze()
-      this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
+      this.rest.physical.target[index].number = Number(this.rest.physical.target[index].number) + 1
     }, () => {
       this.rest.defreeze()
     })
@@ -173,11 +176,11 @@ export class PhysicalPage {
   public async resetSubmit(index: number) {
     await this.rest.freeze('Cài lại...')
     this.rest.checkpost('target', 'res', {
-      id: this.rest.profile.target[index].id,
-      key: this.rest.profile.key
+      id: this.rest.physical.target[index].id,
+      key: this.rest.physical.key
     }).then(response => {
       this.rest.defreeze()
-      this.rest.profile.target[index].number = 0
+      this.rest.physical.target[index].number = 0
     }, () => {
       this.rest.defreeze()
     })
@@ -185,7 +188,7 @@ export class PhysicalPage {
 
   public async print(id: number) {
     await this.rest.freeze('Đang tải bản in...')
-    this.rest.checkpost('profile', 'printword', {
+    this.rest.checkpost('physical', 'printword', {
       id: id
     }).then(response => {
       this.rest.defreeze()
@@ -204,9 +207,9 @@ export class PhysicalPage {
 
   public search() {
     this.rest.checkpost('target', 'search', {
-      key: this.rest.profile.key
+      key: this.rest.physical.key
     }).then((response) => {
-      this.rest.profile.target = response.list
+      this.rest.physical.target = response.list
     }, () => { })
   }
 
@@ -232,14 +235,15 @@ export class PhysicalPage {
 
   public async removeSubmit(id: number) {
     await this.rest.freeze('Đang xóa...')
-    this.rest.checkpost('profile', 'remove', {
+    this.rest.checkpost('physical', 'remove', {
       id: id,
-      key: this.rest.profile.key,
-      page: this.rest.profile.page
+      key: this.rest.physical.key,
+      page: this.rest.physical.page,
+      module: this.rest.action
     }).then(response => {
       this.rest.defreeze()
-      this.rest.profile.page = 1
-      this.rest.profile.list = response.list
+      this.rest.physical.page = 1
+      this.rest.physical.list = response.list
     }, () => {
       this.rest.defreeze()
     })
@@ -247,7 +251,7 @@ export class PhysicalPage {
 
   public async insert() {
     this.rest.temp = {
-      act: 'profile',
+      act: 'physical',
       name: '',
       phone: '',
       address: '',
@@ -255,21 +259,21 @@ export class PhysicalPage {
       weight: '',
       age: '1',
       gender: '0',
-      species: (this.rest.profile.species.length ? this.rest.profile.species[0].id : '0'),
-      serial: this.rest.profile.serial,
-      sampletype: (this.rest.profile.sampletype.length ? this.rest.profile.sampletype[0].id : '0'),
-      samplenumber: this.rest.profile.serial,
-      samplesymbol: this.rest.profile.serial,
+      species: (this.rest.physical.species.length ? this.rest.physical.species[0].id : '0'),
+      serial: this.rest.physical.serial,
+      sampletype: (this.rest.physical.sampletype.length ? this.rest.physical.sampletype[0].id : '0'),
+      samplenumber: this.rest.physical.serial,
+      samplesymbol: this.rest.physical.serial,
       samplestatus: '1',
       symptom: '',
       target: this.temptarget(),
     }
-    this.rest.navCtrl.navigateForward('profile/insert')
+    this.rest.navCtrl.navigateForward('physical/insert')
   }
 
   public temptarget() {
     let target = {}
-    this.rest.profile.target.forEach(item => {
+    this.rest.physical.target.forEach(item => {
       target[item.id] = ''
     })
     return target
@@ -277,22 +281,22 @@ export class PhysicalPage {
 
   public async detail(id: number) {
     await this.rest.freeze('Đang lấy dữ liệu...')
-    this.rest.checkpost('profile', 'printword', {
-      // action: 'profile-get',
+    this.rest.checkpost('physical', 'printword', {
+      // action: 'physical-get',
       id: id
     }).then(response => {
       this.rest.defreeze()
-      this.rest.profile.id = id
-      // this.rest.profile.data = response.data
-      this.rest.profile.print = response.html
-      this.rest.router.navigateByUrl('profile/print')
+      this.rest.physical.id = id
+      // this.rest.physical.data = response.data
+      this.rest.physical.print = response.html
+      this.rest.router.navigateByUrl('physical/print')
     }, () => {
       this.rest.defreeze()
     })
   }
 
   public async loadData(event: any) {
-    this.rest.profile.page++
+    this.rest.physical.page++
     await this.rest.freeze('Đang lấy danh sách...')
     this.getData().then(() => {
       event.target.complete()
@@ -300,21 +304,22 @@ export class PhysicalPage {
   }
 
   public async filter() {
-    this.rest.profile.page = 1
-    this.rest.profile.list = []
+    this.rest.physical.page = 1
+    this.rest.physical.list = []
     await this.rest.freeze('Đang lấy danh sách...')
     this.getData()
   }
 
   public async getData() {
     return new Promise(resolve => {
-      this.rest.checkpost('profile', 'auto', {
-        key: this.rest.profile.key,
-        page: this.rest.profile.page,
+      this.rest.checkpost('physical', 'auto', {
+        key: this.rest.physical.key,
+        page: this.rest.physical.page,
+        module: this.rest.action
       }).then(response => {
         this.rest.defreeze()
-        this.rest.profile.list = this.rest.profile.list.concat(response.list)
-        this.rest.profile.init = true
+        this.rest.physical.list = this.rest.physical.list.concat(response.list)
+        this.rest.physical.init = true
         resolve(true)
       }, () => {
         this.rest.defreeze()

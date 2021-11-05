@@ -31,7 +31,7 @@ export class PhysinsertPage implements OnInit {
     await this.rest.freeze('Đang cập nhật...')
     this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(response => {
       this.rest.defreeze()
-      this.rest.profile.target = response.list
+      this.rest.physical.target = response.list
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -42,7 +42,7 @@ export class PhysinsertPage implements OnInit {
     await this.rest.freeze('Đang thêm...')
     this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.profile.target = resp.list
+      this.rest.physical.target = resp.list
       this.rest.back()
     }, () => { 
       this.rest.defreeze()
@@ -51,13 +51,13 @@ export class PhysinsertPage implements OnInit {
 
   public async insert() {
     await this.rest.freeze('Đang thêm...')
-    this.rest.checkpost('profile', 'insert', this.rest.temp).then(resp => {
+    this.rest.checkpost('physical', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.profile.page = 1
-      this.rest.profile.serial = resp.serial
+      this.rest.physical.page = 1
+      this.rest.physical.serial = resp.serial
       let temp = [resp.data]
-      temp = temp.concat(this.rest.profile.list)
-      this.rest.profile.list = temp
+      temp = temp.concat(this.rest.physical.list)
+      this.rest.physical.list = temp
       this.rest.back()
     }, () => { 
       this.rest.defreeze()
@@ -92,13 +92,13 @@ export class PhysinsertPage implements OnInit {
 
   public async insertSelectSubmit(type: string, typevalue: string) {
     await this.rest.freeze('Đang thêm...')
-    this.rest.checkpost('profile', 'insertselect', {
+    this.rest.checkpost('physical', 'insertselect', {
       typename: type,
       typevalue: typevalue,
     }).then(response => {
       this.rest.defreeze()
-      this.rest.profile[type] = response.list
-      this.rest.temp[type] = this.rest.profile[type][this.rest.profile[type].length - 1].id
+      this.rest.physical[type] = response.list
+      this.rest.temp[type] = this.rest.physical[type][this.rest.physical[type].length - 1].id
     }, () => {
       this.rest.defreeze()
     })
