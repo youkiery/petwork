@@ -318,7 +318,8 @@ export class ProfilePage {
         module: this.rest.action
       }).then(response => {
         this.rest.defreeze()
-        this.rest.profile.list = this.rest.profile.list.concat(response.list)
+        let temp = this.rest.profile.list.concat(response.list)
+        this.rest.profile.list = temp
         this.rest.profile.init = true
         resolve(true)
       }, () => {

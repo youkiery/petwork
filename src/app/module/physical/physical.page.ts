@@ -318,7 +318,8 @@ export class PhysicalPage {
         module: this.rest.action
       }).then(response => {
         this.rest.defreeze()
-        this.rest.physical.list = this.rest.physical.list.concat(response.list)
+        let temp = this.rest.physical.list.concat(response.list)
+        this.rest.physical.list = temp
         this.rest.physical.init = true
         resolve(true)
       }, () => {

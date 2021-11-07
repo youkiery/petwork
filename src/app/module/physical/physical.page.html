@@ -36,7 +36,8 @@
     <ion-card *ngFor="let item of rest.physical.list">
       <ion-card-content>
         <b> Chủ: </b> {{item.customer}} <br>
-        <b> Số điện thoại: </b> {{item.phone}}
+        <b> Số điện thoại: </b> {{item.phone}} <br>
+        <b> Người làm: </b> {{item.doctor}} <br>
         <div class="button-group">
           <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
             <ion-icon name="information-circle-outline"></ion-icon>
