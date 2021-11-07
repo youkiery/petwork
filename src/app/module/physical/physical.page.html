@@ -21,7 +21,6 @@
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
       <ion-segment-button value="2"> Chỉ tiêu </ion-segment-button>
-      <ion-segment-button value="3"> Hóa chất </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
@@ -84,31 +83,6 @@
         </ion-button>
       </ion-item>
     </ion-list>  
-  </div>
-
-  <div *ngIf="segment == '3'">
-    <ion-item>
-      <ion-label position="stacked"> Tìm kiếm tên chỉ tiêu </ion-label>
-      <ion-input [(ngModel)]="rest.physical.key2"></ion-input>
-    </ion-item>
-    <ion-button color="secondary" expand="full" (click)="search()">
-      Tìm kiếm
-    </ion-button>
-
-    <ion-list>
-      <ion-item *ngFor="let item of rest.physical.target; let i = index">
-        <ion-label [class]="(item.number >= 4 ? 'red' : '' )"> {{item.name}}: {{item.number >= 4 ? 4 : item.number}} </ion-label>
-        <ion-button slot="end" (click)="update(i)">
-          <ion-icon name="add-outline"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" (click)="reset(i)">
-          <ion-icon name="refresh-outline"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" *ngIf="rest.config.physical > 1" color="danger" (click)="removeTarget(i)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
   </div>
 </ion-content>
 
