@@ -147,6 +147,10 @@ export class PhysicalPage {
     await alert.present();
   }
 
+  public statistic() {
+    this.rest.navCtrl.navigateForward('physical/statis')
+  }
+
   public async updateSubmit(index: number) {
     await this.rest.freeze('Cập nhật...')
     this.rest.checkpost('target', 'update', {

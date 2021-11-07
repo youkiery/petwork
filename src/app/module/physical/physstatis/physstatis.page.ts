@@ -8,7 +8,9 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./physstatis.page.scss'],
 })
 export class PhysstatisPage implements OnInit {
-  public data = ''
+  public data = {
+    total: 0, price: 0, last: '', cycle: ''
+  }
   constructor(
     public rest: RestService,
     public alert: AlertController
