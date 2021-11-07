@@ -28,6 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('./modal/upload/upload.module').then( m => m.UploadPageModule)
   },
   {
+    path: 'modal/manual',
+    loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },
@@ -71,18 +75,18 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
   },
-  {
-    path: 'blood',
-    loadChildren: () => import('./module/blood/blood.module').then( m => m.BloodPageModule)
-  },
+  // {
+  //   path: 'blood',
+  //   loadChildren: () => import('./module/blood/blood.module').then( m => m.BloodPageModule)
+  // },
   {
     path: 'item',
     loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
   },
-  {
-    path: 'kaizen',
-    loadChildren: () => import('./module/kaizen/kaizen.module').then( m => m.KaizenPageModule)
-  },
+  // {
+  //   path: 'kaizen',
+  //   loadChildren: () => import('./module/kaizen/kaizen.module').then( m => m.KaizenPageModule)
+  // },
   {
     path: 'schedule',
     loadChildren: () => import('./module/schedule/schedule.module').then( m => m.SchedulePageModule)
@@ -91,10 +95,10 @@ const routes: Routes = [
     path: 'his',
     loadChildren: () => import('./module/his/his.module').then( m => m.HisPageModule)
   },
-  {
-    path: 'inout',
-    loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
-  },
+  // {
+  //   path: 'inout',
+  //   loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
+  // },
   {
     path: 'notify',
     loadChildren: () => import('./main/notify/notify.module').then( m => m.NotifyPageModule)
@@ -110,10 +114,6 @@ const routes: Routes = [
   {
     path: 'manager',
     loadChildren: () => import('./main/manager/manager.module').then( m => m.ManagerPageModule)
-  },
-  {
-    path: 'modal/manual',
-    loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
   },
   {
     path: 'update',
