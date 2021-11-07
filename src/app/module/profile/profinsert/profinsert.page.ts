@@ -29,9 +29,9 @@ export class ProfinsertPage implements OnInit {
 
   public async updateTarget() {
     await this.rest.freeze('Đang cập nhật...')
-    this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(response => {
+    this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.profile.target = response.list
+      this.rest.profile.target = resp.list
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -95,9 +95,9 @@ export class ProfinsertPage implements OnInit {
     this.rest.checkpost('profile', 'insertselect', {
       typename: type,
       typevalue: typevalue,
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      this.rest.profile[type] = response.list
+      this.rest.profile[type] = resp.list
       this.rest.temp[type] = this.rest.profile[type][this.rest.profile[type].length - 1].id
     }, () => {
       this.rest.defreeze()

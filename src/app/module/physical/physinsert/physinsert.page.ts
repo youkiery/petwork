@@ -21,17 +21,33 @@ export class PhysinsertPage implements OnInit {
   ngOnInit() {
   }
 
+  public change() {
+    let temp = this.rest.temp.name.replace(/,/g, '')
+    this.rest.temp.name = this.rest.comma(temp)
+  }
+
   ionViewWillEnter() {
     this.rest.ready().then(() => {
       if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
     })
   }
 
+  public async insertImport() {
+    await this.rest.freeze('Đang cập nhật...')
+    this.rest.checkpost('physical', 'import', this.rest.temp).then(resp => {
+      this.rest.defreeze()
+      this.rest.physical.import = resp.import
+      this.rest.back()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async updateTarget() {
     await this.rest.freeze('Đang cập nhật...')
-    this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(response => {
+    this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.physical.target = response.list
+      this.rest.physical.target = resp.list
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -95,9 +111,9 @@ export class PhysinsertPage implements OnInit {
     this.rest.checkpost('physical', 'insertselect', {
       typename: type,
       typevalue: typevalue,
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      this.rest.physical[type] = response.list
+      this.rest.physical[type] = resp.list
       this.rest.temp[type] = this.rest.physical[type][this.rest.physical[type].length - 1].id
     }, () => {
       this.rest.defreeze()

@@ -43,9 +43,9 @@ export class PhysprintPage implements OnInit {
     await this.rest.freeze()
     this.rest.checkpost('physical', 'download', {
       id: this.rest.physical.id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      window.open(response.link)
+      window.open(resp.link)
     }, () => {
       this.rest.defreeze()
     })

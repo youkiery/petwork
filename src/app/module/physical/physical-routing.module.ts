@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'print',
     loadChildren: () => import('./physprint/physprint.module').then( m => m.PhysprintPageModule)
+  },
+  {
+    path: 'statis',
+    loadChildren: () => import('./physstatis/physstatis.module').then( m => m.PhysstatisPageModule)
   }
 ];
 

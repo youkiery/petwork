@@ -110,10 +110,10 @@ export class ProfilePage {
     this.rest.checkpost('target', 'remove', {
       id: this.rest.profile.target[i].id,
       key: this.rest.profile.key2
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.notify('Đã xóa chỉ tiêu')
-      this.rest.profile.target = response.list
+      this.rest.profile.target = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -144,7 +144,7 @@ export class ProfilePage {
     await this.rest.freeze('Cập nhật...')
     this.rest.checkpost('target', 'update', {
       id: this.rest.profile.target[index].id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
     }, () => {
@@ -178,7 +178,7 @@ export class ProfilePage {
     this.rest.checkpost('target', 'res', {
       id: this.rest.profile.target[index].id,
       key: this.rest.profile.key
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.profile.target[index].number = 0
     }, () => {
@@ -190,9 +190,9 @@ export class ProfilePage {
     await this.rest.freeze('Đang tải bản in...')
     this.rest.checkpost('profile', 'printword', {
       id: id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      let html = response.html
+      let html = resp.html
       let winPrint = window.open();
       winPrint.focus()
       winPrint.document.write(html);
@@ -208,8 +208,8 @@ export class ProfilePage {
   public search() {
     this.rest.checkpost('target', 'search', {
       key: this.rest.profile.key
-    }).then((response) => {
-      this.rest.profile.target = response.list
+    }).then((resp) => {
+      this.rest.profile.target = resp.list
     }, () => { })
   }
 
@@ -240,10 +240,10 @@ export class ProfilePage {
       key: this.rest.profile.key,
       page: this.rest.profile.page,
       module: this.rest.action
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.profile.page = 1
-      this.rest.profile.list = response.list
+      this.rest.profile.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -284,11 +284,11 @@ export class ProfilePage {
     this.rest.checkpost('profile', 'printword', {
       // action: 'profile-get',
       id: id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.profile.id = id
-      // this.rest.profile.data = response.data
-      this.rest.profile.print = response.html
+      // this.rest.profile.data = resp.data
+      this.rest.profile.print = resp.html
       this.rest.router.navigateByUrl('profile/print')
     }, () => {
       this.rest.defreeze()
@@ -316,9 +316,9 @@ export class ProfilePage {
         key: this.rest.profile.key,
         page: this.rest.profile.page,
         module: this.rest.action
-      }).then(response => {
+      }).then(resp => {
         this.rest.defreeze()
-        let temp = this.rest.profile.list.concat(response.list)
+        let temp = this.rest.profile.list.concat(resp.list)
         this.rest.profile.list = temp
         this.rest.profile.init = true
         resolve(true)

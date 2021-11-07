@@ -14,9 +14,24 @@
     color="secondary" fill="solid" size="small">
     Thêm
   </ion-button>
+  <ion-button *ngIf="rest.temp.act == 'import'" slot="end" (click)="insertImport()"
+    color="secondary" fill="solid" size="small">
+    Nhập hóa chất
+  </ion-button>
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.temp.act == 'import'">
+    <ion-item>
+      <ion-label position="stacked"> Số tiền nhập hóa chất </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name" (ionChange)="change()"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+    </ion-item>
+  </div>
+
   <div *ngIf="rest.temp.act == 'physical'">
     <ion-item>
       <ion-label position="stacked"> Số điện thoại </ion-label>

@@ -36,6 +36,7 @@ export class PhysicalPage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.physical.list = resp.list
+      this.rest.physical.import = resp.import
       this.rest.physical.serial = resp.serial
       this.rest.physical.sampletype = resp.type
       this.rest.physical.species = resp.species
@@ -56,6 +57,12 @@ export class PhysicalPage {
     this.rest.temp.act = 'target'
     this.rest.temp.module = this.rest.action
     this.rest.temp.key = this.rest.physical.key2
+    this.rest.router.navigateByUrl('/physical/insert')
+  }
+
+  public import() {
+    this.rest.temp = { name: 0, note: '' }
+    this.rest.temp.act = 'import'
     this.rest.router.navigateByUrl('/physical/insert')
   }
 
@@ -110,10 +117,10 @@ export class PhysicalPage {
     this.rest.checkpost('target', 'remove', {
       id: this.rest.physical.target[i].id,
       key: this.rest.physical.key2
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.notify('Đã xóa chỉ tiêu')
-      this.rest.physical.target = response.list
+      this.rest.physical.target = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -144,7 +151,7 @@ export class PhysicalPage {
     await this.rest.freeze('Cập nhật...')
     this.rest.checkpost('target', 'update', {
       id: this.rest.physical.target[index].id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.physical.target[index].number = Number(this.rest.physical.target[index].number) + 1
     }, () => {
@@ -178,7 +185,7 @@ export class PhysicalPage {
     this.rest.checkpost('target', 'res', {
       id: this.rest.physical.target[index].id,
       key: this.rest.physical.key
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.physical.target[index].number = 0
     }, () => {
@@ -190,9 +197,9 @@ export class PhysicalPage {
     await this.rest.freeze('Đang tải bản in...')
     this.rest.checkpost('physical', 'printword', {
       id: id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      let html = response.html
+      let html = resp.html
       let winPrint = window.open();
       winPrint.focus()
       winPrint.document.write(html);
@@ -208,8 +215,8 @@ export class PhysicalPage {
   public search() {
     this.rest.checkpost('target', 'search', {
       key: this.rest.physical.key
-    }).then((response) => {
-      this.rest.physical.target = response.list
+    }).then((resp) => {
+      this.rest.physical.target = resp.list
     }, () => { })
   }
 
@@ -240,10 +247,10 @@ export class PhysicalPage {
       key: this.rest.physical.key,
       page: this.rest.physical.page,
       module: this.rest.action
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.physical.page = 1
-      this.rest.physical.list = response.list
+      this.rest.physical.list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -284,11 +291,11 @@ export class PhysicalPage {
     this.rest.checkpost('physical', 'printword', {
       // action: 'physical-get',
       id: id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.physical.id = id
-      // this.rest.physical.data = response.data
-      this.rest.physical.print = response.html
+      // this.rest.physical.data = resp.data
+      this.rest.physical.print = resp.html
       this.rest.router.navigateByUrl('physical/print')
     }, () => {
       this.rest.defreeze()
@@ -316,9 +323,9 @@ export class PhysicalPage {
         key: this.rest.physical.key,
         page: this.rest.physical.page,
         module: this.rest.action
-      }).then(response => {
+      }).then(resp => {
         this.rest.defreeze()
-        let temp = this.rest.physical.list.concat(response.list)
+        let temp = this.rest.physical.list.concat(resp.list)
         this.rest.physical.list = temp
         this.rest.physical.init = true
         resolve(true)

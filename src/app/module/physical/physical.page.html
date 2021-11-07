@@ -21,6 +21,7 @@
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
       <ion-segment-button value="2"> Chỉ tiêu </ion-segment-button>
+      <ion-segment-button value="3"> Nhập hóa chất </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
@@ -82,6 +83,16 @@
       </ion-item>
     </ion-list>  
   </div>
+
+  <div *ngIf="segment == '3'">
+    <div class="stl-card white" *ngFor="let item of rest.physical.import">
+      Người nhập: {{item.name}} <br>
+      Số tiền nhập: {{rest.comma(item.price)}} <br>
+      Ghi chú: {{item.note}} 
+      <div class="time"> {{item.time}} </div>
+    </div>
+  </div>
+
 </ion-content>
 
 <ion-toolbar>
@@ -99,10 +110,10 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm chỉ tiêu </ion-label>
       </ion-tab-button>
-      <!-- <ion-tab-button (click)="import()">
+      <ion-tab-button (click)="import()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Nhập hóa chất </ion-label>
-      </ion-tab-button> -->
+      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>

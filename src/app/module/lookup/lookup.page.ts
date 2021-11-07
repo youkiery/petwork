@@ -42,10 +42,10 @@ export class LookupPage implements OnInit {
     this.rest.checkpost('drug', 'auto', {
       name: this.rest.drug.filter.name,
       effect: this.rest.drug.filter.effect
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      this.rest.drug.list = response.list
-    }, (response) => {
+      this.rest.drug.list = resp.list
+    }, () => {
       this.rest.defreeze()
     })
   }
@@ -104,10 +104,10 @@ export class LookupPage implements OnInit {
       id: this.rest.temp,
       name: this.rest.drug.filter.name,
       effect: this.rest.drug.filter.effect
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.notify('Đã xóa thuốc')
-      this.rest.drug.list = response.list
+      this.rest.drug.list = resp.list
     }, () => {
       this.rest.defreeze()
     })

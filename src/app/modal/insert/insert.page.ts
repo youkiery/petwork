@@ -245,10 +245,10 @@ export class InsertPage {
     this.rest.checkpost('blood', 'insert', {
       'number': this.rest.temp.number,
       'target': this.rest.temp.target,
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.temp.number = 1
-      this.rest.temp.total = Number(response.number)
+      this.rest.temp.total = Number(resp.number)
       this.rest.temp.start = this.rest.temp.total
       this.rest.temp.end = this.rest.temp.total - 1
       this.rest.temp.target = ''

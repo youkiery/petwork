@@ -43,9 +43,9 @@ export class ProfprintPage implements OnInit {
     await this.rest.freeze()
     this.rest.checkpost('profile', 'download', {
       id: this.rest.profile.id
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      window.open(response.link)
+      window.open(resp.link)
     }, () => {
       this.rest.defreeze()
     })

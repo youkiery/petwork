@@ -57,14 +57,14 @@ export class BloodPage implements OnInit {
 
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('blood', 'init', {}).then(response => {
+    this.rest.checkpost('blood', 'init', {}).then(resp => {
       this.rest.defreeze()
-      this.rest.blood.list = response.list
-      this.rest.blood.total = response.total
-      this.rest.blood.current = response.number
-      this.rest.blood.current = response.current
-      this.rest.blood.start = response.start
-      this.rest.blood.end = response.end
+      this.rest.blood.list = resp.list
+      this.rest.blood.total = resp.total
+      this.rest.blood.current = resp.number
+      this.rest.blood.current = resp.current
+      this.rest.blood.start = resp.start
+      this.rest.blood.end = resp.end
       this.rest.blood.init = true
     }, () => {
       this.rest.defreeze()
@@ -76,9 +76,9 @@ export class BloodPage implements OnInit {
     this.rest.checkpost('blood', 'init', {
       start: this.rest.blood.start,
       end: this.rest.blood.end,
-    }).then(response => {
+    }).then(resp => {
       this.rest.defreeze()
-      this.rest.blood.list = response.list
+      this.rest.blood.list = resp.list
     }, () => {
       this.rest.defreeze()
     })

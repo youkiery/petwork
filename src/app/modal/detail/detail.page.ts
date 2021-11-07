@@ -47,9 +47,9 @@ export class DetailPage {
 
   public async bloodInit() {
     await this.rest.freeze('Đang lấy dữ liệu...')
-    this.rest.checkpost('blood', 'statistic', { }).then(response => {
+    this.rest.checkpost('blood', 'statistic', { }).then(resp => {
       this.rest.defreeze()
-      this.rest.temp = response.data
+      this.rest.temp = resp.data
     }, () => {
       this.rest.defreeze()
     })
