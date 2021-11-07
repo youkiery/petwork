@@ -39,7 +39,7 @@ export class BloodPage implements OnInit {
   public statistic() {
     if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.navCtrl.navigateForward('/detail')
+      this.rest.navCtrl.navigateForward('/modal/detail')
     }
   }
 

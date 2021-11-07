@@ -13,10 +13,10 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="stl-card white" style="width: 50%" *ngFor="let user of rest.admin.list; let i = index">
-    Tên hiển thị: {{user.name}} <br>
-    Họ và tên: {{user.fullname}} <br>
-    Tài khoản: {{user.username}} <br>
+  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+    <div class="bei"> Tên hiển thị: {{user.name}} </div>
+    <div class="bei"> Họ tên: {{user.fullname}} </div>
+    <div class="bei"> Tài khoản: {{user.username}} </div>
     <img class="icon" src="/assets/icon/update.png" (click)="detail(i)">
     <img class="icon" src="/assets/icon/delete.png" (click)="remove(user.userid)">
     <img class="icon" *ngIf="user.module.doctor == '1'" src="/assets/icon/doctor-on.png" (click)="toggleDoctor(user.userid)">

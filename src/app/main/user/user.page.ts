@@ -50,4 +50,40 @@ export class UserPage {
     this.rest.action = action
     this.rest.navCtrl.navigateForward('manager')
   }
+
+  public async editName() {
+    const alert = await this.alert.create({
+      header: 'Chỉnh sửa tên hiển thị',
+      inputs: [{
+        name: 'name',
+        value: this.rest.home.name,
+        placeholder: 'Tên hiển thị'
+      }],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            this.editNameSubmit(e.name)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async editNameSubmit(name: string) {
+    await this.rest.freeze('Đang cập nhật...')
+    this.rest.checkpost('user', 'changename', {
+      name: name
+    }).then(data => {
+      this.rest.defreeze()
+      this.rest.home.name = name
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

@@ -17,7 +17,7 @@
 <ion-content *ngIf="rest.isready">
   <div class="avatar-box text-center">
     <ion-img src="assets/image/avatar.png"></ion-img>
-    <ion-text> {{rest.home.fullname}} </ion-text>
+    <ion-text> {{rest.home.name}} </ion-text> <ion-icon name="create-outline" (click)="editName()"></ion-icon>
   </div>
   <ion-list>
     <ion-item (click)="password = !password">
