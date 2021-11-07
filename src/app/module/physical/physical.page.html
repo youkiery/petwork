@@ -72,9 +72,6 @@
     <ion-list>
       <ion-item *ngFor="let item of rest.physical.target; let i = index">
         <ion-label> {{item.name}}</ion-label>
-        <ion-button slot="end" (click)="info(i)">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
         <ion-button slot="end" (click)="updateTarget(i)">
           <ion-icon name="refresh-circle-outline"></ion-icon>
         </ion-button>
@@ -101,6 +98,10 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm chỉ tiêu </ion-label>
       </ion-tab-button>
+      <!-- <ion-tab-button (click)="import()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Nhập hóa chất </ion-label>
+      </ion-tab-button> -->
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>
