@@ -25,7 +25,7 @@ export class ItemPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()
+      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('item')
       if (this.rest.temp.action == 'purchase' && !this.init) this.purchaseInit()
       if (this.rest.temp.action == 'transfer' && !this.init) this.transferInit()
       if (this.rest.temp.action == 'expired' && !this.init) this.expiredInit()

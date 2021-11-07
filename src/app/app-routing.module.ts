@@ -84,10 +84,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/kaizen/kaizen.module').then( m => m.KaizenPageModule)
   },
   {
-    path: 'vehicle',
-    loadChildren: () => import('./module/vehicle/vehicle.module').then( m => m.VehiclePageModule)
-  },
-  {
     path: 'schedule',
     loadChildren: () => import('./module/schedule/schedule.module').then( m => m.SchedulePageModule)
   },

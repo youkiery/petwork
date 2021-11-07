@@ -43,7 +43,7 @@ export class UsgsearchPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('usg')      
+      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('usg')
     })
   }
 

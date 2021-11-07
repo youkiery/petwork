@@ -23,8 +23,8 @@ export class ProfprintPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()
-      this.html = this.dom.bypassSecurityTrustHtml(this.rest.profile.print)
+      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('profile')
+      else this.html = this.dom.bypassSecurityTrustHtml(this.rest.profile.print)
     })
   }
 

@@ -17,7 +17,7 @@ export class ProfdetailPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()      
+      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('profile')
     })
   }
 

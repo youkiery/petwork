@@ -23,8 +23,8 @@ export class PhysprintPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()
-      this.html = this.dom.bypassSecurityTrustHtml(this.rest.physical.print)
+      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
+      else this.html = this.dom.bypassSecurityTrustHtml(this.rest.physical.print)
     })
   }
 
