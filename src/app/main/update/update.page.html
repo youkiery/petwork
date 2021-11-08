@@ -2,6 +2,6 @@
   <div class="stl-card">
     Phiên bản đang sử dụng đã quá hạn <br>
     Tải lại trang để cập nhật <ion-icon name="refresh-outline"></ion-icon> <ion-icon name="refresh-circle-outline"></ion-icon>
-    <!-- - Với ứng dụng THANHXUANPET trên android hãy tải lại file cài đặt dưới <span style="color: red" (click)="download">đây</span> -->
+    <span *ngIf="platform.platforms().indexOf('android') >= 0"> - Với ứng dụng THANHXUANPET trên android hãy tải lại file cài đặt dưới <span style="color: red" (click)="download">đây</span> </span>
   </div>
 </ion-content>

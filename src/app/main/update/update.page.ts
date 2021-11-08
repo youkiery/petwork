@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -10,6 +11,7 @@ export class UpdatePage implements OnInit {
 
   constructor(
     public rest: RestService,
+    public platform: Platform
   ) { }
 
   ngOnInit() {
