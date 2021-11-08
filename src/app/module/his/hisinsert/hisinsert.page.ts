@@ -14,6 +14,7 @@ export class HisinsertPage implements OnInit {
     { id: 2, name: 'Rất yếu' },
   ]
   public list = []
+  public init = false
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -23,6 +24,12 @@ export class HisinsertPage implements OnInit {
   
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
+    else this.rest.ready().then(() => {
+      if (!this.rest.temp.id && !this.init) {
+        this.init = true
+        this.suggest()
+      }
+    })
   }
 
   public suggest() {

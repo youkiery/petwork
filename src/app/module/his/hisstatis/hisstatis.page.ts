@@ -22,9 +22,7 @@ export class HisstatisPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
-    this.rest.ready().then(() => {
-      this.statistic()
-    })
+    else this.statistic()
   }
 
   public async statistic() {

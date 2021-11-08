@@ -19,11 +19,11 @@ export class NotifyPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
-    this.rest.ready().then(() => {
+    else {
       this.rest.checkpost('user', 'notify', {}).then(() => {
         this.rest.home.notify = 0
       }, () => { })
-    })
+    }
   }
 
   public navi(module: string) {

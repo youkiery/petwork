@@ -19,12 +19,10 @@ export class InsertPage {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
-    this.rest.ready().then(() => {
-      if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
-        this.init = true
-        this.suggest()
-      }      
-    })
+    else if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
+      this.init = true
+      this.suggest()
+    }
   }
 
   public async insertPosItemSubmit() {

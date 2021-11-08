@@ -16,9 +16,7 @@ export class AdminPage {
 
   public async ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
-    this.rest.ready().then(() => {
-      this.init()
-    })
+    else this.init()
   }
 
   public async init() {

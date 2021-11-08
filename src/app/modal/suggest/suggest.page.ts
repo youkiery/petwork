@@ -12,18 +12,16 @@ export class SuggestPage {
   timeout = null
   @ViewChild('input') input: any;
   @ViewChild('input2') input2: any;
-  constructor (
+  constructor(
     public rest: RestService
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
-    this.rest.ready().then(() => {
-      if (this.rest.action == 'item') this.input2.setFocus();
-      else this.input.setFocus();
-    })
+    else if (this.rest.action == 'item') this.input2.setFocus();
+    else this.input.setFocus();
   }
-    
+
   public suggest() {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
@@ -42,7 +40,7 @@ export class SuggestPage {
     if (this.rest.temp.param) this.rest.temp.phone2 = this.key
     else this.rest.temp.phone = this.key
     this.rest.back()
-  } 
+  }
 
   public select(i: number) {
     if (this.rest.temp.param) {
@@ -75,7 +73,7 @@ export class SuggestPage {
       this.rest.defreeze()
     })
   }
-    
+
   public suggestItem() {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
@@ -93,9 +91,9 @@ export class SuggestPage {
   public selectcurrentItem() {
     this.rest.temp.name = this.key
     this.rest.back()
-  } 
+  }
 
-  public selectItem(name:string, code: string) {
+  public selectItem(name: string, code: string) {
     this.rest.temp.name = name
     this.rest.temp.code = code
     this.rest.back()
