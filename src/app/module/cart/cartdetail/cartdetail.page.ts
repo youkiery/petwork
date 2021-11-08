@@ -18,9 +18,7 @@ export class CartdetailPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('cart')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('cart')
   }
   
   public async cartpick() {

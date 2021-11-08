@@ -41,8 +41,8 @@ export class ManagerPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (!this.rest.action) this.rest.navCtrl.navigateBack('/vaccine')
     this.rest.ready().then(() => {
-      if (!this.rest.action) this.rest.navCtrl.navigateBack('/vaccine')
       if (this.rest.temp && this.rest.temp.prv && this.rest.temp.prv.length) this.rest.action = this.rest.temp.prv
       this.rest.home.doctor.forEach((item, index) => {
         this.option.push({

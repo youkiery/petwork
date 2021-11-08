@@ -22,9 +22,9 @@ export class PhysprintPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
-      else this.html = this.dom.bypassSecurityTrustHtml(this.rest.physical.print)
+      this.html = this.dom.bypassSecurityTrustHtml(this.rest.physical.print)
     })
   }
 

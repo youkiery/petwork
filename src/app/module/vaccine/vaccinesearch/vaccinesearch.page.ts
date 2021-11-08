@@ -37,9 +37,7 @@ export class VaccinesearchPage implements OnInit {
   }
 
   public async ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')
   }
 
   public async search() {

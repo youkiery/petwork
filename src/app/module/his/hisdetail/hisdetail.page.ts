@@ -22,9 +22,7 @@ export class HisdetailPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
   }
 
   public update(i: number) {

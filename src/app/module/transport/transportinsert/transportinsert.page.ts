@@ -16,9 +16,7 @@ export class TransportinsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('transport')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('transport')
   }
 
   public async insert() {

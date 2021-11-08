@@ -20,9 +20,9 @@ export class PhysstatisPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
-      else this.init()
+      this.init()
     })
   }
 

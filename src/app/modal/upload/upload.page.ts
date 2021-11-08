@@ -20,8 +20,8 @@ export class UploadPage {
   ) { }
 
   ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.root()
     this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()
       if (this.rest.action == 'spa') {
         if (!this.rest.temp.id && !this.init) {
           this.init = true

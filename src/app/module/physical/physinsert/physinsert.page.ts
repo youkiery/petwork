@@ -27,9 +27,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('physical')
   }
 
   public async insertImport() {

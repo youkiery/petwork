@@ -14,9 +14,7 @@ export class FilterPage {
   ) {  }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.root()      
-    })
+    if (!this.rest.action.length) this.rest.root()      
   }
 
   public async detail(image: string) {

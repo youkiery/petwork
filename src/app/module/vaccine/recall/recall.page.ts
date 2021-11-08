@@ -27,9 +27,7 @@ export class RecallPage {
   ) { }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')    
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')    
   }
 
   public selectbox(id: number) {

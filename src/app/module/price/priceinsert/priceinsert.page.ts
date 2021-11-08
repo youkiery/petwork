@@ -16,9 +16,7 @@ export class PriceinsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('price')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('price')
   }
 
   public change(index: number) {

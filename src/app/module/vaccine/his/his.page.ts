@@ -26,9 +26,7 @@ export class HisPage {
   ) { }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')   
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('vaccine')   
   }
 
   public new() {

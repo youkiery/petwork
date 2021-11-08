@@ -22,9 +22,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('profile')
-    })
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('profile')
   }
 
   public async updateTarget() {

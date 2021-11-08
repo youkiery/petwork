@@ -17,9 +17,7 @@ export class ManualPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      if (!this.rest.temp.action) this.rest.root()
-    })
+    if (!this.rest.temp.action) this.rest.root()
   }
 
   public scrollto(element: string) {
