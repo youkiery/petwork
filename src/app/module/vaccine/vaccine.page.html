@@ -151,7 +151,7 @@
       <img *ngIf="item['status'] == 0" class="icon" src="/assets/icon/pregnant.png" (click)="ucalled(i)">
       <img *ngIf="item['status'] == 1" class="icon" src="/assets/icon/progesterone.png" (click)="progesterone(i)">
       <img *ngIf="item['status'] == 2" class="icon" src="/assets/icon/resound.png" (click)="ucalled(i)">
-      <img *ngIf="item['status'] == 3" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
+      <img *ngIf="item['status'] == 3 || item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
       <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="ucalled(i)">
       <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="ucalled(i)">
       <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
