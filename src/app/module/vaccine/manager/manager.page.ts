@@ -12,7 +12,6 @@ export class ManagerPage implements OnInit {
   public prv = ''
   public input: any = {}
   public list = []
-  public type = 'vaccine'
   public status_text = {
     0: 'Chưa nhắc',
     1: 'Chưa gọi được',
@@ -102,7 +101,7 @@ export class ManagerPage implements OnInit {
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost(this.type, 'tempauto', {
+    this.rest.checkpost(this.rest.vaccine.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -111,7 +110,7 @@ export class ManagerPage implements OnInit {
       this.page = 1
       this.selected = {}
       this.toggle = false
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -132,7 +131,7 @@ export class ManagerPage implements OnInit {
     let list = []
     for (const key in this.selected) {
       if (Object.prototype.hasOwnProperty.call(this.selected, key)) {
-        list.push(this.rest[this.type].temp[this.segment][key].id)
+        list.push(this.rest[this.rest.vaccine.type].temp[this.segment][key].id)
       }
     }
     return list
@@ -175,7 +174,7 @@ export class ManagerPage implements OnInit {
 
   public async transferAllSubmit(list: any, uid: number) {
     await this.rest.freeze('Đang xóa loại nhắc...')
-    this.rest.checkpost(this.type, 'transfer', {
+    this.rest.checkpost(this.rest.vaccine.type, 'transfer', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -184,7 +183,7 @@ export class ManagerPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -215,7 +214,7 @@ export class ManagerPage implements OnInit {
 
   public async removeAllSubmit(list: any) {
     await this.rest.freeze('Đang xóa loại nhắc...')
-    this.rest.checkpost(this.type, 'removeall', {
+    this.rest.checkpost(this.rest.vaccine.type, 'removeall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -223,7 +222,7 @@ export class ManagerPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.selected = {}
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -234,7 +233,7 @@ export class ManagerPage implements OnInit {
     let index = this.getselectedindex()
     
     index.forEach(item => {
-      let citem = this.rest[this.type].temp[this.segment][item]
+      let citem = this.rest[this.rest.vaccine.type].temp[this.segment][item]
       if (!(!citem.name.length || !citem.phone.length || !this.time.isisodate(this.time.datetoisodate(citem.cometime)) || !this.time.isisodate(this.time.datetoisodate(citem.calltime)))) {
         list.push(citem.id)
       }
@@ -263,17 +262,17 @@ export class ManagerPage implements OnInit {
 
   public async doneAllSubmit(list: any) {
     await this.rest.freeze('Đang xác nhận...')
-    this.rest.checkpost(this.type, 'doneall', {
+    this.rest.checkpost(this.rest.vaccine.type, 'doneall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
       list: list
     }).then(resp => {
       this.rest.defreeze()
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
       this.selected = {}
 
-      if (resp.old.length && this.type == 'vaccine') {
+      if (resp.old.length && this.rest.vaccine.type == 'vaccine') {
         this.rest.temp.ov = {}
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
@@ -286,7 +285,7 @@ export class ManagerPage implements OnInit {
   }
 
   public update(index: number) {
-    if (this.type == 'vaccine') {
+    if (this.rest.vaccine.type == 'vaccine') {
       this.rest.action = 'vaccine'
       let item = JSON.parse(JSON.stringify(this.rest.vaccine.temp[this.segment][index])) 
       if (!item.calltime) item.calltime = this.time.timetoisodate(this.time.datetotime(item.cometime) + 60 * 60 * 24 * 21 * 1000)
@@ -329,7 +328,7 @@ export class ManagerPage implements OnInit {
         note: item.note,
       }
     }
-    this.rest.router.navigateByUrl(this.type + '/insert')
+    this.rest.router.navigateByUrl(this.rest.vaccine.type + '/insert')
   }
 
   public async remove(index: number) {
@@ -353,21 +352,21 @@ export class ManagerPage implements OnInit {
 
   public async removeSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost(this.type, 'removetemp', {
+    this.rest.checkpost(this.rest.vaccine.type, 'removetemp', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
-      id: this.rest[this.type].temp[this.segment][index].id
+      id: this.rest[this.rest.vaccine.type].temp[this.segment][index].id
     }).then(resp => {
       this.rest.defreeze()
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
   }
 
   public async done(index: number) {
-    let data = this.rest[this.type].temp[this.segment][index]
+    let data = this.rest[this.rest.vaccine.type].temp[this.segment][index]
     console.log();
     
 
@@ -397,7 +396,7 @@ export class ManagerPage implements OnInit {
 
   public async doneSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost(this.type, 'confirm', {
+    this.rest.checkpost(this.rest.vaccine.type, 'confirm', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -407,8 +406,8 @@ export class ManagerPage implements OnInit {
       this.rest.defreeze()
       this.selected = {}
       this.toggle = false
-      this.rest[this.type].temp = resp.temp
-      if (this.type == 'vaccine' && resp.old.length) {
+      this.rest[this.rest.vaccine.type].temp = resp.temp
+      if (this.rest.vaccine.type == 'vaccine' && resp.old.length) {
         this.rest.temp.list = resp.old
         this.rest.action = 'vaccine'
         this.rest.temp.prv = 'temp'
@@ -423,7 +422,7 @@ export class ManagerPage implements OnInit {
 
   public async reloadTemp(event: any) {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost(this.type, 'tempauto', {
+    this.rest.checkpost(this.rest.vaccine.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -431,7 +430,7 @@ export class ManagerPage implements OnInit {
       this.rest.defreeze()
       this.selected = {}
       this.toggle = false
-      this.rest[this.type].temp = resp.list
+      this.rest[this.rest.vaccine.type].temp = resp.list
       event.target.complete();
       this.page = 1
     }, () => {

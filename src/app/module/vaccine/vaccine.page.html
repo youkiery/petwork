@@ -36,7 +36,7 @@
     <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
   </ion-item>
 
-  <ion-segment [(ngModel)]="type">
+  <ion-segment [(ngModel)]="rest.vaccine.type">
     <ion-segment-button value="vaccine">
       <ion-label>
         Vaccine
@@ -53,7 +53,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <div *ngIf="type == 'vaccine'">
+  <div *ngIf="rest.vaccine.type == 'vaccine'">
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
         <ion-label>
@@ -104,7 +104,7 @@
     </div>
   </div>
 
-  <div *ngIf="type == 'usg'">
+  <div *ngIf="rest.vaccine.type == 'usg'">
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="0">
         <ion-label>

@@ -47,7 +47,6 @@ export class VaccinePage {
     4: 'Xác nhận đã xổ giun, phiếu nhắc tiêm phòng sẽ hiện lại 6 tuần sau khi sinh',
     5: 'Xác nhận đã tiêm vaccine',
   }
-  public type = 'vaccine'
   public segment = '0'
   public key = ''
   public page = 1
@@ -91,7 +90,7 @@ export class VaccinePage {
     if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
       await this.rest.freeze('Đang tải danh sách')
-      this.rest.checkpost(this.type, 'searchcustomer', {
+      this.rest.checkpost(this.rest.vaccine.type, 'searchcustomer', {
         keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
         docscover: this.rest.home.default.docscover,
@@ -99,8 +98,8 @@ export class VaccinePage {
       }).then(resp => {
         this.rest.defreeze()
         this.rest.temp = resp.list
-        this.rest.action = this.type
-        this.rest.navCtrl.navigateForward(this.type + '/search')
+        this.rest.action = this.rest.vaccine.type
+        this.rest.navCtrl.navigateForward(this.rest.vaccine.type + '/search')
       }, () => {
         this.rest.defreeze()
       })
@@ -115,14 +114,14 @@ export class VaccinePage {
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost(this.type, 'filter', {
+    this.rest.checkpost(this.rest.vaccine.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       this.page = 1
-      this.rest[this.type].list = resp.list
+      this.rest[this.rest.vaccine.type].list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -130,14 +129,14 @@ export class VaccinePage {
 
   public async filterR(event: any) {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost(this.type, 'filter', {
+    this.rest.checkpost(this.rest.vaccine.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
     }).then(resp => {
       this.rest.defreeze()
       event.target.complete();
-      this.rest[this.type].list = resp.list
+      this.rest[this.rest.vaccine.type].list = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -218,13 +217,13 @@ export class VaccinePage {
         docscover: this.rest.home.default.docscover,
       }
     }
-    this.rest.navCtrl.navigateForward('/'+ this.type +'/insert')
+    this.rest.navCtrl.navigateForward('/'+ this.rest.vaccine.type +'/insert')
   }
 
   public update(index: number) {
-    this.rest.action = this.type
-    let item = this.rest[this.type].list[this.segment][index]
-    if (this.type == 'vaccine') {
+    this.rest.action = this.rest.vaccine.type
+    let item = this.rest[this.rest.vaccine.type].list[this.segment][index]
+    if (this.rest.vaccine.type == 'vaccine') {
       this.rest.temp = {
         id: item.id,
         petname: item.petname,
@@ -254,7 +253,7 @@ export class VaccinePage {
         docscover: this.rest.home.default.docscover,
       }
     }
-    this.rest.navCtrl.navigateForward('/'+ this.type +'/insert')
+    this.rest.navCtrl.navigateForward('/'+ this.rest.vaccine.type +'/insert')
   }
 
   public async called(index: number) {
