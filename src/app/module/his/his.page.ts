@@ -69,12 +69,13 @@ export class HisPage implements OnInit {
       time: this.time.datetoisodate(this.rest.home.today),
       name: this.rest.his.list[i].customer,
       phone: this.rest.his.list[i].phone,
-      petlist: [],
-      pet: 0,
+      pet: "",
       eye: '',
       temperate: '',
       other: '',
       treat: '',
+      from: this.rest.his.from,
+      end: this.rest.his.end,
       status: Number(this.rest.his.list[i].status),
     }
     this.rest.navCtrl.navigateForward('his/insert')    
@@ -220,10 +221,11 @@ export class HisPage implements OnInit {
 
   public insert() {
     this.rest.temp = {
+      from: this.rest.his.from,
+      end: this.rest.his.end,
       name: '',
       phone: '',
-      petname: '',
-      pet: 0,
+      pet: '',
       eye: '',
       temperate: '',
       other: '',

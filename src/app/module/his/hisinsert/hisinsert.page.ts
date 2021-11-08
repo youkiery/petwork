@@ -33,14 +33,11 @@ export class HisinsertPage implements OnInit {
   }
 
   public suggest() {
-    this.rest.temp.param = 0
-    this.rest.navCtrl.navigateForward('modal/suggest')
+    this.rest.navCtrl.navigateForward('modal/pet')
   }
 
   public async save() {
     await this.rest.freeze('Đang thêm dữ liệu...')
-    this.rest.temp.from = this.rest.his.from
-    this.rest.temp.end = this.rest.his.end
     this.rest.checkpost('his', 'insert', this.rest.temp).then((resp) => {
       this.rest.his.list = resp.list
       this.rest.defreeze()

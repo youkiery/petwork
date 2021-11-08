@@ -1,9 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>pet</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-input [(ngModel)]="key" (keyup)="suggest()" #input [disabled]="selected"> </ion-input>
+    <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
+  </ion-item>
+  <div *ngIf="!selected">
+    <div *ngIf="list.length">
+      <ion-item *ngFor="let item of list; let i = index" (click)="select(i)">
+        {{item.name}} - {{item.phone}}
+      </ion-item>
+    </div>
+    <div *ngIf="!list.length" class="text-center">
+      Nhập số điện thoại tìm kiếm khách hàng, nếu không có, chọn <img class="clear-img" style="width: 16px"
+        src="/assets/icon/select.png">
+    </div>
+  </div>
+  <div *ngIf="selected">
+    <div class="text-center">
+      Nhập tên thú cưng và nhấn <img class="clear-img" style="width: 16px" src="/assets/icon/select.png"> hoặc chọn trong danh sách bên dưới
+    </div>
+    <ion-item>
+      <ion-input [(ngModel)]="key2"> </ion-input>
+      <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrentpet()">
+    </ion-item>
+    <div class="text-center">
+      Danh sách thú cưng
+    </div>
+    <div *ngIf="petlist.length">
+      <ion-item *ngFor="let item of petlist; let i = index" (click)="selectpet(i)">
+        {{item.name}}
+      </ion-item>
+    </div>
+    
+  </div>
 </ion-content>
