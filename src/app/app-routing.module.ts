@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./modal/manual/manual.module').then( m => m.ManualPageModule)
   },
   {
+    path: 'modal/pet',
+    loadChildren: () => import('./modal/pet/pet.module').then( m => m.PetPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },
