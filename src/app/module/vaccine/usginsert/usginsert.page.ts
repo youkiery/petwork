@@ -20,8 +20,8 @@ export class UsginsertPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('usg')
-    else if ((this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('vaccine')
+    else if (!this.rest.temp.id && !this.init) {
       this.init = true
       this.suggest()
     }

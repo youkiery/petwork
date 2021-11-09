@@ -27,6 +27,14 @@ const routes: Routes = [
   {
     path: 'insert',
     loadChildren: () => import('./vaccineinsert/vaccineinsert.module').then( m => m.VaccineinsertPageModule)
+  },
+  {
+    path: 'usearch',
+    loadChildren: () => import('./usgsearch/usgsearch.module').then( m => m.UsgsearchPageModule)
+  },
+  {
+    path: 'uinsert',
+    loadChildren: () => import('./usginsert/usginsert.module').then( m => m.UsginsertPageModule)
   }
 ];
 

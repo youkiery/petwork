@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
-import { TimeService } from 'src/app/services/time.service';
 
 @Component({
-  selector: 'app-usg',
-  templateUrl: './usg.page.html',
-  styleUrls: ['./usg.page.scss'],
+  selector: 'app-usgsearch',
+  templateUrl: './usgsearch.page.html',
+  styleUrls: ['./usgsearch.page.scss'],
 })
-export class UsgPage {
-  public segment = '0'
+export class UsgsearchPage implements OnInit {
   public header = {
     0: 'Nhắc tiêm phòng trước salơ',
     1: 'Nhắc test Progesterone',
@@ -37,35 +35,14 @@ export class UsgPage {
   public page = 1
   constructor(
     public rest: RestService,
-    public alert: AlertController,
-    public time: TimeService
+    public alert: AlertController
   ) { }
 
-  public async ionViewWillEnter() {
-    this.rest.ready().then(() => {
-      this.rest.action = 'usg'
-      this.rest.usg.key = this.rest.usg.key
-      if (!this.rest.usg.init) this.init()
-    })
+  ngOnInit() {
   }
 
-  public async init() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('usg', 'auto', {
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-      time: this.rest.usg.time,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.usg.init = true
-      this.rest.usg.new = resp.new
-      this.rest.usg.list = resp.list
-      // this.rest.usg.type = resp.type
-      this.rest.usg.temp = resp.temp
-      // this.rest.usg.over = resp.over
-    }, () => {
-      this.rest.defreeze()
-    })
+  ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('vaccine')
   }
 
   public async search() {
@@ -80,145 +57,24 @@ export class UsgPage {
       }).then(resp => {
         this.rest.defreeze()
         this.rest.temp = resp.list
-        this.rest.navCtrl.navigateForward('usg/search')
+        this.page = 1
       }, () => {
         this.rest.defreeze()
       })
     }
   }
 
-  public cleardocs() {
-    this.rest.home.default.docs = []
-    this.rest.home.default.docscover = ''
-    this.filter()
-  }
-
-  public async filter() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('usg', 'search', {
-      time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.page = 1
-      this.rest.usg.key = this.rest.usg.key
-      this.rest.usg.list = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public moreusg(event: any) {
-    this.page ++
-    event.target.complete()
-  }
-
-  public async filterR(event: any) {
-    await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('usg', 'search', {
-      time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-    }).then(resp => {
-      event.target.complete();
-      this.rest.defreeze()
-      this.page = 1
-      this.rest.usg.key = this.rest.usg.key
-      this.rest.usg.list = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async docs() {
-    let option = []
-    this.rest.home.doctor.forEach((item, index) => {
-      option.push({
-        name: 'check',
-        type: 'checkbox',
-        label: item.name,
-        value: index,
-        checked: (this.rest.home.default.docs.indexOf(item.userid) >= 0 ? true : false)
-      })
-    })
-    const alert = await this.alert.create({
-      header: 'Lọc nhân viên',
-      inputs: option,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (e) => {
-            let cover = []
-            let docs = []
-            e.forEach((index: number) => {
-              cover.push(this.rest.home.doctor[index].name)
-              docs.push(this.rest.home.doctor[index].userid)
-            });
-            
-            this.rest.home.default.docs = docs
-            this.rest.home.default.docscover = cover.join(', ')
-            this.filter()
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  public insert() {
-    this.rest.temp = {
-      id: 0,
-      number: 0,
-      name: '',
-      phone: '',
-      address: '',
-      cometime: this.time.datetoisodate(this.rest.home.today),
-      calltime: this.time.datetoisodate(this.rest.home.next),
-      note: '',
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-    }
-    this.rest.navCtrl.navigateForward('/usg/insert')
-  }
-
-  public update(index: number) {
-    let item = this.rest.usg.list[this.segment][index]
-    this.rest.temp = {
-      route: true,
-      id: item.id,
-      number: item.number,
-      name: item.name,
-      phone: item.phone,
-      address: item.address,
-      cometime: this.time.datetoisodate(item.cometime),
-      calltime: this.time.datetoisodate(item.calltime),
-      note: item.note,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
-    }
-    this.rest.navCtrl.navigateForward('/usg/insert')
-  }
-
   public async birth(index: number) {
-    let current = this.rest.usg.list[this.segment][index].calltime.split('/')
+    let current = this.rest.temp[index].calltime.split('/')
     let target = current[2] + '-' + current[1] + '-' + current[0]
 
     const alert = await this.alert.create({
-      header: this.header[this.rest.usg.list[this.segment][index].status],
-      subHeader: this.subheader[this.rest.usg.list[this.segment][index].status],
+      header: this.header[this.rest.temp[index].status],
+      subHeader: this.subheader[this.rest.temp[index].status],
       inputs: [{
         type: 'number',
         name: 'number',
-        value: this.rest.usg.list[this.segment][index].number,
+        value: this.rest.temp[index].number,
         placeholder: 'Số thai'
       },
       {
@@ -228,15 +84,9 @@ export class UsgPage {
         placeholder: 'Ngày sinh'
       },
       {
-        type: 'date',
-        name: 'repregnant',
-        value: '',
-        placeholder: 'Ngày nhắc salơ chó mẹ'
-      },
-      {
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -246,7 +96,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e)
+            this.birthSubmit(this.rest.temp[index].id, e.number, e.calltime, e.note)
           }
         }
       ]
@@ -254,20 +104,18 @@ export class UsgPage {
     await alert.present();
   }
 
-  public async birthSubmit(id: number, data: any) {
+  public async birthSubmit(id: number, number: number, calltime: string, note: string) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('usg', 'birth', {
       id: id,
-      note: data['note'],
-      number: data['number'],
-      calltime: data['calltime'],
-      repregnant: data['repregnant'],
+      note: note,
+      number: number,
+      calltime: calltime,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -275,12 +123,12 @@ export class UsgPage {
 
   public async called(index: number) {
     const alert = await this.alert.create({
-      header: this.header[this.rest.usg.list[this.segment][index].status],
-      subHeader: this.subheader[this.rest.usg.list[this.segment][index].status],
+      header: this.header[this.rest.temp[index].status],
+      subHeader: this.subheader[this.rest.temp[index].status],
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -290,7 +138,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.calledSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -304,11 +152,10 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -321,7 +168,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -331,7 +178,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.deadSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.deadSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -346,11 +193,10 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -363,7 +209,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -373,7 +219,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.doneSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -388,11 +234,10 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -405,7 +250,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -415,7 +260,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.progesteroneSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.progesteroneSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -430,11 +275,10 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
@@ -447,7 +291,7 @@ export class UsgPage {
       inputs: [{
         type: 'text',
         name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
+        value: this.rest.temp[index].note,
         placeholder: 'Ghi chú'
       }],
       buttons: [
@@ -457,7 +301,7 @@ export class UsgPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.repregnantSubmit(this.rest.usg.list[this.segment][index].id, e.note)
+            this.repregnantSubmit(this.rest.temp[index].id, e.note)
           }
         }
       ]
@@ -472,18 +316,17 @@ export class UsgPage {
       id: id,
       note: note,
       time: this.rest.usg.time,
-      docs: this.rest.home.default.docs,
-      docscover: this.rest.home.default.docscover,
+      docs: this.rest.home.default.docs
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.usg.list = resp.list
+      this.rest.temp = resp.list
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  public manager() {
-    this.rest.temp = {}
-    this.rest.navCtrl.navigateForward('usg/manager')
+  public moreVaccine(event: any) {
+    this.page ++
+    event.target.complete()
   }
 }

@@ -99,7 +99,8 @@ export class VaccinePage {
         this.rest.defreeze()
         this.rest.temp = resp.list
         this.rest.action = this.rest.vaccine.type
-        this.rest.navCtrl.navigateForward(this.rest.vaccine.type + '/search')
+        if (this.rest.vaccine.type == 'vaccine') this.rest.navCtrl.navigateForward('vaccine/search')
+        else this.rest.navCtrl.navigateForward('vaccine/usearch')
       }, () => {
         this.rest.defreeze()
       })
@@ -217,7 +218,8 @@ export class VaccinePage {
         docscover: this.rest.home.default.docscover,
       }
     }
-    this.rest.navCtrl.navigateForward('/'+ this.rest.vaccine.type +'/insert')
+    if (this.rest.vaccine.type == 'vaccine') this.rest.navCtrl.navigateForward('vaccine/insert')
+    else this.rest.navCtrl.navigateForward('vaccine/uinsert')
   }
 
   public update(index: number) {
@@ -253,7 +255,8 @@ export class VaccinePage {
         docscover: this.rest.home.default.docscover,
       }
     }
-    this.rest.navCtrl.navigateForward('/'+ this.rest.vaccine.type +'/insert')
+    if (this.rest.vaccine.type == 'vaccine') this.rest.navCtrl.navigateForward('vaccine/insert')
+    else this.rest.navCtrl.navigateForward('vaccine/uinsert')
   }
 
   public async called(index: number) {

@@ -56,10 +56,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/vaccine/vaccine.module').then( m => m.VaccinePageModule)
   },
   {
-    path: 'usg',
-    loadChildren: () => import('./module/usg/usg.module').then( m => m.UsgPageModule)
-  },
-  {
     path: 'cart',
     loadChildren: () => import('./module/cart/cart.module').then( m => m.CartPageModule)
   },
