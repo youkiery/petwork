@@ -49,7 +49,7 @@ export class RestService {
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, from: '', end: '' }
   public vaccine = { init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
-  public usg = { key: '',init: false, list: [[], [], []], new: [], old: [], type: [], temp: [[], []], over: [], time: '' }
+  public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
   public item = { init: false, list: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }

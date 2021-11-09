@@ -12,6 +12,13 @@ export class ManagerPage implements OnInit {
   public name = ''
   public input: any = {}
   public list = []
+  public data = {
+    on: 0,
+    total: 0,
+    vaccine: 0,
+    insert: 0,
+    error: []
+  }
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -466,6 +473,7 @@ export class ManagerPage implements OnInit {
           this.rest.logout()
         }
         else {
+          this.data = resp.data
           this.rest.notify(resp.messenger)
         }
       }, (error) => {

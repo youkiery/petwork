@@ -87,13 +87,13 @@ export class UsginsertPage implements OnInit {
       cometime: this.time.datetoisodate(item.cometime),
       calltime: this.time.datetoisodate(item.calltime),
       note: item.note,
-      keyword: this.rest.usg.key
+      keyword: this.rest.vaccine.keyword
     }
   }
 
   public async updateUsgSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
-    this.rest.temp.filter = this.rest.usg.key
+    this.rest.temp.filter = this.rest.vaccine.keyword
     this.rest.checkpost('usg', 'update', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.usg.new = resp.new

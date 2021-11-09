@@ -126,5 +126,19 @@
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
         (change)="file()">
     </div>
+    <div *ngIf="data.on">
+      <div class="stl-card blue">
+        Tổng số mặt hàng: {{data.total}} <br>
+        Tổng số trường nhắc: {{data.vaccine}} <br>
+        Đã thêm: {{data.insert}} <br>
+        Lỗi: {{data.error.length}}
+      </div>
+
+      <div class="stl-card small" *ngFor="let item of data.error">
+        Khách hàng: {{item.name}} <br>
+        Số điện thoại: {{item.phone}} <br>
+        Ghi chú: {{item.note}}
+      </div>
+    </div>
   </div>
 </ion-content>

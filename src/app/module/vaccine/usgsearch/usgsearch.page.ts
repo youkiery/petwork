@@ -46,11 +46,11 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async search() {
-    if (!this.rest.usg.key.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
+    if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
       await this.rest.freeze('Đang tải danh sách')
       this.rest.checkpost('usg', 'searchcustomer', {
-        keyword: this.rest.usg.key,
+        keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
         docscover: this.rest.home.default.docscover,
         time: this.rest.usg.time,
