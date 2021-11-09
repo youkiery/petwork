@@ -22,15 +22,48 @@ export class ManagerPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()      
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('user')   
+  }
+
+  public async refreshSpa(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'spa', {}).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
+      this.rest.home.spa = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async refreshtype(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'type', {}).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
+      this.rest.home.type = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async refreshUsg(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'usg', {}).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
+      this.rest.home.usgcode = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
 
-  public async toggleDefault(id: number, value: string) {
+  public async toggleDefault(id: number, alt: string) {
     await this.rest.freeze('Đang cập nhật dữ liệu...')
     this.rest.checkpost('spa', 'toggletype', {
       id: id,
-      value: value,
+      alt: alt,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list

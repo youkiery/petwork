@@ -122,6 +122,10 @@ export class RestService {
     return type
   }
 
+  public isnumber(n: number) {
+    return Number(n)
+  }
+
   public async subscribe() {
     await PushNotifications.requestPermissions();
     await PushNotifications.register();
