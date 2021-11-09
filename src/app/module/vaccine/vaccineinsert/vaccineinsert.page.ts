@@ -175,22 +175,4 @@ export class VaccineinsertPage {
   public changeNumber() {
     this.rest.temp.end = this.rest.temp.start - this.rest.temp.number
   }
-
-  public async bloodInsert() {
-    await this.rest.freeze('Đang thêm phiếu nhập...')
-    this.rest.checkpost('blood', 'insert', {
-      'number': this.rest.temp.number,
-      'target': this.rest.temp.target,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.temp.number = 1
-      this.rest.temp.total = Number(resp.number)
-      this.rest.temp.start = this.rest.temp.total
-      this.rest.temp.end = this.rest.temp.total - 1
-      this.rest.temp.target = ''
-      this.rest.back()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
 }

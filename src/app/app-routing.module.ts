@@ -75,10 +75,6 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
   },
-  // {
-  //   path: 'blood',
-  //   loadChildren: () => import('./module/blood/blood.module').then( m => m.BloodPageModule)
-  // },
   {
     path: 'item',
     loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
@@ -95,10 +91,6 @@ const routes: Routes = [
     path: 'his',
     loadChildren: () => import('./module/his/his.module').then( m => m.HisPageModule)
   },
-  // {
-  //   path: 'inout',
-  //   loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
-  // },
   {
     path: 'price',
     loadChildren: () => import('./module/price/price.module').then( m => m.PricePageModule)

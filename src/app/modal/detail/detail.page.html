@@ -17,30 +17,6 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.action == 'blood'">
-    <p> Thống kê từ {{rest.temp.from}} đến {{rest.temp.end}} </p>
-
-    <ion-item>
-      Tổng số phiếu thử: {{rest.temp.number}}
-    </ion-item>
-    <ion-item>
-      Tổng số mẫu thử: {{rest.temp.sample}}
-    </ion-item>
-    <ion-item>
-      Tổng tiền chi: {{rest.temp.total}}
-    </ion-item>
-
-    <ion-card *ngFor="let item of rest.temp.list">
-      <ion-card-header>
-        {{item.name}}
-      </ion-card-header>
-      <ion-card-content>
-        <p> Số lần xét nghiệm: {{item.number}} </p>
-        <p> Số mẫu xét nghiệm: {{item.sample}} </p>
-      </ion-card-content>
-    </ion-card>
-  </div>
-
   <div *ngIf="rest.action == 'drug'" class="pad">
     <div class="endline-text">
       <div> <b>Tên:</b></div>

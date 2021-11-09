@@ -27,9 +27,6 @@
       (click)="insertVaccineHistorySubmit()" color="secondary" fill="solid" size="small">
       Thêm & Xác nhận
     </ion-button>
-    <ion-button *ngIf="rest.action == 'blood'" slot="end" (click)="bloodInsert()" color="secondary" fill="solid" size="small">
-      Lưu
-    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -52,30 +49,6 @@
     <div class="stl-card" *ngFor="let item of rest.temp.old; let i = index" (click)="insertPosItem(i)">
       {{item.name}}
     </div>
-  </div>
-
-  <div *ngIf="rest.action == 'blood'">
-    <ion-item>
-      <ion-label position="stacked"> Số lượng mẫu </ion-label>
-      <ion-input [(ngModel)]="rest.temp.number" (ionChange)="changeNumber()"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked"> Số đầu </ion-label>
-      <ion-input [(ngModel)]="rest.temp.start" readonly="true"></ion-input>
-      <ion-icon name="enter-outline" slot="end" (click)="inout('in')"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked"> Số cuối </ion-label>
-      <ion-input [(ngModel)]="rest.temp.end" readonly="true"></ion-input>
-      <ion-icon name="exit-outline" slot="end" (click)="inout('out')"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked"> Mục đích </ion-label>
-      <ion-input [(ngModel)]="rest.temp.target"></ion-input>
-    </ion-item>
   </div>
 
   <div *ngIf="rest.action == 'admin'">

@@ -8,9 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage {
-  public module = {
-    work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, item: 0, blood: 0, usg: 0, drug: 0, profile: 0,
-  }
+  public module: any = {}
   public name = ''
   public fullname = ''
   public list = [
@@ -42,20 +40,9 @@ export class DetailPage {
     if (!this.rest.action.length) this.rest.root()
     else {
       if (this.rest.action == 'admin') this.module = this.rest.admin.list[this.rest.temp.index].module
-      if (this.rest.action == 'blood') this.bloodInit()
     }
   }
 
-  public async bloodInit() {
-    await this.rest.freeze('Đang lấy dữ liệu...')
-    this.rest.checkpost('blood', 'statistic', { }).then(resp => {
-      this.rest.defreeze()
-      this.rest.temp = resp.data
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-  
   public async view(image: string) {
     this.rest.temp.image = image
   }
