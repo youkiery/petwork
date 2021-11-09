@@ -1,12 +1,16 @@
 <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success" *ngIf="rest.isready">
-    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.navCtrl.navigateBack('user')">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="insert()">
     <ion-fab-button>
       Thêm
@@ -32,14 +36,3 @@
     <img class="icon" src="/assets/icon/admin-on.png"> Nhân viên có khả năng cấp quyền nhân viên khác
   </div>
 </ion-content>
-
-<ion-toolbar>
-  <ion-tabs>
-    <ion-tab-bar>
-      <ion-tab-button (click)="rest.back()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-        <ion-label> Trở về </ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-toolbar>

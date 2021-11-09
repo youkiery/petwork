@@ -15,8 +15,7 @@ export class AdminPage {
   ) { }
 
   public async ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
-    else this.init()
+    this.init()
   }
 
   public async init() {
@@ -32,6 +31,17 @@ export class AdminPage {
         this.rest.defreeze()
       })
     }
+  }
+
+  public async refresh(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'auto', {}).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
+      this.rest.admin.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async toggleDoctor(userid: number) {

@@ -25,6 +25,8 @@ export class RestService {
       start: '',
       end: ''
     },
+    today: '',
+    next: '',
     name: '',
     userid: 0,
     username: '',
@@ -34,8 +36,6 @@ export class RestService {
     doctor: [],
     type: [],
     spa: [],
-    today: '',
-    next: '',
     usgcode: [],
     vaccine: 0,
     usg: 0,
