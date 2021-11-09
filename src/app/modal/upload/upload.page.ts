@@ -30,7 +30,6 @@ export class UploadPage {
       this.option = JSON.parse(JSON.stringify(this.rest.home.spa))
       this.rest.temp.option.forEach((id: number) => {
         this.option.forEach((item, index) => {
-          console.log(this.option[index].id, id);
           if (this.option[index].id == id) this.option[index].check = 1
         })
       });
@@ -204,7 +203,7 @@ export class UploadPage {
       this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
     }
     else {
-      this.rest.checkpost('spa', 'update', this.rest.temp).then(resp => {
+      this.rest.checkpost('spa', 'update', temp).then(resp => {
         this.rest.defreeze()
         this.rest.spa.list = resp.list
         this.rest.spa.init = resp.time

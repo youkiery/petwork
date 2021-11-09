@@ -23,6 +23,7 @@ export class DetailPage {
     // {name: 'Quản lý xe', module: 'ride'},
     {name: 'Quản lý sinh hóa', module: 'profile'},
     {name: 'Quản lý sinh lý', module: 'physical'},
+    {name: 'Quản lý lưu bệnh', module: 'his'},
     {name: 'Quản lý đơn hàng', module: 'cart'},
     {name: 'Quản lý nhà xe', module: 'transport'},
     // {name: 'Quản lý công việc', module: 'work'},
