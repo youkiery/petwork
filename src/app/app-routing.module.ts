@@ -104,10 +104,6 @@ const routes: Routes = [
   //   loadChildren: () => import('./modal/inout/inout.module').then( m => m.InoutPageModule)
   // },
   {
-    path: 'notify',
-    loadChildren: () => import('./main/notify/notify.module').then( m => m.NotifyPageModule)
-  },
-  {
     path: 'price',
     loadChildren: () => import('./module/price/price.module').then( m => m.PricePageModule)
   },

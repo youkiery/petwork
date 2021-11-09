@@ -7,12 +7,6 @@
     <ion-button slot="end" color="light" fill="clear" (click)="rest.navCtrl.navigateForward('user')">
       <ion-icon name="person-circle-outline"></ion-icon>
     </ion-button>
-    <ion-button slot="end" color="light" fill="clear" (click)="notify()">
-      <ion-icon name="notifications"></ion-icon>
-      <ion-label>
-        <ion-badge color="danger" *ngIf="rest.home.notify"> {{rest.home.notify}} </ion-badge>
-      </ion-label>
-    </ion-button>
   </ion-toolbar>
 </ion-header>
 

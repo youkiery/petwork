@@ -25,7 +25,6 @@ export class RestService {
       start: '',
       end: ''
     },
-    notify: 0,
     name: '',
     userid: 0,
     username: '',
@@ -70,7 +69,6 @@ export class RestService {
   public action: string = ''
   public isready: boolean = false
   public id: number = 0
-  public notification = []
   public detail: any = {}
   public temp: any = {}
   public toast: any
@@ -176,8 +174,6 @@ export class RestService {
       this.config = resp.config
       this.home = resp.data
       this.session = session
-      this.notification = resp.notification
-      this.home.notify = resp.notify
       this.vaccine.list = [[], [], []]
       if (this.router.url == '/login') this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       this.isready = true
@@ -197,8 +193,6 @@ export class RestService {
         this.config = resp.config
         this.home = resp.data
         this.session = resp.session
-        this.notification = resp.notification
-        this.home.notify = resp.notify
         this.vaccine.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
@@ -219,9 +213,7 @@ export class RestService {
       this.checkpost('user', 'signin', user).then(resp => {
         this.config = resp.config
         this.session = resp.session
-        this.notification = resp.notification
         this.home = resp.data
-        this.home.notify = resp.notify
         this.vaccine.list = [[], [], []]
         this.storage.set('session', resp.session)
         this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' })
