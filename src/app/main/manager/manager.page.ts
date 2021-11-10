@@ -43,7 +43,7 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public async refreshtype(event: any) {
+  public async refreshType(event: any) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'type', {}).then(resp => {
       this.rest.defreeze()
