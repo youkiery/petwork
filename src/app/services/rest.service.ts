@@ -59,7 +59,7 @@ export class RestService {
   public his = { init: false, from: '', end: '', list: [] }
   public price = { init: false, list: [], keyword: '' }
   public transport = { init: false, list: [], keyword: '' }
-  public ride = {init: false, list: [], from: '', end: ''}
+  public ride = {init: false, list: [], from: '', end: '', segment: '0'}
   // public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   // public work = {}
 

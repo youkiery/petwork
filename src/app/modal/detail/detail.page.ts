@@ -18,7 +18,7 @@ export class DetailPage {
     {name: 'Quản lý hàng hóa', module: 'item'},
     {name: 'Tra cứu thuốc', module: 'drug'},
     {name: 'Giá sỉ', module: 'price'},
-    // {name: 'Quản lý xe', module: 'ride'},
+    {name: 'Quản lý xe', module: 'ride'},
     {name: 'Quản lý sinh hóa', module: 'profile'},
     {name: 'Quản lý sinh lý', module: 'physical'},
     {name: 'Quản lý lưu bệnh', module: 'his'},

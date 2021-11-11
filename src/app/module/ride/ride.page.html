@@ -13,15 +13,54 @@
 <ion-content *ngIf="rest.isready">
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.ride.from" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.home.month.start" max="2100"> </ion-datetime>
   </ion-item>
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.ride.end" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.home.month.end" max="2100"> </ion-datetime>
   </ion-item>
   <ion-button ion-block (click)="filter()">
     Lọc dữ liệu
   </ion-button>
+
+  <ion-segment [(ngModel)]="rest.ride.segment">
+    <ion-segment-button value="0">
+      <ion-label>
+        Phiếu Thu
+        <ion-badge color="danger"> {{rest.ride.list[0].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="usg">
+      <ion-label>
+        Phiếu Chi
+        <ion-badge color="danger"> {{rest.ride.list[1].length}} </ion-badge>
+        </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="rest.ride.segment == '0'">
+    <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
+      Khách hàng: {{item.name}} <br>
+      Số điện thoại: {{item.phone}} <br>
+      Điểm đến: {{item.location}} <br>
+      Số tiền: {{item.money}} <br>
+      Thời gian: {{item.time}} <br>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.ride.segment == '1'">
+    <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
+      Số tiền: {{item.money}} <br>
+      Thời gian: {{item.time}} <br>
+      <div *ngIf="rest.config.ride > 1" class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">
