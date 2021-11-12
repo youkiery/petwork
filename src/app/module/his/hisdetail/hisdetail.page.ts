@@ -39,6 +39,7 @@ export class HisdetailPage implements OnInit {
       status: Number(this.rest.detail.detail[i].status),
       from: this.rest.his.from,
       end: this.rest.his.end,
+      image: []
     }
     
     this.rest.navCtrl.navigateForward('his/insert')
@@ -57,6 +58,7 @@ export class HisdetailPage implements OnInit {
       status: Number(this.rest.detail.status),
       from: this.rest.his.from,
       end: this.rest.his.end,
+      image: []
     }
     
     this.rest.navCtrl.navigateForward('his/insert')
@@ -99,4 +101,8 @@ export class HisdetailPage implements OnInit {
     })
   }
 
+  public async detail2(image: string) {
+    this.rest.temp = image
+    this.rest.navCtrl.navigateForward('/modal/detail')
+  }
 }

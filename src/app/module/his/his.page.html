@@ -17,13 +17,13 @@
     </ion-fab-button>
   </ion-fab> -->
   
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
     <ion-datetime [(ngModel)]="rest.his.from" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
     <ion-datetime [(ngModel)]="rest.his.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
@@ -44,6 +44,7 @@
         Ngày nhận: {{item.time}} <br>
         Tình trạng bệnh: {{status[item.status].name}}
       </div>
+
       <div>
         Tình trạng xuất viện: <span class="bold"> {{insult_text[item.insult]}} </span> 
       </div>
@@ -54,6 +55,13 @@
         {{detail.time}}
       </span>
       <div class="upperline">
+        <span *ngIf="rest.config.his > 1 && item.insult > 0">
+          Đánh giá:
+          <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
+          <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
+          <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
+        </span>
+
         <img class="right icon" src="/assets/icon/info.png" (click)="view(i)">
         <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="item.insult < 1">
         <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="item.insult < 1">

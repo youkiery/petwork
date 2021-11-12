@@ -51,7 +51,7 @@ export class SuggestPage {
       this.rest.temp.name = this.list[i].name
       this.rest.temp.phone = this.list[i].phone
       this.rest.temp.address = this.list[i].address
-      if (this.rest.vaccine.type == 'vaccine' && !this.rest.temp.prv) {
+      if (this.rest.action == 'vaccine' && this.rest.vaccine.type == 'vaccine' && !this.rest.temp.prv) {
         this.searchHistory()
       }
     }

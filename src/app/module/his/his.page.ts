@@ -230,8 +230,45 @@ export class HisPage implements OnInit {
       temperate: '',
       other: '',
       treat: '',
-      status: 0
+      status: 0,
+      image: []
     }
     this.rest.navCtrl.navigateForward('his/insert')
+  }
+
+  
+  public async rate(id: number, point: number = 0) {
+    if (this.rest.config.spa > 1) {
+      let alert = await this.alert.create({
+        message: 'Đánh giá ' + point + ' sao cho nhân viên?',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: () => {
+              this.rateSubmit(id, point)
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  public async rateSubmit(id: number, point: number = 0) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('his', 'statrate', {
+      id: id,
+      rate: point,
+      from: this.rest.his.from,
+      end: this.rest.his.end,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.his.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

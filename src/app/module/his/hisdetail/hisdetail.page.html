@@ -42,6 +42,10 @@
       <b>Thuốc điều trị: </b> {{detail.treat}}
     </div>
     <div class="upperline">
+      <div *ngIf="detail.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of detail.image" [src]="image" (click)="detail2(image)">
+      </div>
+
       <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/update.png" (click)="update(i)">
     </div>
   </div>

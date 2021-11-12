@@ -7,13 +7,13 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
     <ion-datetime [(ngModel)]="rest.his.from" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
     <ion-datetime [(ngModel)]="rest.his.end" displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>
@@ -29,5 +29,6 @@
     <b>Xuất viện:</b>  {{item[1]}} <br>
     <b>Đã chết:</b>  {{item[2]}} <br>
     <b>Tổng ca:</b>  {{item[3]}} <br>
+    <b>Tổng điểm:</b>  {{item[4]}} <br>
   </div>
 </ion-content>

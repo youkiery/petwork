@@ -63,6 +63,10 @@
     </ion-item>
   </div>
 
+  <div *ngIf="rest.action == 'his'">
+    <img [src]="rest.temp">
+  </div>
+
   <div *ngIf="rest.action == 'spa'">
     <img [src]="rest.temp">
   </div>
