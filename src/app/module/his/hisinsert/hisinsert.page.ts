@@ -257,4 +257,9 @@ export class HisinsertPage implements OnInit {
   }
 
 
+  public remove(i: number) {
+    this.rest.temp.image = this.rest.temp.image.filter((item: any, index: number) => {
+      return index !== i
+    })
+  }
 }

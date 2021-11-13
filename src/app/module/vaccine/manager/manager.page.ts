@@ -327,8 +327,9 @@ export class ManagerPage implements OnInit {
         calltime: item.calltime,
         note: item.note,
       }
-    }
-    this.rest.router.navigateByUrl(this.rest.vaccine.type + '/insert')
+    }    
+    if (this.rest.vaccine.type == 'vaccine') this.rest.navCtrl.navigateForward('vaccine/insert')
+    else this.rest.navCtrl.navigateForward('vaccine/uinsert')
   }
 
   public async remove(index: number) {
