@@ -271,4 +271,23 @@ export class HisPage implements OnInit {
       this.rest.defreeze()
     })
   }
+
+  public isNumber(number: number) {
+    return Number(number)
+  }
+
+  public async toggleShare(id: number, share: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('his', 'share', {
+      id: id,
+      share: share,
+      from: this.rest.his.from,
+      end: this.rest.his.end,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.his.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }
