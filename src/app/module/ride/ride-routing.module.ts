@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'insert',
     loadChildren: () => import('./rideinsert/rideinsert.module').then( m => m.RideinsertPageModule)
   },
+  {
+    path: 'statis',
+    loadChildren: () => import('./ridestatis/ridestatis.module').then( m => m.RidestatisPageModule)
+  },
 ];
 
 @NgModule({

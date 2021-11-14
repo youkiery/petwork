@@ -13,11 +13,11 @@
 <ion-content *ngIf="rest.isready">
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.home.month.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.ride.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.home.month.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.ride.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
   <ion-button expand="full" (click)="filter()">
     Lọc dữ liệu
@@ -78,6 +78,11 @@
       <ion-tab-button (click)="insertPay()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm phiếu chi </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
