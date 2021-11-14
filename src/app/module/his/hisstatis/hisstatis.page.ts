@@ -28,7 +28,7 @@ export class HisstatisPage implements OnInit {
   public async statistic() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'statistic', {
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.data = resp.data

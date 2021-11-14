@@ -32,11 +32,11 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-label position="stacked"> Thú cưng </ion-label>
     <ion-input [(ngModel)]="rest.temp.pet" [disabled]="rest.temp.id"> </ion-input>
   </ion-item>
 
-  <ion-item *ngIf="rest.temp.id && rest.temp.time">
+  <ion-item>
     <ion-label position="stacked"> Ngày điều trị </ion-label>
     <ion-datetime [(ngModel)]="rest.temp.time" #cometime displayFormat="DD/MM/YYYY" max="2100">
     </ion-datetime>

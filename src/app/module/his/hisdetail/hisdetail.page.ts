@@ -31,13 +31,14 @@ export class HisdetailPage implements OnInit {
       detailid: this.rest.detail.detail[i].id,
       name: this.rest.detail.customer,  
       phone: this.rest.detail.phone,
-      petname: this.rest.detail.pet,
+      pet: this.rest.detail.pet,
+      petid: this.rest.detail.petid,
       eye: this.rest.detail.detail[i].eye,
       temperate: this.rest.detail.detail[i].temperate,
       other: this.rest.detail.detail[i].other,
       treat: this.rest.detail.detail[i].treat,
       status: Number(this.rest.detail.detail[i].status),
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
       image: []
     }
@@ -56,7 +57,7 @@ export class HisdetailPage implements OnInit {
       other: '',
       treat: '',
       status: Number(this.rest.detail.status),
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
       image: []
     }

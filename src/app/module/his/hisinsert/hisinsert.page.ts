@@ -147,45 +147,6 @@ export class HisinsertPage implements OnInit {
     })
   }
 
-  public async insertPet() {
-    const alert = await this.alert.create({
-      message: 'Thêm thú cưng',
-      inputs: [{
-        name: 'name',
-        label: 'Tên thú cưng',
-        value: ''
-      }],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.insertPetSubmit(e.name)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-  
-  public async insertPetSubmit(name: string) {
-    await this.rest.freeze('Đang thêm dữ liệu')
-    this.rest.checkpost('his', 'pet', {
-      name: name,
-      customer: this.rest.temp.name,
-      phone: this.rest.temp.phone,
-    }).then((resp) => {
-      this.rest.temp.pet = resp.petid.toString()
-      this.rest.temp.petlist = resp.petlist
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
   public upload() {
     this.pwaphoto.nativeElement.click();
   }

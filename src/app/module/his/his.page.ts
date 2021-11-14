@@ -47,8 +47,10 @@ export class HisPage implements OnInit {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('his', 'filter', {
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover
     }).then((resp) => {
       this.rest.his.init = true
       this.rest.his.list = resp.list
@@ -70,15 +72,16 @@ export class HisPage implements OnInit {
       name: this.rest.his.list[i].customer,
       phone: this.rest.his.list[i].phone,
       pet: "",
+      petid: this.rest.his.list[i].petid,
       eye: '',
       temperate: '',
       other: '',
       treat: '',
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
       status: Number(this.rest.his.list[i].status),
     }
-    this.rest.navCtrl.navigateForward('his/insert')    
+    this.rest.navCtrl.navigateForward('his/insert')
   }
 
   public async insertHis(index: number) {
@@ -203,7 +206,7 @@ export class HisPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('his', 'remove', {
       id: this.rest.his.list[index].id,
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.rest.his.list = resp.list
@@ -221,11 +224,13 @@ export class HisPage implements OnInit {
 
   public insert() {
     this.rest.temp = {
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
+      time: this.time.datetoisodate(this.rest.home.today),
       name: '',
       phone: '',
       pet: '',
+      petid: 0,
       eye: '',
       temperate: '',
       other: '',
@@ -236,7 +241,7 @@ export class HisPage implements OnInit {
     this.rest.navCtrl.navigateForward('his/insert')
   }
 
-  
+
   public async rate(id: number, point: number = 0) {
     if (this.rest.config.spa > 1) {
       let alert = await this.alert.create({
@@ -262,7 +267,89 @@ export class HisPage implements OnInit {
     this.rest.checkpost('his', 'statrate', {
       id: id,
       rate: point,
-      from: this.rest.his.start,
+      start: this.rest.his.start,
+      end: this.rest.his.end,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.his.list = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+
+  public cleardocs() {
+    this.rest.home.default.docs = []
+    this.rest.home.default.docscover = ''
+    this.filter()
+  }
+
+  public async docs() {
+    let option = []
+    this.rest.home.doctor.forEach((item, index) => {
+      option.push({
+        name: 'check',
+        type: 'checkbox',
+        label: item.name,
+        value: index,
+        checked: (this.rest.home.default.docs.indexOf(item.userid) >= 0 ? true : false)
+      })
+    })
+    const alert = await this.alert.create({
+      header: 'Lọc nhân viên',
+      inputs: option,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            let cover = []
+            let docs = []
+            e.forEach((index: number) => {
+              cover.push(this.rest.home.doctor[index].name)
+              docs.push(this.rest.home.doctor[index].userid)
+            });
+
+            this.rest.home.default.docs = docs
+            this.rest.home.default.docscover = cover.join(', ')
+            this.filter()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async hopital(id: number) {
+    let alert = await this.alert.create({
+      message: 'Hồ sơ sẽ chuyển sang lưu bệnh, xác nhận?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.hopitalSubmit(id)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async hopitalSubmit(id: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('his', 'hopital', {
+      id: id,
+      start: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.rest.defreeze()
@@ -281,7 +368,7 @@ export class HisPage implements OnInit {
     this.rest.checkpost('his', 'share', {
       id: id,
       share: share,
-      from: this.rest.his.start,
+      start: this.rest.his.start,
       end: this.rest.his.end,
     }).then(resp => {
       this.rest.defreeze()

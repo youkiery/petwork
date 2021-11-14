@@ -28,6 +28,16 @@
     <ion-datetime [(ngModel)]="rest.his.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
 
+  <ion-item *ngIf="rest.config.vaccine > 1">
+    <span (click)="docs()" *ngIf="rest.home.default.docscover.length">
+      Bác sĩ: {{rest.home.default.docscover}}
+    </span>
+    <span (click)="docs()" *ngIf="!rest.home.default.docscover.length">
+      Click lọc theo nhân viên
+    </span>
+    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
+  </ion-item>
+
   <ion-button expand="full" (click)="filter()">
     Lọc dữ liệu
   </ion-button>
@@ -68,6 +78,7 @@
         <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="item.insult < 1">
         <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="item.insult < 1">
         <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
+        <img *ngIf="rest.config.his > 1 && item.insult > 0" class="right icon" src="/assets/icon/hopital.png" (click)="hopital(item.id)">
       </div>
     </div>
   </div>

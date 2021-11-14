@@ -52,6 +52,7 @@ export class PetPage {
 
   public selectpet(i: number) {
     this.rest.temp.pet = this.petlist[i].name
+    this.rest.temp.petid = this.petlist[i].id
     this.rest.back()
   }
 
