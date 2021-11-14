@@ -58,7 +58,7 @@ export class SpaPage {
       let firstDay = this.time.datetotime(this.rest.home.today);
       let lastDay = this.time.datetotime(this.rest.home.today);
       this.check = true
-      this.rest.spa.from = this.time.timetoisodate(firstDay)
+      this.rest.spa.start = this.time.timetoisodate(firstDay)
       this.rest.spa.end = this.time.timetoisodate(lastDay)
       
       this.rest.spa.init = new Date().getTime()

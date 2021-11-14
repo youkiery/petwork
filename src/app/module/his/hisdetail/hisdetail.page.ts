@@ -37,7 +37,7 @@ export class HisdetailPage implements OnInit {
       other: this.rest.detail.detail[i].other,
       treat: this.rest.detail.detail[i].treat,
       status: Number(this.rest.detail.detail[i].status),
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
       image: []
     }
@@ -56,7 +56,7 @@ export class HisdetailPage implements OnInit {
       other: '',
       treat: '',
       status: Number(this.rest.detail.status),
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
       image: []
     }

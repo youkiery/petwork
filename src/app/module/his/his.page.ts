@@ -35,7 +35,7 @@ export class HisPage implements OnInit {
 
   ionViewWillEnter() {
     this.rest.ready().then(() => {
-      this.rest.his.from = this.time.timetoisodate(this.time.datetotime(this.rest.home.today) - 60 * 60 * 24 * 21 * 1000)
+      this.rest.his.start = this.time.timetoisodate(this.time.datetotime(this.rest.home.today) - 60 * 60 * 24 * 21 * 1000)
       this.rest.his.end = this.time.datetoisodate(this.rest.home.today)
       if (!this.rest.his.init) {
         this.rest.action = 'his'
@@ -47,7 +47,7 @@ export class HisPage implements OnInit {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('his', 'filter', {
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.rest.his.init = true
@@ -74,7 +74,7 @@ export class HisPage implements OnInit {
       temperate: '',
       other: '',
       treat: '',
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
       status: Number(this.rest.his.list[i].status),
     }
@@ -203,7 +203,7 @@ export class HisPage implements OnInit {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('his', 'remove', {
       id: this.rest.his.list[index].id,
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.rest.his.list = resp.list
@@ -221,7 +221,7 @@ export class HisPage implements OnInit {
 
   public insert() {
     this.rest.temp = {
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
       name: '',
       phone: '',
@@ -262,7 +262,7 @@ export class HisPage implements OnInit {
     this.rest.checkpost('his', 'statrate', {
       id: id,
       rate: point,
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
       this.rest.defreeze()
@@ -281,7 +281,7 @@ export class HisPage implements OnInit {
     this.rest.checkpost('his', 'share', {
       id: id,
       share: share,
-      from: this.rest.his.from,
+      from: this.rest.his.start,
       end: this.rest.his.end,
     }).then(resp => {
       this.rest.defreeze()
