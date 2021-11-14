@@ -142,7 +142,7 @@ export class DonePage implements OnInit {
   public async statisticSubmit() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('spa', 'statistic', {
-      from: this.time.isodatetodate(this.rest.spa.start),
+      start: this.time.isodatetodate(this.rest.spa.start),
       end: this.time.isodatetodate(this.rest.spa.end),
     }).then((resp) => {
       this.rest.defreeze()
@@ -177,7 +177,7 @@ export class DonePage implements OnInit {
     this.rest.checkpost('spa', 'statrate', {
       id: id,
       rate: point,
-      from: this.time.isodatetodate(this.rest.spa.start),
+      start: this.time.isodatetodate(this.rest.spa.start),
       end: this.time.isodatetodate(this.rest.spa.end),
     }).then((resp) => {
       this.rest.defreeze()
