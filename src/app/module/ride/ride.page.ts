@@ -21,7 +21,7 @@ export class RidePage implements OnInit {
 
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
-      this.init()
+      if (!this.rest.ride.init) this.init()
     })
   }
 
@@ -46,7 +46,7 @@ export class RidePage implements OnInit {
 
   public async removeSubmit(id: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
-    this.rest.checkpost('usg', 'remove', {
+    this.rest.checkpost('ride', 'remove', {
       id: id,
       segment: this.rest.ride.segment,
       start: this.rest.home.month.start,
@@ -61,13 +61,26 @@ export class RidePage implements OnInit {
 
   public insertPay() {
     this.rest.action = 'pay'
-    this.rest.temp = {}
+    this.rest.temp = {
+      money: '0',
+      note: '',
+      start: this.rest.home.month.start,
+      end: this.rest.home.month.end,
+    }
     this.rest.navCtrl.navigateForward('ride/insert')
   }
 
   public insertRide() {
     this.rest.action = 'cole'
-    this.rest.temp = {}
+    this.rest.temp = {
+      clockf: this.rest.ride.clock,
+      clocke: this.rest.ride.clock + 1,
+      money: '10,000',
+      destination: '',
+      note: '',
+      start: this.rest.home.month.start,
+      end: this.rest.home.month.end,
+    }
     this.rest.navCtrl.navigateForward('ride/insert')
   }
 
@@ -82,9 +95,11 @@ export class RidePage implements OnInit {
       end: this.rest.home.month.end,
     }).then(resp => {
       this.rest.defreeze()
+      this.rest.ride.init = true
       this.rest.ride.list = resp.list
-      this.rest.ride.from = this.time.datetoisodate(resp.from)
-      this.rest.ride.end = this.time.datetoisodate(resp.end)
+      this.rest.ride.clock = Number(resp.clock)
+      this.rest.ride.from = this.time.datetoisodate(this.rest.home.month.start)
+      this.rest.ride.end = this.time.datetoisodate(this.rest.home.month.end)
     }, () => {
       this.rest.defreeze()
     })

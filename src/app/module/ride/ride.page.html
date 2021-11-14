@@ -13,13 +13,13 @@
 <ion-content *ngIf="rest.isready">
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.home.month.start" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.home.month.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="rest.home.month.end" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.home.month.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
-  <ion-button ion-block (click)="filter()">
+  <ion-button expand="full" (click)="filter()">
     Lọc dữ liệu
   </ion-button>
 
@@ -30,7 +30,7 @@
         <ion-badge color="danger"> {{rest.ride.list[0].length}} </ion-badge>
       </ion-label>
     </ion-segment-button>
-    <ion-segment-button value="usg">
+    <ion-segment-button value="1">
       <ion-label>
         Phiếu Chi
         <ion-badge color="danger"> {{rest.ride.list[1].length}} </ion-badge>
@@ -40,11 +40,10 @@
 
   <div *ngIf="rest.ride.segment == '0'">
     <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
-      Khách hàng: {{item.name}} <br>
-      Số điện thoại: {{item.phone}} <br>
-      Điểm đến: {{item.location}} <br>
-      Số tiền: {{item.money}} <br>
-      Thời gian: {{item.time}} <br>
+      Người đi: {{item.user}} <br>
+      Điểm đến: {{item.destination}} <br>
+      Số tiền: {{rest.comma(item.money)}} <br>
+      Thời gian: {{time.timetodate(item.time * 1000)}} <br>
       <div class="upperline">
         <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
       </div>
@@ -53,8 +52,9 @@
 
   <div *ngIf="rest.ride.segment == '1'">
     <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
-      Số tiền: {{item.money}} <br>
-      Thời gian: {{item.time}} <br>
+      Người đi: {{item.user}} <br>
+      Số tiền: {{rest.comma(item.price)}} <br>
+      Thời gian: {{time.timetodate(item.time * 1000)}} <br>
       <div *ngIf="rest.config.ride > 1" class="upperline">
         <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
       </div>
