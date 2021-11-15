@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-hisdetail',
@@ -15,6 +16,7 @@ export class HisdetailPage implements OnInit {
   ]
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public alert: AlertController
   ) { }
 
@@ -26,21 +28,23 @@ export class HisdetailPage implements OnInit {
   }
 
   public update(i: number) {
+    let detail = this.rest.detail.detail[i]
     this.rest.temp = {
       id: this.rest.detail.id,
-      detailid: this.rest.detail.detail[i].id,
+      detailid: detail.id,
       name: this.rest.detail.customer,  
       phone: this.rest.detail.phone,
       pet: this.rest.detail.pet,
       petid: this.rest.detail.petid,
-      eye: this.rest.detail.detail[i].eye,
-      temperate: this.rest.detail.detail[i].temperate,
-      other: this.rest.detail.detail[i].other,
-      treat: this.rest.detail.detail[i].treat,
-      status: Number(this.rest.detail.detail[i].status),
+      eye: detail.eye,
+      temperate: detail.temperate,
+      other: detail.other,
+      treat: detail.treat,
+      status: Number(detail.status),
       start: this.rest.his.start,
       end: this.rest.his.end,
-      image: []
+      time: this.time.datetoisodate(detail.time),
+      image: detail.image
     }
     
     this.rest.navCtrl.navigateForward('his/insert')

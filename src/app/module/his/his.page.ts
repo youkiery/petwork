@@ -222,6 +222,30 @@ export class HisPage implements OnInit {
     this.rest.navCtrl.navigateForward('his/detail')
   }
 
+  public update(i: number) {
+    let item = this.rest.his.list[i]
+    let detail = item.detail[0]
+    this.rest.temp = {
+      id: item.id,
+      detailid: detail.id,
+      name: item.customer,  
+      phone: item.phone,
+      pet: item.pet,
+      petid: item.petid,
+      eye: detail.eye,
+      temperate: detail.temperate,
+      other: detail.other,
+      treat: detail.treat,
+      status: Number(detail.status),
+      start: this.rest.his.start,
+      end: this.rest.his.end,
+      time: this.time.datetoisodate(item.time),
+      image: detail.image
+    }
+    
+    this.rest.navCtrl.navigateForward('his/insert')
+  }
+
   public insert() {
     this.rest.temp = {
       start: this.rest.his.start,

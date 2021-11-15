@@ -63,7 +63,7 @@ export class RestService {
   // public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', page: { done: 1, undone: 1 }, init: false, filter: { keyword: '', starttime: '', endtime: '' } }
   // public work = {}
 
-  public version = 8
+  public version = 9
   public link = ''
   public action: string = ''
   public isready: boolean = false
