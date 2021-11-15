@@ -52,9 +52,9 @@ export class HisPage implements OnInit {
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover
     }).then((resp) => {
+      this.rest.defreeze()
       this.rest.his.init = true
       this.rest.his.list = resp.list
-      this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })

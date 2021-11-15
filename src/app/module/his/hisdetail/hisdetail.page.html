@@ -6,7 +6,7 @@
     <!-- <ion-button slot="end" (click)="update()" color="light" fill="clear" *ngIf="rest.detail.insult < 1">
       Cập nhật
     </ion-button> -->
-    <ion-button slot="end" (click)="insert()" color="light" fill="clear" *ngIf="rest.detail.insult < 1">
+    <ion-button *ngIf="rest.detail.insult < 1 && rest.detail.doctorid == rest.home.userid" slot="end" (click)="insert()" color="light" fill="clear">
       Thêm liệu trình
     </ion-button>
   </ion-toolbar>
@@ -46,7 +46,7 @@
         <img class="thumbnail-sm" *ngFor="let image of detail.image" [src]="image" (click)="detail2(image)">
       </div>
 
-      <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="detail.insult == 0" class="right icon" src="/assets/icon/update.png" (click)="update(i)">
     </div>
   </div>
 </ion-content>

@@ -2,14 +2,6 @@
   <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  
-  <ion-button *ngIf="rest.action == 'cole'" slot="end" (click)="insertCole()" color="secondary" fill="solid" size="small" >
-    Thêm lịch trình
-  </ion-button>
-  
-  <ion-button *ngIf="rest.action == 'pay'" slot="end" (click)="insertPay()" color="secondary" fill="solid" size="small" >
-    Thêm phiếu chi
-  </ion-button>
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
