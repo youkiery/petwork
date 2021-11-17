@@ -34,25 +34,18 @@
       Lọc danh sách
     </ion-button>
   
-    <ion-card *ngFor="let item of rest.physical.list">
-      <ion-card-content>
-        <b> Chủ: </b> {{item.customer}} <br>
-        <b> Số điện thoại: </b> {{item.phone}} <br>
-        <b> Người làm: </b> {{item.doctor}} <br>
-        <div class="button-group">
-          <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
-            <ion-icon name="information-circle-outline"></ion-icon>
-          </ion-button>
-          <ion-button slot="end" size="small" color="secondary" (click)="print(item.id)">
-            <ion-icon name="print-outline"></ion-icon>
-          </ion-button>
-          <ion-button slot="end" size="small" *ngIf="rest.config.physical > 1" color="danger" (click)="remove(item.id)">
-            <ion-icon name="trash-outline"></ion-icon>
-          </ion-button>
-        </div>
-        <p class="time"> {{item.time}} </p>
-      </ion-card-content>
-    </ion-card>
+    <div class="stl-card" *ngFor="let item of rest.physical.list; let i = index">
+      <b> Chủ: </b> {{item.customer}} <br>
+      <b> Số điện thoại: </b> {{item.phone}} <br>
+      <b> Người làm: </b> {{item.doctor}} <br>
+      <b> Thời gian: </b> {{item.time}}
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/info.png" (click)="detail(item.id)">
+        <img class="icon" src="/assets/icon/printer.png" (click)="print(item.id)">
+        <img class="icon" src="/assets/icon/update.png" (click)="updatePhysical(i)">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
         
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content

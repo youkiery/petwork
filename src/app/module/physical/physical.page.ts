@@ -281,6 +281,33 @@ export class PhysicalPage {
     }
     this.rest.navCtrl.navigateForward('physical/insert')
   }
+  
+  public async updatePhysical(i: number) {
+    let item = this.rest.physical.list[i]
+    this.rest.temp = {
+      act: 'physical',
+      id: item.id,
+      name: item.customer,
+      phone: item.phone,
+      address: item.address,
+      petname: item.name,
+      weight: item.weight,
+      age: item.age,
+      gender: item.gender,
+      species: item.species,
+      serial: item.serial,
+      sampletype: item.sampletype,
+      samplenumber: item.samplenumber,
+      samplesymbol: item.samplesymbol,
+      samplestatus: item.samplestatus,
+      symptom: item.symptom,
+      target: item.target,
+      key: this.rest.physical.key,
+      page: this.rest.physical.page,
+      module: this.rest.action
+    }
+    this.rest.navCtrl.navigateForward('physical/insert')
+  }
 
   public temptarget() {
     let target = {}

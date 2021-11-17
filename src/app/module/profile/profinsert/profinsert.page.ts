@@ -62,6 +62,17 @@ export class ProfinsertPage implements OnInit {
     })
   }
 
+  public async updateprofile() {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('profile', 'updateprofile', this.rest.temp).then(resp => {
+      this.rest.defreeze()
+      this.rest.profile.list = resp.list
+      this.rest.back()
+    }, () => { 
+      this.rest.defreeze()
+    })
+  }
+
   public async insertSelect(type: string = 'sampletype') {
     let alert = await this.alert.create({
       header: this.header[type],

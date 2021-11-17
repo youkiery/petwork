@@ -78,6 +78,17 @@ export class PhysinsertPage implements OnInit {
     })
   }
 
+  public async updatephysical() {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.checkpost('physical', 'updatephysical', this.rest.temp).then(resp => {
+      this.rest.defreeze()
+      this.rest.physical.list = resp.list
+      this.rest.back()
+    }, () => { 
+      this.rest.defreeze()
+    })
+  }
+
   public async insertSelect(type: string = 'sampletype') {
     let alert = await this.alert.create({
       header: this.header[type],

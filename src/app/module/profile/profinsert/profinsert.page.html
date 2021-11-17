@@ -2,9 +2,13 @@
   <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="rest.temp.act == 'profile'" slot="end" (click)="insert()" color="secondary" fill="solid"
+  <ion-button *ngIf="rest.temp.act == 'profile' && !rest.temp.id" slot="end" (click)="insert()" color="secondary" fill="solid"
     size="small">
     Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.act == 'profile' && rest.temp.id" slot="end" (click)="updateprofile()" color="secondary" fill="solid"
+    size="small">
+    Cập nhật
   </ion-button>
   <ion-button *ngIf="rest.temp.act == 'target' && rest.temp.id > 0" slot="end" (click)="updateTarget()"
     color="secondary" fill="solid" size="small">

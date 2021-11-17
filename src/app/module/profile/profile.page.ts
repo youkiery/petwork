@@ -271,6 +271,33 @@ export class ProfilePage {
     this.rest.navCtrl.navigateForward('profile/insert')
   }
 
+  public async updateProfile(i: number) {
+    let item = this.rest.profile.list[i]
+    this.rest.temp = {
+      act: 'profile',
+      id: item.id,
+      name: item.customer,
+      phone: item.phone,
+      address: item.address,
+      petname: item.name,
+      weight: item.weight,
+      age: item.age,
+      gender: item.gender,
+      species: item.species,
+      serial: item.serial,
+      sampletype: item.sampletype,
+      samplenumber: item.samplenumber,
+      samplesymbol: item.samplesymbol,
+      samplestatus: item.samplestatus,
+      symptom: item.symptom,
+      target: item.target,
+      key: this.rest.profile.key,
+      page: this.rest.profile.page,
+      module: this.rest.action
+    }
+    this.rest.navCtrl.navigateForward('profile/insert')
+  }
+
   public temptarget() {
     let target = {}
     this.rest.profile.target.forEach(item => {
