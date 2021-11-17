@@ -8,7 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./item.page.scss'],
 })
 export class ItemPage implements OnInit {
-
+  public page = 1
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -36,6 +36,7 @@ export class ItemPage implements OnInit {
       this.rest.item.transfer = resp.transfer
       this.rest.item.expired = resp.expired
       this.rest.item.list = resp.list
+      this.filter()
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
@@ -56,6 +57,7 @@ export class ItemPage implements OnInit {
       this.rest.item.transfer = resp.transfer
       this.rest.item.expired = resp.expired
       this.rest.item.list = resp.list
+      this.filter()
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
@@ -65,15 +67,12 @@ export class ItemPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item', 'filter', {
-      keyword: this.rest.item.keyword
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.item.list = resp.list
-    }, () => {
-      this.rest.defreeze()
+    let key = this.rest.alias(this.rest.item.keyword)
+    let temp = []
+    this.rest.item.list.filter((item: any, index) => {
+      if (item.alias.search(key) >= 0) temp.push(index)
     })
+    this.rest.item.i = temp
   }
 
   public purchase() {

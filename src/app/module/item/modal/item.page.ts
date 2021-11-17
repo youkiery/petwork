@@ -281,6 +281,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'insert', temp).then(resp => {
       this.rest.defreeze()
       this.rest.item.list = resp.list
+      this.filter()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -317,6 +318,7 @@ export class ItemPage implements OnInit {
     this.rest.checkpost('item', 'update', temp).then(resp => {
       this.rest.defreeze()
       this.rest.item.list = resp.list
+      this.filter()
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -400,5 +402,14 @@ export class ItemPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+  
+  public async filter() {
+    let key = this.rest.alias(this.rest.item.keyword)
+    let temp = []
+    this.rest.item.list.filter((item: any, index) => {
+      if (item.alias.search(key) >= 0) temp.push(index)
+    })
+    this.rest.item.i = temp
   }
 }

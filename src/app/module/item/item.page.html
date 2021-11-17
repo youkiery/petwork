@@ -40,12 +40,12 @@
     </ion-card-content>
   </ion-card>
 
-  <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
-    Tên hàng: {{item.name}} <br>
-    Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
-    Vị trí: <div class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </div>
-    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(i)">
-    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(item.id)">
+  <div class="stl-card" *ngFor="let index of rest.item.i">
+    Tên hàng: {{rest.item.list[index].name}} <br>
+    Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
+    Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
+    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
+    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(rest.item.list[index].id)">
   </div>
 </ion-content>
 
