@@ -71,13 +71,13 @@
           <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
           <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
         </span>
-
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && !isNumber(item.share)" class="right icon" src="/assets/icon/share-off.png" (click)="toggleShare(item.id, item.share)">
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.share == '1'" class="right icon" src="/assets/icon/share-on.png" (click)="toggleShare(item.id, item.share)">
+        
         <img class="right icon" src="/assets/icon/info.png" (click)="view(i)">
+        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && !isNumber(item.share)" class="right icon" src="/assets/icon/share-off.png" (click)="toggleShare(item.id, item.share)">
+        <img class="right icon" src="/assets/icon/update.png" (click)="update(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
+        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.share == '1'" class="right icon" src="/assets/icon/share-on.png" (click)="toggleShare(item.id, item.share)">
         <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
         <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
-        <img class="right icon" src="/assets/icon/update.png" (click)="update(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
         <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
         <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1 && item.insult > 0" class="right icon" src="/assets/icon/hopital.png" (click)="hopital(item.id)">
       </div>
