@@ -68,7 +68,12 @@
 
     <ion-item *ngIf="rest.home.admin" (click)="change('vaccine')">
       <ion-icon name="cloud-upload-outline"></ion-icon>
-      Import
+      Import Vaccine
+    </ion-item>
+
+    <ion-item *ngIf="rest.home.admin" (click)="change('item')">
+      <ion-icon name="cloud-upload-outline"></ion-icon>
+      Import Hàng hóa
     </ion-item>
 
     <ion-item (click)="rest.logout()">

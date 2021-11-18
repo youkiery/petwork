@@ -444,7 +444,7 @@ export class ManagerPage implements OnInit {
     this.pwaphoto.nativeElement.click();
   }
 
-  public async uploadPWA() {
+  public async uploadVaccine() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
 
     let body = new FormData();
@@ -461,6 +461,40 @@ export class ManagerPage implements OnInit {
       this.rest.home.default.docs.forEach((item: any) => {
         body.append('docs[]', item)
       })
+
+      this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
+        this.rest.defreeze()
+        if (resp.overtime) {
+          this.rest.notify("Đã hết thời gian sử dụng")
+          this.rest.root()
+        }
+        else if (resp.nogin) {
+          this.rest.notify("Phiên đăng nhập hết hạn")
+          this.rest.logout()
+        }
+        else {
+          this.data = resp.data
+          this.rest.notify(resp.messenger)
+        }
+      }, (error) => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public async uploadItem() {
+    const fileList: FileList = this.pwaphoto.nativeElement.files;
+
+    let body = new FormData();
+    if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
+    else {
+      await this.rest.freeze('Đang tải dữ liệu...')
+      body.append('file', fileList[0]);
+      body.append('session', this.rest.session);
+      body.append('type', 'item');
+      body.append('action', 'excel');
+      body.append('version', this.rest.version.toString());
+      body.append('time', this.rest.vaccine.time);
 
       this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
         this.rest.defreeze()

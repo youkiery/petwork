@@ -5,7 +5,11 @@
     </ion-button>
 
     <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="secondary" fill="solid" size="small"
-      (click)="uploadPWA()">
+      (click)="uploadVaccine()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="secondary" fill="solid" size="small"
+      (click)="uploadItem()">
       Tải lên
     </ion-button>
     <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="secondary" fill="solid" size="small"
@@ -138,6 +142,26 @@
         Khách hàng: {{item.name}} <br>
         Số điện thoại: {{item.phone}} <br>
         Ghi chú: {{item.note}}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'item'">
+    <div class="avatar-box" (click)="uploadItem()">
+      <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+    </div>
+    <div *ngIf="name.length" class="text-center">
+      {{name}}
+    </div>
+    <div id="pwa" style="display: none;">
+      <input type="file" id="pwaphoto" #pwaphoto
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="file()">
+    </div>
+    <div *ngIf="data.on">
+      <div class="stl-card blue">
+        Tổng số mặt hàng: {{data.total}} <br>
+        Đã cập nhật: {{data.insert}} <br>
       </div>
     </div>
   </div>
