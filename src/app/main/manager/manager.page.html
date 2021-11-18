@@ -8,8 +8,12 @@
       (click)="uploadVaccine()">
       Tải lên
     </ion-button>
-    <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="secondary" fill="solid" size="small"
+    <ion-button *ngIf="rest.action == 'item'" slot="end" color="secondary" fill="solid" size="small"
       (click)="uploadItem()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'checkout'" slot="end" color="secondary" fill="solid" size="small"
+      (click)="uploadCheckout()">
       Tải lên
     </ion-button>
     <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="secondary" fill="solid" size="small"
@@ -119,7 +123,7 @@
   </div>
 
   <div *ngIf="rest.action == 'vaccine'">
-    <div class="avatar-box" (click)="upload()">
+    <div class="avatar-box" (click)="upload(1)">
       <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
     </div>
     <div *ngIf="name.length" class="text-center">
@@ -128,7 +132,7 @@
     <div id="pwa" style="display: none;">
       <input type="file" id="pwaphoto" #pwaphoto
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        (change)="file()">
+        (change)="file(1)">
     </div>
     <div *ngIf="data.on">
       <div class="stl-card blue">
@@ -147,16 +151,16 @@
   </div>
 
   <div *ngIf="rest.action == 'item'">
-    <div class="avatar-box" (click)="uploadItem()">
+    <div class="avatar-box" (click)="upload(2)">
       <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
     </div>
     <div *ngIf="name.length" class="text-center">
       {{name}}
     </div>
     <div id="pwa" style="display: none;">
-      <input type="file" id="pwaphoto" #pwaphoto
+      <input type="file" id="pwaphoto2" #pwaphoto2
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        (change)="file()">
+        (change)="file(2)">
     </div>
     <div *ngIf="data.on">
       <div class="stl-card blue">
@@ -164,5 +168,56 @@
         Đã cập nhật: {{data.insert}} <br>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="rest.action == 'checkout'">
+    <div class="stl-card small">
+      <div class="avatar-box" (click)="upload(3)">
+        <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+      </div>
+      <div *ngIf="name.length" class="text-center">
+        {{name}}
+      </div>
+      <div id="pwa" style="display: none;">
+        <input type="file" id="pwaphoto3" #pwaphoto3
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="file(3)">
+      </div>
+    </div>
+    <div class="stl-card small">
+      <div class="avatar-box" (click)="upload(4)">
+        <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+      </div>
+      <div *ngIf="name2.length" class="text-center">
+        {{name2}}
+      </div>
+      <div id="pwa" style="display: none;">
+        <input type="file" id="pwaphoto4" #pwaphoto4
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="file(4)">
+      </div>
+    </div>
+    <table *ngIf="checkout.on">
+      <tr> 
+        <th style="width: 25%;"> Kiotviet </th>  
+        <th style="width: 25%"> Vietcombank </th>  
+        <th style="width: 50%"> Thông tin chuyển khoản </th>  
+      </tr>
+      <tr *ngFor="let item of checkout.pair">
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{item.info}} </td>
+      </tr>
+      <tr *ngFor="let item of checkout.vietcom">
+        <td class="red">  </td>
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{item.info}} </td>
+      </tr>
+      <tr *ngFor="let item of checkout.kiot">
+        <td> {{rest.comma(item.money)}} </td>
+        <td class="red">  </td>
+        <td>  </td>
+      </tr>
+    </table>
   </div>
 </ion-content>

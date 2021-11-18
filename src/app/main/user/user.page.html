@@ -76,6 +76,11 @@
       Import Hàng hóa
     </ion-item>
 
+    <ion-item *ngIf="rest.home.admin" (click)="change('checkout')">
+      <ion-icon name="cloud-upload-outline"></ion-icon>
+      Import Checkout
+    </ion-item>
+
     <ion-item (click)="rest.logout()">
       <ion-icon name="exit-outline" color="danger"></ion-icon>
       Đăng xuất

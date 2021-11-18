@@ -22,14 +22,10 @@
 
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
-    <ion-input [(ngModel)]="rest.item.keyword"></ion-input>
+    <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
   </ion-item>
 
-  <ion-button size="small" expand="block" (click)="filter()">
-    Lọc dữ liệu
-  </ion-button>
-
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-content>
       Hàng sắp hết: {{rest.item.purchase}}
       <ion-button size="small" color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
@@ -38,9 +34,10 @@
       Hàng sắp hết hạn: {{rest.item.expired}}
       <ion-button size="small" color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <div class="stl-card" *ngFor="let index of rest.item.i">
+    Mã hàng: {{rest.item.list[index].code}} <br>
     Tên hàng: {{rest.item.list[index].name}} <br>
     Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
     Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>

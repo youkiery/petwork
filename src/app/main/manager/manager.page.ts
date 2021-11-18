@@ -9,7 +9,8 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class ManagerPage implements OnInit {
   public prv = ''
-  public name = ''
+  public name = 'Chưa chọn file Excel'
+  public name2 = 'Chưa chọn file Excel ngân hàng'
   public input: any = {}
   public list = []
   public data = {
@@ -19,7 +20,14 @@ export class ManagerPage implements OnInit {
     insert: 0,
     error: []
   }
+  public checkout = {
+    on: 0,
+    kiot: [], vietcom: [], pair: []
+  }
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
+  @ViewChild('pwaphoto2') pwaphoto2: ElementRef;
+  @ViewChild('pwaphoto3') pwaphoto3: ElementRef;
+  @ViewChild('pwaphoto4') pwaphoto4: ElementRef;
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -440,8 +448,21 @@ export class ManagerPage implements OnInit {
   }
 
   
-  public upload() {
-    this.pwaphoto.nativeElement.click();
+  public upload(number: number) {
+    switch (number) {
+      case 1:
+        this.pwaphoto.nativeElement.click();
+        break;
+      case 2:
+        this.pwaphoto2.nativeElement.click();    
+        break;
+      case 3:
+        this.pwaphoto3.nativeElement.click();
+        break;
+      case 4:
+        this.pwaphoto4.nativeElement.click();
+        break;
+    }
   }
 
   public async uploadVaccine() {
@@ -483,7 +504,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async uploadItem() {
-    const fileList: FileList = this.pwaphoto.nativeElement.files;
+    const fileList: FileList = this.pwaphoto2.nativeElement.files;
 
     let body = new FormData();
     if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
@@ -516,10 +537,62 @@ export class ManagerPage implements OnInit {
     }
   }
 
-  public file() {
-    const fileList: FileList = this.pwaphoto.nativeElement.files;
+  public async uploadCheckout() {
+    const fileList: FileList = this.pwaphoto3.nativeElement.files;
+    const fileList2: FileList = this.pwaphoto4.nativeElement.files;
 
-    if (fileList.length) this.name = fileList[0].name
+    let body = new FormData();
+    if (!fileList[0]) this.rest.notify('Chưa chọn file excel')
+    else if (!fileList2[0]) this.rest.notify('Chưa chọn file excel Ngân hàng')
+    else {
+      await this.rest.freeze('Đang tải dữ liệu...')
+      body.append('file', fileList[0]);
+      body.append('file2', fileList2[0]);
+      body.append('session', this.rest.session);
+      body.append('type', 'checkout');
+      body.append('action', 'excel');
+      body.append('version', this.rest.version.toString());
+      body.append('time', this.rest.vaccine.time);
+
+      this.rest.http.post(this.rest.baseurl, body).toPromise().then((resp: any) => {
+        this.rest.defreeze()
+        if (resp.overtime) {
+          this.rest.notify("Đã hết thời gian sử dụng")
+          this.rest.root()
+        }
+        else if (resp.nogin) {
+          this.rest.notify("Phiên đăng nhập hết hạn")
+          this.rest.logout()
+        }
+        else {
+          this.checkout = resp.data
+          this.rest.notify(resp.messenger)
+        }
+      }, (error) => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public file(number: number) {
+    let file = this.pwaphoto
+    switch (number) {
+      case 2:
+        file = this.pwaphoto2
+        break;
+      case 3:
+        file = this.pwaphoto3
+        break;
+      case 4:
+        file = this.pwaphoto4
+        break;
+    }
+    const fileList: FileList = file.nativeElement.files
+
+    if (fileList.length) {
+      if (number < 4) this.name = fileList[0].name
+      else this.name2 = fileList[0].name
+    }
     else this.name = 'Chưa chọn file'
   }
 
