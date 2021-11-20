@@ -32,14 +32,12 @@ export class ItemPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.item.init = true
-      this.rest.item.purchase = resp.purchase
-      this.rest.item.transfer = resp.transfer
-      this.rest.item.expired = resp.expired
-      this.rest.item.list = resp.list
-      this.filter()
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
+      this.rest.item.user = resp.user
+      this.rest.item.list = resp.list
+      this.filter()
       event.target.complete()
     }, () => {
       this.rest.defreeze()
@@ -56,11 +54,12 @@ export class ItemPage implements OnInit {
       this.rest.item.purchase = resp.purchase
       this.rest.item.transfer = resp.transfer
       this.rest.item.expired = resp.expired
-      this.rest.item.list = resp.list
-      this.filter()
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
+      this.rest.item.list = resp.list
+      this.rest.item.user = resp.user
+      this.filter()
     }, () => {
       this.rest.defreeze()
     })
@@ -120,14 +119,21 @@ export class ItemPage implements OnInit {
   public updateItem(index: number) {
     this.rest.temp = {
       action: 'item',
+      index: index,
       id: this.rest.item.list[index].id,
-      cat: this.rest.item.list[index].cat,
+      cat: this.rest.item.list[index].catid,
       name: this.rest.item.list[index].name,
       code: this.rest.item.list[index].code,
       border: this.rest.item.list[index].border,
-      image: this.rest.item.list[index].image
+      image: this.rest.item.list[index].image,
+      keyword: this.rest.item.keyword
     }
     this.rest.navCtrl.navigateForward('item/modal')
+  }
+
+  public manager() {
+    this.rest.action = 'user'
+    this.rest.navCtrl.navigateForward('/item/manager')
   }
 
   public async removeItem(id: number) {

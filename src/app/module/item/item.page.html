@@ -39,6 +39,7 @@
   <div class="stl-card" *ngFor="let index of rest.item.i">
     Mã hàng: {{rest.item.list[index].code}} <br>
     Tên hàng: {{rest.item.list[index].name}} <br>
+    Danh mục: {{rest.item.list[index].cat}} <br>
     Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
     Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
     <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
@@ -46,7 +47,7 @@
   </div>
 </ion-content>
 
-<ion-toolbar>
+<ion-toolbar *ngIf="rest.isready">
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button (click)="rest.root()">
@@ -56,7 +57,7 @@
 
       <ion-tab-button (click)="insertItem()">
         <ion-icon name="add-circle-outline"></ion-icon>
-        <ion-label> Thêm hàng hóa </ion-label>
+        <ion-label> Thêm hàng </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="insertExpire()">
@@ -67,6 +68,11 @@
       <ion-tab-button (click)="position()">
         <ion-icon name="stats-chart-outline"></ion-icon>
         <ion-label> Vị trí </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="manager()" *ngIf="rest.config.item > 1">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <ion-label> Quản lý </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

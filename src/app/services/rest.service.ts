@@ -15,8 +15,8 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = '/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
   public config: any
@@ -52,7 +52,7 @@ export class RestService {
   public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
-  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '' }
+  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], purchase: 0, transfer: 0, expired: 0, keyword: '', user: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public physical = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [] }

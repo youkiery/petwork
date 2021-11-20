@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'modal',
     loadChildren: () => import('./modal/item.module').then( m => m.ItemPageModule)
   },
+  {
+    path: 'manager',
+    loadChildren: () => import('./itemmanager/itemmanager.module').then( m => m.ItemmanagerPageModule)
+  },
+
 
 ];
 

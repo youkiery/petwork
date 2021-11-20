@@ -313,11 +313,9 @@ export class ItemPage implements OnInit {
   }
 
   public async updateSubmit() {
-    let temp = JSON.parse(JSON.stringify(this.rest.temp))
-    temp.keyword = this.rest.item.keyword    
-    this.rest.checkpost('item', 'update', temp).then(resp => {
+    this.rest.checkpost('item', 'update', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.item.list = resp.list
+      this.rest.item.list[this.rest.temp.index] = resp.data
       this.filter()
       this.rest.back()
     }, () => {
