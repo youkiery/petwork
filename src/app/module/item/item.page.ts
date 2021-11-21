@@ -25,23 +25,39 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public async reload(event: any) {
+  public async reload() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item', 'init', {
-      keyword: this.rest.item.keyword
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.item.init = true
-      this.page = 1
-      this.rest.item.all = resp.all
-      this.rest.item.image = resp.image
-      this.rest.item.catlist = resp.catlist
-      this.rest.item.user = resp.user
-      this.rest.item.list = resp.list
-      this.filter()
+    return new Promise(resolve => {
+      this.rest.checkpost('item', 'init', {
+        cat: this.rest.item.cat
+      }).then(resp => {
+        this.rest.defreeze()
+        this.page = 1
+        this.rest.item.purchase = resp.purchase
+        this.rest.item.transfer = resp.transfer
+        this.rest.item.expired = resp.expired
+        this.rest.item.all = resp.all
+        this.rest.item.image = resp.image
+        this.rest.item.catlist = resp.catlist
+        this.rest.item.list = resp.list
+        this.rest.item.user = resp.user
+        this.rest.item.cat = resp.cat
+        this.rest.item.cats = resp.cats
+        this.rest.item.usercat = resp.usercat
+        this.filter()
+        resolve(true)
+      }, () => {
+        this.rest.defreeze()
+        resolve(true)
+      })
+    })
+  }
+
+  public async reloadEvent(event: any) {
+    this.reload().then(() => {
+      console.log(1);
+      
       event.target.complete()
-    }, () => {
-      this.rest.defreeze()
     })
   }
 
@@ -55,7 +71,6 @@ export class ItemPage implements OnInit {
   public async init() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item', 'init', {
-      keyword: this.rest.item.keyword
     }).then(resp => {
       this.rest.defreeze()
       this.rest.item.init = true
@@ -67,10 +82,66 @@ export class ItemPage implements OnInit {
       this.rest.item.catlist = resp.catlist
       this.rest.item.list = resp.list
       this.rest.item.user = resp.user
+      this.rest.item.cat = resp.cat
+      this.rest.item.cats = resp.cats
+      this.rest.item.usercat = resp.usercat
       this.filter()
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public cleardocs() {
+    this.rest.item.cat = []
+    this.rest.item.cats = ''
+    this.reload()
+  }
+
+  public checkCat(catid: number) {
+    let check = false
+    this.rest.item.cat.forEach(item => {
+      if (item == catid) check = true
+    })
+    return check
+  }
+
+  public async docs() {
+    let option = []
+    this.rest.item.usercat.forEach((item, index) => {
+      option.push({
+        name: 'check',
+        type: 'checkbox',
+        label: item.name,
+        value: index,
+        checked: this.checkCat(item.id)
+      })
+    })
+    const alert = await this.alert.create({
+      header: 'Lọc nhân viên',
+      inputs: option,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Ok',
+          handler: (e) => {
+            let cover = []
+            let docs = []
+            e.forEach((index: number) => {
+              cover.push(this.rest.item.usercat[index].name)
+              docs.push(this.rest.item.usercat[index].id)
+            });
+
+            this.rest.item.cat = docs
+            this.rest.item.cats = cover.join(', ')
+            this.reload()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public async filter() {

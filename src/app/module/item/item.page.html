@@ -16,13 +16,22 @@
       Góp ý
     </ion-fab-button>
   </ion-fab> -->
-  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="reloadEvent($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
     <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
+  </ion-item>
+  <ion-item>
+    <span (click)="docs()" *ngIf="rest.item.cats">
+      Danh mục: {{rest.item.cats}}
+    </span>
+    <span (click)="docs()" *ngIf="!rest.item.cats">
+      Click lọc theo danh mục hàng
+    </span>
+    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
   </ion-item>
 
   <div class="stl-card blue">
