@@ -32,6 +32,7 @@ export class ItemPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.item.init = true
+      this.page = 1
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
@@ -42,6 +43,13 @@ export class ItemPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async loadData(event: any) {
+    this.rest.physical.page++
+    this.page++
+    this.filter()
+    event.target.complete()
   }
 
   public async init() {
@@ -155,14 +163,18 @@ export class ItemPage implements OnInit {
     await alert.present();
   }
 
-  public async removeItemSubmit(id: number) {
+  public async removeItemSubmit(index: number) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('item', 'remove', {
-      id: id,
+      id: this.rest.item.list[index].id,
       keyword: this.rest.item.keyword
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.item.list = resp.list
+      let temp = this.rest.item.list.filter((item, cindex) => {
+        return index !== cindex
+      })
+      this.rest.item.list = temp
+      this.filter()
     }, () => {
       this.rest.defreeze()
     })

@@ -25,26 +25,26 @@
     <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
   </ion-item>
 
-  <!-- <ion-card>
-    <ion-card-content>
-      Hàng sắp hết: {{rest.item.purchase}}
-      <ion-button size="small" color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng cần chuyển: {{rest.item.transfer}}
-      <ion-button size="small" color="secondary" (click)="transfer()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-      Hàng sắp hết hạn: {{rest.item.expired}}
-      <ion-button size="small" color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
-    </ion-card-content>
-  </ion-card> -->
+  <div class="stl-card blue">
+    Hàng cần nhập: {{rest.item.purchase}} <img *ngIf="rest.item.purchase > 0" class="icon" src="/assets/icon/info.png" (click)="purchase()"> <br>
+    Hàng sắp hết hạn: {{rest.item.expired}} <img *ngIf="rest.item.expired > 0" class="icon" src="/assets/icon/info.png" (click)="expired()"> <br>
+  </div>
 
-  <div class="stl-card" *ngFor="let index of rest.item.i">
+  <div class="stl-card" *ngFor="let index of rest.item.i | slice:0:page * 50">
     Mã hàng: {{rest.item.list[index].code}} <br>
     Tên hàng: {{rest.item.list[index].name}} <br>
     Danh mục: {{rest.item.list[index].cat}} <br>
     Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
     Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
     <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
-    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(rest.item.list[index].id)">
+    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(index)">
   </div>
+  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">
