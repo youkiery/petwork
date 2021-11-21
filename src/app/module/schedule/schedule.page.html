@@ -20,69 +20,70 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div>
-    Ngày hiện tại: {{time.timetodate(rest.schedule.time)}}
-  </div>
-
-  <table style="font-size: 0.7em;" border="1" *ngIf="rest.config.schedule < 2">
-    <tr>  
-      <td> Thứ </td>
-      <td> Ngày </td>
-      <td> Trực sáng </td>
-      <td> Trực tối </td>
-      <td> Nghỉ sáng </td>
-      <td> Nghỉ chiều </td>
-    </tr>
-    <tr *ngFor="let data of rest.schedule.data; let i = index">
-      <td> {{data.day}} </td>
-      <td> {{data.date}} </td>
-      <td (click)="reg(i, 0)" [class]="data.list[0].color"> {{data.list[0].name}} </td>
-      <td (click)="reg(i, 1)" [class]="data.list[1].color"> {{data.list[1].name}} </td>
-      <td (click)="reg(i, 2)" [class]="data.list[2].color"> {{data.list[2].name}} </td>
-      <td (click)="reg(i, 3)" [class]="data.list[3].color"> {{data.list[3].name}} </td>
-    </tr>
-  </table>
-
-  <div *ngIf="rest.config.schedule > 1">
-    <table style="font-size: 0.7em;" border="1">
-      <tr class="text-center">
-        <td>  </td>
-        <td colspan="2"> Thứ 2 </td>
-        <td colspan="2"> Thứ 3 </td>
-        <td colspan="2"> Thứ 4</td>
-        <td colspan="2"> Thứ 5 </td>
-        <td colspan="2"> Thứ 6 </td>
-        <td colspan="2"> Thứ 7 </td>
-        <td colspan="2"> CN </td>
+  <div class="table">
+    <p class="text-center">
+      Ngày hiện tại: {{time.timetodate(rest.schedule.time)}}
+    </p>
+    <table style="font-size: 0.7em;" border="1" *ngIf="rest.config.schedule < 2">
+      <tr>  
+        <td> Thứ </td>
+        <td> Ngày </td>
+        <td> Trực sáng </td>
+        <td> Trực tối </td>
+        <td> Nghỉ sáng </td>
+        <td> Nghỉ chiều </td>
       </tr>
-      <tr class="text-center">
-        <td>  </td>
-        <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
-      </tr>
-      <tr class="text-center">
-        <td style="width: 30%;"> Họ tên </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-        <td> S </td> <td> C </td>
-      </tr>
-      <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
-        <td> {{data.name}} </td>
-        <td *ngFor="let day of data.list; let j = index" (click)="reg2(i, j)" [class]="day"> </td>
+      <tr *ngFor="let data of rest.schedule.data; let i = index">
+        <td> {{data.day}} </td>
+        <td> {{data.date}} </td>
+        <td (click)="reg(i, 0)" [class]="data.list[0].color"> {{data.list[0].name}} </td>
+        <td (click)="reg(i, 1)" [class]="data.list[1].color"> {{data.list[1].name}} </td>
+        <td (click)="reg(i, 2)" [class]="data.list[2].color"> {{data.list[2].name}} </td>
+        <td (click)="reg(i, 3)" [class]="data.list[3].color"> {{data.list[3].name}} </td>
       </tr>
     </table>
-
-    <ion-button size="small" [color]="rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 1; auto()">
-      <span> Lịch nghỉ </span>
-      <!-- *ngIf="rest.schedule.state" -->
-    </ion-button>
-    <ion-button size="small" [color]="!rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 0; auto()">
-      <span> Lịch trực </span>
-      <!-- *ngIf="!rest.schedule.state" -->
-    </ion-button>
+  
+    <div *ngIf="rest.config.schedule > 1">
+      <table style="font-size: 0.7em;" border="1">
+        <tr class="text-center">
+          <td>  </td>
+          <td colspan="2"> Thứ 2 </td>
+          <td colspan="2"> Thứ 3 </td>
+          <td colspan="2"> Thứ 4</td>
+          <td colspan="2"> Thứ 5 </td>
+          <td colspan="2"> Thứ 6 </td>
+          <td colspan="2"> Thứ 7 </td>
+          <td colspan="2"> CN </td>
+        </tr>
+        <tr class="text-center">
+          <td>  </td>
+          <td colspan="2" *ngFor="let day of rest.schedule.data['day']"> {{day}} </td>
+        </tr>
+        <tr class="text-center">
+          <td style="width: 30%;"> Họ tên </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+          <td> S </td> <td> C </td>
+        </tr>
+        <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
+          <td> {{data.name}} </td>
+          <td *ngFor="let day of data.list; let j = index" (click)="reg2(i, j)" [class]="day"> </td>
+        </tr>
+      </table>
+  
+      <ion-button size="small" [color]="rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 1; auto()">
+        <span> Lịch nghỉ </span>
+        <!-- *ngIf="rest.schedule.state" -->
+      </ion-button>
+      <ion-button size="small" [color]="!rest.schedule.state ? 'warning' : 'medium'" (click)="rest.schedule.state = 0; auto()">
+        <span> Lịch trực </span>
+        <!-- *ngIf="!rest.schedule.state" -->
+      </ion-button>
+    </div>
   </div>
 </ion-content>
 

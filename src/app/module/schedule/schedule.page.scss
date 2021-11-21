@@ -20,3 +20,15 @@
 .orange {
   background: orange;
 }
+tr:nth-child(odd) td {
+  border-bottom: 1px solid black;
+}
+tr:nth-child(even) td {
+  border-bottom: 1px solid gray;
+}
+@media (min-width: 768px) {
+  .table {
+    width: 50%;
+    margin: auto;
+  }
+}
