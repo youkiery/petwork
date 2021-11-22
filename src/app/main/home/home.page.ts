@@ -19,6 +19,11 @@ export class HomePage {
     this.rest.navCtrl.navigateForward('/notify')
   }
 
+  public checkout() {
+    this.rest.action = 'checkout'
+    this.rest.navCtrl.navigateForward('manager')
+  }
+
   ionViewWillEnter() {
     this.rest.action = 'home'
     this.subscription = this.platform.backButton.subscribe(() => {

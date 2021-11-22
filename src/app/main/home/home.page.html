@@ -98,4 +98,11 @@
       Nhà xe
     </div>
   </div>
+
+  <div *ngIf="rest.home.admin > 0" class="box" (click)="checkout()">
+    <ion-img src="assets/image/accounting.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Kế toán
+    </div>
+  </div>
 </ion-content>
