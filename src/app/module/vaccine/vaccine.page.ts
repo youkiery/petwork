@@ -143,6 +143,16 @@ export class VaccinePage {
     })
   }
 
+  public vaccined() {
+    this.rest.temp = {
+      start: this.rest.home.month.start,
+      end: this.rest.home.month.end,
+      list: []
+    }
+    console.log(this.rest.temp);
+    this.rest.navCtrl.navigateForward('vaccine/d')
+  }
+
   public async docs() {
     let option = []
     this.rest.home.doctor.forEach((item, index) => {

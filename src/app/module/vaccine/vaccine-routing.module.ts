@@ -35,6 +35,10 @@ const routes: Routes = [
   {
     path: 'uinsert',
     loadChildren: () => import('./usginsert/usginsert.module').then( m => m.UsginsertPageModule)
+  },
+  {
+    path: 'd',
+    loadChildren: () => import('./vaccined/vaccined.module').then( m => m.VaccinedPageModule)
   }
 ];
 
