@@ -209,14 +209,19 @@
         <td> {{item.info}} </td>
       </tr>
       <tr *ngFor="let item of checkout.vietcom">
-        <td class="red">  </td>
+        <td class="red"> {{item.time}} </td>
         <td> {{rest.comma(item.money)}} </td>
         <td> {{item.info}} </td>
       </tr>
       <tr *ngFor="let item of checkout.kiot">
-        <td> {{rest.comma(item)}} </td>
-        <td class="red">  </td>
-        <td>  </td>
+        <td> {{rest.comma(item.money)}} </td>
+        <td class="red"> {{item.time}} </td>
+        <td> {{item.note}} </td>
+      </tr>
+      <tr>
+        <td> {{rest.comma(total.kiot)}} </td>
+        <td> {{rest.comma(total.vietcom)}} </td>
+        <td> Tổng </td>
       </tr>
     </table>
   </div>

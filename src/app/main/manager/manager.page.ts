@@ -20,6 +20,9 @@ export class ManagerPage implements OnInit {
     insert: 0,
     error: []
   }
+  public total = {
+    kiot: '0', vietcom: '0'
+  }
   public checkout = {
     on: 0,
     kiot: [], vietcom: [], pair: []
@@ -565,6 +568,7 @@ export class ManagerPage implements OnInit {
           this.rest.logout()
         }
         else {
+          this.total = resp.total
           this.checkout = resp.data
           this.rest.notify(resp.messenger)
         }
