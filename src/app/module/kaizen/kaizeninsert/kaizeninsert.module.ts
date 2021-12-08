@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FiveminPageRoutingModule } from './fivemin-routing.module';
+import { KaizeninsertPageRoutingModule } from './kaizeninsert-routing.module';
 
-import { FiveminPage } from './fivemin.page';
+import { KaizeninsertPage } from './kaizeninsert.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FiveminPageRoutingModule
+    KaizeninsertPageRoutingModule
   ],
-  declarations: [FiveminPage]
+  declarations: [KaizeninsertPage]
 })
-export class FiveminPageModule {}
+export class KaizeninsertPageModule {}

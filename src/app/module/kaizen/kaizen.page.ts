@@ -9,7 +9,6 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./kaizen.page.scss'],
 })
 export class KaizenPage implements OnInit {
-  autoupdate: boolean = false
   interval: any
   constructor(
     public alert: AlertController,
@@ -20,178 +19,146 @@ export class KaizenPage implements OnInit {
 
   ngOnInit() { }
 
-  // ionViewWillEnter() {
-  //   this.rest.ready().then(() => {
-  //     this.init()
-  //   })
-  // }
+  ionViewWillEnter() {
+    this.rest.ready().then(() => {
+      this.rest.action = 'kaizen'
+      this.init()
+    })
+  }
 
-  // public async init() {
-  //   if (!this.rest.kaizen.init) {
-  //     await this.rest.freeze('Đang lấy dữ liệu...')
-  //     this.rest.checkpost('kaizen', 'init', {  }).then(data => {
-  //       this.rest.kaizen.init = false
-  //       this.rest.kaizen.list = data.list
-  //       this.rest.defreeze()
-  //     }, () => {
-  //       this.rest.defreeze()
-  //     })
-  //   }
-  // }
-
+  public async init() {
+    if (!this.rest.kaizen.init) {
+      await this.rest.freeze('Đang lấy dữ liệu...')
+      this.rest.kaizen.filter.starttime = this.rest.home.month.start
+      this.rest.kaizen.filter.endtime = this.rest.home.month.end
+      this.rest.checkpost('kaizen', 'init', {
+        filter: this.rest.kaizen.filter
+      }).then(data => {
+        this.rest.kaizen.init = false
+        this.rest.kaizen.list = data.list
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
   
-  // public clear(name: string) {
-  //   this.rest.kaizen.filter[name] = ''
-  // }
+  public clear(name: string) {
+    this.rest.kaizen.filter[name] = ''
+  }
 
-  // public async filter() {
-  //   await this.rest.freeze('Đang lấy dữ liệu')
-  //   this.rest.kaizen.page = { undone: 1, done: 1 }
+  public async filter() {
+    await this.rest.freeze('Đang lấy dữ liệu')
+    this.rest.kaizen.filter.done = 1
+    this.rest.kaizen.filter.undone = 1
 
-  //   this.rest.checkpost('kaizen', 'init', this.rest.kaizen.filter).then(data => {
-  //     this.rest.kaizen.list = data['list']
-  //     this.rest.defreeze()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+    this.rest.checkpost('kaizen', 'init', {
+      filter: this.rest.kaizen.filter
+    }).then(data => {
+      this.rest.kaizen.list = data['list']
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // // public filter() {
-  // //   return new Promise((resolve) => {
-  // //     if (!this.autoupdate) {
-  // //       this.autoupdate = true
-  // //       this.rest.checkpost('kaizen', 'auto', {
-  // //         starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
-  // //         endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
-  // //         keyword: this.rest.kaizen.filter.keyword,
-  // //         type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-  // //         page: this.rest.kaizen.page[this.rest.kaizen.segment],
-  // //         sort: this.rest.kaizen.filter.sort,
-  // //       }).then(data => {
-  // //         this.autoupdate = false
-  // //         if (data['list']) {
-  // //           this.rest.kaizen.unread = data['unread']
-  // //           this.rest.kaizen.time = data.time
-  // //           if (data.list) this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
-  // //           resolve('')
-  // //         }
-  // //       }, (e) => {
-  // //         resolve('')
-  // //       })
-  // //     }
-  // //   })
-  // // }
+  public async checker(id: number) {
+    let alert = await this.alert.create({
+      message: 'Hoàn thành sẽ không thể hoàn tác',
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.checkerSubmit(id)
+          }
+        }
+      ]
+    })
+    alert.present()
+  }
 
-  // public async checker(id: number) {
-  //   let alert = await this.alert.create({
-  //     message: 'Hoàn thành sẽ không thể hoàn tác',
-  //     buttons: [
-  //       {
-  //         text: 'Bỏ',
-  //         role: 'cancel',
-  //         cssClass: 'default'
-  //       }, {
-  //         text: 'Xác nhận',
-  //         cssClass: 'secondary',
-  //         handler: (e) => {
-  //           this.checkerSubmit(id)
-  //         }
-  //       }
-  //     ]
-  //   })
-  //   alert.present()
-  // }
+  public async checkerSubmit(id: number) {
+    await this.rest.freeze('Đang hoàn thành...')
+    this.rest.checkpost('kaizen', 'done', {
+      id: id,
+      type: this.rest.kaizen.segment,
+      filter: this.rest.kaizen.filter
+    }).then(data => {
+      this.rest.kaizen.data = data['list']
+      this.rest.defreeze()
+    }, () => [
+      this.rest.defreeze()
+    ])
+  }
 
-  // public async checkerSubmit(id: number) {
-  //   await this.rest.freeze('Đang hoàn thành...')
-  //   this.rest.checkpost('kaizen', 'check', {
-  //     id: id,
-  //     type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-  //     starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
-  //     endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
-  //     keyword: this.rest.kaizen.filter.keyword,
-  //     page1: this.rest.kaizen.page.undone,
-  //     page2: this.rest.kaizen.page.done,
-  //   }).then(data => {
-  //     this.rest.kaizen.data = data['list']
-  //     this.rest.defreeze()
-  //   }, () => [
-  //     this.rest.defreeze()
-  //   ])
-  // }
+  public async edit(index: number = 0) {
+    let item = this.rest.kaizen.data[this.rest.kaizen.segment][index]
+    this.rest.temp = {
+      id: item.id,
+      problem: item.problem,
+      solution: item.solution,
+      result: item.result,
+    }
+    this.rest.navCtrl.navigateForward('kaizen/insert')
+  }
 
-  // // public async edit(insert = false, index: number = 0) {
-  // //   this.rest.kaizen.insert = insert
-  // //   if (insert) {
-  // //     this.rest.kaizen.edit = {
-  // //       id: 0,
-  // //       problem: '',
-  // //       solution: '',
-  // //       result: '',
-  // //     }
-  // //   }
-  // //   else {
-  // //     let current = this.rest.kaizen.data[this.rest.kaizen.segment][index]
-  // //     this.rest.kaizen.edit = {
-  // //       id: current['id'],
-  // //       problem: current['problem'],
-  // //       solution: current['solution'],
-  // //       result: current['result']
-  // //     }
-  // //   }
-  // //   let modal = await this.modal.create({
-  // //     component: EditPage
-  // //   })
-  // //   modal.present()    
-  // // }
+  public async insert() {
+    this.rest.temp = {
+      problem: '',
+      solution: '',
+      result: '',
+    }
+    this.rest.navCtrl.navigateForward('kaizen/insert')
+  }
 
-  // public async remove(id: number) {
-  //   const alert = await this.alert.create({
-  //     header: 'Chú ý!!!',
-  //     message: 'Giải pháp sẽ bị xóa vĩnh viễn',
-  //     buttons: [
-  //       {
-  //         text: 'Trở vể',
-  //         role: 'cancel',
-  //         cssClass: 'default'
-  //       }, {
-  //         text: 'Xác nhận',
-  //         cssClass: 'danger',
-  //         handler: () => {
-  //           this.removeSubmit(id)
-  //         }
-  //       }
-  //     ]
-  //   });
+  public async remove(id: number) {
+    const alert = await this.alert.create({
+      header: 'Chú ý!!!',
+      message: 'Giải pháp sẽ bị xóa vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở vể',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'danger',
+          handler: () => {
+            this.removeSubmit(id)
+          }
+        }
+      ]
+    });
 
-  //   await alert.present();
-  // }
+    await alert.present();
+  }
 
-  // public async removeSubmit(id: number) {
-  //   await this.rest.freeze('Đang xóa giải pháp')
-  //   this.rest.checkpost('kaizen', 'remove', {
-  //     action: 'kaizen-remove',
-  //     id: id,
-  //     starttime: this.time.datetotime(this.rest.kaizen.filter.starttime),
-  //     endtime: this.time.datetotime(this.rest.kaizen.filter.endtime),
-  //     keyword: this.rest.kaizen.filter.keyword,
-  //     page: this.rest.kaizen.page[this.rest.kaizen.segment],
-  //     type: this.rest.kaizen.segment,
-  //   }).then((data) => {
-  //     this.rest.kaizen.unread = data['unread']
-  //     this.rest.kaizen.time = data['time']
-  //     this.rest.kaizen.data = data['list']
-  //     this.rest.defreeze()
-  //   }, (error) => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Đang xóa giải pháp')
+    this.rest.checkpost('kaizen', 'remove', {
+      action: 'kaizen-remove',
+      id: id,
+      filter: this.rest.kaizen.filter
+    }).then((data) => {
+      this.rest.kaizen.unread = data['unread']
+      this.rest.kaizen.time = data['time']
+      this.rest.kaizen.data = data['list']
+      this.rest.defreeze()
+    }, (error) => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public loadData(event) {
-  //   this.rest.kaizen.page[this.rest.kaizen.segment] += 1
+  public loadData(event) {
+    this.rest.kaizen.filter[this.rest.kaizen.segment] += 1
 
-  //   this.filter().then(() => {
-  //     event.target.complete();
-  //   })
-  // }
+    this.filter().then(() => {
+      event.target.complete();
+    })
+  }
 }

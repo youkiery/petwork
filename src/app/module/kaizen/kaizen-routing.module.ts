@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: KaizenPage
+  },
+  {
+    path: 'insert',
+    loadChildren: () => import('./kaizeninsert/kaizeninsert.module').then( m => m.KaizeninsertPageModule)
   }
+
 ];
 
 @NgModule({

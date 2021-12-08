@@ -16,6 +16,7 @@ export class DetailPage {
     {name: 'Quản lý nhắc gọi', module: 'vaccine'},
     {name: 'Đăng ký lịch', module: 'schedule'},
     {name: 'Quản lý hàng hóa', module: 'item'},
+    {name: 'Kaizen', module: 'kaizen'},
     {name: 'Tra cứu thuốc', module: 'drug'},
     {name: 'Giá sỉ', module: 'price'},
     {name: 'Quản lý xe', module: 'ride'},
@@ -25,7 +26,6 @@ export class DetailPage {
     {name: 'Quản lý đơn hàng', module: 'cart'},
     {name: 'Quản lý nhà xe', module: 'transport'},
     // {name: 'Quản lý công việc', module: 'work'},
-    // {name: 'Kaizen', module: 'kaizen'},
   ]
   public level = {
     '-1': '', '0': 'Không phận sự', '1': 'Nhân viên', '2': 'Quản lý', '3': ''

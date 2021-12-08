@@ -17,24 +17,17 @@
     </ion-fab-button>
   </ion-fab> -->
   
-  <!-- <ion-item>
+  <ion-item>
     <ion-label position="stacked"> Từ khóa </ion-label>
     <ion-input [(ngModel)]="rest.kaizen.filter.keyword"></ion-input>
   </ion-item>
-  <ion-item class="click" (click)="clear('starttime')">
-    <ion-label color="danger">
-      Xóa ngày bắt đầu
-    </ion-label>
-  </ion-item>
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Ngày bắt đầu </ion-label>
     <ion-datetime [(ngModel)]="rest.kaizen.filter.starttime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
-    <ion-button color="danger" (click)="clear('starttime')"> x </ion-button>
   </ion-item>
-  <ion-item>
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Ngày kết thúc </ion-label>
     <ion-datetime [(ngModel)]="rest.kaizen.filter.endtime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
-    <ion-button color="danger" (click)="clear('endtime')"> x </ion-button>
   </ion-item>
   
   <ion-button expand="full" (click)="filter()">
@@ -55,7 +48,7 @@
           <ion-button color="secondary" *ngIf="rest.config.kaizen > 1 && rest.kaizen.segment === 'undone'" (click)="checker(item.id)" size="small">
             <ion-icon name="checkmark-outline"></ion-icon>
           </ion-button>
-          <ion-button color="secondary" (click)="edit(false, i)" size="small">
+          <ion-button color="secondary" (click)="edit(i)" size="small">
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
           <ion-button color="danger" (click)="remove(item.id)" size="small">
@@ -83,10 +76,10 @@
 
   <div *ngIf="!rest.kaizen.data[rest.kaizen.segment].length">
     Chưa có giải pháp nào
-  </div> -->
+  </div>
 </ion-content>
 
-<!-- <ion-toolbar>
+<ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button (click)="rest.root()">
@@ -94,16 +87,10 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="edit(true)">
+      <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
-
-      <ion-tab-button (click)="rest.navCtrl.navigateForward('/kaizen/notify')">
-        <ion-icon name="notifications-outline"></ion-icon>
-        <ion-label> Thông báo </ion-label>
-        <ion-badge color="danger" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
-      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-</ion-toolbar> -->
+</ion-toolbar>
