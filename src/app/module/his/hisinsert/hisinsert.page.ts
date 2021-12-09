@@ -30,7 +30,7 @@ export class HisinsertPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
     else this.rest.ready().then(() => {
-      if (!this.rest.temp.id && !this.init) {
+      if (!this.rest.temp.temp && !this.rest.temp.id && !this.init) {
         this.init = true
         this.suggest()
       }
@@ -39,6 +39,41 @@ export class HisinsertPage implements OnInit {
 
   public suggest() {
     this.rest.navCtrl.navigateForward('modal/pet')
+  }
+
+  public async checkConfirmSubmit() {
+    this.count++
+    if (this.rest.temp.image.length == this.count) {
+      this.confirmSubmit()
+    }
+  }
+
+  public async confirm() {
+    this.count = 0
+    await this.rest.freeze('Đang tải dữ liệu...')
+
+    if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    else if (!this.rest.temp.image.length) this.confirmSubmit()
+    else this.rest.temp.image.forEach((image, index) => {
+      if (image.length > 200) {
+        this.uploadImage(image).then((url: string) => {
+          this.rest.temp.image[index] = url
+          this.checkConfirmSubmit()
+        })
+      }
+      else this.checkConfirmSubmit()
+    });
+  }
+
+  public async confirmSubmit() {
+    this.rest.checkpost('his', 'confirm', this.rest.temp).then((resp) => {
+      this.rest.defreeze()
+      this.rest.his.manager = resp.list
+      this.rest.navCtrl.navigateBack('his/manager')
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async checkinsertSubmit() {

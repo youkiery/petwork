@@ -44,6 +44,10 @@ export class HisPage implements OnInit {
     })
   }
 
+  public manager() {
+    this.rest.navCtrl.navigateForward('his/manager')
+  }
+
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('his', 'filter', {

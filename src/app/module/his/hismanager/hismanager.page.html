@@ -1,0 +1,25 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let item of rest.his.manager; let i = index">
+    Khách hàng: {{item.name}} <br>
+    Số điện thoại: {{item.phone}} <br>
+    Người điều trị: {{item.user}} <br>
+    Thời gian: {{time.timetodate(item.time * 1000)}} <br>
+    Thuốc điều trị: {{item.treat}} <br>
+    <div class="upperline">
+      <img class="right icon" src="/assets/icon/update.png" (click)="update(i)">
+      <img class="right icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+    </div>
+  </div>
+</ion-content>

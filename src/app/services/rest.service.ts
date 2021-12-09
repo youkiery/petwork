@@ -56,14 +56,14 @@ export class RestService {
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public physical = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [] }
-  public his = { init: false, start: '', end: '', list: [] }
+  public his = { init: false, start: '', end: '', list: [], manager_init: false, manager: [] }
   public price = { init: false, list: [], keyword: '' }
   public transport = { init: false, list: [], keyword: '' }
   public ride = {init: false, list: [[], []], start: '', end: '', segment: '0', clock: 0}
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', init: false, filter: { keyword: '', starttime: '', endtime: '', sort: 'asc', done: 1, undone: 1 } }
   // public work = {}
 
-  public version = 16
+  public version = 16 // 20
   public link = ''
   public action: string = ''
   public isready: boolean = false

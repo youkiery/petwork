@@ -19,6 +19,14 @@ const routes: Routes = [
   {
     path: 'statis',
     loadChildren: () => import('./hisstatis/hisstatis.module').then( m => m.HisstatisPageModule)
+  },
+  {
+    path: 'manager',
+    loadChildren: () => import('./hismanager/hismanager.module').then( m => m.HismanagerPageModule)
+  },
+  {
+    path: 'temp',
+    loadChildren: () => import('./histemp/histemp.module').then( m => m.HistempPageModule)
   }
 ];
 
