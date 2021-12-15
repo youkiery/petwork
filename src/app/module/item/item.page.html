@@ -24,29 +24,20 @@
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
     <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
   </ion-item>
-  <ion-item>
-    <span (click)="docs()" *ngIf="rest.item.cats">
-      Danh mục: {{rest.item.cats}}
-    </span>
-    <span (click)="docs()" *ngIf="!rest.item.cats">
-      Click lọc theo danh mục hàng
-    </span>
-    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
-  </ion-item>
-
-  <div class="stl-card blue">
-    Hàng cần nhập: {{rest.item.purchase}} <img *ngIf="rest.item.purchase > 0" class="icon" src="/assets/icon/info.png" (click)="purchase()"> <br>
-    Hàng sắp hết hạn: {{rest.item.expired}} <img *ngIf="rest.item.expired > 0" class="icon" src="/assets/icon/info.png" (click)="expired()"> <br>
-  </div>
 
   <div class="stl-card" *ngFor="let index of rest.item.i | slice:0:page * 50">
-    Mã hàng: {{rest.item.list[index].code}} <br>
+    <!-- Mã hàng: {{rest.item.list[index].code}} <br> -->
     Tên hàng: {{rest.item.list[index].name}} <br>
-    Danh mục: {{rest.item.list[index].cat}} <br>
-    Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
+    <!-- Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br> -->
     Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
+    <span *ngIf="rest.item.list[index].expired.length">
+      <br>
+      Hạn sử dụng: <div class="pos" *ngFor="let pos of rest.item.list[index].expired; let i = index" (click)="removeexpire(index, i, pos.name)"> {{pos.name}} </div>
+    </span>
     <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
     <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(index)">
+    <img *ngIf="rest.item.list[index].outstock == 1" class="right icon" src="/assets/icon/item-on.png" (click)="toggle(index, rest.item.list[index].outstock)">
+    <img *ngIf="rest.item.list[index].outstock == 0" class="right icon" src="/assets/icon/item-off.png" (click)="toggle(index, rest.item.list[index].outstock)">
   </div>
   <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
@@ -69,19 +60,19 @@
         <ion-label> Thêm hàng </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="insertExpire()">
+      <!-- <ion-tab-button (click)="insertExpire()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm HSD </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
 
       <ion-tab-button (click)="position()">
         <ion-icon name="stats-chart-outline"></ion-icon>
         <ion-label> Vị trí </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="manager()" *ngIf="rest.config.item > 1">
-        <ion-icon name="briefcase-outline"></ion-icon>
-        <ion-label> Quản lý </ion-label>
+      <ion-tab-button (click)="purchase()">
+        <ion-icon name="basket-outline"></ion-icon>
+        <ion-label> Báo hết </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

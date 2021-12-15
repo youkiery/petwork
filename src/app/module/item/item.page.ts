@@ -33,9 +33,6 @@ export class ItemPage implements OnInit {
       }).then(resp => {
         this.rest.defreeze()
         this.page = 1
-        this.rest.item.purchase = resp.purchase
-        this.rest.item.transfer = resp.transfer
-        this.rest.item.expired = resp.expired
         this.rest.item.all = resp.all
         this.rest.item.image = resp.image
         this.rest.item.catlist = resp.catlist
@@ -74,9 +71,6 @@ export class ItemPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.item.init = true
-      this.rest.item.purchase = resp.purchase
-      this.rest.item.transfer = resp.transfer
-      this.rest.item.expired = resp.expired
       this.rest.item.all = resp.all
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
@@ -91,57 +85,12 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public cleardocs() {
-    this.rest.item.cat = []
-    this.rest.item.cats = ''
-    this.reload()
-  }
-
   public checkCat(catid: number) {
     let check = false
     this.rest.item.cat.forEach(item => {
       if (item == catid) check = true
     })
     return check
-  }
-
-  public async docs() {
-    let option = []
-    this.rest.item.usercat.forEach((item, index) => {
-      option.push({
-        name: 'check',
-        type: 'checkbox',
-        label: item.name,
-        value: index,
-        checked: this.checkCat(item.id)
-      })
-    })
-    const alert = await this.alert.create({
-      header: 'Lọc nhân viên',
-      inputs: option,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        }, {
-          text: 'Ok',
-          handler: (e) => {
-            let cover = []
-            let docs = []
-            e.forEach((index: number) => {
-              cover.push(this.rest.item.usercat[index].name)
-              docs.push(this.rest.item.usercat[index].id)
-            });
-
-            this.rest.item.cat = docs
-            this.rest.item.cats = cover.join(', ')
-            this.reload()
-          }
-        }
-      ]
-    });
-
-    await alert.present();
   }
 
   public async filter() {
@@ -154,29 +103,25 @@ export class ItemPage implements OnInit {
   }
 
   public purchase() {
-    this.rest.temp = {
-      action: 'purchase',
-      step: 1,
-      list: []
-    }
-    this.rest.navCtrl.navigateForward('item/modal')
+    this.rest.navCtrl.navigateForward('item/purchase')
   }
-  public transfer() {
-    this.rest.temp = {
-      action: 'transfer',
-      step: 1,
-      list: []
-    }
-    this.rest.navCtrl.navigateForward('item/modal')
-  }
-  public expired() {
-    this.rest.temp = {
-      action: 'expired',
-      step: 1,
-      list: []
-    }
-    this.rest.navCtrl.navigateForward('item/modal')
-  }
+
+  // public transfer() {
+  //   this.rest.temp = {
+  //     action: 'transfer',
+  //     step: 1,
+  //     list: []
+  //   }
+  //   this.rest.navCtrl.navigateForward('item/modal')
+  // }
+  // public expired() {
+  //   this.rest.temp = {
+  //     action: 'expired',
+  //     step: 1,
+  //     list: []
+  //   }
+  //   this.rest.navCtrl.navigateForward('item/modal')
+  // }
 
   public view(posid: number) {
     this.rest.temp = this.rest.item.image[posid]
@@ -213,6 +158,53 @@ export class ItemPage implements OnInit {
   public manager() {
     this.rest.action = 'user'
     this.rest.navCtrl.navigateForward('/item/manager')
+  }
+
+  public async removeexpire(itemindex: number, expireindex: number, name: string) {
+    const alert = await this.alert.create({
+      message: 'Xóa hạn sử dụng '+name+'?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removeexpireSubmit(itemindex, expireindex)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removeexpireSubmit(itemindex: number, expireindex: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('item', 'removeexpire', {
+      id: this.rest.item.list[itemindex].expired[expireindex].id,
+    }).then((resp) => {
+      this.rest.defreeze()
+      let temp = this.rest.item.list[itemindex].expired.filter((item: any, cindex: any) => {
+        return expireindex !== cindex
+      })
+      this.rest.item.list[itemindex].expired = temp
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async toggle(itemindex: number, type: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('item', 'changeover', {
+      id: this.rest.item.list[itemindex].id,
+      type: this.rest.item.list[itemindex].type,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.list[itemindex].outstock = resp.value
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async removeItem(id: number) {

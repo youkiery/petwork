@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'manager',
     loadChildren: () => import('./itemmanager/itemmanager.module').then( m => m.ItemmanagerPageModule)
   },
+  {
+    path: 'purchase',
+    loadChildren: () => import('./itempurchase/itempurchase.module').then( m => m.ItempurchasePageModule)
+  },
+
 
 
 ];

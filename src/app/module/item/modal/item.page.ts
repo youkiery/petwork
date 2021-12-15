@@ -167,7 +167,6 @@ export class ItemPage implements OnInit {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.temp.list = resp.list
-      this.rest.item.expired = resp.expired
     }, () => {
       this.rest.defreeze()
     })
