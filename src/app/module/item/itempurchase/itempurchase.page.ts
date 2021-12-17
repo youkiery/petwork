@@ -22,7 +22,7 @@ export class ItempurchasePage implements OnInit {
   }
 
   public async initiaze() {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'purchase', { }).then((resp) => {
       this.rest.defreeze()
       this.rest.item.purchase = resp.list
@@ -32,7 +32,7 @@ export class ItempurchasePage implements OnInit {
   }
 
   public async purchased() {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     let list = []
     this.rest.item.purchase.forEach(item => {
       if (item.checked) list.push(item.id)
@@ -48,4 +48,53 @@ export class ItempurchasePage implements OnInit {
     })
   }
 
+  public async insert() {
+    const alert = await this.alert.create({
+      message: 'Ghi nội dung nhập hàng',
+      inputs: [{
+        name: 'content',
+        type: 'text',
+        placeholder: 'Nội dung nhập hàng'
+      },
+      {
+        name: 'number',
+        type: 'number',
+        placeholder: 'Số lượng cần nhập',
+        value: 5
+      },
+      {
+        name: 'customer',
+        type: 'text',
+        placeholder: 'Tên khách'
+      },
+      {
+        name: 'phone',
+        type: 'text',
+        placeholder: 'Số điện thoại'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.insertSubmit(e)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async insertSubmit(data: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('item', 'purchase', { }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.purchase = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

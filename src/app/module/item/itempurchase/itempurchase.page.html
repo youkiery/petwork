@@ -11,6 +11,10 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="insert()">
+    <ion-fab-button> Báo <br> nhập </ion-fab-button>
+  </ion-fab>
+
   <ion-list>
     <ion-item *ngFor="let item of rest.item.purchase">
       <ion-label>{{item.name}}</ion-label>
