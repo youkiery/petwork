@@ -52,7 +52,7 @@ export class RestService {
   public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
-  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], keyword: '', user: [], usercat: [], cat: [], cats: '', purchase: [] }
+  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], keyword: '', user: [], usercat: [], cat: [], cats: '', purchase: [], position: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public physical = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [] }

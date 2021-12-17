@@ -84,6 +84,16 @@ export class ItemPage implements OnInit {
     this.rest.temp.image = [this.rest.temp.list[i].image]
     this.rest.navCtrl.navigateForward('modal/upload')
   }
+
+  public removeItemPos(i: number) {
+    this.rest.temp.position = this.rest.temp.position.filter((item: any, index: number) => {
+      return i !== index
+    })
+  }
+
+  public insertItemPos(i: number) {
+    this.rest.navCtrl.navigateForward('/item/pos')
+  }
   
   public insertPos(i: number) {
     this.rest.temp.prv = i
@@ -314,6 +324,8 @@ export class ItemPage implements OnInit {
   public async updateSubmit() {
     this.rest.checkpost('item', 'update', this.rest.temp).then(resp => {
       this.rest.defreeze()
+      console.log(this.rest.item.list, this.rest.temp.index);
+      
       this.rest.item.list[this.rest.temp.index] = resp.data
       this.filter()
       this.rest.back()

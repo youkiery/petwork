@@ -20,9 +20,10 @@ const routes: Routes = [
     path: 'purchase',
     loadChildren: () => import('./itempurchase/itempurchase.module').then( m => m.ItempurchasePageModule)
   },
-
-
-
+  {
+    path: 'pos',
+    loadChildren: () => import('./itempos/itempos.module').then( m => m.ItemposPageModule)
+  },
 ];
 
 @NgModule({

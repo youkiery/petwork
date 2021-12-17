@@ -37,6 +37,7 @@ export class ItemPage implements OnInit {
         this.rest.item.image = resp.image
         this.rest.item.catlist = resp.catlist
         this.rest.item.list = resp.list
+        this.rest.item.position = resp.position
         this.rest.item.user = resp.user
         this.rest.item.cat = resp.cat
         this.rest.item.cats = resp.cats
@@ -52,8 +53,6 @@ export class ItemPage implements OnInit {
 
   public async reloadEvent(event: any) {
     this.reload().then(() => {
-      console.log(1);
-      
       event.target.complete()
     })
   }
@@ -75,6 +74,7 @@ export class ItemPage implements OnInit {
       this.rest.item.image = resp.image
       this.rest.item.catlist = resp.catlist
       this.rest.item.list = resp.list
+      this.rest.item.position = resp.position
       this.rest.item.user = resp.user
       this.rest.item.cat = resp.cat
       this.rest.item.cats = resp.cats
@@ -136,6 +136,7 @@ export class ItemPage implements OnInit {
       name: '',
       code: '',
       border: 10,
+      position: [],
       image: []
     }
     this.rest.navCtrl.navigateForward('item/modal')
@@ -149,6 +150,7 @@ export class ItemPage implements OnInit {
       name: this.rest.item.list[index].name,
       code: this.rest.item.list[index].code,
       border: this.rest.item.list[index].border,
+      position: this.rest.item.list[index].position,
       image: this.rest.item.list[index].image,
       keyword: this.rest.item.keyword
     }

@@ -34,10 +34,12 @@
       <br>
       Hạn sử dụng: <div class="pos" *ngFor="let pos of rest.item.list[index].expired; let i = index" (click)="removeexpire(index, i, pos.name)"> {{pos.name}} </div>
     </span>
-    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
-    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(index)">
-    <img *ngIf="rest.item.list[index].outstock == 1" class="right icon" src="/assets/icon/item-on.png" (click)="toggle(index, rest.item.list[index].outstock)">
-    <img *ngIf="rest.item.list[index].outstock == 0" class="right icon" src="/assets/icon/item-off.png" (click)="toggle(index, rest.item.list[index].outstock)">
+    <div class="upperline">
+      <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
+      <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(index)">
+      <img *ngIf="rest.item.list[index].outstock == 1" class="right icon" src="/assets/icon/item-on.png" (click)="toggle(index, rest.item.list[index].outstock)">
+      <img *ngIf="rest.item.list[index].outstock == 0" class="right icon" src="/assets/icon/item-off.png" (click)="toggle(index, rest.item.list[index].outstock)">
+    </div>
   </div>
   <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content

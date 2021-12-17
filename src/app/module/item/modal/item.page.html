@@ -73,9 +73,10 @@
       <ion-input [(ngModel)]="rest.temp.name"></ion-input>
     </ion-item>
     
-    <!-- <div>
-      Vị trí: <span *ngFor="let item of "></span>
-    </div> -->
+    <div>
+      Vị trí: <span *ngFor="let item of rest.temp.position; let i = index" class="pos" (click)="removeItemPos(i)"> {{item.name}} </span>
+      <div class="pos" (click)="insertItemPos()"> + </div>
+    </div>
     
     <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
     <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
