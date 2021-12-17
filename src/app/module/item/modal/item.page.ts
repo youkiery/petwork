@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-item',
@@ -16,6 +17,7 @@ export class ItemPage implements OnInit {
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public alert: AlertController,
     private storage: AngularFireStorage,
   ) { }

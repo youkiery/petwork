@@ -30,6 +30,17 @@
     <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
   </div>
 
+  <div *ngIf="rest.temp.action == 'recommend'">
+    <div class="stl-card">
+      Nội dung: {{rest.temp.data.content}} <br>
+      Số lượng: {{rest.temp.data.number}} <br>
+      Khách hàng: {{rest.temp.data.name}} <br>
+      Số điện thoại: {{rest.temp.data.phone}} <br>
+      Người đề xuất: {{rest.temp.data.user}} <br>
+      Thời gian: {{time.timetodate(rest.temp.data.time * 1000)}} <br>
+    </div>
+  </div>
+
   <div *ngIf="rest.temp.action == 'position'">
     <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
       Vị trí: {{item.name}} <br>

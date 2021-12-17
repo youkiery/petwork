@@ -8,6 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./itempurchase.page.scss'],
 })
 export class ItempurchasePage implements OnInit {
+  public init = false
   constructor(
     public rest: RestService,
     public alert: AlertController,
@@ -18,13 +19,14 @@ export class ItempurchasePage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('item')
-    else this.initiaze()
+    else if (!this.init) this.initiaze()
   }
 
   public async initiaze() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'purchase', { }).then((resp) => {
       this.rest.defreeze()
+      this.init = true
       this.rest.item.purchase = resp.list
     }, () => {
       this.rest.defreeze()
@@ -32,20 +34,28 @@ export class ItempurchasePage implements OnInit {
   }
 
   public async purchased() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    let list = []
-    this.rest.item.purchase.forEach(item => {
-      if (item.checked) list.push(item.id)
+    let list = {
+      item: [],
+      recommend: []
+    }
+    this.rest.item.purchase.item.forEach(item => {
+      if (item.checked) list.item.push(item.id)
     })
-    if (!list.length) this.rest.notify('Chọn ít nhất 1 loại hàng')
-    else this.rest.checkpost('item', 'purchased', {
-      list: list
-    }).then((resp) => {
-      this.rest.defreeze()
-      this.rest.item.purchase = resp.list
-    }, () => {
-      this.rest.defreeze()
+    this.rest.item.purchase.recommend.forEach(item => {
+      if (item.checked) list.recommend.push(item.id)
     })
+    if (!(list.item.length || list.recommend.length)) this.rest.notify('Chọn ít nhất 1 loại hàng')
+    else {
+      await this.rest.freeze('Đang tải dữ liệu...')
+      this.rest.checkpost('item', 'purchased', {
+       list: list
+     }).then((resp) => {
+       this.rest.defreeze()
+       this.rest.item.purchase = resp.list
+     }, () => {
+       this.rest.defreeze()
+     })
+    }
   }
 
   public async insert() {
@@ -60,10 +70,9 @@ export class ItempurchasePage implements OnInit {
         name: 'number',
         type: 'number',
         placeholder: 'Số lượng cần nhập',
-        value: 5
       },
       {
-        name: 'customer',
+        name: 'name',
         type: 'text',
         placeholder: 'Tên khách'
       },
@@ -88,9 +97,17 @@ export class ItempurchasePage implements OnInit {
     await alert.present();
   }
 
+  public info(i: number) {
+    this.rest.temp = {
+      action: 'recommend',
+      data: this.rest.item.purchase.recommend[i]
+    } 
+    this.rest.navCtrl.navigateForward('/item/modal')
+  }
+
   public async insertSubmit(data: any) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('item', 'purchase', { }).then((resp) => {
+    this.rest.checkpost('item', 'recommend', data).then((resp) => {
       this.rest.defreeze()
       this.rest.item.purchase = resp.list
     }, () => {

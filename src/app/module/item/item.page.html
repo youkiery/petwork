@@ -75,6 +75,7 @@
       <ion-tab-button (click)="purchase()">
         <ion-icon name="basket-outline"></ion-icon>
         <ion-label> Báo hết </ion-label>
+        <ion-badge color="danger" *ngIf="rest.item.purchase.item.length + rest.item.purchase.recommend.length"> {{rest.item.purchase.item.length + rest.item.purchase.recommend.length}} </ion-badge>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

@@ -42,6 +42,7 @@ export class ItemPage implements OnInit {
         this.rest.item.cat = resp.cat
         this.rest.item.cats = resp.cats
         this.rest.item.usercat = resp.usercat
+        this.rest.item.purchase = resp.purchase
         this.filter()
         resolve(true)
       }, () => {
@@ -79,6 +80,7 @@ export class ItemPage implements OnInit {
       this.rest.item.cat = resp.cat
       this.rest.item.cats = resp.cats
       this.rest.item.usercat = resp.usercat
+      this.rest.item.purchase = resp.purchase
       this.filter()
     }, () => {
       this.rest.defreeze()
