@@ -49,7 +49,7 @@ export class HisPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('his', 'filter', {
       start: this.rest.his.start,
       end: this.rest.his.end,
@@ -145,7 +145,7 @@ export class HisPage implements OnInit {
   }
 
   public async deadSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'dead', {
       id: this.rest.his.list[index].id,
     }).then((resp) => {
@@ -176,7 +176,7 @@ export class HisPage implements OnInit {
   }
 
   public async returnSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'returned', {
       id: this.rest.his.list[index].id,
     }).then((resp) => {
@@ -207,7 +207,7 @@ export class HisPage implements OnInit {
   }
 
   public async removeSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'remove', {
       id: this.rest.his.list[index].id,
       start: this.rest.his.start,
@@ -291,7 +291,7 @@ export class HisPage implements OnInit {
   }
 
   public async rateSubmit(id: number, point: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'statrate', {
       id: id,
       rate: point,
@@ -374,7 +374,7 @@ export class HisPage implements OnInit {
   }
 
   public async hopitalSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'hopital', {
       id: id,
       start: this.rest.his.start,

@@ -84,7 +84,7 @@ export class RecallPage {
   }
 
   public async doneSubmit(index: string[]) {
-    await this.rest.freeze('Xóa lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'donerecall', {
       list : this.getselectedid(),
       docs: this.rest.home.default.docs,
@@ -107,7 +107,7 @@ export class RecallPage {
   }
 
   public async doneUsgSubmit(index: number[]) {
-    await this.rest.freeze('Xóa lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'done', {
       index: this.getselectedid(),
     }).then(resp => {

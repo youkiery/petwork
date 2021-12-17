@@ -46,7 +46,7 @@ export class RidePage implements OnInit {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('ride', 'remove', {
       id: id,
       segment: this.rest.ride.segment,
@@ -90,7 +90,7 @@ export class RidePage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy danh sách..')
+    await this.rest.freeze('Đang tải danh sách..')
     this.rest.checkpost('ride', 'init', {
       start: this.rest.home.month.start,
       end: this.rest.home.month.end,

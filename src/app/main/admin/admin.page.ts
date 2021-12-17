@@ -108,7 +108,7 @@ export class AdminPage {
   }
 
   public async removeSubmit(userid: number) {
-    await this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'remove', {
       userid: userid
     }).then(resp => {

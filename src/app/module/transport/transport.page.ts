@@ -24,7 +24,7 @@ export class TransportPage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('transport', 'init', {}).then(resp => {
       this.rest.defreeze()
       this.rest.transport.init = true
@@ -35,7 +35,7 @@ export class TransportPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('transport', 'init', {
       keyword: this.rest.transport.keyword
     }).then(resp => {
@@ -89,7 +89,7 @@ export class TransportPage implements OnInit {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('transport', 'remove', {
       id: id,
       keyword: this.rest.transport.keyword

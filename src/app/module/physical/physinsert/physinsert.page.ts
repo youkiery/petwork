@@ -31,7 +31,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async insertImport() {
-    await this.rest.freeze('Đang cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'import', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.physical.import = resp.import
@@ -42,7 +42,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async updateTarget() {
-    await this.rest.freeze('Đang cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.physical.target = resp.list
@@ -53,7 +53,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async insertTarget() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.physical.target = resp.list
@@ -64,7 +64,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async insert() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.physical.page = 1
@@ -79,7 +79,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async updatephysical() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'updatephysical', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.physical.list = resp.list
@@ -116,7 +116,7 @@ export class PhysinsertPage implements OnInit {
   }
 
   public async insertSelectSubmit(type: string, typevalue: string) {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'insertselect', {
       typename: type,
       typevalue: typevalue,

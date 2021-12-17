@@ -93,7 +93,7 @@ export class SpaPage {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'filter', {
       time: this.rest.spa.time,
     }).then((resp) => {
@@ -106,7 +106,7 @@ export class SpaPage {
   }
 
   public async search() {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'search', {
       keyword: this.rest.spa.keyword
     }).then((resp) => {
@@ -180,7 +180,7 @@ export class SpaPage {
   }
 
   public async returnedSubmit(index: number, uid: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'returned', {
       id: this.rest.spa.list[index].id,
       uid: uid,
@@ -215,7 +215,7 @@ export class SpaPage {
   }
 
   public async removeSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'remove', {
       id: this.rest.spa.list[index].id,
       time: this.rest.spa.time,
@@ -252,7 +252,7 @@ export class SpaPage {
   }
 
   public async doneSubmit(index: number, uid: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'done', {
       id: this.rest.spa.list[index].id,
       uid: uid,
@@ -290,7 +290,7 @@ export class SpaPage {
   }
 
   public async calledSubmit(index: number, uid: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'called', {
       id: this.rest.spa.list[index].id,
       uid: uid,

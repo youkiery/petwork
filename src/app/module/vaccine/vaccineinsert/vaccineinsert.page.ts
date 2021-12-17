@@ -32,7 +32,7 @@ export class VaccineinsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Thêm lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.temp.vid = resp.vid
@@ -55,7 +55,7 @@ export class VaccineinsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Thêm lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'inserthistory', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.new = resp.new
@@ -85,7 +85,7 @@ export class VaccineinsertPage {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Xóa lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'removevaccine', {
       id: id
     }).then(resp => {
@@ -116,7 +116,7 @@ export class VaccineinsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Cập nhật lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.list = resp.list
@@ -141,7 +141,7 @@ export class VaccineinsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'updatehistory', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.temp = resp.list

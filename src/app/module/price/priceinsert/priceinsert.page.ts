@@ -25,7 +25,7 @@ export class PriceinsertPage implements OnInit {
   }
 
   public async insert() {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('price', 'insert', this.rest.temp).then((resp) => {
       this.rest.defreeze()
       this.rest.price.list = resp.list
@@ -36,7 +36,7 @@ export class PriceinsertPage implements OnInit {
   }
 
   public async update() {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('price', 'update', this.rest.temp).then((resp) => {
       this.rest.defreeze()
       this.rest.price.list = resp.list

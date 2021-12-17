@@ -54,7 +54,7 @@ export class UploadPage {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-      await this.rest.freeze('Đang tải...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();
@@ -134,7 +134,7 @@ export class UploadPage {
 
   public async insert() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -152,7 +152,7 @@ export class UploadPage {
 
   public async update() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -216,7 +216,7 @@ export class UploadPage {
 
   public async drugInsert() {
     this.count = 0
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.image.length) this.drugInsertSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
@@ -232,7 +232,7 @@ export class UploadPage {
 
   public async drugUpdate() {
     this.count = 0
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.image.length) this.drugUpdateSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
@@ -302,7 +302,7 @@ export class UploadPage {
 
   public async updatePositionCheck() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     if (!this.rest.temp.image.length) this.updatePositionSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
@@ -340,7 +340,7 @@ export class UploadPage {
 
   public async insertPositionCheck() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     if (!this.rest.temp.image.length) this.insertPositionSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {

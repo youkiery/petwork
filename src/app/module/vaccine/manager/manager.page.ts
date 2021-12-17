@@ -100,7 +100,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost(this.rest.vaccine.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -173,7 +173,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async transferAllSubmit(list: any, uid: number) {
-    await this.rest.freeze('Đang xóa loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'transfer', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -213,7 +213,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeAllSubmit(list: any) {
-    await this.rest.freeze('Đang xóa loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'removeall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -261,7 +261,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async doneAllSubmit(list: any) {
-    await this.rest.freeze('Đang xác nhận...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'doneall', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -352,7 +352,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'removetemp', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -396,7 +396,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async doneSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'confirm', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -422,7 +422,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async reloadTemp(event: any) {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost(this.rest.vaccine.type, 'tempauto', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,

@@ -26,7 +26,7 @@ export class ItemPage implements OnInit {
   }
 
   public async reload() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     return new Promise(resolve => {
       this.rest.checkpost('item', 'init', {
         cat: this.rest.item.cat
@@ -65,7 +65,7 @@ export class ItemPage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'init', {
     }).then(resp => {
       this.rest.defreeze()
@@ -182,7 +182,7 @@ export class ItemPage implements OnInit {
   }
 
   public async removeexpireSubmit(itemindex: number, expireindex: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'removeexpire', {
       id: this.rest.item.list[itemindex].expired[expireindex].id,
     }).then((resp) => {
@@ -197,7 +197,7 @@ export class ItemPage implements OnInit {
   }
 
   public async toggle(itemindex: number, type: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'changeover', {
       id: this.rest.item.list[itemindex].id,
       type: this.rest.item.list[itemindex].type,
@@ -229,7 +229,7 @@ export class ItemPage implements OnInit {
   }
 
   public async removeItemSubmit(index: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'remove', {
       id: this.rest.item.list[index].id,
       keyword: this.rest.item.keyword

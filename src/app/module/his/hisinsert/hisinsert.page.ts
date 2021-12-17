@@ -85,7 +85,7 @@ export class HisinsertPage implements OnInit {
 
   public async insert() {
     this.count = 0
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -120,7 +120,7 @@ export class HisinsertPage implements OnInit {
 
   public async update() {
     this.count = 0
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -156,7 +156,7 @@ export class HisinsertPage implements OnInit {
 
   public async insertDetail() {
     this.count = 0
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else if (!this.rest.temp.image.length) this.insertDetailSubmit()
@@ -189,7 +189,7 @@ export class HisinsertPage implements OnInit {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-      await this.rest.freeze('Đang tải...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();

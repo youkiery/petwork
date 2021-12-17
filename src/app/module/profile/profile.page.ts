@@ -28,7 +28,7 @@ export class ProfilePage {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'init', {
       key: this.rest.profile.key,
       page: this.rest.profile.page,
@@ -106,7 +106,7 @@ export class ProfilePage {
   }
 
   public async removeTargetSubmit(i: number) {
-    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'remove', {
       id: this.rest.profile.target[i].id,
       key: this.rest.profile.key2
@@ -141,7 +141,7 @@ export class ProfilePage {
   }
 
   public async updateSubmit(index: number) {
-    await this.rest.freeze('Cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'update', {
       id: this.rest.profile.target[index].id
     }).then(resp => {
@@ -174,7 +174,7 @@ export class ProfilePage {
   }
 
   public async resetSubmit(index: number) {
-    await this.rest.freeze('Cài lại...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'res', {
       id: this.rest.profile.target[index].id,
       key: this.rest.profile.key
@@ -187,7 +187,7 @@ export class ProfilePage {
   }
 
   public async print(id: number) {
-    await this.rest.freeze('Đang tải bản in...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'printword', {
       id: id
     }).then(resp => {
@@ -234,7 +234,7 @@ export class ProfilePage {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'remove', {
       id: id,
       key: this.rest.profile.key,
@@ -307,7 +307,7 @@ export class ProfilePage {
   }
 
   public async detail(id: number) {
-    await this.rest.freeze('Đang lấy dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'printword', {
       // action: 'profile-get',
       id: id
@@ -324,7 +324,7 @@ export class ProfilePage {
 
   public async loadData(event: any) {
     this.rest.profile.page++
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.getData().then(() => {
       event.target.complete()
     })
@@ -333,7 +333,7 @@ export class ProfilePage {
   public async filter() {
     this.rest.profile.page = 1
     this.rest.profile.list = []
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.getData()
   }
 

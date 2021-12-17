@@ -43,7 +43,7 @@ export class VaccinesearchPage implements OnInit {
   public async search() {
     if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
-      await this.rest.freeze('Đang tải danh sách')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'searchcustomer', {
         keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
@@ -88,7 +88,7 @@ export class VaccinesearchPage implements OnInit {
   }
 
   public async calledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'called', {
       id: id,
       note: note,
@@ -134,7 +134,7 @@ export class VaccinesearchPage implements OnInit {
   }
 
   public async uncalledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'uncalled', {
       id: id,
       note: note,
@@ -173,7 +173,7 @@ export class VaccinesearchPage implements OnInit {
   }
 
   public async doneSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'done', {
       id: id,
       keyword: this.rest.vaccine.keyword,
@@ -219,7 +219,7 @@ export class VaccinesearchPage implements OnInit {
   }
 
   public async deadSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'dead', {
       id: id,
       note: note,

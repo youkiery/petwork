@@ -30,7 +30,7 @@ export class HismanagerPage implements OnInit {
   }
 
   public async reload(event: any) {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'manager', {}).then((resp) => {
       this.rest.defreeze()
       event.target.complete();

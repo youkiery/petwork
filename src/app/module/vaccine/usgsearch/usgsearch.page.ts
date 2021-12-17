@@ -48,7 +48,7 @@ export class UsgsearchPage implements OnInit {
   public async search() {
     if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
-      await this.rest.freeze('Đang tải danh sách')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('usg', 'searchcustomer', {
         keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
@@ -105,7 +105,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async birthSubmit(id: number, number: number, calltime: string, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'birth', {
       id: id,
       note: note,
@@ -147,7 +147,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async calledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
@@ -188,7 +188,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async deadSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
@@ -229,7 +229,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async doneSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
@@ -270,7 +270,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async progesteroneSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
@@ -311,7 +311,7 @@ export class UsgsearchPage implements OnInit {
   }
 
   public async repregnantSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'repregnant', {
       id: id,
       note: note,

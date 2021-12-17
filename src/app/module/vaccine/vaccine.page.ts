@@ -66,7 +66,7 @@ export class VaccinePage {
   }
 
   public async init() {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'auto', {
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
@@ -89,7 +89,7 @@ export class VaccinePage {
   public async search() {
     if (!this.rest.vaccine.keyword.length) this.rest.notify('Nhập ít nhất 1 ký tự...')
     else {
-      await this.rest.freeze('Đang tải danh sách')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost(this.rest.vaccine.type, 'searchcustomer', {
         keyword: this.rest.vaccine.keyword,
         docs: this.rest.home.default.docs,
@@ -114,7 +114,7 @@ export class VaccinePage {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -129,7 +129,7 @@ export class VaccinePage {
   }
 
   public async filterR(event: any) {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost(this.rest.vaccine.type, 'filter', {
       time: this.rest.vaccine.time,
       docs: this.rest.home.default.docs,
@@ -300,7 +300,7 @@ export class VaccinePage {
   }
 
   public async calledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'called', {
       id: id,
       note: note,
@@ -348,7 +348,7 @@ export class VaccinePage {
   }
 
   public async uncalledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'uncalled', {
       id: id,
       note: note,
@@ -388,7 +388,7 @@ export class VaccinePage {
   }
 
   public async doneSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'done', {
       id: id,
       keyword: this.rest.vaccine.keyword,
@@ -435,7 +435,7 @@ export class VaccinePage {
   }
 
   public async deadSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'dead', {
       id: id,
       note: note,
@@ -504,7 +504,7 @@ export class VaccinePage {
   }
 
   public async birthSubmit(id: number, data: any) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'birth', {
       id: id,
       note: data['note'],
@@ -548,7 +548,7 @@ export class VaccinePage {
   }
 
   public async ucalledSubmit(id: number, note: string) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'called', {
       id: id,
       note: note,
@@ -590,7 +590,7 @@ export class VaccinePage {
   }
 
   public async udeadSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'dead', {
       id: id,
       note: note,
@@ -632,7 +632,7 @@ export class VaccinePage {
   }
 
   public async udoneSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
@@ -674,7 +674,7 @@ export class VaccinePage {
   }
 
   public async progesteroneSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'done', {
       id: id,
       note: note,
@@ -716,7 +716,7 @@ export class VaccinePage {
   }
 
   public async repregnantSubmit(id: number, note: string = '') {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'repregnant', {
       id: id,
       note: note,

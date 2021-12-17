@@ -21,7 +21,7 @@ export class KaizeninsertPage implements OnInit {
   public async save() {
     let action = 'insert'
     if (this.rest.temp.id) action = 'edit'
-    await this.rest.freeze('Lưu dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('kaizen', action, {
       data: this.rest.temp,
       filter: this.rest.kaizen.filter

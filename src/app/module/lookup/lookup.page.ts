@@ -26,7 +26,7 @@ export class LookupPage implements OnInit {
   
   public async init() {
     if (!this.rest.drug.init) {
-      await this.rest.freeze('Đang tải danh sách')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('drug', 'auto', { }).then(resp => {
         this.rest.defreeze()
         this.rest.drug.init = true
@@ -38,7 +38,7 @@ export class LookupPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang lọc thuốc')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('drug', 'auto', {
       name: this.rest.drug.filter.name,
       effect: this.rest.drug.filter.effect
@@ -99,7 +99,7 @@ export class LookupPage implements OnInit {
   }
 
   public async removeSubmit() {
-    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('drug', 'remove', {
       id: this.rest.temp,
       name: this.rest.drug.filter.name,

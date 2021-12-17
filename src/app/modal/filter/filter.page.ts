@@ -43,7 +43,7 @@ export class FilterPage {
   }
 
   public async rateSubmit(id: number, point: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'rate', {
       id: id,
       rate: point,

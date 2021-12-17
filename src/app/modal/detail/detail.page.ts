@@ -64,7 +64,7 @@ export class DetailPage {
   }
 
   public async save() {
-    await this.rest.freeze('Đang lưu dữ liệu')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'update', {
       module: this.module,
       name: this.rest.temp.name,

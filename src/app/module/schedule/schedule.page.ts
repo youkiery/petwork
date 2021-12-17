@@ -56,7 +56,7 @@ export class SchedulePage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.schedule.time = this.time.datetotime(this.rest.home.today)
     this.rest.checkpost('schedule', 'init', {
       time: this.rest.schedule.time,
@@ -171,7 +171,7 @@ export class SchedulePage implements OnInit {
 
   public async changeWeek(increaseWeek: number) {
     let time = this.rest.schedule.time + 60 * 60 * 24 * 7 * 1000 * increaseWeek
-    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('schedule', 'init', {
       time: time,
       name: this.rest.home.name,
@@ -186,7 +186,7 @@ export class SchedulePage implements OnInit {
   }
 
   public async auto() {
-    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('schedule', 'init', {
       time: this.rest.schedule.time,
       name: this.rest.home.name,
@@ -200,7 +200,7 @@ export class SchedulePage implements OnInit {
   }
 
   public async reload(event: any) {
-    await this.rest.freeze('Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('schedule', 'init', {
       time: this.rest.schedule.time,
       name: this.rest.home.name,

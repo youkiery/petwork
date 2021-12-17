@@ -22,7 +22,7 @@ export class CartdetailPage implements OnInit {
   }
   
   public async cartpick() {
-    await this.rest.freeze('Đang lưu dữ liệu')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('cart', 'pick', {
       id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {
@@ -53,7 +53,7 @@ export class CartdetailPage implements OnInit {
   }
 
   public async cartdone() {
-    await this.rest.freeze('Đang lưu dữ liệu')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('cart', 'done', {
       id: this.rest.cart.list[this.rest.temp].id
     }).then(resp => {

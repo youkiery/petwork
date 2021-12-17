@@ -25,7 +25,7 @@ export class PricePage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('price', 'init', {}).then((resp) => {
       this.rest.defreeze()
       this.rest.price.init = true
@@ -36,7 +36,7 @@ export class PricePage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang lấy dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('price', 'init', {
       keyword: this.rest.price.keyword
     }).then((resp) => {
@@ -92,7 +92,7 @@ export class PricePage implements OnInit {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('price', 'remove', {
       id: id,
     }).then(resp => {

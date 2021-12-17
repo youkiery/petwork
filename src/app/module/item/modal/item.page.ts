@@ -34,7 +34,7 @@ export class ItemPage implements OnInit {
   }
 
   public async positionInit() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'position_init', {}).then(resp => {
       this.rest.defreeze()
       this.init = true
@@ -45,7 +45,7 @@ export class ItemPage implements OnInit {
   }
 
   public async purchaseInit() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'purchase_init', {}).then(resp => {
       this.rest.defreeze()
       this.init = true
@@ -56,7 +56,7 @@ export class ItemPage implements OnInit {
   }
 
   public async transferInit() {
-      await this.rest.freeze('Đang tải danh sách...')
+      await this.rest.freeze('Đang tải dữ liệu......')
       this.rest.checkpost('item', 'transfer_init', {}).then(resp => {
         this.rest.defreeze()
         this.init = true
@@ -67,7 +67,7 @@ export class ItemPage implements OnInit {
   }
 
   public async expiredInit() {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'expired_init', {}).then(resp => {
       this.rest.defreeze()
       this.init = true
@@ -134,7 +134,7 @@ export class ItemPage implements OnInit {
   }
 
   public async removePositionSbumit(index: number) {
-    await this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'position_remove', {
       id: this.rest.temp.list[index].id,
     }).then((resp) => {
@@ -171,7 +171,7 @@ export class ItemPage implements OnInit {
   }
 
   public async doneSubmit(id: number) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'expire_done', {
       id: id,
     }).then((resp) => {
@@ -195,7 +195,7 @@ export class ItemPage implements OnInit {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-     await this.rest.freeze('Đang tải...')
+     await this.rest.freeze('Đang tải dữ liệu...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();
@@ -268,7 +268,7 @@ export class ItemPage implements OnInit {
 
   public async insertItem() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên hàng hóa')
     else if (!this.rest.temp.code.length) this.rest.notify('Chưa nhập mã hàng hóa')
@@ -306,7 +306,7 @@ export class ItemPage implements OnInit {
 
   public async updateItem() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên hàng hóa')
     else if (!this.rest.temp.code.length) this.rest.notify('Chưa nhập mã hàng hóa')
     else if (!this.rest.temp.image.length) this.updateSubmit()
@@ -339,7 +339,7 @@ export class ItemPage implements OnInit {
   }
 
   public async insertExpire() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     this.rest.checkpost('item', 'expire', temp).then(() => {
       this.rest.defreeze()
@@ -362,7 +362,7 @@ export class ItemPage implements OnInit {
   }
 
   public async removePos(index: number, itemid: string) {
-    await this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'repos', {
       itemid: itemid,
       posid: this.rest.temp.list[index].id,
@@ -401,7 +401,7 @@ export class ItemPage implements OnInit {
   }
 
   public async insertCatSubmit(cat: number) {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'incat', {
       cat: cat
     }).then((resp) => {

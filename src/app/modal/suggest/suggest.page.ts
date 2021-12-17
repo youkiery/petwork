@@ -60,7 +60,7 @@ export class SuggestPage {
   }
 
   public async searchHistory() {
-    await this.rest.freeze('Đang tìm lịch sử')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'history', {
       phone: this.rest.temp.phone
     }).then(resp => {

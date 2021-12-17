@@ -20,7 +20,7 @@ export class CartPage {
 
   public async init() {
     if (!this.rest.cart.init) {
-      await this.rest.freeze('Đang tải danh sách')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('cart', 'auto', { }).then(resp => {
         this.rest.defreeze()
         this.rest.cart.init = true
@@ -37,7 +37,7 @@ export class CartPage {
   }
 
   // public async filter() {
-  //   await this.rest.freeze('Đang tải danh sách')
+  //   await this.rest.freeze('Đang tải dữ liệu...')
   //   this.rest.checkpost('cart', 'search', {
   //     filter: this.rest.cart.filter
   //   }).then(resp => {
@@ -94,7 +94,7 @@ export class CartPage {
   // }
 
   // public async calledSubmit(index: number, note: string) {
-  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   await this.rest.freeze('Đang tải dữ liệu...')
   //   this.rest.checkpost('cart', 'called', {
   //     id: this.rest.cart.list[index].id,
   //     note: note,
@@ -135,7 +135,7 @@ export class CartPage {
   // }
 
   // public async uncalledSubmit(index: number, note: string) {
-  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   await this.rest.freeze('Đang tải dữ liệu...')
   //   this.rest.checkpost('cart', 'uncalled', {
   //     id: this.rest.cart.list[index].id,
   //     note: note,
@@ -175,7 +175,7 @@ export class CartPage {
   // }
 
   // public async deadSubmit(index: number, note: string = '') {
-  //   await this.rest.freeze('Đang thay đổi trạng thái')
+  //   await this.rest.freeze('Đang tải dữ liệu...')
   //   this.rest.checkpost('cart', 'dead', {
   //     id: this.rest.cart.list[index].id,
   //     note: note,

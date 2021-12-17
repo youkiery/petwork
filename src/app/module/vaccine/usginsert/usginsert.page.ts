@@ -35,7 +35,7 @@ export class UsginsertPage implements OnInit {
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
-      await this.rest.freeze('Thêm lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('usg', 'insert', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.usg.new = resp.new
@@ -65,7 +65,7 @@ export class UsginsertPage implements OnInit {
   }
 
   public async removeUsgSubmit(id: number) {
-    await this.rest.freeze('Xóa lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'remove', {
       id: id
     }).then(resp => {
@@ -92,7 +92,7 @@ export class UsginsertPage implements OnInit {
   }
 
   public async updateUsgSubmit() {
-    await this.rest.freeze('Thêm lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.temp.filter = this.rest.vaccine.keyword
     this.rest.checkpost('usg', 'update', this.rest.temp).then(resp => {
       this.rest.defreeze()
@@ -109,7 +109,7 @@ export class UsginsertPage implements OnInit {
     let msg = this.checkusgData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('usg', 'updatehistory', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.usg.temp = resp.list

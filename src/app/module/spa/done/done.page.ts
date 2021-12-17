@@ -41,7 +41,7 @@ export class DonePage implements OnInit {
   public async uploadPWA() {
     const fileList: FileList = this.pwaphoto.nativeElement.files;
     if (fileList && fileList.length > 0) {
-      await this.rest.freeze('Đang tải...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       for (let i = 0; i < fileList.length; i++) {
         await this.firstFileToBase64(fileList[i]).then((result: string) => {
           let image = new Image();
@@ -114,7 +114,7 @@ export class DonePage implements OnInit {
 
   public async done() {
     this.count = 0
-    await this.rest.freeze('Đang tải ảnh...')
+    await this.rest.freeze('Đang tải dữ liệu...')
 
     if (!this.rest.temp.image.length) this.doneSubmit()
     else this.rest.temp.image.forEach((image, index) => {
@@ -140,7 +140,7 @@ export class DonePage implements OnInit {
   }
 
   public async statisticSubmit() {
-    await this.rest.freeze('Đang tải danh sách')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'statistic', {
       start: this.time.isodatetodate(this.rest.spa.start),
       end: this.time.isodatetodate(this.rest.spa.end),
@@ -173,7 +173,7 @@ export class DonePage implements OnInit {
   }
 
   public async rateSubmit(id: number, point: number = 0) {
-    await this.rest.freeze('Đang thay đổi trạng thái')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'statrate', {
       id: id,
       rate: point,

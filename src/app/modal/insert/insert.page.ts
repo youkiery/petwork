@@ -26,7 +26,7 @@ export class InsertPage {
   }
 
   public async insertPosItemSubmit() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'inpositem', {
       list: this.rest.temp.selected,
       image: this.rest.temp.image,
@@ -61,7 +61,7 @@ export class InsertPage {
   }
 
   public async insertAdmin(userid: number) {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'insert', {
       userid: userid,
       key: this.rest.temp.key
@@ -75,7 +75,7 @@ export class InsertPage {
   }
 
   public async filterAdmin() {
-    await this.rest.freeze('Đang lọc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'filter', {
       key: this.rest.temp.key
     }).then(resp => {
@@ -94,7 +94,7 @@ export class InsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Thêm lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'insert', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.temp.vid = resp.vid
@@ -117,7 +117,7 @@ export class InsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Thêm lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'inserthistory', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.new = resp.new
@@ -147,7 +147,7 @@ export class InsertPage {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Xóa lịch nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'removevaccine', {
       id: id
     }).then(resp => {
@@ -178,7 +178,7 @@ export class InsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Cập nhật lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.list = resp.list
@@ -203,7 +203,7 @@ export class InsertPage {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
     else {
-      await this.rest.freeze('Cập nhật & xác nhận lịch nhắc...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('vaccine', 'updatehistory', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.temp = resp.list

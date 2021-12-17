@@ -26,7 +26,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   public async updateTarget() {
-    await this.rest.freeze('Đang cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'updateinfo', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.profile.target = resp.list
@@ -37,7 +37,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   public async insertTarget() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.profile.target = resp.list
@@ -48,7 +48,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   public async insert() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'insert', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.profile.page = 1
@@ -63,7 +63,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   public async updateprofile() {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'updateprofile', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.profile.list = resp.list
@@ -100,7 +100,7 @@ export class ProfinsertPage implements OnInit {
   }
 
   public async insertSelectSubmit(type: string, typevalue: string) {
-    await this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('profile', 'insertselect', {
       typename: type,
       typevalue: typevalue,

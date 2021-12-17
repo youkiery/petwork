@@ -25,7 +25,7 @@ export class PhysstatisPage implements OnInit {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'statistic', {
       start: this.rest.home.month.start,
       end: this.rest.home.month.end,

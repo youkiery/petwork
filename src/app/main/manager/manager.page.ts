@@ -78,7 +78,7 @@ export class ManagerPage implements OnInit {
 
 
   public async toggleDefault(id: number, alt: string) {
-    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu')
     this.rest.checkpost('spa', 'toggletype', {
       id: id,
       alt: alt,
@@ -92,7 +92,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async upspa(id: number, id2: number) {
-    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu')
     this.rest.checkpost('spa', 'uptype', {
       id: id,
       id2: id2,
@@ -106,7 +106,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async downspa(id: number, id2: number) {
-    await this.rest.freeze('Đang cập nhật dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu')
     this.rest.checkpost('spa', 'downtype', {
       id: id,
       id2: id2,
@@ -160,7 +160,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async insertSpaSubmit(name: string) {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'inserttype', {
       name: name,
     }).then(resp => {
@@ -172,7 +172,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async updateSpaSubmit(id: number, name: string) {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'updatetype', {
       id: id,
       name: name,
@@ -202,7 +202,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeSpaSubmit(id: number) {
-    await this.rest.freeze('Đang xóa dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'removetype', {
       id: id,
     }).then(resp => {
@@ -234,7 +234,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async insertUsgSubmit(name: string) {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'inserttype', {
       name: name,
     }).then(resp => {
@@ -266,7 +266,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async updateUsgSubmit(id: number, name: string) {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'updatetype', {
       id: id,
       name: name,
@@ -296,7 +296,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeUsgSubmit(id: number) {
-    await this.rest.freeze('Đang xóa dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'removetype', {
       id: id,
     }).then(resp => {
@@ -328,7 +328,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeTypeSubmit(id: number) {
-    await this.rest.freeze('Đang xóa loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'remove', {
       id: id,
     }).then(resp => {
@@ -341,7 +341,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async updateTypeSubmit() {
-    await this.rest.freeze('Cập nhật loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'updatetype', {
       id: this.input.id,
       code: this.input.code,
@@ -356,7 +356,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async insertTypeSubmit() {
-    await this.rest.freeze('Thêm loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'inserttype', {
       code: this.input.code,
       name: this.input.name
@@ -391,7 +391,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async removeDoctorSubmit(id: number) {
-    await this.rest.freeze('Đang xóa loại nhắc...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'removedoctor', {
       id: id,
     }).then(resp => {
@@ -404,7 +404,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async updateDoctorSubmit() {
-    await this.rest.freeze('Cập nhật bác sĩ...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'updatedoctor', {
       id: this.input.id,
       user: this.input.userid,
@@ -419,7 +419,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async insertDoctorSubmit() {
-    await this.rest.freeze('Thêm bác sĩ...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'insertdoctor', {
       user: this.input.userid,
       name: this.input.name
@@ -433,7 +433,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async searchDoctor() {
-    await this.rest.freeze('Đang tìm kiếm...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('vaccine', 'searchdoctor', {
       keyword: this.input.username
     }).then(resp => {
@@ -601,7 +601,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async reloadType(event: any) {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('vaccine', 'typeauto', {}).then(resp => {
       this.rest.defreeze()
       this.rest.home.type = resp.list
@@ -612,7 +612,7 @@ export class ManagerPage implements OnInit {
   }
 
   public async reloadDoctor(event: any) {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {
       this.rest.defreeze()
       this.rest.home.doctor = resp.list

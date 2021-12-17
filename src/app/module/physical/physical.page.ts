@@ -28,7 +28,7 @@ export class PhysicalPage {
   }
 
   public async init() {
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'init', {
       key: this.rest.physical.key,
       page: this.rest.physical.page,
@@ -113,7 +113,7 @@ export class PhysicalPage {
   }
 
   public async removeTargetSubmit(i: number) {
-    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'remove', {
       id: this.rest.physical.target[i].id,
       key: this.rest.physical.key2
@@ -152,7 +152,7 @@ export class PhysicalPage {
   }
 
   public async updateSubmit(index: number) {
-    await this.rest.freeze('Cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'update', {
       id: this.rest.physical.target[index].id
     }).then(resp => {
@@ -185,7 +185,7 @@ export class PhysicalPage {
   }
 
   public async resetSubmit(index: number) {
-    await this.rest.freeze('Cài lại...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('target', 'res', {
       id: this.rest.physical.target[index].id,
       key: this.rest.physical.key
@@ -198,7 +198,7 @@ export class PhysicalPage {
   }
 
   public async print(id: number) {
-    await this.rest.freeze('Đang tải bản in...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'printword', {
       id: id
     }).then(resp => {
@@ -245,7 +245,7 @@ export class PhysicalPage {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'remove', {
       id: id,
       key: this.rest.physical.key,
@@ -318,7 +318,7 @@ export class PhysicalPage {
   }
 
   public async detail(id: number) {
-    await this.rest.freeze('Đang lấy dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('physical', 'printword', {
       // action: 'physical-get',
       id: id
@@ -335,7 +335,7 @@ export class PhysicalPage {
 
   public async loadData(event: any) {
     this.rest.physical.page++
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.getData().then(() => {
       event.target.complete()
     })
@@ -344,7 +344,7 @@ export class PhysicalPage {
   public async filter() {
     this.rest.physical.page = 1
     this.rest.physical.list = []
-    await this.rest.freeze('Đang lấy danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.getData()
   }
 

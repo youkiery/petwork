@@ -28,7 +28,7 @@ export class KaizenPage implements OnInit {
 
   public async init() {
     if (!this.rest.kaizen.init) {
-      await this.rest.freeze('Đang lấy dữ liệu...')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.kaizen.filter.starttime = this.rest.home.month.start
       this.rest.kaizen.filter.endtime = this.rest.home.month.end
       this.rest.checkpost('kaizen', 'init', {
@@ -48,7 +48,7 @@ export class KaizenPage implements OnInit {
   }
 
   public async filter() {
-    await this.rest.freeze('Đang lấy dữ liệu')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.kaizen.filter.done = 1
     this.rest.kaizen.filter.undone = 1
 
@@ -83,7 +83,7 @@ export class KaizenPage implements OnInit {
   }
 
   public async checkerSubmit(id: number) {
-    await this.rest.freeze('Đang hoàn thành...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('kaizen', 'done', {
       id: id,
       type: this.rest.kaizen.segment,
@@ -139,7 +139,7 @@ export class KaizenPage implements OnInit {
   }
 
   public async removeSubmit(id: number) {
-    await this.rest.freeze('Đang xóa giải pháp')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('kaizen', 'remove', {
       action: 'kaizen-remove',
       id: id,

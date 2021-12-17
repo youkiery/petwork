@@ -61,7 +61,7 @@ export class ItemmanagerPage implements OnInit {
   }
 
   public async updateSubmit(index: number, cat: any) {
-    await this.rest.freeze('Đang tải danh sách...')
+    await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'per', {
       userid: this.rest.item.user[index].userid,
       cat: cat

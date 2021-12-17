@@ -31,7 +31,7 @@ export class RideinsertPage implements OnInit {
   }
 
   public async insertCole() {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('ride', 'cole', this.rest.temp).then((resp) => {
       this.rest.defreeze()
       this.rest.ride.list = resp.list
@@ -43,7 +43,7 @@ export class RideinsertPage implements OnInit {
   }
 
   public async insertPay() {
-    await this.rest.freeze('Đang thêm dữ liệu...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('ride', 'pay', this.rest.temp).then((resp) => {
       this.rest.defreeze()
       this.rest.ride.list = resp.list

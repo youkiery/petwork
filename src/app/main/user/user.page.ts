@@ -29,7 +29,7 @@ export class UserPage {
     else if (!this.verpas.length) this.rest.notify('Mật khẩu xác nhận trống')
     else if (this.newpas !== this.verpas) this.rest.notify('Mật khẩu xác nhận không trùng nhau')
     else {
-      await this.rest.freeze('Đang đổi mật khẩu')
+      await this.rest.freeze('Đang tải dữ liệu...')
       this.rest.checkpost('user', 'password', {
         old: this.oldpas,
         new: this.newpas
@@ -74,7 +74,7 @@ export class UserPage {
   }
 
   public async editNameSubmit(name: string) {
-    await this.rest.freeze('Đang cập nhật...')
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('user', 'changename', {
       name: name
     }).then(data => {
