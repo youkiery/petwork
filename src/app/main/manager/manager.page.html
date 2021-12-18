@@ -206,17 +206,17 @@
       <tr *ngFor="let item of checkout.pair">
         <td> {{rest.comma(item.money)}} </td>
         <td> {{rest.comma(item.money)}} </td>
-        <td> {{item.info}} </td>
+        <td> {{item.content}} </td>
       </tr>
       <tr *ngFor="let item of checkout.vietcom">
         <td class="red"> {{item.time}} </td>
         <td> {{rest.comma(item.money)}} </td>
-        <td> {{item.info}} </td>
+        <td> {{item.content}} </td>
       </tr>
       <tr *ngFor="let item of checkout.kiot">
         <td> {{rest.comma(item.money)}} </td>
         <td class="red"> {{item.time}} </td>
-        <td> {{item.note}} </td>
+        <td> {{item.content}} </td>
       </tr>
       <tr>
         <td> {{rest.comma(total.kiot)}} </td>
@@ -224,5 +224,69 @@
         <td> Tổng </td>
       </tr>
     </table>
+
+    <div class="stl-card">
+      <ion-list>
+        <ion-list-header>
+          Kiot
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label> Cột chuyển khoản </ion-label>
+          <ion-select [(ngModel)]="kiot.money">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột Nội dung </ion-label>
+          <ion-select [(ngModel)]="kiot.content">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột thời gian </ion-label>
+          <ion-select [(ngModel)]="kiot.time">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Ngân hàng
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label> Cột chuyển khoản </ion-label>
+          <ion-select [(ngModel)]="vietcom.money">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột Nội dung </ion-label>
+          <ion-select [(ngModel)]="vietcom.content">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột thời gian </ion-label>
+          <ion-select [(ngModel)]="vietcom.time">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
 </ion-content>

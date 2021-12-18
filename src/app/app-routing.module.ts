@@ -110,6 +110,10 @@ const routes: Routes = [
   {
     path: 'physical',
     loadChildren: () => import('./module/physical/physical.module').then( m => m.PhysicalPageModule)
+  },
+  {
+    path: 'accounting',
+    loadChildren: () => import('./main/accounting/accounting.module').then( m => m.AccountingPageModule)
   }
 ];
 

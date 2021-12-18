@@ -20,8 +20,7 @@ export class HomePage {
   }
 
   public checkout() {
-    this.rest.action = 'checkout'
-    this.rest.navCtrl.navigateForward('manager')
+    this.rest.navCtrl.navigateForward('accounting')
   }
 
   ionViewWillEnter() {
