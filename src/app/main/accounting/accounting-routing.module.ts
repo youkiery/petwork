@@ -9,7 +9,7 @@ const routes: Routes = [
     component: AccountingPage
   },
   {
-    path: 'accselect',
+    path: 'select',
     loadChildren: () => import('./accselect/accselect.module').then( m => m.AccselectPageModule)
   }
 ];

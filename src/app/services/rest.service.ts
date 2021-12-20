@@ -19,6 +19,7 @@ export class RestService {
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
+  public version = 21 // 21-42
   public config: any
   public home = {
     month: {
@@ -52,6 +53,7 @@ export class RestService {
   public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
+  public accounting = { kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' } }
   public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], keyword: '', user: [], usercat: [], cat: [], cats: '', purchase: { item: [], recommend: [] }, purcount: 0, position: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
@@ -63,7 +65,6 @@ export class RestService {
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', init: false, filter: { keyword: '', starttime: '', endtime: '', sort: 'asc', done: 1, undone: 1 } }
   // public work = {}
 
-  public version = 21 // 21-21
   public link = ''
   public action: string = ''
   public isready: boolean = false

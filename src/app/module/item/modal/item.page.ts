@@ -34,7 +34,7 @@ export class ItemPage implements OnInit {
       if (this.rest.temp.action == 'position' && !this.init) this.positionInit()
     }
   }
-
+  
   public async positionInit() {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'position_init', {}).then(resp => {
@@ -93,7 +93,7 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public insertItemPos(i: number) {
+  public insertItemPos() {
     this.rest.navCtrl.navigateForward('/item/pos')
   }
   

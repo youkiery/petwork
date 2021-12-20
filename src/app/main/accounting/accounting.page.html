@@ -4,8 +4,7 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'checkout'" slot="end" color="secondary" fill="solid" size="small"
-      (click)="uploadCheckout()">
+    <ion-button slot="end" color="secondary" fill="solid" size="small" (click)="uploadCheckout()">
       Tải lên
     </ion-button>
   </ion-toolbar>
@@ -73,61 +72,42 @@
         Kiot
       </ion-list-header>
 
-      <ion-item>
-        <ion-label> Cột chuyển khoản </ion-label>
-        <ion-select [(ngModel)]="kiot.money">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('kiot', 'money')">
+        <ion-label> Cột chuyển khoản: {{rest.accounting.kiot.money}} </ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label> Cột Nội dung </ion-label>
-        <ion-select [(ngModel)]="kiot.content">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('kiot', 'content')">
+        <ion-label> Cột nội dung: {{rest.accounting.kiot.content}} </ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label> Cột thời gian </ion-label>
-        <ion-select [(ngModel)]="kiot.time">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('kiot', 'time')">
+        <ion-label> Cột thời gian: {{rest.accounting.kiot.time}} </ion-label>
       </ion-item>
     </ion-list>
-
+    <div class="upperline">
+      <ion-button (click)="save('kiot')" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+  <div class="stl-card">
     <ion-list>
       <ion-list-header>
         Ngân hàng
       </ion-list-header>
 
-      <ion-item>
-        <ion-label> Cột chuyển khoản </ion-label>
-        <ion-select [(ngModel)]="vietcom.money">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('vietcom', 'money')">
+        <ion-label> Cột chuyển khoản: {{rest.accounting.vietcom.money}} </ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label> Cột Nội dung </ion-label>
-        <ion-select [(ngModel)]="vietcom.content">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('vietcom', 'content')">
+        <ion-label> Cột nội dung: {{rest.accounting.vietcom.content}} </ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label> Cột thời gian </ion-label>
-        <ion-select [(ngModel)]="vietcom.time">
-          <ion-select-option *ngFor="let item of cell" [value]="item">
-            {{item}}
-          </ion-select-option>
-        </ion-select>
+      <ion-item (click)="select('vietcom', 'time')">
+        <ion-label> Cột thời gian: {{rest.accounting.vietcom.time}} </ion-label>
       </ion-item>
     </ion-list>
+    <div class="upperline">
+      <ion-button (click)="save('vietcom')" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 </ion-content>
