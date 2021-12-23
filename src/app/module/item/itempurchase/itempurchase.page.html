@@ -11,7 +11,7 @@
     <ion-fab-button> Đề <br> xuất </ion-fab-button>
   </ion-fab>
 
-  <div class="text-center">
+  <div class="text-center" *ngIf="rest.item.purchase.recommend.length">
     <b>
       Hàng đề xuất nhập
     </b>
@@ -39,30 +39,27 @@
     </div>
   </div>
 
-  <div class="text-center">
+  <div class="text-center" *ngIf="rest.item.purchase.item.length">
     <b>
       Hàng báo hết
     </b>
   </div>
 
-  <div class="stl-card" *ngFor="let item of rest.item.purchase.item; let i = index">
-    Tên hàng: {{item.name}} <br>
-    Số lượng đề xuất: {{item.outstock}} <br>
-    <div *ngIf="item.show">
+  <div class="stl-card" *ngFor="let data of rest.item.purchase.item; let i = index">
+    <div class="text-center">
+      <b> {{data.user}} </b>
+    </div>
+    <div *ngFor="let item of data.list" class="upperline">
+      Tên hàng: {{item.name}} <br>
+      Số lượng đề xuất: {{item.outstock}} <br>
       Tồn: {{item.remain}} <br>
-      Người đề xuất: {{item.user}} <br>
-      Thời gian: {{time.timetodate(item.time * 1000)}} <br>
-    </div>
-    <div class="upperline" *ngIf="item.image.length">
-      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
-    </div>
-    <div class="upperline">
-      <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/update.png" (click)="updateStock(i)">
-      <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/delete.png" (click)="removeStock(item.id)">
-      <img *ngIf="!item.show" class="icon right" src="/assets/icon/up.png"
-        (click)="rest.item.purchase.item[i].show = 1">
-      <img *ngIf="item.show" class="icon right" src="/assets/icon/down.png"
-        (click)="rest.item.purchase.item[i].show = 0">
+      <div class="upperline" *ngIf="item.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
+      </div>
+      <div class="upperline">
+        <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/update.png" (click)="updateStock(i)">
+        <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/delete.png" (click)="removeStock(item.id)">
+      </div>
     </div>
   </div>
 </ion-content>
