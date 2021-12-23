@@ -24,6 +24,11 @@ const routes: Routes = [
     path: 'pos',
     loadChildren: () => import('./itempos/itempos.module').then( m => m.ItemposPageModule)
   },
+  {
+    path: 'purchaseinsert',
+    loadChildren: () => import('./itempurchaseinsert/itempurchaseinsert.module').then( m => m.ItempurchaseinsertPageModule)
+  },
+
 ];
 
 @NgModule({

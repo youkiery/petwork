@@ -343,15 +343,10 @@ export class ItemPage implements OnInit {
   public async insertExpire() {
     await this.rest.freeze('Đang tải dữ liệu...')
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
-    this.rest.checkpost('item', 'expire', temp).then(() => {
+    this.rest.checkpost('item', 'expire', temp).then((resp) => {
       this.rest.defreeze()
-      this.rest.temp = {
-        action: 'expire',
-        name: '',
-        code: '',
-        expire: this.rest.home.today,
-        Number: 1
-      }
+      this.rest.item.list[this.rest.temp.index].expired = resp.data
+      this.rest.back()
     }, () => {
       this.rest.defreeze()
     })

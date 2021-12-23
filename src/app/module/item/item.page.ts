@@ -198,11 +198,48 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public async toggle(itemindex: number, type: number) {
+  public async outstock(itemindex: number) {
+    const alert = await this.alert.create({
+      message: 'Nhập số lượng đề xuất nhập',
+      inputs: [{
+        placeholder: 'Số lượng',
+        value: 1,
+        type: 'text',
+        name: 'number'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.outstockSubmit(itemindex, this.rest.item.list[itemindex].id, e.number)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async outstockSubmit(itemindex: number, id: number, number: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('item', 'outstock', {
+      id: id,
+      number: number
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.list[itemindex].outstock = resp.value
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async toggle(itemindex: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'changeover', {
       id: this.rest.item.list[itemindex].id,
-      type: this.rest.item.list[itemindex].type,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.item.list[itemindex].outstock = resp.value
@@ -247,11 +284,14 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public insertExpire() {
+  public insertExpire(index: number) {
+    let item = this.rest.item.list[index]
     this.rest.temp = {
+      index: index,
+      id: item.id,
       action: 'expire',
-      name: '',
-      code: '',
+      name: item.name,
+      code: item.code,
       expire: this.rest.home.today,
       number: 1
     }

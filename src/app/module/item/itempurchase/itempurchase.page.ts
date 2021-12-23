@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-itempurchase',
@@ -11,6 +12,7 @@ export class ItempurchasePage implements OnInit {
   public init = false
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public alert: AlertController,
   ) { }
 
@@ -58,29 +60,9 @@ export class ItempurchasePage implements OnInit {
     }
   }
 
-  public async insert() {
+  public async remove(id: number) {
     const alert = await this.alert.create({
-      message: 'Ghi nội dung nhập hàng',
-      inputs: [{
-        name: 'content',
-        type: 'text',
-        placeholder: 'Nội dung nhập hàng'
-      },
-      {
-        name: 'number',
-        type: 'number',
-        placeholder: 'Số lượng cần nhập',
-      },
-      {
-        name: 'name',
-        type: 'text',
-        placeholder: 'Tên khách'
-      },
-      {
-        name: 'phone',
-        type: 'text',
-        placeholder: 'Số điện thoại'
-      }],
+      message: 'Xóa đề xuất nhập hàng',
       buttons: [
         {
           text: 'Trở về',
@@ -88,13 +70,85 @@ export class ItempurchasePage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.insertSubmit(e)
+            this.removeSubmit(id)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('item', 'removerecommend', {
+      id: id
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.purchase = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async removeStock(id: number) {
+    const alert = await this.alert.create({
+      message: 'Xóa đề xuất nhập hàng',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removeStockSubmit(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removeStockSubmit(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('item', 'removestock', {
+      id: id
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.purchase = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async update(index: number) {
+    let item = this.rest.item.purchase.recommend[index]
+    this.rest.temp = {
+      id: item.id,
+      content: item.content,
+      number: item.number,
+      name: item.name,
+      phone: item.phone,
+      image: item.image
+    }
+    this.rest.navCtrl.navigateForward('item/purchaseinsert')
+  }
+
+  public async detail(image: string) {
+    this.rest.temp = image
+    this.rest.navCtrl.navigateForward('/modal/detail')
+  }
+
+  public async insert() {
+    this.rest.temp = {
+      content: '',
+      number: '0',
+      name: '',
+      phone: '',
+      image: []
+    }
+    this.rest.navCtrl.navigateForward('item/purchaseinsert')
   }
 
   public info(i: number) {
@@ -105,11 +159,41 @@ export class ItempurchasePage implements OnInit {
     this.rest.navCtrl.navigateForward('/item/modal')
   }
 
-  public async insertSubmit(data: any) {
+  public async updateStock(itemindex: number) {
+    let item = this.rest.item.purchase.item[itemindex]
+    
+    const alert = await this.alert.create({
+      message: 'Số lượng đề xuất nhập',
+      inputs: [{
+        placeholder: 'Số lượng',
+        value: item.outstock,
+        type: 'text',
+        name: 'number'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.outstockSubmit(itemindex, this.rest.item.purchase.item[itemindex].id, e.number)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async outstockSubmit(itemindex: number, id: number, number: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('item', 'recommend', data).then((resp) => {
+    this.rest.checkpost('item', 'outstock', {
+      id: id,
+      number: number
+    }).then((resp) => {
       this.rest.defreeze()
-      this.rest.item.purchase = resp.list
+      this.rest.item.purchase.item[itemindex].outstock = resp.value
     }, () => {
       this.rest.defreeze()
     })
