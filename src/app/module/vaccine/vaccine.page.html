@@ -9,8 +9,8 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-img *ngIf="rest.vaccine.type == 'usg'" src="assets/icon/manual.png" (click)="rest.manual('usg')"></ion-img>
-      <ion-img *ngIf="rest.vaccine.type == 'vaccine'" src="assets/icon/manual.png" (click)="rest.manual('vaccine')"></ion-img>
+      <ion-img *ngIf="rest.vaccine.type == 'usg'" src="assets/icon/manual.png" (click)="rest.goManual('usg')"></ion-img>
+      <ion-img *ngIf="rest.vaccine.type == 'vaccine'" src="assets/icon/manual.png" (click)="rest.goManual('vaccine')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -63,6 +63,7 @@ export class RestService {
   public transport = { init: false, list: [], keyword: '' }
   public ride = {init: false, list: [[], []], start: '', end: '', segment: '0', clock: 0}
   public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', init: false, filter: { keyword: '', starttime: '', endtime: '', sort: 'asc', done: 1, undone: 1 } }
+  public manual = { init: false, key: '', data: [], list: [], selected: -1 }
   // public work = {}
 
   public link = ''
@@ -163,9 +164,9 @@ export class RestService {
     );
   }
 
-  public manual(page: string) {
-    this.temp.action = page
-    this.navCtrl.navigateForward('modal/manual')
+  public goManual(page: string) {
+    this.manual.key = page
+    this.navCtrl.navigateForward('manual')
   }
 
   public async sess(session: string) {

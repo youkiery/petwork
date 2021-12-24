@@ -1,0 +1,32 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <!-- <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title> -->
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-fab *ngIf="rest.config.admin == 1" slot="fixed" vertical="bottom" horizontal="end" (click)="insert()">
+    <ion-fab-button> Thêm </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-input placeholder="Từ khóa" [(ngModel)]="rest.manual.key" (keyup)="search()"> </ion-input>
+  </ion-item>
+  <ion-item *ngFor="let index of rest.manual.list">
+    <ion-label (click)="open(index)">
+      {{rest.manual.data[index].title}}
+    </ion-label>
+    <ion-button color="secondary" slot="end" fill="clear" (click)="update(index)">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="danger" slot="end" fill="clear" (click)="remove(index)">
+      <ion-icon name="trash-bin-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-content>
