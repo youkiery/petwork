@@ -4,9 +4,13 @@
       THANHXUANPET
     </ion-title>
 
-    <ion-button slot="end" color="light" fill="clear" (click)="rest.navCtrl.navigateForward('user')">
-      <ion-icon name="person-circle-outline"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-img src="assets/icon/user.png" (click)="rest.navCtrl.navigateForward('user')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('user')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -110,13 +114,6 @@
     <ion-img src="assets/image/accounting.png" class="box-image"></ion-img>
     <div class="box-title">
       Kế toán
-    </div>
-  </div>
-
-  <div *ngIf="rest.home.admin > 0" class="box" (click)="rest.navCtrl.navigateForward('manual')">
-    <ion-img src="assets/image/manual.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Hướng dẫn sử dụng
     </div>
   </div>
 </ion-content>

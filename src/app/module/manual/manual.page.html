@@ -1,10 +1,10 @@
 <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
-    <!-- <ion-title style="text-align: center;">
-      THANHXUANPET
-    </ion-title> -->
+    <ion-button *ngIf="rest.action.length" color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
 
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="!rest.action.length" slot="start">
       <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
@@ -22,10 +22,10 @@
     <ion-label (click)="open(index)">
       {{rest.manual.data[index].title}}
     </ion-label>
-    <ion-button color="secondary" slot="end" fill="clear" (click)="update(index)">
+    <ion-button *ngIf="rest.config.admin == 1" color="secondary" slot="end" fill="clear" (click)="update(index)">
       <ion-icon name="create-outline"></ion-icon>
     </ion-button>
-    <ion-button color="danger" slot="end" fill="clear" (click)="remove(index)">
+    <ion-button *ngIf="rest.config.admin == 1" color="danger" slot="end" fill="clear" (click)="remove(index)">
       <ion-icon name="trash-bin-outline"></ion-icon>
     </ion-button>
   </ion-item>

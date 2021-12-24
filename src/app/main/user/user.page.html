@@ -1,15 +1,11 @@
 <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
-    <ion-title style="text-align: center;">
-      THANHXUANPET
-    </ion-title>
-
     <ion-buttons slot="start">
       <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
     </ion-buttons>
 
-    <ion-buttons slot="end">
-      <ion-icon name="information-circle-outline" (click)="rest.goManual('spa')"></ion-icon>
+    <ion-buttons slot="end" *ngIf="rest.config.admin">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('admin')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
