@@ -30,7 +30,7 @@
   </ion-item>
 
   <ion-item *ngFor="let item of rest.temp.list; let i = index">
-    <ion-input *ngIf="item.type == 0" placeholder="Nội dung" [(ngModel)]="rest.temp.list[i].content"></ion-input>
+    <ion-textarea *ngIf="item.type == 0" placeholder="Nội dung" [(ngModel)]="rest.temp.list[i].content"></ion-textarea>
     <ion-label *ngIf="item.type == 1 && !item.content.length">  </ion-label>
     <ion-thumbnail slot="start" *ngIf="item.type == 1 && item.content.length">
       <img [src]="item.content">

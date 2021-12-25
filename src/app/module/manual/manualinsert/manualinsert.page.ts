@@ -9,18 +9,24 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class ManualinsertPage implements OnInit {
 
-  public module = [{
-    code: 'vaccine', name: 'Quản lý vaccine'
-  },
-  {
-    code: 'usg', name: 'Quản lý siêu âm'
-  },
-  {
-    code: 'spa', name: 'Lịch spa'
-  },
-  {
-    code: 'item', name: 'Quản lý hàng hóa'
-  }]
+  public module = [
+    { code: 'user', name: 'Người dùng' },
+    { code: 'admin', name: 'Quản lý' },
+    { code: 'vaccine', name: 'Quản lý vaccine' },
+    { code: 'usg', name: 'Quản lý siêu âm' },
+    { code: 'spa', name: 'Lịch spa' },
+    { code: 'schedule', name: 'Đăng ký lịch' },
+    { code: 'item', name: 'Quản lý hàng hóa' },
+    { code: 'cart', name: 'Bán hàng online' },
+    { code: 'his', name: 'Lưu bệnh' },
+    { code: 'kaizen', name: 'Kaizen' },
+    { code: 'drug', name: 'Tra cứu thuốc' },
+    { code: 'blood', name: 'Xét nghiệm sinh lý' },
+    { code: 'bio', name: 'Xét nghiệm sinh hóa' },
+    { code: 'price', name: 'Giá sỉ' },
+    { code: 'vehicle', name: 'Quản lý xe' },
+    { code: 'transport', name: 'Danh sách vận chuyển' },
+  ]
   public max = 640
   public count = 0
   public total = 0

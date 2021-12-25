@@ -8,7 +8,7 @@
       Thêm hàng hóa
     </ion-button>
 
-    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="secondary" fill="solid" size="small">
+    <ion-button *ngIf="rest.temp.id && !rest.temp.prv && rest.action != 'item'" slot="end" (click)="clear()" color="secondary" fill="solid" size="small">
       Hủy
     </ion-button>
     <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="secondary" fill="solid" size="small">
