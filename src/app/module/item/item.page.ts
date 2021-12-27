@@ -100,6 +100,7 @@ export class ItemPage implements OnInit {
     let temp = []
     this.rest.item.list.filter((item: any, index) => {
       if (item.alias.search(key) >= 0) temp.push(index)
+      else if (item.code.toLowerCase().search(key) >= 0) temp.push(index)
     })
     this.rest.item.i = temp
   }
