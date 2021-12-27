@@ -80,8 +80,7 @@
       <div class="col-xs-6">
         Thú cưng: {{item['petname']}} <br>
         Tên khách: {{item['name']}} <br>
-        Điện thoại: <a [href]="'tel:' + item['phone']">{{item['phone']}} <img class="icon"
-            src="/assets/icon/tel-xs.png"></a> <br>
+        Điện thoại: {{item['phone']}} <br>
         Địa chỉ: {{item['address']}}
       </div>
       <div class="col-xs-6">
@@ -129,11 +128,7 @@
     <div *ngFor="let item of this.rest.usg.list[segment]; let i = index" [class]="ustatus[item['over']]">
       <div class="col-xs-6">
         Tên khách: {{item['name']}} <br>
-        Điện thoại:
-        <a [href]="'tel:' + item['phone']">
-          {{item['phone']}}
-          <img class="icon" src="/assets/icon/tel-xs.png">
-        </a> <br>
+        Điện thoại: {{item['phone']}} <br>        
         Địa chỉ: {{item['address']}}
       </div>
       <div class="col-xs-6">

@@ -26,7 +26,7 @@
   <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
     <div class="col-xs-6">
       Tên khách: {{item.name}} <br>
-      Điện thoại: <a [href]="'tel:' + item['phone']">{{item['phone']}} <img class="icon" src="/assets/icon/tel-xs.png"></a> <br>
+      Điện thoại: {{item['phone']}} <br>
       <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
       Địa chỉ: {{item['address']}}
     </div>

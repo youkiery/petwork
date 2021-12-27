@@ -1,10 +1,10 @@
 <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
-    <ion-button *ngIf="rest.action.length" color="secondary" fill="solid" size="small" (click)="rest.back()">
+    <ion-button slot="start" color="secondary" fill="solid" size="small" (click)="rest.back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-buttons *ngIf="!rest.action.length" slot="start">
+    <ion-buttons slot="end">
       <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
