@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'select',
     loadChildren: () => import('./accselect/accselect.module').then( m => m.AccselectPageModule)
+  },
+  {
+    path: 'old',
+    loadChildren: () => import('./accold/accold.module').then( m => m.AccoldPageModule)
   }
 ];
 

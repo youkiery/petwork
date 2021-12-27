@@ -53,7 +53,7 @@ export class RestService {
   public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
-  public accounting = { kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' } }
+  public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0' }, checkout: { on: 0, kiot: [], vietcom: [], pair: [] }, start: '', end: '', old: [] }
   public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], keyword: '', user: [], usercat: [], cat: [], cats: '', purchase: { item: [], recommend: [] }, purcount: 0, position: [] }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}

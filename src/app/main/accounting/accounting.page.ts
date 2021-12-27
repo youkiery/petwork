@@ -13,13 +13,6 @@ export class AccountingPage implements OnInit {
   public name2 = 'Chưa chọn file Excel ngân hàng'
   public input: any = {}
   public list = []
-  public total = {
-    kiot: '0', vietcom: '0'
-  }
-  public checkout = {
-    on: 0,
-    kiot: [], vietcom: [], pair: []
-  }
   public init = false
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   @ViewChild('pwaphoto2') pwaphoto2: ElementRef;
@@ -45,7 +38,8 @@ export class AccountingPage implements OnInit {
     this.rest.checkpost('checkout', 'init', { }).then((resp) => {
       this.rest.defreeze()
       this.init = true
-      this.rest.accounting = resp.data
+      this.rest.accounting.kiot = resp.data.kiot
+      this.rest.accounting.vietcom = resp.data.vietcom
     }, () => {
       this.rest.defreeze()
     })
@@ -75,6 +69,10 @@ export class AccountingPage implements OnInit {
         this.pwaphoto4.nativeElement.click();
         break;
     }
+  }
+
+  public old() {
+    this.rest.navCtrl.navigateForward('accounting/old')
   }
 
   public async save(type: string) {
@@ -123,8 +121,8 @@ export class AccountingPage implements OnInit {
           this.rest.logout()
         }
         else {
-          this.total = resp.total
-          this.checkout = resp.data
+          this.rest.accounting.total = resp.total
+          this.rest.accounting.checkout = resp.data
           this.rest.notify(resp.messenger)
         }
       }, (error) => {

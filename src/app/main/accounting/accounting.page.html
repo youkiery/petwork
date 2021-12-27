@@ -1,15 +1,14 @@
 <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success" *ngIf="rest.isready">
-    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
 
     <ion-button slot="end" color="secondary" fill="solid" size="small" (click)="uploadCheckout()">
       Tải lên
     </ion-button>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content *ngIf="rest.isready">
   <div class="stl-card small">
@@ -38,30 +37,35 @@
         (change)="file(4)">
     </div>
   </div>
-  <table *ngIf="checkout.on">
+
+  <div class="stl-card blue" (click)="old()">
+    Xem lịch sử cũ
+  </div>
+
+  <table *ngIf="rest.accounting.checkout.on">
     <tr>
       <th style="width: 25%;"> Kiotviet </th>
       <th style="width: 25%"> Vietcombank </th>
       <th style="width: 50%"> Thông tin chuyển khoản </th>
     </tr>
-    <tr *ngFor="let item of checkout.pair">
+    <tr *ngFor="let item of rest.accounting.checkout.pair">
       <td> {{rest.comma(item.money)}} </td>
       <td> {{rest.comma(item.money)}} </td>
       <td> {{item.content}} </td>
     </tr>
-    <tr *ngFor="let item of checkout.vietcom">
+    <tr *ngFor="let item of rest.accounting.checkout.vietcom">
       <td class="red"> {{item.time}} </td>
       <td> {{rest.comma(item.money)}} </td>
       <td> {{item.content}} </td>
     </tr>
-    <tr *ngFor="let item of checkout.kiot">
+    <tr *ngFor="let item of rest.accounting.checkout.kiot">
       <td> {{rest.comma(item.money)}} </td>
       <td class="red"> {{item.time}} </td>
       <td> {{item.content}} </td>
     </tr>
     <tr>
-      <td> {{rest.comma(total.kiot)}} </td>
-      <td> {{rest.comma(total.vietcom)}} </td>
+      <td> {{rest.comma(rest.accounting.total.kiot)}} </td>
+      <td> {{rest.comma(rest.accounting.total.vietcom)}} </td>
       <td> Tổng </td>
     </tr>
   </table>
