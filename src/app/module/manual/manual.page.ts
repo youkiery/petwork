@@ -8,7 +8,10 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./manual.page.scss'],
 })
 export class ManualPage implements OnInit {
-
+  public cate = {
+    key: ['', 'user', 'admin', 'vaccine', 'usg', 'spa', 'schedule', 'item', 'cart', 'his', 'kaizen', 'drug', 'blood', 'bio', 'price', 'vehicle', 'transport'],
+    name: ['Chọn danh mục', 'Người dùng', 'Quản lý', 'Quản lý vaccine', 'Quản lý siêu âm', 'Lịch spa', 'Đăng ký lịch', 'Quản lý hàng hóa', 'Bán hàng online', 'Lưu bệnh', 'Kaizen', 'Tra cứu thuốc', 'Xét nghiệm sinh lý', 'Xét nghiệm sinh hóa', 'Giá sỉ', 'Quản lý xe', 'Danh sách vận chuyển', ],
+  }
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -57,9 +60,26 @@ export class ManualPage implements OnInit {
     let key = this.rest.alias(this.rest.manual.key)
     
     this.rest.manual.data.forEach((data, index) => {
-      if (this.deepsearch(key, data.module) || this.deepsearch(key, data.title)) temp.push(index)
+      if ((this.rest.manual.cate == '' || this.rest.manual.cate == data.module) && this.deepsearch(key, data.title)) {
+        if (!temp[data.module]) {
+          let key = this.cate.key.indexOf(data.module)
+          temp[data.module] = {
+            name: this.cate.name[key],
+            list: []
+          }
+        }
+        temp[data.module].list.push(index)
+      }
     })
-    this.rest.manual.list = temp
+    let list = [] 
+    for (const key in temp) {
+      if (Object.prototype.hasOwnProperty.call(temp, key)) {
+        const data = temp[key];
+        list.push(data)
+      }
+    }
+    
+    this.rest.manual.list = list
   }
 
   public deepsearch(keyword: string, content: string) {

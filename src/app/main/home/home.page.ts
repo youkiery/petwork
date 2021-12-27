@@ -25,6 +25,7 @@ export class HomePage {
 
   ionViewWillEnter() {
     this.rest.action = 'home'
+    this.rest.ain = true
     this.subscription = this.platform.backButton.subscribe(() => {
       navigator['app'].exitApp();
     });
