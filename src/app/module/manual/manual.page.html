@@ -29,7 +29,7 @@
 
   <ion-list *ngFor="let data of rest.manual.list">
     <ion-list-header>
-      <h4> [{{data.name}}] </h4> 
+      [{{data.name}}]
     </ion-list-header>
     <ion-item *ngFor="let index of data.list">
       <ion-label (click)="open(index)">

@@ -147,6 +147,52 @@
         Ghi chú: {{item.note}}
       </div>
     </div>
+
+    <div class="stl-card">
+      <ion-item>
+        <ion-label> Ký hiệu tách dòng </ion-label>
+        <ion-input [(ngModel)]="code">  </ion-input>
+      </ion-item>
+      <div class="upperline">
+        <ion-button (click)="save()" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+  
+      <!-- <ion-list>
+        <ion-list-header>
+          Cột dữ liệu
+        </ion-list-header>
+
+        public manager = { code: '', seller: '', phone: '', customer: '', time: '', note: '', item: '', number: '' }
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('seller')">
+          <ion-label> Người bán: {{rest.manager.seller}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('phone')">
+          <ion-label> Điện thoại: {{rest.manager.phone}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+      </ion-list>
+      <div class="upperline">
+        <ion-button (click)="save('kiot')" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div> -->
+    </div>
   </div>
 
   <div *ngIf="rest.action == 'item'">

@@ -19,7 +19,7 @@ export class RestService {
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 21 // 21-47
+  public version = 21 // 21-48
   public config: any
   public home = {
     month: {
@@ -48,6 +48,7 @@ export class RestService {
   }
   public ain = false
   public session = ''
+  public manager = { code: '', seller: '', phone: '', customer: '', time: '', note: '', item: '', number: '' }
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, start: '', end: '' }
   public vaccine = { init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }

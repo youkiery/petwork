@@ -11,6 +11,7 @@ export class ManagerPage implements OnInit {
   public prv = ''
   public name = 'Chưa chọn file Excel'
   public name2 = 'Chưa chọn file Excel ngân hàng'
+  public code = ''
   public input: any = {}
   public list = []
   public kiot = {
@@ -52,6 +53,29 @@ export class ManagerPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('user')   
+    else if (this.rest.action == 'vaccine') this.manageInit()
+  }
+
+  public async manageInit() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'vaccine', {}).then(resp => {
+      this.rest.defreeze()
+      this.code = resp.code
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async save() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'savevaccine', {
+      comma: this.code
+    }).then(() => {
+      this.rest.defreeze()
+      this.rest.notify('Đã lưu')
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async refreshSpa(event: any) {
