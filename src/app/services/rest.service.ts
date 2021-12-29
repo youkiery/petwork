@@ -231,9 +231,15 @@ export class RestService {
     }
   }
 
-  public logout() {
-    this.storage.remove('session')
-    this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
+  public async logout() {
+    await this.freeze('Đăng xuất...')
+    this.checkpost('user', 'logout', {}).then(resp => {
+      this.defreeze()
+      this.storage.remove('session')
+      this.navCtrl.navigateRoot('/login', { animated: true, animationDirection: 'back' })
+    }, () => {
+      this.defreeze()
+    })
   }
 
   public back() {
