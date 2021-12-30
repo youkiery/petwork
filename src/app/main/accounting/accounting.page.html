@@ -46,27 +46,35 @@
     <tr>
       <th style="width: 25%;"> Kiotviet </th>
       <th style="width: 25%"> Vietcombank </th>
-      <th style="width: 50%"> Thông tin chuyển khoản </th>
+      <th style="width: 50%"> Thông tin Kiot </th>
+      <th style="width: 50%"> Thông tin Vietcombank </th>
     </tr>
     <tr *ngFor="let item of rest.accounting.checkout.pair">
       <td> {{rest.comma(item.money)}} </td>
       <td> {{rest.comma(item.money)}} </td>
-      <td> {{item.content}} </td>
+      <td> {{item.kiot}} </td>
+      <td> {{item.vietcom}} </td>
     </tr>
     <tr *ngFor="let item of rest.accounting.checkout.vietcom">
-      <td class="red"> {{item.time}} </td>
+      <td class="red">  </td>
       <td> {{rest.comma(item.money)}} </td>
-      <td> {{item.content}} </td>
+      <td> {{item.kiot}} </td>
+      <td> {{item.vietcom}} </td>
     </tr>
     <tr *ngFor="let item of rest.accounting.checkout.kiot">
       <td> {{rest.comma(item.money)}} </td>
-      <td class="red"> {{item.time}} </td>
-      <td> {{item.content}} </td>
+      <td class="red">  </td>
+      <td> {{item.kiot}} </td>
+      <td> {{item.vietcom}} </td>
     </tr>
     <tr>
-      <td> {{rest.comma(rest.accounting.total.kiot)}} </td>
-      <td> {{rest.comma(rest.accounting.total.vietcom)}} </td>
-      <td> Tổng </td>
+      <td class="redden"> {{rest.comma(rest.accounting.total.kiot)}} </td>
+      <td class="redden"> {{rest.comma(rest.accounting.total.vietcom)}} </td>
+      <td colspan="2" class="redden"> Tổng </td>
+    </tr>
+    <tr>
+      <td colspan="2"> {{rest.comma(rest.accounting.total.subtract)}} </td>
+      <td colspan="2"> Chênh lệch </td>
     </tr>
   </table>
 

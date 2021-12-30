@@ -361,8 +361,8 @@ export class ItemPage implements OnInit {
   public async removePos(index: number, itemid: string) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'repos', {
-      itemid: itemid,
-      posid: this.rest.temp.list[index].id,
+      posid: this.rest.temp.list[index].posid,
+      itemid: this.rest.temp.list[index].itemid,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.temp.list[index].position = resp.list
