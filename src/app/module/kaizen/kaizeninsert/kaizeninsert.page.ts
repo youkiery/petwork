@@ -26,7 +26,7 @@ export class KaizeninsertPage implements OnInit {
       data: this.rest.temp,
       filter: this.rest.kaizen.filter
     }).then(data => {
-      this.rest.kaizen.data = data['list']
+      this.rest.kaizen.list = data['list']
       this.rest.defreeze()
       this.rest.back()
     }, (e) => {

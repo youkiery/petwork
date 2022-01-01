@@ -89,7 +89,7 @@ export class KaizenPage implements OnInit {
       type: this.rest.kaizen.segment,
       filter: this.rest.kaizen.filter
     }).then(data => {
-      this.rest.kaizen.data = data['list']
+      this.rest.kaizen.list = data['list']
       this.rest.defreeze()
     }, () => [
       this.rest.defreeze()
@@ -97,7 +97,7 @@ export class KaizenPage implements OnInit {
   }
 
   public async edit(index: number = 0) {
-    let item = this.rest.kaizen.data[this.rest.kaizen.segment][index]
+    let item = this.rest.kaizen.list[this.rest.kaizen.segment][index]
     this.rest.temp = {
       id: item.id,
       problem: item.problem,
@@ -147,7 +147,7 @@ export class KaizenPage implements OnInit {
     }).then((data) => {
       this.rest.kaizen.unread = data['unread']
       this.rest.kaizen.time = data['time']
-      this.rest.kaizen.data = data['list']
+      this.rest.kaizen.list = data['list']
       this.rest.defreeze()
     }, (error) => {
       this.rest.defreeze()

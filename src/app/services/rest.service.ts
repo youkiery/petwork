@@ -19,7 +19,7 @@ export class RestService {
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 21 // 21-49
+  public version = 21 // 21-52
   public config: any
   public home = {
     month: {
@@ -64,7 +64,7 @@ export class RestService {
   public price = { init: false, list: [], keyword: '' }
   public transport = { init: false, list: [], keyword: '' }
   public ride = {init: false, list: [[], []], start: '', end: '', segment: '0', clock: 0}
-  public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: [], data: { done: [], undone: [] }, segment: 'undone', init: false, filter: { keyword: '', starttime: '', endtime: '', sort: 'asc', done: 1, undone: 1 } }
+  public kaizen = { reversal_segment: {}, unread: 0, time: 0, list: {done: [], undone: []}, data: { done: [], undone: [] }, segment: 'undone', init: false, filter: { keyword: '', starttime: '', endtime: '', sort: 'asc', done: 1, undone: 1 } }
   public manual = { init: false, key: '', cate: '', data: [], list: [], selected: -1 }
   // public work = {}
 
