@@ -44,7 +44,7 @@
   <div *ngIf="rest.temp.action == 'position'">
     <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
       Vị trí: {{item.name}} <br>
-      Hàng hóa: <div class="pos" *ngFor="let pos of item.position; let j = index" (click)="removePos(i, pos.id)">
+      Hàng hóa: <div class="pos" *ngFor="let pos of item.position; let j = index" (click)="removePos(i, j)">
         {{pos.name}} </div>
       <div class="pos" (click)="insertPos(i)"> + </div>
       <div>
