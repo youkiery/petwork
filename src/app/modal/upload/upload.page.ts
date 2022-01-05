@@ -13,6 +13,7 @@ export class UploadPage {
   public init = false
   public max = 640
   public count = 0
+  public treat = false
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,
@@ -179,6 +180,7 @@ export class UploadPage {
   public async insertSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.option = this.checkOption()
+    temp.treat = Number(this.treat)
     if (!temp.option.length) {
       this.rest.defreeze()
       this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
@@ -186,7 +188,7 @@ export class UploadPage {
     else {
       this.rest.checkpost('spa', 'insert', temp).then(resp => {
         this.rest.defreeze()
-        this.rest.spa.list = resp.list
+          this.rest.spa.list = resp.list
         this.rest.spa.init = resp.time
         this.rest.back()
       }, () => {
@@ -198,6 +200,7 @@ export class UploadPage {
   public async updateSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.option = this.checkOption()
+    temp.treat = Number(this.treat)
     if (!temp.option.length) {
       this.rest.defreeze()
       this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')

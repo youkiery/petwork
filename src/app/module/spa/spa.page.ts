@@ -11,6 +11,7 @@ import { TimeService } from 'src/app/services/time.service';
 export class SpaPage {
   interval = null
   checked = false
+  public segment = '0'
   public status = {
     0: 'stl-card',
     1: 'stl-card green',
