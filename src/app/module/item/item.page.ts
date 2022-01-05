@@ -9,6 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class ItemPage implements OnInit {
   public page = 1
+  public segment = '0'
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -43,6 +44,8 @@ export class ItemPage implements OnInit {
         this.rest.item.cats = resp.cats
         this.rest.item.usercat = resp.usercat
         this.rest.item.purchase = resp.purchase
+        this.rest.item.outstock = resp.outstock
+        this.rest.item.source = resp.source       
         this.filter()
         resolve(true)
       }, () => {
@@ -81,6 +84,7 @@ export class ItemPage implements OnInit {
       this.rest.item.cats = resp.cats
       this.rest.item.usercat = resp.usercat
       this.rest.item.purchase = resp.purchase
+      this.rest.item.source = resp.source
       this.filter()
     }, () => {
       this.rest.defreeze()
@@ -95,14 +99,47 @@ export class ItemPage implements OnInit {
     return check
   }
 
+  public cancel() {
+    this.rest.item.toggle = !this.rest.item.toggle;
+    this.rest.item.list.forEach((item, index) => {
+      this.rest.item.list[index].checked = false
+    })
+  }
+
+  public submit() {
+    let check = false
+    this.rest.item.list.forEach((item, index) => {
+      if (item.checked) check = true
+    })
+
+    if (check) this.rest.navCtrl.navigateForward('/item/cart')    
+    else this.rest.notify('Chọn 1 mặt hàng để tiếp tục')
+  }
+
   public async filter() {
     let key = this.rest.alias(this.rest.item.keyword)
     let temp = []
+    
     this.rest.item.list.filter((item: any, index) => {
-      if (item.alias.search(key) >= 0) temp.push(index)
-      else if (item.code.toLowerCase().search(key) >= 0) temp.push(index)
+      if (this.segment == '0' || (this.segment == '1' && item.lowonnumber == 1))
+      if (this.rest.item.sourceid == '0' || this.searchSource(this.rest.item.list[index].source)) {
+        if (item.alias.search(key) >= 0) temp.push(index)
+        else if (item.code.toLowerCase().search(key) >= 0) temp.push(index)
+      }
     })
     this.rest.item.i = temp
+  }
+
+  public searchSource(list: any) {
+    let check = false
+    
+    list.forEach((item: any) => {
+      if (item.id == this.rest.item.sourceid) {
+        check = true
+        return
+      }
+    })
+    return check
   }
 
   public purchase() {
@@ -140,23 +177,30 @@ export class ItemPage implements OnInit {
       code: '',
       border: 10,
       position: [],
+      source: [],
       image: []
     }
     this.rest.navCtrl.navigateForward('item/modal')
   }
   public updateItem(index: number) {
+    let item = this.rest.item.list[index]
+    console.log(item);
+    
     this.rest.temp = {
       action: 'item',
       index: index,
-      id: this.rest.item.list[index].id,
-      cat: this.rest.item.list[index].catid,
-      name: this.rest.item.list[index].name,
-      code: this.rest.item.list[index].code,
-      border: this.rest.item.list[index].border,
-      position: this.rest.item.list[index].position,
-      image: this.rest.item.list[index].image,
+      id: item.id,
+      cat: item.catid,
+      name: item.name,
+      code: item.code,
+      border: item.border,
+      position: item.position,
+      source: item.source,
+      image: item.image,
       keyword: this.rest.item.keyword
     }
+    console.log(this.rest.item.source, this.rest.temp.source);
+    
     this.rest.navCtrl.navigateForward('item/modal')
   }
 

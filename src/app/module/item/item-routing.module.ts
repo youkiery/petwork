@@ -28,6 +28,16 @@ const routes: Routes = [
     path: 'purchaseinsert',
     loadChildren: () => import('./itempurchaseinsert/itempurchaseinsert.module').then( m => m.ItempurchaseinsertPageModule)
   },
+  {
+    path: 'source',
+    loadChildren: () => import('./itemsource/itemsource.module').then( m => m.ItemsourcePageModule)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./itemcart/itemcart.module').then( m => m.ItemcartPageModule)
+  },
+
+
 
 ];
 

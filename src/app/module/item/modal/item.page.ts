@@ -96,6 +96,16 @@ export class ItemPage implements OnInit {
   public insertItemPos() {
     this.rest.navCtrl.navigateForward('/item/pos')
   }
+
+  public removeItemSource(i: number) {
+    this.rest.temp.source = this.rest.temp.source.filter((item: any, index: number) => {
+      return i !== index
+    })
+  }
+
+  public insertItemSource() {
+    this.rest.navCtrl.navigateForward('/item/source')
+  }
   
   public insertPos(i: number) {
     this.rest.temp.prv = i
@@ -358,7 +368,7 @@ export class ItemPage implements OnInit {
     })
   }
 
-  public async removePos(index: number, itemindex: string) {
+  public async removePos(index: number, itemindex: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('item', 'repos', {
       posid: this.rest.temp.list[index].position[itemindex].posid,

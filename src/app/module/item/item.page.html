@@ -20,27 +20,87 @@
       Góp ý
     </ion-fab-button>
   </ion-fab> -->
+
+  <ion-fab *ngIf="!rest.item.toggle" vertical="bottom" horizontal="end" slot="fixed" (click)="rest.item.toggle = !rest.item.toggle">
+    <ion-fab-button>
+      Báo <br> nhập
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="rest.item.toggle" vertical="bottom" horizontal="end" slot="fixed" (click)="cancel()">
+    <ion-fab-button color="danger">
+      Hủy
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="rest.item.toggle" vertical="bottom" horizontal="middle" slot="fixed" (click)="submit()">
+    <ion-fab-button color="secondary">
+      Xác <br> nhận
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-refresher slot="fixed" (ionRefresh)="reloadEvent($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-item>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="0" (click)="filter()">
+      <ion-label>
+        Hàng hóa
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1" (click)="filter()">
+      <ion-label>
+        Hàng sắp hết
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-item class="item-label-class">
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
     <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
   </ion-item>
 
-  <div class="stl-card" *ngFor="let index of rest.item.i | slice:0:page * 50">
-    Mã hàng: {{rest.item.list[index].code}} <br>
-    Tên hàng: {{rest.item.list[index].name}} <br>
-    Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png"> <br>
-    <div *ngIf="rest.item.list[index].position.length">
-      Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
-      <br>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Chọn nguồn cung </ion-label>
+    <ion-select [(ngModel)]="rest.item.sourceid" (ionChange)="filter()">
+      <ion-select-option value="0">
+        Chọn nguồn cung
+      </ion-select-option>
+      <ion-select-option *ngFor="let item of rest.item.source" [value]="item.id">
+        {{item.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+<!-- 
+  <div class="blue small stl-card" *ngIf="rest.item.outstock">
+    Danh sách hàng sắp hết số lượng: {{rest.item.outstock}}
+  </div> -->
+
+  <div *ngFor="let index of rest.item.i | slice:0:page * 50"  [class]="rest.item.list[index].lowonnumber == 1 ? 'stl-card relative red' : 'stl-card relative'" (click)="rest.item.list[index].checked = !rest.item.list[index].checked">
+    <img class="float" *ngIf="rest.item.toggle && !rest.item.list[index].checked" src="/assets/icon/untick.png">
+    <img class="float" *ngIf="rest.item.toggle && rest.item.list[index].checked" src="/assets/icon/tick.png">
+
+    <div class="col-xs-4">
+      <img class="small-thumbnail" [src]="rest.item.list[index].image[0].length ? rest.item.list[index].image[0] : '/assets/image/no-image.png'">
     </div>
-    <span *ngIf="rest.item.list[index].expired.length">
-      Hạn sử dụng: <div class="pos" *ngFor="let pos of rest.item.list[index].expired; let i = index" (click)="removeexpire(index, i, pos.name)"> {{pos.name}} </div>
-    </span>
-    <div class="upperline">
+    <div class="col-xs-8">
+      Mã hàng: {{rest.item.list[index].code}} <br>
+      Tên hàng: {{rest.item.list[index].name}} <br>
+      Tồn kho: {{rest.item.list[index].shop}} <img src="/assets/icon/shop-xs.png">, {{rest.item.list[index].storage}} <img src="/assets/icon/storage-xs.png">, {{rest.item.list[index].border}} <img src="/assets/icon/limit.png"> <br>
+      <div *ngIf="rest.item.list[index].position.length">
+        Vị trí: <div class="pos" *ngFor="let pos of rest.item.list[index].position" (click)="view(pos.id)"> {{pos.name}} </div>
+        <br>
+      </div>
+      <div *ngIf="rest.item.list[index].source.length">
+        Nguồn cung: <div class="pos" *ngFor="let pos of rest.item.list[index].source"> {{pos.name}} </div>
+        <br>
+      </div>
+      <span *ngIf="rest.item.list[index].expired.length">
+        Hạn sử dụng: <div class="pos" *ngFor="let pos of rest.item.list[index].expired; let i = index" (click)="removeexpire(index, i, pos.name)"> {{pos.name}} </div>
+      </span>
+    </div>
+    <div class="upperline" *ngIf="!rest.item.toggle">
       <img class="right icon" src="/assets/icon/expired.png" (click)="insertExpire(index)">
       <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(index)">
       <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(index)">

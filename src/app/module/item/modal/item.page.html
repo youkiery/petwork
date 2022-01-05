@@ -83,10 +83,21 @@
       <ion-label position="stacked"> Tên hàng hóa </ion-label>
       <ion-input [(ngModel)]="rest.temp.name"></ion-input>
     </ion-item>
-    
-    <div>
-      Vị trí: <span *ngFor="let item of rest.temp.position; let i = index" class="pos" (click)="removeItemPos(i)"> {{item.name}} </span>
-      <div class="pos" (click)="insertItemPos()"> + </div>
+    <ion-item>
+      <ion-label position="stacked"> Giới hạn (Tồn < giới hạn => nhập hàng) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.border"></ion-input>
+    </ion-item>
+
+    <div class="stl-card">
+      <div>
+        Vị trí: <span *ngFor="let item of rest.temp.position; let i = index" class="pos" (click)="removeItemPos(i)"> {{item.name}} </span>
+        <div class="pos" (click)="insertItemPos()"> + </div>
+      </div>
+      
+      <div class="upperline">
+        Nguồn cung: <span *ngFor="let item of rest.temp.source; let i = index" class="pos" (click)="removeItemSource(i)"> {{item.name}} </span>
+        <div class="pos" (click)="insertItemSource()"> + </div>
+      </div>
     </div>
     
     <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
