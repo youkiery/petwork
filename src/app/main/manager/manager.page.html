@@ -24,19 +24,55 @@
       (click)="updateTypeSubmit()">
       Cập nhật
     </ion-button>
-
-    <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="secondary" fill="solid"
-      size="small" (click)="insertDoctorSubmit()">
-      Thêm bác sĩ
-    </ion-button>
-    <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="secondary" fill="solid"
-      size="small" (click)="updateDoctorSubmit()">
-      Cập nhật
-    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngIf="rest.action == 'recycle-vaccine'">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label>
+          Chuyển nhượng
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>
+          Xóa mục cũ
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="segment == '0'">
+      <ion-item position="stacked" color="secondary" class="half-item">
+        <ion-label> Vaccine </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.option.vaccine"> </ion-checkbox>
+      </ion-item>
+      <ion-item position="stacked" color="secondary" class="half-item">
+        <ion-label> Siêu âm </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.option.usg"> </ion-checkbox>
+      </ion-item>
+  
+      <ion-item position="stacked" *ngFor="let item of rest.home.doctor">
+        <ion-label> {{item.name}} </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.doctor[item.userid]"> </ion-checkbox>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="recycleVaccine()">
+        Chuyển nhượng
+      </ion-button>
+    </div>
+    <div *ngIf="segment == '1'">
+      <ion-item>
+        <ion-label position="stacked"> Xóa trước ngày </ion-label>
+        <ion-datetime [(ngModel)]="date" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="reduceVaccine()">
+        Xóa bỏ
+      </ion-button>
+    </div>
+  </div>
+
   <div *ngIf="rest.action == 'insert-type'">
     <ion-item>
       <ion-label position="stacked"> Mã hàng </ion-label>
@@ -46,27 +82,6 @@
       <ion-label position="stacked"> Loại nhắc </ion-label>
       <ion-input [(ngModel)]="input.name"></ion-input>
     </ion-item>
-  </div>
-
-  <div *ngIf="rest.action == 'insert-doctor'">
-    <ion-item>
-      <ion-label position="stacked"> Tên người dùng </ion-label>
-      <ion-input [(ngModel)]="input.username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Tên bác sĩ </ion-label>
-      <ion-input [(ngModel)]="input.name"></ion-input>
-    </ion-item>
-    <ion-button expand="full" (click)="searchDoctor()">
-      Tìm kiếm
-    </ion-button>
-
-    <div class="stl-card green" *ngIf="list.length">
-      <div class="botterline" *ngFor="let item of list">
-        {{item.username}}: {{item.name}}
-        <img class="img-xs" src="/assets/icon/select.png" (click)="select(item.userid, item.username, item.name)">
-      </div>
-    </div>
   </div>
 
   <div class="stl-card green" *ngIf="rest.action == 'spa'">

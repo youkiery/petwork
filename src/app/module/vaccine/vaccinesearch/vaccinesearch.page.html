@@ -22,12 +22,12 @@
       Địa chỉ: {{item['address']}}
     </div>
     <div class="col-xs-6">
-      Ngày nhắc: {{item['calltime']}} <br>
       Ngày đến: {{item['cometime']}} <br>
       Loại nhắc: {{item['vaccine']}} <br>
       <span *ngIf="item['called']"> Gọi nhắc cuối: <span [class]="item['called'] == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item['called']}} </span> <br> </span>
       Trạng thái: <span class="bold"> {{status_text[item['status']]}} </span> <br>
-      Người tiêm: {{item['doctor']}} 
+      Người tiêm: {{item['doctor']}} <br>
+      Ngày nhắc: {{item['calltime']}} <br>
     </div>
     <div class="upperline">
       Ghi chú: {{item['note']}}

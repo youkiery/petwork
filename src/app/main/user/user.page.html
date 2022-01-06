@@ -51,6 +51,11 @@
       <ion-icon name="cloud-upload-outline"></ion-icon>
       Import Hàng hóa
     </ion-item>
+        
+    <ion-item *ngIf="rest.home.admin" (click)="change('recycle-vaccine')">
+      <ion-icon name="arrow-redo-outline"></ion-icon>
+      Thao tác vaccine
+    </ion-item>
 
     <ion-item *ngIf="rest.home.admin" (click)="change('spa')">
       <ion-icon name="document-text-outline"></ion-icon>

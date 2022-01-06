@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-manager',
@@ -14,6 +15,14 @@ export class ManagerPage implements OnInit {
   public code = ''
   public input: any = {}
   public list = []
+  public segment = '0'
+  public recycle = {
+    option: {
+      vaccine: true,
+      usg: true
+    },
+    doctor: {}    
+  }
   public kiot = {
     content: 'G2',
     time: 'B2',
@@ -35,6 +44,7 @@ export class ManagerPage implements OnInit {
   public total = {
     kiot: '0', vietcom: '0'
   }
+  public date = ''
   public checkout = {
     on: 0,
     kiot: [], vietcom: [], pair: []
@@ -45,6 +55,7 @@ export class ManagerPage implements OnInit {
   @ViewChild('pwaphoto4') pwaphoto4: ElementRef;
   constructor(
     public rest: RestService,
+    public time: TimeService,
     public alert: AlertController
   ) { }
 
@@ -54,6 +65,9 @@ export class ManagerPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('user')   
     else if (this.rest.action == 'vaccine') this.manageInit()
+    else {
+      this.date = this.time.timetoisodate(new Date().getTime() - 60 * 60 * 24 * 365 * 1000)
+    }
   }
 
   public async manageInit() {
@@ -76,6 +90,50 @@ export class ManagerPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public async recycleVaccine() {
+    let temp = this.parse()
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'recycle', temp).then(() => {
+      this.rest.defreeze()
+      this.rest.notify('Đã chuyển dữ liệu')
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async reduceVaccine() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('admin', 'reduce', {
+      date: this.time.isodatetotime(this.date) / 1000
+    }).then(() => {
+      this.rest.defreeze()
+      this.rest.notify('Đã chuyển dữ liệu')
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public parse() {
+    let temp = {
+      option: [],
+      doctor: []
+    }
+
+    for (const key in this.recycle.option) {
+      if (Object.prototype.hasOwnProperty.call(this.recycle.option, key)) {
+        const element = this.recycle.option[key];
+        if (element) temp.option.push(key)
+      }
+    }
+    for (const key in this.recycle.doctor) {
+      if (Object.prototype.hasOwnProperty.call(this.recycle.doctor, key)) {
+        const element = this.recycle.doctor[key];
+        if (element) temp.doctor.push(key)
+      }
+    }
+    return temp
   }
 
   public async refreshSpa(event: any) {
@@ -404,81 +462,6 @@ export class ManagerPage implements OnInit {
     })
   }
 
-  public updateDoctor(index: number) {
-    this.prv = 'doctor'
-    this.rest.action = 'insert-doctor'
-    this.input = {
-      id: this.rest.home.doctor[index].id,
-      userid: this.rest.home.doctor[index].userid,
-      username: this.rest.home.doctor[index].username,
-      name: this.rest.home.doctor[index].name
-    }
-  }
-
-  public async insertDoctor() {
-    this.prv = 'doctor'
-    this.rest.action = 'insert-doctor'
-    this.input = {
-      userid: 0,
-      username: '',
-      name: ''
-    }
-  }
-
-  public async removeDoctorSubmit(id: number) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('vaccine', 'removedoctor', {
-      id: id,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.doctor = resp.list
-      this.rest.action = 'doctor'
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async updateDoctorSubmit() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('vaccine', 'updatedoctor', {
-      id: this.input.id,
-      user: this.input.userid,
-      name: this.input.name
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.doctor = resp.list
-      this.rest.action = 'doctor'
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async insertDoctorSubmit() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('vaccine', 'insertdoctor', {
-      user: this.input.userid,
-      name: this.input.name
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.doctor = resp.list
-      this.rest.action = 'doctor'
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async searchDoctor() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('vaccine', 'searchdoctor', {
-      keyword: this.input.username
-    }).then(resp => {
-      this.rest.defreeze()
-      this.list = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
   public select(userid: number, username: string, name: string) {
     this.input.userid = userid
     this.input.username = username
@@ -646,17 +629,6 @@ export class ManagerPage implements OnInit {
     this.rest.checkpost('vaccine', 'typeauto', {}).then(resp => {
       this.rest.defreeze()
       this.rest.home.type = resp.list
-      event.target.complete();
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async reloadDoctor(event: any) {
-    await this.rest.freeze('Đang tải dữ liệu......')
-    this.rest.checkpost('vaccine', 'doctorauto', {}).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.doctor = resp.list
       event.target.complete();
     }, () => {
       this.rest.defreeze()

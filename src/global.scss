@@ -202,12 +202,12 @@ ion-badge {
   border-top: 1px solid lightgray;
 }
 
-.item-label-class {
+.item-label-class, .half-item {
   width: 50%;
   display: inline-block;
 }
 
-.item-label-class ion-checkbox {
+.item-label-class ion-checkbox, .half-item ion-checkbox {
   margin: 5px;
 }
 
