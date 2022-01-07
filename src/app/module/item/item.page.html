@@ -21,9 +21,15 @@
     </ion-fab-button>
   </ion-fab> -->
 
-  <ion-fab *ngIf="!rest.item.toggle" vertical="bottom" horizontal="end" slot="fixed" (click)="rest.item.toggle = !rest.item.toggle">
+  <ion-fab *ngIf="!rest.item.toggle" vertical="bottom" horizontal="end" slot="fixed" (click)="rest.item.toggle = !rest.item.toggle; rest.item.action = 'purchase'">
     <ion-fab-button>
       Báo <br> nhập
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="!rest.item.toggle" vertical="bottom" horizontal="start" slot="fixed" (click)="rest.item.toggle = !rest.item.toggle; rest.item.action = 'transfer'">
+    <ion-fab-button>
+      Lấy <br> hàng
     </ion-fab-button>
   </ion-fab>
 
@@ -56,9 +62,18 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-item class="item-label-class">
+  <ion-item>
     <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
     <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
+  </ion-item>
+
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Tầng </ion-label>
+    <ion-select [(ngModel)]="rest.item.floor" (ionChange)="filter()">
+      <ion-select-option *ngFor="let item of floor" [value]="item.value">
+        {{item.name}}
+      </ion-select-option>
+    </ion-select>
   </ion-item>
 
   <ion-item class="item-label-class">

@@ -10,6 +10,12 @@ import { RestService } from 'src/app/services/rest.service';
 export class ItemPage implements OnInit {
   public page = 1
   public segment = '0'
+  public floor = [
+    { name: 'Tất cả', value: '' },
+    { name: 'Tầng 1', value: 'T1' },
+    { name: 'Tầng 2', value: 'T2' },
+    { name: 'Tầng 3', value: 'T3' },
+  ]
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -112,22 +118,40 @@ export class ItemPage implements OnInit {
       if (item.checked) check = true
     })
 
-    if (check) this.rest.navCtrl.navigateForward('/item/cart')    
-    else this.rest.notify('Chọn 1 mặt hàng để tiếp tục')
+    if (!check) this.rest.notify('Chọn 1 mặt hàng để tiếp tục')
+    else {
+      if (this.rest.item.action == 'purchase') this.rest.navCtrl.navigateForward('/item/cart')
+      else this.rest.navCtrl.navigateForward('/item/transfer')
+    }
   }
 
   public async filter() {
     let key = this.rest.alias(this.rest.item.keyword)
     let temp = []
-    
+
+    this.rest.storage.set('floor', this.rest.item.floor)
     this.rest.item.list.filter((item: any, index) => {
       if (this.segment == '0' || (this.segment == '1' && item.lowonnumber == 1))
-      if (this.rest.item.sourceid == '0' || this.searchSource(this.rest.item.list[index].source)) {
-        if (item.alias.search(key) >= 0) temp.push(index)
-        else if (item.code.toLowerCase().search(key) >= 0) temp.push(index)
+      if (this.searchFloor(item.position)) {
+        if (this.rest.item.sourceid == '0' || this.searchSource(this.rest.item.list[index].source)) {
+          if (item.alias.search(key) >= 0) temp.push(index)
+          else if (item.code.toLowerCase().search(key) >= 0) temp.push(index)
+        }
       }
     })
     this.rest.item.i = temp
+  }
+
+  public searchFloor(list: any) {
+    let check = false
+    
+    list.forEach((pos: any) => {
+      if (pos.name.search(this.rest.item.floor) >= 0) {
+        check = true
+        return
+      }
+    })
+    return check
   }
 
   public searchSource(list: any) {
