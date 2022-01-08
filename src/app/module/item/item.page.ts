@@ -267,6 +267,10 @@ export class ItemPage implements OnInit {
     })
   }
 
+  public outstockitem() {
+    return this.rest.item.list.filter((item) => { return item.lowonnumber == 1 }).length
+  }
+
   public async outstock(itemindex: number) {
     const alert = await this.alert.create({
       message: 'Nhập số lượng đề xuất nhập',

@@ -53,11 +53,13 @@
     <ion-segment-button value="0" (click)="filter()">
       <ion-label>
         Hàng hóa
+        <ion-badge color="danger"> {{rest.item.list.length}} </ion-badge>
       </ion-label>
     </ion-segment-button>
     <ion-segment-button value="1" (click)="filter()">
       <ion-label>
         Hàng sắp hết
+        <ion-badge color="danger"> {{outstockitem()}} </ion-badge>
       </ion-label>
     </ion-segment-button>
   </ion-segment>
