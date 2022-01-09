@@ -10,6 +10,7 @@ export class ItemtransferPage implements OnInit {
   public keyword = ''
   public list = []
   public map = []
+  public init = false
   constructor(
     public rest: RestService
   ) { }
@@ -19,7 +20,7 @@ export class ItemtransferPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('item')
-    else this.initiaze()
+    else if (!this.init) this.initiaze()
   }
 
   public initiaze() {
@@ -27,36 +28,27 @@ export class ItemtransferPage implements OnInit {
       item.number = 0
       if (item.checked) this.list.push(item)
     })
+    this.init = true
   }
 
-  // public async save() {
-  //   let list = []
-  //   this.list.forEach(item => {
-  //     list.push({
-  //       id: item.id,
-  //       number: item.number
-  //     })
-  //   })
+  public change(index: number, number: number) {
+    this.list[index].number += number 
+    if (this.list[index].number < 1) this.list[index].number = 1
+  }
 
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('item', 'outstocks', {
-  //     data: list
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.item.toggle = !this.rest.item.toggle;
-  //     this.rest.item.list.forEach((item, index) => {
-  //       this.rest.item.list[index].checked = false
-  //     })
-  //     this.rest.back()
-  //     this.rest.freeze('Đang chuyển hướng...')
-  //     setTimeout(() => {
-  //       this.rest.navCtrl.navigateForward('item/purchase')
-  //       this.rest.defreeze()
-  //     }, 500);
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public view(posid: number) {
+    this.rest.temp = this.rest.item.image[posid]
+    this.rest.navCtrl.navigateForward('modal/detail')
+  }
+
+  public next() {
+    let temp = ''
+    this.list.forEach(item => {
+      temp += item.name + ': ' + item.number + '\n'
+    })
+    this.rest.temp = temp
+    this.rest.navCtrl.navigateForward('item/final')
+  }
 
   public remove(index: number) {
     let temp = this.list.filter((item, i) => {

@@ -115,10 +115,10 @@
 
     <ion-item>
       <ion-label> Điều trị </ion-label>
-      <ion-checkbox slot="start" [(ngModel)]="treat"></ion-checkbox>
+      <ion-checkbox slot="start" [(ngModel)]="rest.temp.treat"></ion-checkbox>
     </ion-item>
 
-    <div *ngIf="!treat">
+    <div *ngIf="!rest.temp.treat">
       <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">
         <ion-label> {{item.name}} </ion-label>
         <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>

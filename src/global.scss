@@ -196,6 +196,17 @@ ion-badge {
   color: black;
 }
 
+.small-thumbnail {
+  width: 128px;
+  height: 128px;
+  padding: 5px;
+}
+
+.float {
+  position: absolute;
+  top: 5px; right: 5px;
+}
+
 .upperline {
   margin-top: 5px;
   padding-top: 5px;
@@ -263,6 +274,13 @@ ion-badge {
   background-color: lightskyblue;
   color: black;
   display: inline-block;
+}
+
+.pos.red {
+  background-color: #f99;
+}
+.pos.green {
+  background-color: #9f9;
 }
 
 .native-input, .native-textarea {

@@ -188,8 +188,10 @@ export class ItemPage implements OnInit {
   // }
 
   public view(posid: number) {
-    this.rest.temp = this.rest.item.image[posid]
-    this.rest.navCtrl.navigateForward('modal/detail')
+    if (!this.rest.item.toggle) {
+      this.rest.temp = this.rest.item.image[posid]
+      this.rest.navCtrl.navigateForward('modal/detail')
+    }
   }
 
   public insertItem() {

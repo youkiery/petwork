@@ -40,6 +40,11 @@ const routes: Routes = [
     path: 'transfer',
     loadChildren: () => import('./itemtransfer/itemtransfer.module').then( m => m.ItemtransferPageModule)
   },
+  {
+    path: 'final',
+    loadChildren: () => import('./itemfinal/itemfinal.module').then( m => m.ItemfinalPageModule)
+  },
+
 ];
 
 @NgModule({

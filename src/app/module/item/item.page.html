@@ -113,9 +113,9 @@
         Nguồn cung: <div class="pos" *ngFor="let pos of rest.item.list[index].source"> {{pos.name}} </div>
         <br>
       </div>
-      <span *ngIf="rest.item.list[index].expired.length">
+      <!-- <span *ngIf="rest.item.list[index].expired.length">
         Hạn sử dụng: <div class="pos" *ngFor="let pos of rest.item.list[index].expired; let i = index" (click)="removeexpire(index, i, pos.name)"> {{pos.name}} </div>
-      </span>
+      </span> -->
     </div>
     <div class="upperline" *ngIf="!rest.item.toggle">
       <img class="right icon" src="/assets/icon/expired.png" (click)="insertExpire(index)">

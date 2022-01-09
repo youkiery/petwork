@@ -180,7 +180,6 @@ export class UploadPage {
   public async insertSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.option = this.checkOption()
-    temp.treat = Number(this.treat)
     if (!temp.option.length) {
       this.rest.defreeze()
       this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
@@ -200,7 +199,6 @@ export class UploadPage {
   public async updateSubmit() {
     let temp = JSON.parse(JSON.stringify(this.rest.temp))
     temp.option = this.checkOption()
-    temp.treat = Number(this.treat)
     if (!temp.option.length) {
       this.rest.defreeze()
       this.rest.notify('Hãy chọn 1 dịch vụ trước khi thêm')
