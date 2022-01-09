@@ -40,14 +40,13 @@
     <ion-segment-button value="vaccine">
       <ion-label>
         Vaccine
-        <ion-badge color="danger"> {{rest.vaccine.list[0].length + rest.vaccine.list[1].length +
-          rest.vaccine.list[2].length}} </ion-badge>
+        <ion-badge color="danger"> {{rest.vaccine.uncalled}} </ion-badge>
       </ion-label>
     </ion-segment-button>
     <ion-segment-button value="usg">
       <ion-label>
         Siêu âm
-        <ion-badge color="danger"> {{rest.usg.list[0].length + rest.usg.list[1].length + rest.usg.list[2].length}}
+        <ion-badge color="danger"> {{rest.usg.uncalled[0] + rest.usg.uncalled[1] + rest.usg.uncalled[2]}}
         </ion-badge>
       </ion-label>
     </ion-segment-button>
@@ -58,19 +57,17 @@
       <ion-segment-button value="0">
         <ion-label>
           Chưa gọi
-          <ion-badge color="danger"> {{rest.vaccine.list[0].length}} </ion-badge>
+          <ion-badge color="danger"> {{rest.vaccine.uncalled}} </ion-badge>
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="1">
         <ion-label>
           Không nghe
-          <ion-badge color="danger"> {{rest.vaccine.list[1].length}} </ion-badge>
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="2">
         <ion-label>
           Đã gọi
-          <ion-badge color="danger"> {{rest.vaccine.list[2].length}} </ion-badge>
         </ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -108,19 +105,19 @@
       <ion-segment-button value="0">
         <ion-label>
           Chưa sinh
-          <ion-badge color="danger"> {{rest.usg.list[0].length}} </ion-badge>
+          <ion-badge color="danger"> {{rest.usg.uncalled[0]}} </ion-badge>
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="1">
         <ion-label>
           Đã sinh
-          <ion-badge color="danger"> {{rest.usg.list[1].length}} </ion-badge>
+          <ion-badge color="danger"> {{rest.usg.uncalled[1]}} </ion-badge>
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="2">
         <ion-label>
           Không thai
-          <ion-badge color="danger"> {{rest.usg.list[2].length}} </ion-badge>
+          <ion-badge color="danger"> {{rest.usg.uncalled[2]}} </ion-badge>
         </ion-label>
       </ion-segment-button>
     </ion-segment>

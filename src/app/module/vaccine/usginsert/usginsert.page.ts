@@ -39,10 +39,20 @@ export class UsginsertPage implements OnInit {
       this.rest.checkpost('usg', 'insert', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.usg.new = resp.new
+        this.rest.usg.list = resp.list
+        this.usgCal()
         this.clear()
       }, () => {
         this.rest.defreeze()
       })
+    }
+  }
+
+  public usgCal() {
+    for (let i = 0; i < 3; i++) {
+      this.rest.usg.uncalled[i] = this.rest.usg.list[i].filter((item: any) => {
+        return item.over
+      }).length
     }
   }
 
@@ -98,6 +108,7 @@ export class UsginsertPage implements OnInit {
       this.rest.defreeze()
       this.rest.usg.new = resp.new
       this.rest.usg.list = resp.list
+      this.usgCal()
       this.clear()
       if (this.rest.temp.route) this.rest.back()
     }, () => {

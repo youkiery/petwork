@@ -15,11 +15,11 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = '/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 56 // 21-56
+  public version = 21 // 21-56
   public config: any
   public home = {
     month: {
@@ -51,8 +51,8 @@ export class RestService {
   public manager = { code: '', seller: '', phone: '', customer: '', time: '', note: '', item: '', number: '' }
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: 0, list: [], old: [], keyword: '', toggle: false, start: '', end: '' }
-  public vaccine = { init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
-  public usg = { list: [[], [], []], temp: [[], []], new: [], time: '' }
+  public vaccine = { uncalled: 0, init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
+  public usg = { uncalled: [0, 0, 0], list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: { on: 0, kiot: [], vietcom: [], pair: [] }, start: '', end: '', old: [] }

@@ -79,11 +79,27 @@ export class VaccinePage {
       this.rest.usg.temp = resp.usg.temp
       this.rest.vaccine.new = resp.vaccine.new
       this.rest.vaccine.list = resp.vaccine.list
+      this.vacCal()
+      this.usgCal()
       this.rest.vaccine.temp = resp.vaccine.temp
       this.rest.vaccine.over = resp.vaccine.over
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public vacCal() {
+    this.rest.vaccine.uncalled = this.rest.vaccine.list[0].filter((item: any) => {
+      return item.over
+    }).length
+  }
+
+  public usgCal() {
+    for (let i = 0; i < 3; i++) {
+      this.rest.usg.uncalled[i] = this.rest.usg.list[i].filter((item: any) => {
+        return item.over
+      }).length
+    }
   }
 
   public async search() {
@@ -311,6 +327,7 @@ export class VaccinePage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.vaccine.list = resp.list
+      this.vacCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -359,6 +376,7 @@ export class VaccinePage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.vaccine.list = resp.list
+      this.vacCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -398,6 +416,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.vaccine.list = resp.list
+      this.vacCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -446,6 +465,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.vaccine.list = resp.list
+      this.vacCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -517,6 +537,7 @@ export class VaccinePage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -558,6 +579,7 @@ export class VaccinePage {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -600,6 +622,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -642,6 +665,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -684,6 +708,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -726,6 +751,7 @@ export class VaccinePage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.usg.list = resp.list
+      this.usgCal()
     }, () => {
       this.rest.defreeze()
     })

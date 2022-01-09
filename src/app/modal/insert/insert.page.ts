@@ -20,6 +20,8 @@ export class InsertPage {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.root()
     else if ((this.rest.action == 'vaccine' || this.rest.action == 'usg') && !this.rest.temp.id && !this.init) {
+      console.log(this.rest.vaccine.list);
+      
       this.init = true
       this.suggest()
     }
@@ -90,6 +92,12 @@ export class InsertPage {
     this.rest.navCtrl.navigateForward('/modal/suggest')
   }
 
+  public vacCal() {
+    this.rest.vaccine.uncalled = this.rest.vaccine.list[0].filter((item: any) => {
+      return item.over
+    }).length
+  }
+
   public async insertSubmit() {
     let msg = this.checkVaccineData()
     if (msg) this.rest.notify(msg)
@@ -99,6 +107,7 @@ export class InsertPage {
         this.rest.defreeze()
         this.rest.temp.vid = resp.vid
         this.rest.vaccine.list = resp.list
+        this.vacCal()
         this.rest.vaccine.new = resp.new
         this.rest.temp.ov = JSON.parse(JSON.stringify(this.rest.temp))
         if (this.rest.temp.route == 'new-history') this.rest.back()
@@ -182,6 +191,7 @@ export class InsertPage {
       this.rest.checkpost('vaccine', 'update', this.rest.temp).then(resp => {
         this.rest.defreeze()
         this.rest.vaccine.list = resp.list
+        this.vacCal()
         this.rest.vaccine.new = resp.new
         if (this.rest.temp.ppv) this.clear()
         else this.rest.back()
