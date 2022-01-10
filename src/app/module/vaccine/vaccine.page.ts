@@ -139,6 +139,8 @@ export class VaccinePage {
       this.rest.defreeze()
       this.page = 1
       this.rest[this.rest.vaccine.type].list = resp.list
+      if (this.rest.vaccine.type == 'vaccine') this.vacCal()
+      else this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
@@ -154,6 +156,8 @@ export class VaccinePage {
       this.rest.defreeze()
       event.target.complete();
       this.rest[this.rest.vaccine.type].list = resp.list
+      if (this.rest.vaccine.type == 'vaccine') this.vacCal()
+      else this.usgCal()
     }, () => {
       this.rest.defreeze()
     })
