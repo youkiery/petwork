@@ -32,17 +32,18 @@
           <br>
         </div>
       </div>
-      <div class="upperline text-center">
-        <div *ngIf="!item.done">
-          <div class="pos" (click)="change(i, -10)"> -10 </div>
-          <div class="pos" (click)="change(i, -1)"> -1 </div>
-          <div class="pos" (click)="change(i, 1)"> Số lượng: {{item.number}} </div>
-          <div class="pos" (click)="change(i, 1)"> +1 </div>
-          <div class="pos" (click)="change(i, 10)"> +10 </div>
-        </div>
-        <div class="pos green" (click)="list[i].done = !list[i].done"> đã lấy </div>
-        <div class="pos red" (click)="remove(i)"> xóa </div>
+    </div>
+    <div class="upperline text-center">
+      <div *ngIf="!item.done">
+        <div class="pos" (click)="change(i, -10)"> -10 </div>
+        <div class="pos" (click)="change(i, -5)"> -5 </div>
+        <div class="pos" (click)="change(i, -1)"> -1 </div>
+        <div class="pos" (click)="change(i, 1)"> Số lượng: {{item.number}} </div>
+        <div class="pos" (click)="change(i, 5)"> +5 </div>
+        <div class="pos" (click)="change(i, 10)"> +10 </div>
       </div>
+      <div class="pos green" (click)="list[i].done = !list[i].done"> đã lấy </div>
+      <div class="pos red" (click)="remove(i)"> xóa </div>
     </div>
   </div>
 </ion-content>
