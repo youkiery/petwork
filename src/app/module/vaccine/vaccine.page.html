@@ -147,7 +147,7 @@
       <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="ucalled(i)">
       <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="ucalled(i)">
       <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
-      <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png"
+      <img *ngIf="item['status'] <= 3 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png"
         (click)="repregnant(i)">
       <img *ngIf="item['status'] <= 6" class="icon" src="/assets/icon/dead.png" (click)="udead(i)">
       <img *ngIf="rest.config.vaccine> 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
@@ -171,6 +171,11 @@
       <ion-tab-button (click)="vaccined()">
         <ion-icon name="eyedrop-outline"></ion-icon>
         <ion-label> Đã tiêm phòng </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.vaccine > 1" (click)="statis()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="manager()">

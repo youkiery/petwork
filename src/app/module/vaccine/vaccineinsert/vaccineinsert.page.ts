@@ -30,7 +30,7 @@ export class VaccineinsertPage {
 
   public vacCal() {
     this.rest.vaccine.uncalled = this.rest.vaccine.list[0].filter((item: any) => {
-      return item.over
+      return item.over == 1
     }).length
   }
 

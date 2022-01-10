@@ -90,14 +90,14 @@ export class VaccinePage {
 
   public vacCal() {
     this.rest.vaccine.uncalled = this.rest.vaccine.list[0].filter((item: any) => {
-      return item.over
+      return item.over == 1
     }).length
   }
 
   public usgCal() {
     for (let i = 0; i < 3; i++) {
       this.rest.usg.uncalled[i] = this.rest.usg.list[i].filter((item: any) => {
-        return item.over
+        return item.over == 1
       }).length
     }
   }
@@ -738,6 +738,10 @@ export class VaccinePage {
     });
 
     await alert.present();
+  }
+
+  public statis() {
+    this.rest.navCtrl.navigateForward('vaccine/statis')
   }
 
   public async repregnantSubmit(id: number, note: string = '') {

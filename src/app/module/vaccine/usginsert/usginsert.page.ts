@@ -51,7 +51,7 @@ export class UsginsertPage implements OnInit {
   public usgCal() {
     for (let i = 0; i < 3; i++) {
       this.rest.usg.uncalled[i] = this.rest.usg.list[i].filter((item: any) => {
-        return item.over
+        return item.over == 1
       }).length
     }
   }

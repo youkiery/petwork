@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'd',
     loadChildren: () => import('./vaccined/vaccined.module').then( m => m.VaccinedPageModule)
+  },
+  {
+    path: 'statis',
+    loadChildren: () => import('./vaccinestatis/vaccinestatis.module').then( m => m.VaccinestatisPageModule)
   }
 ];
 
