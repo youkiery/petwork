@@ -19,7 +19,7 @@ export class UsgbirthPage implements OnInit {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('vaccine')
   }
 
-  public async save(id: number, data: any) {
+  public async save() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('usg', 'birth', this.rest.temp).then(resp => {
       this.rest.defreeze()

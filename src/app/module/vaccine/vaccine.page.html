@@ -146,6 +146,7 @@
       <img *ngIf="item['status'] == 3 || item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
       <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="ucalled(i)">
       <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="ucalled(i)">
+      <img *ngIf="item['status'] < 6" class="icon" src="/assets/icon/uncalled.png" (click)="uuncalled(i)">
       <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
       <img *ngIf="item['status'] <= 3 && item['status'] > 1" class="icon" src="/assets/icon/rip.png"
         (click)="repregnant(i)">

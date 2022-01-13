@@ -21,6 +21,9 @@ export class ItemfinalPage implements OnInit {
 
   public done() {
     this.rest.item.toggle = false
+    this.rest.item.list.forEach((item, index) => {
+      this.rest.item.list[index].checked = false
+    })
     this.rest.navCtrl.navigateRoot('item')
   }
 }

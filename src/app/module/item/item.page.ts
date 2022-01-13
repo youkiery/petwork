@@ -372,6 +372,11 @@ export class ItemPage implements OnInit {
     }
     this.rest.navCtrl.navigateForward('item/modal')
   }
+
+  public purchased() {
+    this.rest.navCtrl.navigateForward('item/purchased')
+  }
+
   public position() {
     if (this.rest.config.item < 2) this.rest.notify('Không có quyền truy cập')
     else {

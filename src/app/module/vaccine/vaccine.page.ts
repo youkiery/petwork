@@ -386,6 +386,55 @@ export class VaccinePage {
     })
   }
 
+  public async uuncalled(index: number) {
+    let note = ''
+    let id = 0
+    id = this.rest.usg.list[this.segment][index].id
+    note = this.rest.usg.list[this.segment][index].note
+
+    const alert = await this.alert.create({
+      header: 'Xác nhận Không gọi được',
+      subHeader: 'Đã gọi nhưng khách không nghe máy, xác nhận?',
+      message: 'Ghi chú: ',
+      inputs: [{
+        type: 'text',
+        label: 'Ghi chú',
+        name: 'note',
+        value: note
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.uuncalledSubmit(id, e.note)
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async uuncalledSubmit(id: number, note: string) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('usg', 'uncalled', {
+      id: id,
+      note: note,
+      keyword: this.rest.vaccine.keyword,
+      time: this.rest.vaccine.time,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.usg.list = resp.list
+      this.usgCal()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async done(index: number) {
     let id = 0
     id = this.rest.vaccine.list[this.segment][index].id

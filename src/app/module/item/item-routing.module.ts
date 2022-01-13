@@ -44,6 +44,11 @@ const routes: Routes = [
     path: 'final',
     loadChildren: () => import('./itemfinal/itemfinal.module').then( m => m.ItemfinalPageModule)
   },
+  {
+    path: 'purchased',
+    loadChildren: () => import('./itempurchased/itempurchased.module').then( m => m.ItempurchasedPageModule)
+  },
+
 
 ];
 

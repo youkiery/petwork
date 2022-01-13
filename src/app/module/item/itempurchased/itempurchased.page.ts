@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
-import { TimeService } from 'src/app/services/time.service';
 
 @Component({
-  selector: 'app-itempurchase',
-  templateUrl: './itempurchase.page.html',
-  styleUrls: ['./itempurchase.page.scss'],
+  selector: 'app-itempurchased',
+  templateUrl: './itempurchased.page.html',
+  styleUrls: ['./itempurchased.page.scss'],
 })
-export class ItempurchasePage implements OnInit {
+export class ItempurchasedPage implements OnInit {
   public init = false
   constructor(
     public rest: RestService,
-    public time: TimeService,
     public alert: AlertController,
   ) { }
 

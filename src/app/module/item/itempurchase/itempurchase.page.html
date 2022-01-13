@@ -31,6 +31,7 @@
     </div>
     <div class="upperline">
       <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
+      <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/done.png" (click)="done(item.id)">
       <img *ngIf="rest.config.item > 1" class="icon right" src="/assets/icon/delete.png" (click)="remove(item.id)">
       <img *ngIf="!item.show" class="icon right" src="/assets/icon/up.png"
         (click)="rest.item.purchase.recommend[i].show = 1">
