@@ -68,6 +68,11 @@ ion-badge {
   padding: 0px;
 }
 
+.alert-input.sc-ion-alert-ios {
+  margin-top: 0px;
+  border: none;
+}
+
 .tick {
   background-image: url(/assets/icon/tick.png);
   position: absolute;

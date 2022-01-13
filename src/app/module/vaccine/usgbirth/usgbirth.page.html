@@ -1,0 +1,32 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="secondary" fill="solid" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" (click)="save()" color="secondary" fill="solid" size="small">
+      Thêm
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.ready">
+  <ion-item>
+    <ion-label position="stacked"> Số thai </ion-label>
+    <ion-input [(ngModel)]="rest.temp.number"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày dự sinh </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.calltime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày phối lại </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.repregnant" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+  </ion-item>
+</ion-content>

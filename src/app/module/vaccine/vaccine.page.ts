@@ -26,9 +26,9 @@ export class VaccinePage {
   public uheader = {
     0: 'Nhắc tiêm phòng trước salơ',
     1: 'Nhắc test Progesterone',
-    2: 'Tư vấn trước sinh',
-    3: 'Ngày sinh',
-    4: 'Nhắc sổ giun lần 1',
+    2: '1 tuần trước sinh',
+    3: '1 ngày sau sinh',
+    4: 'Nhắc sổ giun lần',
     5: 'Nhắc tiêm vaccine',
     6: 'Đã nhắc tiêm vaccine',
     7: 'Đã hoàn thành',
@@ -484,67 +484,19 @@ export class VaccinePage {
   public async birth(index: number) {
     let current = this.rest.usg.list[this.segment][index].calltime.split('/')
     let target = current[2] + '-' + current[1] + '-' + current[0]
-
-    const alert = await this.alert.create({
-      header: this.uheader[this.rest.usg.list[this.segment][index].status],
-      subHeader: this.usubheader[this.rest.usg.list[this.segment][index].status],
-      inputs: [{
-        type: 'number',
-        name: 'number',
-        value: this.rest.usg.list[this.segment][index].number,
-        placeholder: 'Số thai'
-      },
-      {
-        type: 'date',
-        name: 'calltime',
-        value: target,
-        placeholder: 'Ngày sinh'
-      },
-      {
-        type: 'date',
-        name: 'repregnant',
-        value: '',
-        placeholder: 'Ngày nhắc salơ chó mẹ'
-      },
-      {
-        type: 'text',
-        name: 'note',
-        value: this.rest.usg.list[this.segment][index].note,
-        placeholder: 'Ghi chú'
-      }],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.birthSubmit(this.rest.usg.list[this.segment][index].id, e)
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  public async birthSubmit(id: number, data: any) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('usg', 'birth', {
-      id: id,
-      note: data['note'],
-      number: data['number'],
-      calltime: data['calltime'],
-      repregnant: data['repregnant'],
+    let item = this.rest.usg.list[this.segment][index]
+    this.rest.temp = {
+      id: item.id,
+      number: item.number,
+      calltime: target,
+      repregnant: '',
+      note: item.note,
       time: this.rest.usg.time,
       docs: this.rest.home.default.docs,
       docscover: this.rest.home.default.docscover,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.usg.list = resp.list
-      this.usgCal()
-    }, () => {
-      this.rest.defreeze()
-    })
+    }
+
+    this.rest.navCtrl.navigateForward('vaccine/birth')
   }
 
   public async ucalled(index: number) {
