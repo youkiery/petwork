@@ -156,10 +156,11 @@
         <ion-label> Vị trí </ion-label>
       </ion-tab-button>
 
-      <!-- <ion-tab-button (click)="purchased()">
+      <ion-tab-button (click)="purchased()">
         <ion-icon name="cart-outline"></ion-icon>
         <ion-label> Đã nhập </ion-label>
-      </ion-tab-button> -->
+        <ion-badge color="danger" *ngIf="rest.item.purchased"> {{rest.item.purchased}} </ion-badge>
+      </ion-tab-button>
 
       <ion-tab-button (click)="purchase()">
         <ion-icon name="basket-outline"></ion-icon>

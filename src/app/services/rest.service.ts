@@ -19,7 +19,7 @@ export class RestService {
   //  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 21 // 21-60
+  public version = 21 // 21-61
   public config: any
   public home = {
     month: {
@@ -56,7 +56,7 @@ export class RestService {
   public schedule = { time: 0, state: 1, list: [], except: [], data: [] }
   public cart = { list: [], init: false }
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: { on: 0, kiot: [], vietcom: [], pair: [] }, start: '', end: '', old: [] }
-  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], floor: '', keyword: '', user: [], usercat: [], cat: [], cats: '', action: '', purchase: { item: [], recommend: [] }, source: [], sourceid: '0', purcount: 0, position: [], expired: 0, outstock: 0, outx: {}, toggle: false }
+  public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], floor: '', keyword: '', user: [], usercat: [], cat: [], cats: '', action: '', purchased: 0, purchase: { item: [], recommend: [] }, source: [], sourceid: '0', purcount: 0, position: [], expired: 0, outstock: 0, outx: {}, toggle: false }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public physical = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [] }

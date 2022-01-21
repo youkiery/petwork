@@ -50,6 +50,7 @@ export class ItemPage implements OnInit {
         this.rest.item.cats = resp.cats
         this.rest.item.usercat = resp.usercat
         this.rest.item.purchase = resp.purchase
+        this.rest.item.purchased = resp.purchased
         this.rest.item.outstock = resp.outstock
         this.rest.item.source = resp.source       
         this.filter()
@@ -90,6 +91,7 @@ export class ItemPage implements OnInit {
       this.rest.item.cats = resp.cats
       this.rest.item.usercat = resp.usercat
       this.rest.item.purchase = resp.purchase
+      this.rest.item.purchased = resp.purchased
       this.rest.item.source = resp.source
       this.filter()
     }, () => {
