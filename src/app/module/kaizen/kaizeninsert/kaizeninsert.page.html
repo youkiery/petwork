@@ -8,6 +8,10 @@
 </ion-toolbar>
 
 <ion-content>
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+ 
   <ion-item>
     <ion-label position="fixed"> Vấn đề </ion-label>
     <ion-textarea [(ngModel)]="rest.temp.problem"></ion-textarea>
@@ -22,4 +26,9 @@
     <ion-label position="fixed"> Hiệu quả </ion-label>
     <ion-textarea [(ngModel)]="rest.temp.result"></ion-textarea>
   </ion-item>
+
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
+    <img class="thumbnail" [src]="item">
+  </span>
 </ion-content>

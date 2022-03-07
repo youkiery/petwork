@@ -47,6 +47,11 @@ export class KaizenPage implements OnInit {
     this.rest.kaizen.filter[name] = ''
   }
 
+  public async detail(image: string) {
+    this.rest.temp = image
+    this.rest.navCtrl.navigateForward('/modal/detail')
+  }
+
   public async filter() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.kaizen.filter.done = 1
@@ -103,6 +108,7 @@ export class KaizenPage implements OnInit {
       problem: item.problem,
       solution: item.solution,
       result: item.result,
+      image: item.image
     }
     this.rest.navCtrl.navigateForward('kaizen/insert')
   }
@@ -112,6 +118,7 @@ export class KaizenPage implements OnInit {
       problem: '',
       solution: '',
       result: '',
+      image: []
     }
     this.rest.navCtrl.navigateForward('kaizen/insert')
   }

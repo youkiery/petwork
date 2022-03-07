@@ -45,45 +45,63 @@
   <ion-button expand="full" (click)="filter()">
     Lọc dữ liệu
   </ion-button>
-  
-  <div *ngFor="let item of rest.his.list; let i = index" [class]="insult[item.insult]">
-    <div class="row">
-      <div class="col-xs-6">
-        Khách hàng: {{item.customer}} <br>
-        Điện thoại: {{item.phone}} <br>
-        Thú cưng: {{item.pet}}
-      </div>
-      <div class="col-xs-6">
-        Người nhận: {{item.doctor}} <br>
-        Ngày nhận: {{item.time}} <br>
-        Tình trạng bệnh: {{status[item.status].name}}
-      </div>
 
-      <div>
-        Tình trạng xuất viện: <span class="bold"> {{insult_text[item.insult]}} </span> 
-      </div>
-      <div>
-        Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)" *ngIf="item.insult < 1">
-      </div>
-      <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i)">
-        {{detail.time}}
-      </span>
-      <div class="upperline">
-        <span *ngIf="rest.config.his > 1 && item.insult > 0">
-          Đánh giá:
-          <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
-          <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
-          <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="0">
+      <ion-label>
+        Bệnh viện
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Lưu trú
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  
+  <div *ngFor="let item of rest.his.list; let i = index">
+    <div [class]="insult[item.insult]" *ngIf="item.pos == segment">
+      <div class="row">
+        <div class="col-xs-6">
+          Khách hàng: {{item.customer}} <br>
+          Điện thoại: {{item.phone}} <br>
+          Thú cưng: {{item.pet}}
+        </div>
+        <div class="col-xs-6">
+          Người nhận: {{item.doctor}} <br>
+          Ngày nhận: {{item.time}} <br>
+          Tình trạng bệnh: {{status[item.status].name}}
+        </div>
+  
+        <div>
+          Tình trạng xuất viện: <span class="bold"> {{insult_text[item.insult]}} </span> 
+        </div>
+        <div>
+          Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)" *ngIf="item.insult < 1">
+        </div>
+        <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i)">
+          {{detail.time}}
         </span>
-        
-        <img class="right icon" src="/assets/icon/info.png" (click)="view(i)">
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && !isNumber(item.share)" class="right icon" src="/assets/icon/share-off.png" (click)="toggleShare(item.id, item.share)">
-        <img class="right icon" src="/assets/icon/update.png" (click)="update(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.share == '1'" class="right icon" src="/assets/icon/share-on.png" (click)="toggleShare(item.id, item.share)">
-        <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
-        <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
-        <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1 && item.insult > 0" class="right icon" src="/assets/icon/hopital.png" (click)="hopital(item.id)">
+        <span class="pos" (click)="add(i)">
+          +
+        </span>
+        <div class="upperline">
+          <span *ngIf="rest.config.his > 1 && item.insult > 0">
+            Đánh giá:
+            <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
+            <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
+            <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
+          </span>
+          
+          <img class="right icon" src="/assets/icon/info.png" (click)="view(i)">
+          <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && !isNumber(item.share)" class="right icon" src="/assets/icon/share-off.png" (click)="toggleShare(item.id, item.share)">
+          <img class="right icon" src="/assets/icon/update.png" (click)="update(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
+          <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.share == '1'" class="right icon" src="/assets/icon/share-on.png" (click)="toggleShare(item.id, item.share)">
+          <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
+          <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && item.insult < 1">
+          <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
+          <img *ngIf="(item.doctorid == rest.home.userid || rest.config.his > 1) && rest.config.his > 1 && item.insult > 0" class="right icon" src="/assets/icon/hopital.png" (click)="hopital(item.id)">
+        </div>
       </div>
     </div>
   </div>

@@ -152,9 +152,10 @@ export class SpaPage {
       phone2: this.rest.spa.list[index].phone2,
       note: this.rest.spa.list[index].note,
       image: this.rest.spa.list[index].image,
-      segment: this.rest.spa.list[index].treat,
+      segment: Number(this.segment),
       option: this.rest.spa.list[index].option,
       weight: Number(this.rest.spa.list[index].weight),
+      treat: Number(this.rest.spa.list[index].treat), 
       time: this.rest.spa.time,
       ctime: this.rest.spa.init
     }

@@ -11,9 +11,9 @@ export class UploadPage {
   public option = []
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public init = false
+  public treat = false
   public max = 640
   public count = 0
-  public treat = false
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public rest: RestService,

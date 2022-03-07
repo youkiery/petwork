@@ -171,6 +171,11 @@ export class HisinsertPage implements OnInit {
     });
   }
 
+  public radioGroupChange() {
+    console.log(this.rest.temp.pos);
+    
+  }
+
   public async insertDetailSubmit() {
     this.rest.checkpost('his', 'detail', this.rest.temp).then((resp) => {
       this.rest.defreeze()

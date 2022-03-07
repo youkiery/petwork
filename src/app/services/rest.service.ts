@@ -19,7 +19,7 @@ export class RestService {
   //  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 21 // 21-61
+  public version = 21 // 21-62
   public config: any
   public home = {
     month: {

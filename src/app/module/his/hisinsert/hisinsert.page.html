@@ -73,6 +73,20 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="rest.temp.pos">
+      <ion-item>
+        <ion-label> Bệnh viện </ion-label>
+        <ion-radio slot="start" value="0"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label> Lưu trú </ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
   
   <span class="thumbnail-box"> <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()"> </span>
   <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">

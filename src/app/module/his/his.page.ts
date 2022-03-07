@@ -19,6 +19,7 @@ export class HisPage implements OnInit {
     1: 'Đã ra viện',
     2: 'Đã chết'
   }
+  public segment = '0'
   public status = [
     { id: 0, name: 'Bình thường' },
     { id: 1, name: 'Yếu' },
@@ -42,6 +43,31 @@ export class HisPage implements OnInit {
         this.filter()
       }
     })
+  }
+
+  public add(i: number) {
+    let detail = this.rest.his.list[i].detail[this.rest.his.list[i].detail.length - 1]
+    
+    this.rest.temp = {
+      id: this.rest.his.list[i].id,
+      detailid: 0,
+      name: this.rest.his.list[i].customer,  
+      phone: this.rest.his.list[i].phone,
+      pet: this.rest.his.list[i].pet,
+      petid: this.rest.his.list[i].petid,
+      eye: detail.eye,
+      temperate: detail.temperate,
+      other: detail.other,
+      treat: detail.treat,
+      status: Number(detail.status),
+      start: this.rest.his.start,
+      end: this.rest.his.end,
+      time: this.time.datetoisodate(detail.time),
+      image: detail.image,
+      pos: this.rest.his.list[i].pos
+    }
+    
+    this.rest.navCtrl.navigateForward('his/insert')
   }
 
   public manager() {
@@ -244,7 +270,8 @@ export class HisPage implements OnInit {
       start: this.rest.his.start,
       end: this.rest.his.end,
       time: this.time.datetoisodate(item.time),
-      image: detail.image
+      image: detail.image,
+      pos: item.pos
     }
     
     this.rest.navCtrl.navigateForward('his/insert')
@@ -264,7 +291,8 @@ export class HisPage implements OnInit {
       other: '',
       treat: '',
       status: 0,
-      image: []
+      image: [],
+      pos: this.segment
     }
     this.rest.navCtrl.navigateForward('his/insert')
   }
