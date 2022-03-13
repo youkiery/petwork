@@ -19,6 +19,7 @@ export class HisPage implements OnInit {
     1: 'Đã ra viện',
     2: 'Đã chết'
   }
+  public pay_class = ['pos red', 'pos yellow', 'pos']
   public segment = '0'
   public status = [
     { id: 0, name: 'Bình thường' },
@@ -62,7 +63,7 @@ export class HisPage implements OnInit {
       status: Number(detail.status),
       start: this.rest.his.start,
       end: this.rest.his.end,
-      time: this.time.datetoisodate(detail.time),
+      time: this.time.datetoisodate(this.rest.home.today),
       image: detail.image,
       pos: this.rest.his.list[i].pos
     }
@@ -72,6 +73,43 @@ export class HisPage implements OnInit {
 
   public manager() {
     this.rest.navCtrl.navigateForward('his/manager')
+  }
+  
+  public async move(id: number) {
+    const alert = await this.alert.create({
+      message: 'Xác nhận chuyển nơi lưu bệnh?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.moveSubmit(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async moveSubmit(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('his', 'move', {
+      id: id,
+      pos: this.segment,
+      start: this.rest.his.start,
+      end: this.rest.his.end,
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async filter() {
@@ -85,6 +123,7 @@ export class HisPage implements OnInit {
       this.rest.defreeze()
       this.rest.his.init = true
       this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
     }, () => {
       this.rest.defreeze()
     })
@@ -239,8 +278,9 @@ export class HisPage implements OnInit {
       start: this.rest.his.start,
       end: this.rest.his.end,
     }).then((resp) => {
-      this.rest.his.list = resp.list
       this.rest.defreeze()
+      this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
     }, () => {
       this.rest.defreeze()
     })
@@ -249,12 +289,31 @@ export class HisPage implements OnInit {
   public view(i: number) {
     this.rest.id = i
     this.rest.detail = this.rest.his.list[i]
+    this.rest.detail.chat = this.rest.his.list[i].chat
+    this.rest.detail.hisid = this.rest.his.list[i].id
+    this.rest.navCtrl.navigateForward('his/detail')
+  }
+
+  public chat(i: number) {
+    this.rest.temp = {
+      id: this.rest.his.list[i].id
+    }
+    
+    this.rest.id = i
+    this.rest.detail = this.rest.his.list[i]
+    this.rest.detail.chat = this.rest.his.list[i].chat
+    this.rest.detail.hisid = this.rest.his.list[i].id
+    setTimeout(() => {
+      this.rest.navCtrl.navigateForward('his/chat')
+    }, 500);
     this.rest.navCtrl.navigateForward('his/detail')
   }
 
   public update(i: number) {
     let item = this.rest.his.list[i]
-    let detail = item.detail[0]
+    this.rest.id = i
+    
+    let detail = item.detail[item.detail.length - 1]
     this.rest.temp = {
       id: item.id,
       detailid: detail.id,
@@ -269,7 +328,7 @@ export class HisPage implements OnInit {
       status: Number(detail.status),
       start: this.rest.his.start,
       end: this.rest.his.end,
-      time: this.time.datetoisodate(item.time),
+      time: this.time.datetoisodate(detail.time),
       image: detail.image,
       pos: item.pos
     }
@@ -328,6 +387,7 @@ export class HisPage implements OnInit {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
     }, () => {
       this.rest.defreeze()
     })
@@ -410,6 +470,7 @@ export class HisPage implements OnInit {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
     }, () => {
       this.rest.defreeze()
     })
@@ -429,6 +490,7 @@ export class HisPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
     }, () => {
       this.rest.defreeze()
     })

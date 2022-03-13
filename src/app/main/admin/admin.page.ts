@@ -8,7 +8,24 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage {
-
+  public switch = ['on', 'off']
+  public list = [
+    {name: 'Lịch spa', module: 'spa'},
+    {name: 'Quản lý nhắc gọi', module: 'vaccine'},
+    {name: 'Đăng ký lịch', module: 'schedule'},
+    {name: 'Quản lý hàng hóa', module: 'item'},
+    {name: 'Kaizen', module: 'kaizen'},
+    {name: 'Tra cứu thuốc', module: 'drug'},
+    {name: 'Giá sỉ', module: 'price'},
+    {name: 'Quản lý xe', module: 'ride'},
+    {name: 'Quản lý sinh hóa', module: 'profile'},
+    {name: 'Quản lý sinh lý', module: 'physical'},
+    {name: 'Quản lý bệnh nhân', module: 'his'},
+    {name: 'Quản lý đơn hàng', module: 'cart'},
+    {name: 'Quản lý nhà xe', module: 'transport'},
+    // {name: 'Quản lý công việc', module: 'work'},
+  ]
+  public level = ['l0', 'l1', 'l2']
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -44,23 +61,11 @@ export class AdminPage {
     })
   }
 
-  public async toggleDoctor(userid: number) {
+  public async toggle(userid: number, per: string = 'doctor') {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('admin', 'doctor', {
+    this.rest.checkpost('admin', 'toggle', {
       userid: userid,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.config = resp.config
-      this.rest.admin.list = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-  
-  public async toggleManager(userid: number) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('admin', 'manager', {
-      userid: userid,
+      per: per
     }).then(resp => {
       this.rest.defreeze()
       this.rest.config = resp.config
@@ -70,10 +75,11 @@ export class AdminPage {
     })
   }
 
-  public async toggleAdmin(userid: number) {
+  public async change(userid: number, per: string = 'doctor') {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('admin', 'admin', {
+    this.rest.checkpost('admin', 'change', {
       userid: userid,
+      per: per
     }).then(resp => {
       this.rest.defreeze()
       this.rest.config = resp.config
@@ -82,6 +88,32 @@ export class AdminPage {
       this.rest.defreeze()
     })
   }
+  
+  // public async toggleManager(userid: number) {
+  //   await this.rest.freeze('Đang tải dữ liệu...')
+  //   this.rest.checkpost('admin', 'manager', {
+  //     userid: userid,
+  //   }).then(resp => {
+  //     this.rest.defreeze()
+  //     this.rest.config = resp.config
+  //     this.rest.admin.list = resp.list
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
+
+  // public async toggleAdmin(userid: number) {
+  //   await this.rest.freeze('Đang tải dữ liệu...')
+  //   this.rest.checkpost('admin', 'admin', {
+  //     userid: userid,
+  //   }).then(resp => {
+  //     this.rest.defreeze()
+  //     this.rest.config = resp.config
+  //     this.rest.admin.list = resp.list
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
   
   public isNumber(number: number) {
     return Number(number)

@@ -93,6 +93,7 @@
     <ion-img src="assets/image/his.png" class="box-image"></ion-img>
     <div class="box-title">
       Quản lý bệnh nhân
+      <ion-badge color="danger" *ngIf="rest.home.his > 0"> {{rest.home.his}} </ion-badge>
     </div>
   </div>
 

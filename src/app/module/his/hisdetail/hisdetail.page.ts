@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AlertController, IonContent } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
@@ -14,6 +14,17 @@ export class HisdetailPage implements OnInit {
     { id: 1, name: 'Yếu' },
     { id: 2, name: 'Rất yếu' },
   ]
+  public pay = [
+    { class: 'pos red', name: 'Chưa ra toa'},
+    { class: 'pos yellow', name: 'Chưa trả'},
+    { class: 'pos', name: 'Đã trả'},
+  ]
+  public list = []
+  public text = ''
+  public side = ['posx', 'posx side']
+  public x = ['', 'x']
+  public init = false
+  @ViewChild(IonContent) content: IonContent;
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -25,6 +36,47 @@ export class HisdetailPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('his')
+    else if (!this.init) this.auto()
+  }
+
+  public chat() {
+    this.rest.temp = {
+      id: this.rest.detail.id
+    }
+    this.rest.navCtrl.navigateForward('his/chat')
+  }
+  
+  public async change(payindex: number, index: number) {
+    const alert = await this.alert.create({
+      message: 'Xác nhận chuyển trạng thái thanh toán sang '+ this.pay[payindex].name,
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.changeSubmit(payindex, index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async changeSubmit(payindex: number, index: number) {
+    let detail = this.rest.detail.detail[index]
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('his', 'pay', {
+      pay: payindex,
+      detailid: detail.id,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.detail.detail[index].pay = payindex
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public update(i: number) {
@@ -44,7 +96,8 @@ export class HisdetailPage implements OnInit {
       start: this.rest.his.start,
       end: this.rest.his.end,
       time: this.time.datetoisodate(detail.time),
-      image: detail.image
+      image: detail.image,
+      pos: this.rest.his.list[this.rest.id].pos
     }
     
     this.rest.navCtrl.navigateForward('his/insert')
@@ -63,7 +116,8 @@ export class HisdetailPage implements OnInit {
       status: Number(this.rest.detail.status),
       start: this.rest.his.start,
       end: this.rest.his.end,
-      image: []
+      image: [],
+      pos: this.rest.his.list[this.rest.id].pos
     }
     
     this.rest.navCtrl.navigateForward('his/insert')
@@ -92,6 +146,11 @@ export class HisdetailPage implements OnInit {
 
     await alert.present();
   }
+  
+  public muchChat(number: string) {
+    if (Number(number) > 99) return "99+"
+    return number
+  }
 
   public async insertHisSubmit(his: string) {
     await this.rest.freeze('Đang thêm tiền sử')
@@ -109,5 +168,44 @@ export class HisdetailPage implements OnInit {
   public async detail2(image: string) {
     this.rest.temp = image
     this.rest.navCtrl.navigateForward('/modal/detail')
+  }
+
+  public totime(time: number) {
+    return this.time.timetodates(time * 1000)
+  }
+
+  public async reload(event: any) {
+    await this.auto()
+    event.target.complete()
+  }
+
+  public async auto() {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    setTimeout(() => {
+      this.rest.checkpost('his', 'getchat', {
+        id: this.rest.his.list[this.rest.id].id,
+      }).then((resp) => {
+        this.rest.defreeze()
+        this.init = true
+        this.list = resp.list
+      }, () => {
+        this.rest.defreeze()
+      })
+    }, 1000);
+  }
+
+  public async post() {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('his', 'postchat', {
+      id: this.rest.his.list[this.rest.id].id,
+      text: this.text
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.list = resp.list
+      this.content.scrollToBottom(300);
+      this.text = ''
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

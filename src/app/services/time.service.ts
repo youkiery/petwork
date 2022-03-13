@@ -23,6 +23,20 @@ export class TimeService {
     return date + '/' + month + '/' + year
   }
 
+  public timetodates(time: number) {
+    let datetime = new Date(Number(time))
+    let date = datetime.getDate().toString()
+    date = (Number(date) < 10 ? '0' + date : date)
+    let month = (datetime.getMonth() + 1).toString()
+    month = (Number(month) < 10 ? '0' + month : month)
+    let year = datetime.getFullYear()
+    let hour = datetime.getHours().toString()
+    hour = (Number(hour) < 10 ? '0' + hour : hour)
+    let minute = datetime.getMinutes().toString()
+    minute = (Number(minute) < 10 ? '0' + minute : minute)
+    return date + '/' + month + '/' + year + ' '+ hour + ':'+ minute
+  }
+
   public timetoisodate(time: number) {
     return this.datetoisodate(this.timetodate(time))
   }

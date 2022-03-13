@@ -335,9 +335,7 @@ export class ItemPage implements OnInit {
 
   public async updateSubmit() {
     this.rest.checkpost('item', 'update', this.rest.temp).then(resp => {
-      this.rest.defreeze()
-      console.log(this.rest.item.list, this.rest.temp.index);
-      
+      this.rest.defreeze()      
       this.rest.item.list[this.rest.temp.index] = resp.data
       this.filter()
       this.rest.back()

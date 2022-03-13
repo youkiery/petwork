@@ -33,7 +33,8 @@
     <div class="col-xs-6">
       Người làm: {{detail.doctor}} <br>
       Ngày làm: {{detail.time}} <br>
-      Tình trạng: {{status[detail.status].name}}
+      Tình trạng: {{status[detail.status].name}} <br>
+      Thanh toán: <b> <span [class]="pay[detail.pay].class"> {{pay[detail.pay].name}} </span> </b> <br>
     </div>
     <div class="col-xs-6">
       <b>Niêm mạc: </b> {{detail.eye}} <br>
@@ -46,6 +47,29 @@
         <img class="thumbnail-sm" *ngFor="let image of detail.image" [src]="image" (click)="detail2(image)">
       </div>
       <img *ngIf="rest.detail.insult == 0" class="right icon" src="/assets/icon/update.png" (click)="update(i)">
+      <div *ngIf="rest.config.his > 1">
+        <span *ngFor="let item of pay; let payindex = index" [class]="item.class" (click)="change(payindex, i)">
+          {{item.name}}
+        </span>
+      </div>
     </div>
   </div>
+
+  <div *ngFor="let chat of list" [class]="x[chat.side]">
+    <div [class]="side[chat.side]">
+      {{chat.text}}
+    </div>
+    <div class="posttime">
+      {{totime(chat.time)}}
+    </div>
+  </div>
+
+  <div class="inp"></div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="text" maxlength="100" placeholder="tối đa 100 từ"> </ion-input>
+    <ion-button fill="clear" (click)="post()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
 </ion-content>

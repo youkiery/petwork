@@ -103,8 +103,9 @@ export class HisinsertPage implements OnInit {
 
   public async insertSubmit() {
     this.rest.checkpost('his', 'insert', this.rest.temp).then((resp) => {
-      this.rest.his.list = resp.list
       this.rest.defreeze()
+      this.rest.his.list = resp.list
+      this.rest.his.count = resp.count
       this.rest.back()
     }, () => {
       this.rest.defreeze()

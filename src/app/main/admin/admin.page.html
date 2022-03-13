@@ -17,22 +17,45 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
-    <div class="bei"> Tên hiển thị: {{user.name}} </div>
-    <div class="bei"> Họ tên: {{user.fullname}} </div>
-    <div class="bei"> Tài khoản: {{user.username}} </div>
-    <img class="icon" src="/assets/icon/update.png" (click)="detail(i)">
-    <img class="icon" src="/assets/icon/delete.png" (click)="remove(user.userid)">
-    <img class="icon" *ngIf="user.module.doctor == '1'" src="/assets/icon/doctor-on.png" (click)="toggleDoctor(user.userid)">
-    <img class="icon" *ngIf="!isNumber(user.module.doctor)" src="/assets/icon/doctor-off.png" (click)="toggleDoctor(user.userid)">
-    <img class="icon" *ngIf="user.module.manager == '1'" src="/assets/icon/manager-on.png" (click)="toggleManager(user.userid)">
-    <img class="icon" *ngIf="!isNumber(user.module.manager)" src="/assets/icon/manager-off.png" (click)="toggleManager(user.userid)">
-    <img class="icon" *ngIf="user.module.admin == '1'" src="/assets/icon/admin-on.png" (click)="toggleAdmin(user.userid)">
-    <img class="icon" *ngIf="!isNumber(user.module.admin)" src="/assets/icon/admin-off.png" (click)="toggleAdmin(user.userid)">
+  <div class="box-sm">
+    <div>
+      <b> Chức vụ </b>
+    </div>
+    <div class="margin-left">
+      Lưu trú: Nhân viên được truy cập [...] <br>
+      Bác sĩ: Nhân viên được liệt kê vào danh sách bác sĩ <br>
+      Kế toán: Nhân viên không hạn chế đăng ký lịch nghỉ <br>
+      Quản lý: Nhân viên có khả năng cấp quyền nhân viên khác <br>
+      <b> Click để bật tắt quyền </b>
+    </div>
   </div>
-  <div>
-    <img class="icon" src="/assets/icon/doctor-on.png"> Nhân viên được liệt kê vào danh sách bác sĩ <br>
-    <img class="icon" src="/assets/icon/manager-on.png"> Nhân viên không hạn chế đăng ký lịch nghỉ <br>
-    <img class="icon" src="/assets/icon/admin-on.png"> Nhân viên có khả năng cấp quyền nhân viên khác
+  <div class="box-sm">
+    <div>
+      <b> Chức năng </b>
+    </div>
+    <div class="margin-left">
+      <div class="square-sm l0"> </div> Không quyền <br>
+      <div class="square-sm l1"> </div> Nhân viên <br>
+      <div class="square-sm l2"> </div> Quản lý <br>
+      <b> Click để tăng giảm quyền </b>
+    </div>
+  </div>
+
+  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+    <div> <b> Họ tên: </b> {{user.fullname}} </div>
+    <div> <b> Tài khoản: </b> {{user.username}} </div>
+    <div>
+      Chức vụ:
+      <!-- <span [class]="user.module.stay > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'stay')"> Lưu trú </span> -->
+      <span [class]="user.module.doctor > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'doctor')"> Bác sĩ </span>
+      <span [class]="user.module.manager > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'manager')"> Kế toán </span>
+      <span [class]="user.module.admin > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'admin')"> Quản lý </span>
+    </div>
+    <div>
+      Chức năng: <div *ngFor="let item of list" [class]="level[user.module[item.module]]"
+        (click)="change(user.userid, item.module)">
+        {{item.name}}
+      </div>
+    </div>
   </div>
 </ion-content>

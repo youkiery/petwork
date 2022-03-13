@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'temp',
     loadChildren: () => import('./histemp/histemp.module').then( m => m.HistempPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   }
 ];
 

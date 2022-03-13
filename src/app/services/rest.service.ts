@@ -15,11 +15,11 @@ import { FCM } from '@capacitor-community/fcm';
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/server/index.php?';
-  //  public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+   public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 21 // 21-62
+  public version = 65 // 21-64
   public config: any
   public home = {
     month: {
@@ -34,6 +34,7 @@ export class RestService {
     fullname: '',
     admin: 0,
     users: [],
+    his: 0,
     doctor: [],
     type: [],
     spa: [],
@@ -60,7 +61,7 @@ export class RestService {
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: ''}
   public physical = { init: false, page: 1, target: [], data2: {}, key: '', key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [] }
-  public his = { init: false, start: '', end: '', list: [], manager_init: false, manager: [] }
+  public his = { init: false, count: [0, 0], start: '', end: '', list: [], manager_init: false, manager: [] }
   public price = { init: false, list: [], keyword: '' }
   public transport = { init: false, list: [], keyword: '' }
   public ride = {init: false, list: [[], []], start: '', end: '', segment: '0', clock: 0}

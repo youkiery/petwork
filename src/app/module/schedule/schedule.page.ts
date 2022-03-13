@@ -124,7 +124,10 @@ export class SchedulePage implements OnInit {
         time: this.rest.schedule.time,
         state: this.rest.schedule.state,
       }).then(resp => {
+        this.rest.defreeze()
         this.rest.schedule.data = resp.data
+      }, () => {
+        this.rest.defreeze()
       })
     }
   }
@@ -152,7 +155,10 @@ export class SchedulePage implements OnInit {
         time: this.rest.schedule.time,
         state: this.rest.schedule.state,
       }).then(resp => {
+        this.rest.defreeze()
         this.rest.schedule.data = resp.data
+      }, () => {
+        this.rest.defreeze()
       })
     }
   }
