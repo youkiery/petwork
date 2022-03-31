@@ -32,8 +32,8 @@
       <tr>  
         <td> Thứ </td>
         <td> Ngày </td>
-        <td> Trực sáng </td>
-        <td> Trực tối </td>
+        <td> Trực BV </td>
+        <td> Trực lưu bệnh </td>
         <td> Nghỉ sáng </td>
         <td> Nghỉ chiều </td>
       </tr>
@@ -65,13 +65,13 @@
         </tr>
         <tr class="text-center">
           <td style="width: 30%;"> Họ tên </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
-          <td> S </td> <td> C </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
+          <td> {{txt[rest.schedule.state][0]}} </td> <td> {{txt[rest.schedule.state][1]}} </td>
         </tr>
         <tr *ngFor="let data of rest.schedule.data['list']; let i = index">
           <td> {{data.name}} </td>

@@ -20,6 +20,16 @@ export class SchedulePage implements OnInit {
   //   ['', '', '', ''],
   //   ['', '', '', '']
   // ]
+  public txt = {
+    0: {
+      0: 'BV',
+      1: 'LB'
+    },
+    1: {
+      0: 'S',
+      1: 'C'
+    }
+  }
   public reversal_color = {
     'gray': 'gray',
     'red': 'purple',
@@ -118,6 +128,7 @@ export class SchedulePage implements OnInit {
     })
     if (!list.length) this.rest.notify('Chưa chọn ca đăng ký')
     else {
+      this.rest.freeze()
       this.rest.checkpost('schedule', 'userreg', {
         list: list,
         name: this.rest.home.name,
@@ -150,6 +161,7 @@ export class SchedulePage implements OnInit {
     })
     if (!list.length) this.rest.notify('Chưa chọn ca đăng ký')
     else {
+      this.rest.freeze()
       this.rest.checkpost('schedule', 'managerreg', {
         list: list,
         time: this.rest.schedule.time,

@@ -19,7 +19,7 @@ export class RestService {
    public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://app.petcoffee.work/server/index.php?';
-  public version = 65 // 21-64
+  public version = 67 // 21-67
   public config: any
   public home = {
     month: {
@@ -267,7 +267,7 @@ export class RestService {
     return check
   }
 
-  public async freeze(text: string = 'connecting to server') {
+  public async freeze(text: string = 'Đang tải dữ liệu') {
     let loading = await this.loadCtrl.create({
       message: text
     })
