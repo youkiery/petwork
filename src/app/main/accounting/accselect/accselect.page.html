@@ -1,0 +1,19 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Từ khóa </ion-label>
+    <ion-input [(ngModel)]="keyword" (keyup)="search()">  </ion-input>
+  </ion-item>
+
+  <ion-item *ngFor="let item of list" (click)="select(item)">
+    <ion-label> {{item}} </ion-label>
+    <ion-checkbox slot="start" [checked]="item == rest.temp.value">  </ion-checkbox>
+  </ion-item>
+</ion-content>

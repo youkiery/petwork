@@ -1,0 +1,64 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.root()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="insert()">
+    <ion-fab-button>
+      Thêm
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="box-sm">
+    <div>
+      <b> Chức vụ </b>
+    </div>
+    <div class="margin-left">
+      Lưu trú: Nhân viên được truy cập [...] <br>
+      Bác sĩ: Nhân viên được liệt kê vào danh sách bác sĩ <br>
+      Kế toán: Nhân viên không hạn chế đăng ký lịch nghỉ <br>
+      Quản lý: Nhân viên có khả năng cấp quyền nhân viên khác <br>
+      <b> Click để bật tắt quyền </b>
+    </div>
+  </div>
+  <div class="box-sm">
+    <div>
+      <b> Chức năng </b>
+    </div>
+    <div class="margin-left">
+      <div class="square-sm l0"> </div> Không quyền <br>
+      <div class="square-sm l1"> </div> Nhân viên <br>
+      <div class="square-sm l2"> </div> Quản lý <br>
+      <b> Click để tăng giảm quyền </b>
+    </div>
+  </div>
+
+  <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
+    <div> <b> Họ tên: </b> {{user.fullname}} </div>
+    <div> <b> Tài khoản: </b> {{user.username}} </div>
+    <div> <b> Chi nhánh: </b> <span class="pos" (click)="selectplace(user.userid)">{{user.place}}</span> </div>
+    <div>
+      Chức vụ:
+      <!-- <span [class]="user.module.stay > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'stay')"> Lưu trú </span> -->
+      <span [class]="user.module.doctor > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'doctor')"> Bác sĩ </span>
+      <span [class]="user.module.manager > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'manager')"> Bán hàng </span>
+      <span [class]="user.module.admin > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'admin')"> Quản lý </span>
+      <span *ngIf="(user.userid != '1') || (rest.home.userid == '1')" class="on blue" (click)="update(i)"> sửa </span>
+      <span *ngIf="user.userid != '1'" class="on red" (click)="remove(user.userid)"> Xóa </span>
+    </div>
+    <div>
+      Chức năng: <div *ngFor="let item of list" [class]="level[user.module[item.module]]"
+        (click)="change(user.userid, item.module)">
+        {{item.name}}
+      </div>
+    </div>
+  </div>
+</ion-content>

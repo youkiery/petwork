@@ -1,0 +1,70 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button *ngIf="!(rest.temp.id && rest.action == 'vaccine' && rest.temp.prv)" color="light" fill="clear" size="small" (click)="rest.back()">
+      Hoàn thành
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" color="light" fill="clear" size="small" (click)="rest.navCtrl.navigateForward('/vaccine/manager')">
+      Hoàn thành
+    </ion-button>
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="done()">
+      Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'vaccine'">
+    <div *ngIf="rest.temp.ov && rest.temp.ov.phone">
+      <div class="stl-card blue">
+        Khách hàng vừa thêm
+      </div>
+  
+      <div class="stl-card">
+        <div class="col-xs-6">
+          Thú cưng: {{rest.temp.ov.petname}} <br>
+          Tên khách: {{rest.temp.ov.name}} <br>
+          Điện thoại: {{rest.temp.ov.phone}}
+        </div>
+        <div class="col-xs-6">
+          Loại nhắc: {{rest.temp.ov.type}} <br>
+          Ngày đến: {{time.isodatetodate(rest.temp.ov.cometime)}} <br>
+          Ngày nhắc: {{time.isodatetodate(rest.temp.ov.calltime)}} <br>
+          Ghi chú: {{rest.temp.ov.note}} <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="stl-card blue">
+      Thú cưng đã đến trước đó
+    </div>
+
+    <div *ngFor="let item of rest.temp.list; let i = index" [class]="status[item.status]" (click)="selectbox(i)">
+      <div [class]="selected[i] ? 'tick' : 'untick'"></div>
+      <div class="col-xs-6">
+        Thú cưng: {{item.petname}} <br>
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}} 
+        <br>
+      </div>
+      <div class="col-xs-6">
+        Loại nhắc: {{item.vaccine}} <br>
+        Ngày đến: {{item.cometime}} <br>
+        Ngày nhắc: {{item.calltime}} <br>
+        Ghi chú: {{item.note}} <br>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'usg'">
+    <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index" (click)="selectbox(i)">
+      <div>
+        Siêu âm lại: {{item.calltime}} <br>
+        Thai dự kiến: {{item.number}} <br>
+        Ghi chú: {{item.note}} <br>
+        <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} </span>
+      </div>
+    </div>
+  </div>
+</ion-content>

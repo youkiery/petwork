@@ -1,0 +1,28 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-button expand="full" (click)="locdulieu()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <div *ngFor="let nhanvien of danhsachnhanvien">
+    <div class="stl-card" *ngIf="nhanvien.tong > 0">
+      Nhân viên: {{nhanvien.ten}} <br>
+      Tổng số công việc: {{nhanvien.tong}} <br>
+      Hoàn thành: {{nhanvien.hoanthanh}} ({{nhanvien.phantramhoanthanh}}%) <span *ngIf="nhanvien.hoanthanhquahan > 0">, quá hạn: {{nhanvien.hoanthanhquahan}} ({{nhanvien.phantramhoanthanhquahan}}%) </span> <br>
+      Chưa hoàn thành: {{nhanvien.conlai}} ({{nhanvien.phantramconlai}}%) <span *ngIf="nhanvien.conlaiquahan > 0">, quá hạn: {{nhanvien.conlaiquahan}} ({{nhanvien.phantramconlaiquahan}}%) </span> <br>
+    </div>
+  </div>
+</ion-content>

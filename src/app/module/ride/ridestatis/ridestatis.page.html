@@ -1,0 +1,33 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.ride.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.ride.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-button expand="full" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <div class="stl-card blue">
+    <b>Tổng thu:</b>  {{rest.comma(rest.temp.cole)}} <br>
+    <b>Tổng chi:</b>  {{rest.comma(rest.temp.pay)}} <br>
+    <b>Số lần đi:</b>  {{rest.temp.count}} lượt <br>
+  </div>
+
+  <div *ngFor="let item of rest.temp.list" class="stl-card">
+    <b>Người đi:</b>  {{item.name}} <br>
+    <b>Tổng số công tơ:</b>  {{item.clock}} <br>
+    <b>Tổng thu:</b>  {{rest.comma(item.cole)}} <br>
+    <b>Tổng chi:</b>  {{rest.comma(item.pay)}} <br>
+    <b>Số lần đi:</b>  {{item.count}} lượt <br>
+  </div>
+</ion-content>

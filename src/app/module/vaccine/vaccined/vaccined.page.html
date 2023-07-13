@@ -1,0 +1,45 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small"
+      (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.start" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <div class="stl-card" *ngFor="let item of rest.temp.list; let i = index">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item['phone']}} <br>
+      <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
+      Địa chỉ: {{item['address']}}
+    </div>
+    <div class="col-xs-6">
+      Ngày nhắc: {{item['calltime']}} <br>
+      Ngày đến: {{item['cometime']}} <br>
+      Loại nhắc: {{item['vaccine']}} <br>
+      <span *ngIf="item['called']"> Gọi nhắc cuối: <span [class]="item['called'] == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item['called']}} </span> <br> </span>
+      Người tiêm: {{item['doctor']}} 
+    </div>
+    <div class="upperline">
+      Ghi chú: {{item['note']}}
+    </div>
+    <img class="right icon" src="/assets/icon/hopital.png" (click)="reset(i)">
+  </div>
+</ion-content>

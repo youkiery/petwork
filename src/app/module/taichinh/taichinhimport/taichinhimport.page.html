@@ -1,0 +1,214 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="tab != '3'" slot="end" color="light" fill="clear" size="small" (click)="tailen()">
+      Tải lên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-segment [(ngModel)]="tab" (click)="clear()">
+    <ion-segment-button value="0">
+      <ion-label>
+        Chi
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Khách nợ
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>
+        Nợ NCC
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="3">
+      <ion-label>
+        Tổng kho
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="avatar-box" (click)="upload()" *ngIf="tab != '3'">
+    <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+  </div>
+  <div *ngIf="name.length" class="text-center">
+    {{name}}
+  </div>
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      (change)="file()">
+  </div>
+
+  <div *ngIf="tab == '0'">
+    <div class="stl-card">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked"> Cột loại chi </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].loaichi"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột tiền chi </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].tienchi"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột thời gian chi </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].thoigian"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột ghi chú </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].ghichu"> </ion-input>
+        </ion-item>
+      </ion-list>
+      <div class="upperline"></div>
+      <ion-button (click)="luucauhinh()" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="stl-card">
+      <ion-item>
+        <ion-label position="stacked"> Danh sách chi import vật tư </ion-label>
+        <ion-button slot="end" color="success" (click)="themloaichi()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item *ngFor="let loaichi of loaichivattu">
+        <ion-label> {{loaichi.loaichi}} </ion-label>
+        <ion-button color="danger" size="small" slot="end" (click)="xoaloaichi(loaichi.id)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+    <!-- <ion-item color="secondary">
+      <ion-label> Các khoản chi cố định hằng tháng </ion-label>
+    </ion-item> -->
+
+    <!-- <div *ngFor="let loaichi of chicodinh; let i = index">
+      <ion-item class="half-item">
+        <ion-input [(ngModel)]="chicodinh[i].loaichi"> </ion-input>
+      </ion-item>
+      <ion-item class="half-item">
+        <ion-input [(ngModel)]="chicodinh[i].giatri" (keyup)="nhapgiatri(i)"> </ion-input>
+        <ion-button size="small" color="danger" (click)="xoachicodinh(i)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <ion-item (click)="themchicodinh()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      &nbsp; Thêm
+    </ion-item>
+
+    <ion-item (click)="luuchicodinh()">
+      <ion-icon name="save-outline"></ion-icon>
+      &nbsp; Lưu
+    </ion-item> -->
+  </div>
+
+  <div *ngIf="tab == '1'">
+    <div class="stl-card">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked"> Cột điện thoại </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].dienthoai"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột tên khách hàng </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].khachhang"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột tiền nợ </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].tienno"> </ion-input>
+        </ion-item>
+      </ion-list>
+      <div class="upperline"></div>
+      <ion-button (click)="luucauhinh()" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="tab == '2'">
+    <div class="stl-card">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked"> Cột nhà cung cấp </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].nhacungcap"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột nội dung </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].noidung"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột thanh toán </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].thanhtoan"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột nợ </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].noncc"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột thời gian </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].thoigian"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột đã thanh toán </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].dathanhtoan"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Cột đã nhập hàng </ion-label>
+          <ion-input [(ngModel)]="cauhinh[tab].danhaphang"> </ion-input>
+        </ion-item>
+      </ion-list>
+      <div class="upperline"></div>
+      <ion-button (click)="luucauhinh()" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="tab == '3'">
+    <ion-item>
+      <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+        <ion-icon name="play-back"></ion-icon>
+      </button>
+
+      <ion-datetime style="width: 100%" [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100"
+        (ionChange)="khoitao()">
+      </ion-datetime>
+
+      <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+        <ion-icon name="play-forward"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked"> Tổng kho ban đầu </ion-label>
+      <ion-input [(ngModel)]="tonkho.bandau" (keyup)="nhaptien('bandau')"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tổng kho tháng này </ion-label>
+      <ion-input [(ngModel)]="tonkho.thangnay" (keyup)="nhaptien('thangnay')"> </ion-input>
+    </ion-item>
+    <div class="upperline"></div>
+    <ion-button (click)="luukhothangnay()" fill="clear">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div *ngFor="let loi of error">
+    {{loi}}
+  </div>
+</ion-content>

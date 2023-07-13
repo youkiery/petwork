@@ -1,0 +1,43 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button slot="end" (click)="filter()" color="light" fill="clear" size="small">
+    Lọc công việc
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Từ khóa </ion-label>
+    <ion-input [(ngModel)]="loc.tukhoa"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Danh mục </ion-label>
+    <ion-select [(ngModel)]="loc.danhmuc">
+      <ion-select-option value="">
+        Không chọn
+      </ion-select-option>
+      <ion-select-option *ngFor="let danhmuc of rest.work.danhmuc" [value]="danhmuc.id">
+        {{danhmuc.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item (click)="loc.hoanthanh = rev[loc.hoanthanh]">
+    <ion-label> <b> Mức hoàn thành: </b> {{hoanthanh[loc.hoanthanh]}} </ion-label>
+  </ion-item>
+
+  <ion-item (click)="loc.denhan = rev[loc.denhan]">
+    <ion-label> <b> Quá hạn: </b> {{denhan[loc.denhan]}} </ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.work > 1">
+    <ion-label position="stacked"> Công việc của nhân viên </ion-label>
+    <ion-select [(ngModel)]="loc.nhanvien">
+      <ion-select-option value="0"> - </ion-select-option>
+      <ion-select-option *ngFor="let nhanvien of rest.home.doctor" [value]="nhanvien.userid"> {{nhanvien.name}} </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

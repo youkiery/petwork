@@ -1,0 +1,168 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="rest.luong.dulieu.id" slot="end" color="light" fill="clear" size="small" (click)="luungaynghi()">
+      Lưu
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="upload()">
+      Tải lên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <input type="file" id="pwaphoto" style="display: none;" #bank
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="thaydoiexcel()">
+
+  <div class="item-group">
+    <div class="item-header">
+      Chọn file excel
+    </div>
+
+    <ion-item (click)="chonexcel()">
+      <ion-avatar slot="start">
+        <img [src]="bankinput ? ibank[1] : ibank[0]">
+      </ion-avatar>
+      <ion-label>
+        Excel doanh thu
+      </ion-label>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày chốt lương </ion-label>
+    <ion-datetime [(ngModel)]="rest.luong.dulieu.thoigian" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <div class="item-group">
+    <div class="item-header">
+      Nhập mục thu chi
+    </div>
+    <div *ngFor="let thuchi of rest.luong.dulieu.thuchi; let i = index">
+      <ion-item class="item-label-class">
+        <ion-avatar slot="start" (click)="xoathuchi(i)">
+          <img src="/assets/image/red.png">
+        </ion-avatar>
+        <ion-input [(ngModel)]="rest.luong.dulieu.thuchi[i].loaichi" placeholder="Loại chi"> </ion-input>
+      </ion-item>
+      <ion-item class="item-label-class">
+        <ion-input [(ngModel)]="rest.luong.dulieu.thuchi[i].tienchi" placeholder="Tiền chi" (keyup)="nhaptien(i)">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <ion-item (click)="themthuchi()">
+      <ion-avatar slot="start">
+        <img src="/assets/image/his-1.png">
+      </ion-avatar>
+      <ion-label> Thêm thu chi </ion-label>
+    </ion-item>
+  </div>
+
+  <div class="item-group">
+    <div class="item-header">
+      Nhập số buổi nhân viên nghỉ
+      <ion-icon color="success" *ngIf="toggle" (click)="toggle = !toggle" name="chevron-up-circle"></ion-icon>
+      <ion-icon color="success" *ngIf="!toggle" (click)="toggle = !toggle" name="chevron-down-circle"></ion-icon>
+    </div>
+    <div *ngIf="!toggle">
+      <ion-item class="item-label-class" *ngFor="let nhanvien of rest.luong.dulieu.ngaynghi; let i = index">
+        <ion-label position="stacked"> {{nhanvien.tennhanvien}} </ion-label>
+        <ion-input [(ngModel)]="rest.luong.dulieu.ngaynghi[i].ngaynghi"> </ion-input>
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="rest.luong.dulieu.nhanvien.length">
+    <ion-item>
+      <ion-label> Doanh thu: {{rest.luong.dulieu.tongdoanhthu}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label> Lợi nhuận: {{rest.luong.dulieu.tongloinhuan}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label> Tổng chi khác: {{rest.luong.dulieu.tongchi}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label> Tổng chi nhân viên: {{rest.luong.dulieu.tongnhanvien}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label> Lợi nhuận cổ đông: {{rest.luong.dulieu.tongcodong}} </ion-label>
+    </ion-item>
+
+    <table>
+      <tr>
+        <th> Nhân viên </th>
+        <th> Doanh thu </th>
+        <th> Lợi nhuận </th>
+        <th> Tỉ lệ </th>
+        <th> Tỉ lệ thưởng </th>
+        <th> Lương </th>
+        <th> Lương thưởng </th>
+        <th> Nghỉ phép </th>
+        <th> Tiết kiệm </th>
+        <th> Phụ cấp </th>
+        <th> Lương phụ cấp </th>
+        <th> Tổng lương </th>
+        <th> Thực nhận </th>
+        <th> Cổ phần </th>
+        <th> Lãi cổ đông </th>
+      </tr>
+      <tr *ngFor="let nhanvien of rest.luong.dulieu.nhanvien; let i = index" (click)="capnhat(i)">
+        <td> {{nhanvien.tennhanvien}} </td>
+        <td class="text-right"> {{nhanvien.doanhthu}} </td>
+        <td class="text-right"> {{nhanvien.loinhuan}} </td>
+        <td class="text-right"> {{nhanvien.tile}}% </td>
+        <td class="text-right"> {{nhanvien.tilethuong}} </td>
+        <td class="text-right"> {{nhanvien.luongcung}} </td>
+        <td class="text-right"> {{nhanvien.luongthuong}} </td>
+        <td class="text-right"> {{nhanvien.nghiphep}} </td>
+        <td class="text-right"> {{nhanvien.tietkiem}} </td>
+        <td class="text-right"> {{nhanvien.phucap}}% </td>
+        <td class="text-right"> {{nhanvien.luongphucap}} </td>
+        <td class="text-right"> {{nhanvien.tongluong}} </td>
+        <td class="text-right"> {{nhanvien.thucnhan}} </td>
+        <td class="text-right"> {{nhanvien.cophan}}% </td>
+        <td class="text-right"> {{nhanvien.luongcophan}} </td>
+      </tr>
+    </table>
+
+    <ion-button color="secondary" expand="full" (click)="chotluong()">
+      Chốt lương
+    </ion-button>
+  </div>
+
+  <div class="item-group">
+    <div class="item-header">
+      Cấu hình doanh thu
+      <ion-icon color="success" *ngIf="toggle2" (click)="toggle2 = !toggle2" name="chevron-up-circle"></ion-icon>
+      <ion-icon color="success" *ngIf="!toggle2" (click)="toggle2 = !toggle2" name="chevron-down-circle"></ion-icon>
+    </div>
+
+    <div *ngIf="toggle2">
+      <ion-item>
+        <ion-label position="stacked"> Cột nhân viên </ion-label>
+        <ion-input [(ngModel)]="rest.luong.excel.nhanvien"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột doanh thu </ion-label>
+        <ion-input [(ngModel)]="rest.luong.excel.doanhthu"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột lợi nhuận </ion-label>
+        <ion-input [(ngModel)]="rest.luong.excel.loinhuan"> </ion-input>
+      </ion-item>
+      <div class="upperline">
+        <ion-button (click)="luuexcel()" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

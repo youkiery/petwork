@@ -1,0 +1,56 @@
+.bei {
+  overflow: hidden;
+  max-height: 18px;
+}
+
+.on.red {
+  background: red;
+}
+
+.on.blue {
+  background: #3dc2ff;
+}
+
+.on, .off, .l0, .l1, .l2 {
+  margin: 3px;
+  padding: 1px 3px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  display: inline-block;
+  font-size: 0.9em;
+}
+
+.on, .l2 {
+  background: #4a4;
+  color: white;
+}
+
+.off, .l0 {
+  background: lightgrey;
+  color: black;
+}
+
+.l1 {
+  color: black;
+  background: #fa1;
+}
+
+.clear {
+  clear: both;
+}
+
+.square-sm {
+  width: 16px;
+  height: 16px;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.box-sm {
+  font-size: 0.8em;
+  margin-bottom: 5px;
+}
+
+.margin-left {
+  margin-left: 20px;
+}

@@ -1,0 +1,40 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'item'">
+    <ion-item>
+      <ion-input [(ngModel)]="key" (keyup)="suggestItem()" #input2> </ion-input>
+      <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrentItem()">
+    </ion-item>
+    <div *ngIf="list.length">
+      <ion-item *ngFor="let item of list" (click)="selectItem(item.name, item.code)">
+        <span class="left-item" slot="start"> {{item.code}} </span>
+        <span> {{item.name}} </span>
+      </ion-item>
+    </div>
+    <div *ngIf="!list.length" class="text-center">
+      Nhập tên hàng hóa
+    </div>
+  </div>
+  <div *ngIf="rest.temp.action != 'expire'">
+    <ion-item>
+      <ion-input [(ngModel)]="key" (keyup)="suggest()" #input> </ion-input>
+      <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
+    </ion-item>
+    <div *ngIf="list.length">
+      <ion-item *ngFor="let item of list; let i = index" (click)="select(i)">
+        {{item.name}} - {{item.phone}}
+      </ion-item>
+    </div>
+    <div *ngIf="!list.length" class="text-center">
+      Nhập số điện thoại tìm kiếm khách hàng, nếu không có, chọn <img class="clear-img" style="width: 16px"
+        src="/assets/icon/select.png">
+    </div>
+  </div>
+</ion-content>

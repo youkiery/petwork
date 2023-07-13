@@ -1,0 +1,16 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngFor="let khachhang of rest.temp">
+    Khách hàng: {{khachhang.khachhang}} <br>
+    Điện thoại: {{khachhang.dienthoai}} <br>
+    <div class="upperline"></div>
+    Thuộc nhóm {{khachhang.nhomtin}}
+  </div>
+</ion-content>

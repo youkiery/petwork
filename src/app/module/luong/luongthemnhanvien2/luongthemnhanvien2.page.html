@@ -1,0 +1,68 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      Thêm
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Họ và tên </ion-label>
+    <ion-input [(ngModel)]="rest.temp.fullname" name="fullname" placeholder="Họ và tên"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tài khoản </ion-label>
+    <ion-input [(ngModel)]="rest.temp.username" name="username" placeholder="Tài khoản"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Mật khẩu </ion-label>
+    <ion-input type="password" [(ngModel)]="rest.temp.password" name="password" placeholder="Mật khẩu"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Xác nhận mật khẩu </ion-label>
+    <ion-input type="password" [(ngModel)]="rest.temp.vpassword" name="vpassword" placeholder="Xác nhận mật khẩu">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Lương cơ bản </ion-label>
+    <ion-input [(ngModel)]="rest.temp.luongcoban" (ionChange)="nhaptien('luongcoban')">  </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ thưởng % </ion-label>
+    <ion-input min="0" max="100" type="number" [(ngModel)]="rest.temp.tile"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Cổ phần </ion-label>
+    <ion-input min="0" max="100" type="number" [(ngModel)]="rest.temp.cophan"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Phụ cấp % </ion-label>
+    <ion-input min="0" max="100" type="number" [(ngModel)]="rest.temp.phucap"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Phụ cấp cứng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phucap2" (ionChange)="nhaptien('phucap2')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày ký hợp đồng </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.hopdong" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Cam kết đến năm </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.camket" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="doingay()">
+      Đổi ngày đặt
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Ngày đặt lịch </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <!-- <div *ngFor="let item of list; let i = index" [class]="status[item.status]">
+    Khách hàng: {{item.name}} <br>
+    Điện thoại: {{item.phone}} <br>
+    Ghi chú: {{item.note}} <br>
+    Ngày đặt: {{item.time}} <br>
+    <div class="upperline" *ngIf="item.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+    </div>
+    Trạng thái: <div class="pos" *ngIf="item.status == '0'" (click)="change(i)"> chưa đến </div>
+    <div class="pos" *ngIf="item.status == '1'" (click)="change(i)"> đã đến </div>
+  </div> -->
+</ion-content>

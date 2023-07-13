@@ -1,0 +1,31 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="insert()">
+    <ion-fab-button>
+      Thêm
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-label position="stacked"> Nhập username hoặc họ tên </ion-label>
+    <ion-input [(ngModel)]="key"> </ion-input>
+    <img src="/assets/icon/search.png" class="clear-img" slot="end" (click)="filter()">
+  </ion-item>
+
+  <div class="stl-card" *ngFor="let user of list">
+    Tài khoản: {{user.username}} <br>
+    Họ tên: {{user.fullname}} <br>
+    <div class="upperline">
+      <ion-button color="secondary" size="small" (click)="add(user.userid)">
+        Thêm người dùng
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,37 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="them()">
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Tiền mặt </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tienmat" (keyup)="nhaptien('tienmat')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngân hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.nganhang" (keyup)="nhaptien('nganhang')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.hinhanh; let i = index">
+    <span class="thumbnail-box-icon" (click)="xoaanh(i)"> x </span>
+    <img class="thumbnail" [src]="item">
+  </span>
+</ion-content>

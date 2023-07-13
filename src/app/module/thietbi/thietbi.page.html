@@ -1,0 +1,55 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="secondary">
+    <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.thietbi.tukhoa" (keyup)="locthietbi()"> </ion-input>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let thietbi of rest.thietbi.danhsachtam; let i = index">
+    <div class="col-xs-6">
+      <img style="width: 100px; height: 100px" src="/assets/images/noimage.png" *ngIf="!thietbi.hinhanh.length">
+      <img style="width: 100px; height: 100px" [src]="thietbi.hinhanh" *ngIf="thietbi.hinhanh.length">
+    </div>
+    <div class="col-xs-6">
+      <b> {{thietbi.ten}} </b> <br>
+      Công dụng: <br>
+      <pre>{{thietbi.congdung}}</pre><br>
+      <div *ngIf="thietbi.link.length" (click)="chuyenhuong(thietbi.link)" class="pos"> Link hướng dẫn </div>
+    </div>
+    <div *ngIf="rest.config.thietbi > 1" class="upperline"> 
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoathietbi(thietbi.id)">
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhatthietbi(i)">
+    </div>
+  </div>  
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="themthietbi()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

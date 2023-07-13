@@ -1,0 +1,172 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item>
+    <ion-label position="stacked"> Doanh số điều trị + spa </ion-label>
+    <ion-input [(ngModel)]="spa" (keyup)="nhaptien('spa')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Doanh số bán hàng </ion-label>
+    <ion-input [(ngModel)]="banhang" (keyup)="nhaptien('banhang')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label> Lương thưởng: {{rest.comma(rest.loinhuan.thuong)}} </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label> Lương cơ bản: {{rest.comma(rest.loinhuan.luongcoban)}} </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label> Phụ cấp: {{rest.comma(rest.loinhuan.phucap)}} </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label> Lương + Thưởng: {{rest.comma(rest.loinhuan.tongluong)}} </ion-label>
+  </ion-item>
+
+  <div class="stl-card green">
+    <b> Thời gian cập nhật dữ liệu: {{rest.loinhuan.luong.thoigian}} </b> <br>
+    Doanh thu bán hàng: {{rest.comma(rest.loinhuan.luong.doanhsobanhang)}} <br>
+    Doanh thu spa + điều trị: {{rest.comma(rest.loinhuan.luong.doanhsospa)}} <br>
+    Lương: {{rest.comma(rest.loinhuan.luong.luongcoban)}} <br>
+    Thưởng: {{rest.comma(rest.loinhuan.luong.thuong)}} <br>
+    Phụ cấp: {{rest.comma(rest.loinhuan.luong.phucap)}} <br>
+    Nghỉ phép: {{rest.comma(rest.loinhuan.luong.nghiphep)}} <br>
+    Tiết kiệm: {{rest.comma(rest.loinhuan.luong.tietkiem)}} <br>
+    Tổng lương: {{rest.comma(rest.loinhuan.luong.tongluong)}} <br>
+    Thực nhận: {{rest.comma(rest.loinhuan.luong.thucnhan)}} <br>
+    Cổ phần: {{rest.comma(rest.loinhuan.luong.cophan)}} <br>
+  </div>
+
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="rest.loinhuan.thoigian" displayFormat="MM/YYYY" max="2100"
+      (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
+  <div class="stl-card" *ngIf="rest.config.loinhuan > 1">
+    Tổng tiền tiết kiệm năm nay: {{rest.loinhuan.luong.tongtietkiemnam}} <br>
+    Tổng tiền cổ phần năm nay: {{rest.loinhuan.luong.tongcophannam}} <br>
+  </div>
+
+  <div *ngIf="rest.loinhuan.anbangluong || rest.config.loinhuan > 1">
+    <ion-item *ngIf="rest.config.loinhuan > 1">
+      <ion-label position="stacked"> Tìm kiếm nhân viên </ion-label>
+      <ion-input [(ngModel)]="rest.loinhuan.tukhoa" (keyup)="locdanhsach()"></ion-input>
+    </ion-item>
+
+    <div scrolly="true" *ngFor="let luong of rest.loinhuan.danhsachtam">
+      <table>
+        <tr>
+          <td class="text-center" colspan="14"> BẢNG TỔNG HỢP LƯƠNG TỰ ĐỘNG </td>
+        </tr>
+        <tr>
+          <td class="text-center" colspan="14"> Từ ngày {{luong.ngaybatdau}} đến ngày {{luong.ngayketthuc}} </td>
+        </tr>
+        <tr>
+          <td colspan="14"> </td>
+        </tr>
+        <tr>
+          <td class="text-center"> Họ và tên </td>
+          <td class="text-center"> Tổng doanh thu </td>
+          <td class="text-center"> Lương </td>
+          <td class="text-center"> Thưởng </td>
+          <td class="text-center"> Phụ cấp </td>
+          <td class="text-center"> Nghỉ phép </td>
+          <td class="text-center"> Gửi tiết kiệm </td>
+          <td class="text-center"> Tổng lương </td>
+          <td class="text-center"> Thực nhận </td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td class="text-center"> {{luong.hoten}} </td>
+          <td class="text-right"> {{luong.doanhthu}} </td>
+          <td class="text-right"> {{luong.luongcoban}} </td>
+          <td class="text-right"> {{luong.thuong}} </td>
+          <td class="text-right"> {{luong.phucap}} </td>
+          <td class="text-right"> {{luong.nghiphep}} </td>
+          <td class="text-right"> {{luong.tietkiem}} </td>
+          <td class="text-right"> {{luong.tongluong}} </td>
+          <td class="text-right"> {{luong.thucnhan}} </td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td colspan="14"> </td>
+        </tr>
+        <tr>
+          <td class="text-center" rowspan="2"> Gửi tiết kiệm </td>
+          <td class="text-center"> Tổng tiền </td>
+          <td class="text-center"> Tháng 1 </td>
+          <td class="text-center"> Tháng 2 </td>
+          <td class="text-center"> Tháng 3 </td>
+          <td class="text-center"> Tháng 4 </td>
+          <td class="text-center"> Tháng 5 </td>
+          <td class="text-center"> Tháng 6 </td>
+          <td class="text-center"> Tháng 7 </td>
+          <td class="text-center"> Tháng 8 </td>
+          <td class="text-center"> Tháng 9 </td>
+          <td class="text-center"> Tháng 10 </td>
+          <td class="text-center"> Tháng 11 </td>
+          <td class="text-center"> Tháng 12 </td>
+        </tr>
+        <tr>
+          <td class="text-right"> {{luong.tongtietkiem}} </td>
+          <td class="text-right" *ngFor="let tietkiem of luong.danhsachtietkiem"> {{tietkiem}} </td>
+        </tr>
+        <tr>
+          <td class="text-center"> Cổ phần </td>
+          <td class="text-right"> {{luong.tongcophan}} </td>
+          <td class="text-right" *ngFor="let cophan of luong.danhsachcophan"> {{cophan}} </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.loinhuan > 1" (click)="dencauhinh()">
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label> Cấu hình </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.loinhuan > 1" (click)="dendoanhthu()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Tính lương </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.loinhuan > 1" (click)="dennhaplieu()">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <ion-label> Nhập dữ liệu </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

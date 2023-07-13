@@ -1,0 +1,59 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ten"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Đơn vị </ion-label>
+    <ion-input [(ngModel)]="rest.temp.donvi"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số lượng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.soluong" (keyup)="nhaptien('soluong')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giá trị </ion-label>
+    <ion-input [(ngModel)]="rest.temp.giatri" (keyup)="nhaptien('giatri')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ (%) </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tile" (keyup)="nhaptile('tile')"> </ion-input>
+  </ion-item>
+  <ion-item *ngIf="rest.temp.idchi == 0">
+    <ion-checkbox slot="start" [(ngModel)]="rest.temp.chivattu"></ion-checkbox>
+    <ion-label> Thêm vào chi vật tư </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thuộc tầng: </ion-label>
+    <ion-button slot="end" color="success" (click)="themtang()"> 
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <div *ngIf="khoitao">
+    <ion-item *ngFor="let tang of rest.vattu.danhsachtang">
+      <ion-checkbox slot="start" [(ngModel)]="danhdau[tang.id]"></ion-checkbox>
+      <ion-label> {{tang.ten}} </ion-label>
+    </ion-item>
+  </div>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ghichu"> </ion-input>
+  </ion-item>
+</ion-content>

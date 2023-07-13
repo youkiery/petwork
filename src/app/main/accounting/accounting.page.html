@@ -1,0 +1,141 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="uploadCheckout()">
+      Tải lên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <input type="file" id="pwaphoto" style="display: none;" #kiot
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="kiotchange()">
+  <input type="file" id="pwaphoto" style="display: none;" #bank
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="bankchange()">
+
+  <ion-item (click)="selectbank()">
+    <ion-avatar slot="start">
+      <img [src]="bankinput ? ibank[1] : ibank[0]">
+    </ion-avatar>
+    <ion-label>
+      Excel ngân hàng
+    </ion-label>
+  </ion-item>
+  <ion-item *ngFor="let item of kiotinput; let i = index">
+    <ion-avatar slot="start" (click)="selectkiot(i)">
+      <img [src]="item.file ? ikiot[1] : ikiot[0]">
+    </ion-avatar>
+    <ion-avatar *ngIf="i > 0" slot="start" (click)="removebranch(i)">
+      <img src="/assets/image/red.png">
+    </ion-avatar>
+    <ion-input [(ngModel)]="kiotinput[i].name" placeholder="Mã chi nhánh"> </ion-input>
+  </ion-item>
+  <ion-item (click)="insertbranch()">
+    <ion-avatar slot="start">
+      <img src="/assets/image/his-1.png">
+    </ion-avatar>
+    <ion-label> Thêm chi nhánh </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày thêm </ion-label>
+    <ion-datetime [(ngModel)]="rest.accounting.datetime" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <div class="stl-card blue" (click)="old()">
+    Xem lịch sử cũ
+  </div>
+
+  <div class="item-group" *ngFor="let item of rest.accounting.checkout; let i = index">
+    <div class="item-header"> {{item.name}} </div>
+
+    <table>
+      <tr>
+        <th style="width: 20%"> Kiot </th>
+        <th style="width: 20%"> NH </th>
+        <th style="width: 30%"> Chi tiết Kiot </th>
+        <th style="width: 30%"> Chi tiết NH </th>
+      </tr>
+      <tr *ngFor="let row of item.list" [class]="row.status != 0 ? 'pinky' : ''">
+        <td> <span *ngIf="row.status <= 0"> {{rest.comma(row.money)}} </span> </td>
+        <td> <span *ngIf="row.status >= 0"> {{rest.comma(row.money)}} </span> </td>
+        <td> {{row.kiot}} </td>
+        <td> {{row.bank}} </td>
+      </tr>
+      <tr>
+        <td> {{rest.comma(rest.comma(item.kiot))}} </td>
+        <td> {{rest.comma(rest.comma(item.bank))}} </td>
+        <td colspan="2"> Tổng </td>
+      </tr>
+      <tr>
+        <td colspan="2"> {{rest.comma(item.sub)}} </td>
+        <td colspan="2"> Chênh lệch </td>
+      </tr>
+    </table>
+
+    <ion-item>
+      <ion-label position="stacked"> Lý do chênh lệch </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.accounting.checkout[i].note"></ion-textarea>
+    </ion-item>
+
+    <ion-button color="secondary" expand="full" (click)="savenote()">
+      Lưu
+    </ion-button>
+  </div>
+
+  <div class="stl-card">
+    <ion-list>
+      <ion-list-header>
+        Kiot
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label position="stacked"> Cột chuyển khoản </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.kiot.money">  </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột nội dung </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.kiot.content">  </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột thời gian </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.kiot.time">  </ion-input>
+      </ion-item>
+    </ion-list>
+    <div class="upperline">
+      <ion-button (click)="save('kiot')" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+  <div class="stl-card">
+    <ion-list>
+      <ion-list-header>
+        Ngân hàng
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label position="stacked"> Cột chuyển khoản </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.vietcom.money">  </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột nội dung </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.vietcom.content">  </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Cột thời gian </ion-label>
+        <ion-input [(ngModel)]="rest.accounting.vietcom.time">  </ion-input>
+      </ion-item>
+    </ion-list>
+    <div class="upperline">
+      <ion-button (click)="save('vietcom')" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

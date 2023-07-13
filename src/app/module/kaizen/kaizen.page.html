@@ -1,0 +1,98 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('kaizen')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('/gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <ion-item>
+    <ion-label position="stacked"> Từ khóa </ion-label>
+    <ion-input [(ngModel)]="rest.kaizen.filter.keyword"></ion-input>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày bắt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.kaizen.filter.starttime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày kết thúc </ion-label>
+    <ion-datetime [(ngModel)]="rest.kaizen.filter.endtime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="filter()">
+    Tìm kiếm
+  </ion-button>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.kaizen.segment">
+      <ion-segment-button value="undone"> Chưa hoàn thành </ion-segment-button>
+      <ion-segment-button value="done"> Đã hoàn thành </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div class="stl-card" *ngFor="let item of rest.kaizen.list[rest.kaizen.segment]; let i = index">
+    <div *ngIf="rest.home.admin == 1"> <b> Người gửi: </b> {{item.name}} </div>
+    <div> <b> Đồng đội: </b> {{item.noidungdongdoi}} </div>
+    <div class="upperline" *ngIf="item.hinhanhdongdoi.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.hinhanhdongdoi" [src]="image" (click)="rest.view(image)">
+    </div>
+    <div> <b> Tự giác: </b> {{item.noidungtugiac}} </div>
+    <div class="upperline" *ngIf="item.hinhanhtugiac.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.hinhanhtugiac" [src]="image" (click)="rest.view(image)">
+    </div>
+    <div> <b> Thời gian: </b> {{item.time}} </div>
+    <div> <b> Vấn đề: </b> {{item.problem}} </div>
+    <div> <b> Giải quyết: </b> {{item.solution}} </div>
+    <div> <b> Hiệu quả: </b> {{item.result}} </div>
+    <div class="upperline" *ngIf="item.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+    </div>
+    <div class="upperline">
+      <ion-button color="light" *ngIf="rest.config.kaizen > 1 && rest.kaizen.segment === 'undone'"
+        (click)="checker(item.id)" size="small">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="light" (click)="edit(i)" size="small">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" (click)="remove(item.id)" size="small">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.kaizen.list[rest.kaizen.segment].length">
+    Chưa có giải pháp nào
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

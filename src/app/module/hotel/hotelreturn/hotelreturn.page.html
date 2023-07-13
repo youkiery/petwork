@@ -1,0 +1,54 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="return()" color="light" fill="clear" size="small">
+    Trả về
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phone" readonly> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="suggest()">
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name" readonly> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-input [(ngModel)]="rest.temp.address" readonly> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Sức khỏe </ion-label>
+    <ion-input [(ngModel)]="rest.temp.health"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày về </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.returntime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Người trả </ion-label>
+    <ion-select [(ngModel)]="rest.temp.returnuserid">
+      <ion-select-option *ngFor="let item of rest.home.doctor" [value]="item.userid">
+        {{item.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+    <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+    <img class="thumbnail" [src]="item">
+  </span>
+</ion-content>

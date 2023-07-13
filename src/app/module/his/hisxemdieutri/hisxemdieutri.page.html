@@ -1,0 +1,33 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngFor="let item of rest.temp; let i = index">
+    <div [class]="insult[item.insult]">
+      <div class="row">
+        <div class="col-xs-6">
+          Khách hàng: {{item.customer}} <br>
+          Điện thoại: {{item.phone}} <br>
+          Địa chỉ: {{item.address}} <br>
+          Thú cưng: {{item.petname}} <br>
+        </div>
+        <div class="col-xs-6">
+          Người nhận: {{item.doctor}} <br>
+          Ngày nhận: {{item.time}} <br>
+          Tình trạng bệnh: {{status[item.status].name}} <br>
+          <div *ngIf="item.disease.text.length">Nhóm bệnh: {{item.disease.text}}</div>
+        </div>
+
+        <div> Tình trạng: <span class="bold"> {{insult_text[item.insult]}} </span> </div>
+        <span *ngFor="let detail of item.detail; let j = index" [class]="pay_class[detail.pay]" (click)="xemchitiet(i)">
+          {{detail.time}}
+        </span>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,115 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="!rest.temp.id" slot="end" (click)="insert()" color="light" fill="clear" size="small">
+    Thêm
+  </ion-button>
+  <ion-button *ngIf="rest.temp.id" slot="end" (click)="insert()" color="light" fill="clear" size="small">
+    Cập nhật
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+  <!-- <input type="file" id="pwaphoto" style="display: none;" #file (change)="filechange()"> -->
+
+  <ion-item>
+    <ion-label position="stacked"> Tiêu đề </ion-label>
+    <ion-input [(ngModel)]="rest.temp.title"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Nội dung </ion-label>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.content"> </ion-textarea>
+  </ion-item>
+  <!-- file -->
+  <!-- <ion-item *ngFor="let item of rest.temp.file; let i = index">
+    <ion-avatar slot="start" (click)="select(i)">
+      <img [src]="item ? excel[1] : excel[0]">
+    </ion-avatar>
+    <ion-avatar slot="start" (click)="remove(i)">
+      <img src="/assets/icon/red.png">
+    </ion-avatar>
+    <ion-label> {{item.name}} </ion-label>
+  </ion-item>
+  <ion-item (click)="insert()">
+    <ion-avatar slot="start">
+      <img src="/assets/icon/green.png">
+    </ion-avatar>
+    <ion-label> Thêm file </ion-label>
+  </ion-item> -->
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày bẳt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.create" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Hạn công việc </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.expire" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <!-- depart -->
+  <ion-item>
+    <ion-label position="stacked"> Danh mục </ion-label>
+    <ion-select [(ngModel)]="rest.temp.departid">
+      <ion-select-option *ngFor="let danhmuc of this.rest.work.danhmuc" [value]="danhmuc.id">
+        {{danhmuc.name}}
+      </ion-select-option>
+    </ion-select>
+    <ion-button slot="end" (click)="themdanhmuc()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <!-- follow -->
+  <ion-item (click)="chonnhanvien('follow')">
+    <ion-label><b>Người theo dõi:</b> {{rest.temp.follow.text}}</ion-label>
+  </ion-item>
+  <!-- repeat -->
+  <!-- follow -->
+  <ion-item (click)="chonnhanvien('assign')">
+    <ion-label><b>Nhận công việc:</b> {{rest.temp.assign.text}}</ion-label>
+  </ion-item>
+  <!-- repeat -->
+
+  <div *ngIf="rest.temp.repeat">
+    <ion-item>
+      <ion-label position="stacked"> Lặp lại </ion-label>
+      <ion-select [(ngModel)]="rest.temp.repeat.type">
+          <!-- <ion-select-option value="0"> Không </ion-select-option> -->
+        <ion-select-option value="1"> Mỗi tuần </ion-select-option>
+        <ion-select-option value="2"> Mỗi tháng </ion-select-option>
+        <ion-select-option value="3"> Mỗi năm </ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <div class="stl-card" *ngIf="rest.temp.repeat.type == '1'">
+      <ion-item *ngFor="let laplai of ngaylaplai; let i = index">
+        <ion-checkbox slot="start" [(ngModel)]="rest.temp.repeat.list[i]"></ion-checkbox>
+        <ion-label> {{laplai}} </ion-label>
+      </ion-item>
+    </div>
+    <div class="stl-card" *ngIf="rest.temp.repeat.type == '2'">
+      <ion-item>
+        <ion-label position="stacked"> Ngày lặp hằng tháng </ion-label>
+        <ion-datetime [(ngModel)]="rest.temp.repeat.time" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+    </div>
+    <div class="stl-card" *ngIf="rest.temp.repeat.type == '3'">
+      <ion-item>
+        <ion-label position="stacked"> Ngày lặp hằng năm </ion-label>
+        <ion-datetime [(ngModel)]="rest.temp.repeat.time" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+    </div>
+  </div>
+
+  <!-- image -->
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+    <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+    <img class="thumbnail" [src]="item">
+  </span>
+</ion-content>

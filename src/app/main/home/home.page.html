@@ -1,0 +1,237 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/icon/user.png" (click)="rest.navCtrl.navigateForward('/user')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('')"></ion-img>
+    </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <div class="stl-card" *ngIf="rest.config.admin == 1 && rest.home.birthday.length">
+    <div> Sinh nhật </div>
+    <div *ngFor="let nhanvien of rest.home.birthday">
+      {{nhanvien.fullname}} - {{nhanvien.birthday}}
+    </div>
+  </div> -->
+
+  <div *ngIf="rest.config.his > 0" class="box" (click)="rest.navCtrl.navigateForward('/his')">
+    <ion-img src="assets/image/his-1.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý bệnh nhân
+      <ion-badge color="danger" *ngIf="rest.home.his > 0"> {{rest.home.his}} </ion-badge>
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.his > 0"> {{rest.badge.his}} </span>
+  </div>
+
+  <div *ngIf="rest.config.spa > 0" class="box" (click)="rest.navCtrl.navigateForward('/spa')">
+    <ion-img src="assets/image/spa.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Danh sách spa
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.work > 0" class="box" (click)="rest.navCtrl.navigateForward('/work')">
+    <ion-img src="assets/image/work.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Công việc
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.vaccine > 0" class="box" (click)="rest.navCtrl.navigateForward('/vaccine')">
+    <span class="redbadge" *ngIf="rest.home.vaccine > 0 || rest.home.usg > 0">
+      <span *ngIf="rest.home.vaccine"> {{rest.home.vaccine}} <img src="/assets/icon/vaccine-xs.png"> </span>
+      <span *ngIf="rest.home.usg"> {{rest.home.usg}} <img src="/assets/icon/usg-xs.png"> </span>
+    </span>
+    <ion-img src="assets/image/calling.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý nhắc gọi
+    </div>
+  </div>
+  
+  <div *ngIf="rest.config.schedule > 0" class="box" (click)="rest.navCtrl.navigateForward('/schedule')">
+    <ion-img src="assets/image/schedule.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Đăng ký lịch
+    </div>
+  </div>
+  
+  <div *ngIf="rest.config.kaizen > 0"  class="box" (click)="rest.navCtrl.navigateForward('/kaizen')">
+    <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Chiến lược Kaizen
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.kaizen > 0"> {{rest.badge.kaizen}} </span>
+  </div>
+
+  <div *ngIf="rest.config.hotel > 0" class="box" (click)="rest.navCtrl.navigateForward('/hotel')">
+    <ion-img src="assets/image/hotel.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý khách sạn
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.nhantin > 0" class="box" (click)="rest.navCtrl.navigateForward('/nhantin')">
+    <ion-img src="assets/image/nhantin.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Nhắn tin nhắc nhở
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.nhantin > 0" class="box" (click)="rest.navCtrl.navigateForward('/nhomtin')">
+    <ion-img src="assets/image/nhantinchuongtrinh.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Nhắn tin chương trình
+    </div>
+  </div>
+
+  <!-- <div *ngIf="rest.config.item > 0" class="box" (click)="rest.navCtrl.navigateForward('/item')">
+    <ion-img src="assets/image/item.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Hàng hóa
+    </div>
+  </div> -->
+
+  <div *ngIf="rest.config.drug > 0" class="box" (click)="rest.navCtrl.navigateForward('/lookup')">
+    <ion-img src="assets/image/drug.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Tra cứu thuốc
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.profile > 0" class="box" (click)="rest.navCtrl.navigateForward('/profile')">
+    <ion-img src="assets/image/profile.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý sinh hóa
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.profile > 0"> {{rest.badge.profile}} </span>
+  </div>
+
+  <div *ngIf="rest.config.physical > 0" class="box" (click)="rest.navCtrl.navigateForward('/physical')">
+    <ion-img src="assets/image/physical.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý sinh lý
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.physical > 0"> {{rest.badge.physical}} </span>
+  </div>
+
+  <div *ngIf="rest.config.xquang > 0" class="box" (click)="rest.navCtrl.navigateForward('/xquang')">
+    <ion-img src="assets/image/xquang.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý X Quang
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.xquang > 0"> {{rest.badge.xquang}} </span>
+  </div>
+
+  <div *ngIf="rest.config.sieuam > 0" class="box" (click)="rest.navCtrl.navigateForward('/sieuam')">
+    <ion-img src="assets/image/sieuam.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý siêu âm
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.sieuam > 0"> {{rest.badge.sieuam}} </span>
+  </div>
+
+  <div *ngIf="rest.config.other > 0" class="box" (click)="rest.navCtrl.navigateForward('/other')">
+    <ion-img src="assets/image/other.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý xét nghiệm khác
+    </div>
+    <span class="redbadge" *ngIf="rest.badge.other > 0"> {{rest.badge.other}} </span>
+  </div>
+
+  <div *ngIf="rest.config.ride > 0" class="box" (click)="rest.navCtrl.navigateForward('/ride')">
+    <ion-img src="assets/image/ride.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý xe
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.price > 0" class="box" (click)="rest.navCtrl.navigateForward('/price')">
+    <ion-img src="assets/image/price.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Giá sỉ
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.transport > 0"  class="box" (click)="rest.navCtrl.navigateForward('/transport')">
+    <ion-img src="assets/image/transport.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Nhà xe
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.accounting > 0" class="box" (click)="checkout()">
+    <ion-img src="assets/image/accounting.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Kế toán
+    </div>
+  </div>
+
+  <!-- <div *ngIf="this.rest.admindefault.indexOf(this.rest.home.userid) >= 0" class="box" (click)="rest.navCtrl.navigateForward('/luong')">
+    <ion-img src="assets/image/salary.png" class="box-image"></ion-img>
+    <div class="box-title"> 
+      Quản lý lương
+    </div>
+  </div> -->
+
+  <div *ngIf="rest.config.thietbi > 0" class="box" (click)="rest.navCtrl.navigateForward('/thietbi')">
+    <ion-img src="assets/image/thietbi.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Cách dùng thiết bị
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.vattu > 0" class="box" (click)="rest.navCtrl.navigateForward('/vattu')">
+    <ion-img src="assets/image/vattu.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Vật tư (tài sản cố định)
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.loinhuan > 0" class="box" (click)="rest.navCtrl.navigateForward('/loinhuan')">
+    <ion-img src="assets/image/loinhuan.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Tính lương thưởng
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.taichinh > 0" class="box" (click)="rest.navCtrl.navigateForward('/taichinh')">
+    <ion-img src="assets/image/loinhuan.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Tài chính
+    </div>
+  </div>
+  
+  <div *ngIf="rest.config.excel > 0" class="box" (click)="rest.navCtrl.navigateForward('/excel')">
+    <ion-img src="assets/image/excel.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Cài đặt
+    </div>
+  </div>
+
+  <div *ngIf="rest.home.admin > 0" class="box" (click)="rest.navCtrl.navigateForward('/admin')">
+    <ion-img src="assets/image/user.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Phân quyền
+    </div>
+  </div>
+
+  <!-- <div *ngIf="rest.home.userid == '5'" class="box" (click)="rest.navCtrl.navigateForward('/test')">
+    <ion-img src="assets/image/test.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Test
+    </div>
+  </div> -->
+
+  <div class="stl-card text-center">
+    Bản quyền thuộc về Thanhxuan Pet <br>
+    Hotline: 0987060181
+  </div>
+</ion-content>

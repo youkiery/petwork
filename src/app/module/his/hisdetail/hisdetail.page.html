@@ -1,0 +1,141 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <!-- <ion-button slot="end" (click)="update()" color="light" fill="clear" *ngIf="rest.his.list[rest.id].insult < 1">
+      Cập nhật
+    </ion-button> -->
+    <ion-button
+      *ngIf="rest.his.list[rest.id].insult < 1 && (rest.his.list[rest.id].doctorid == rest.home.userid) || rest.config.his > 1"
+      slot="end" (click)="insert()" color="light" fill="clear">
+      Thêm liệu trình
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card blue">
+    <div class="col-xs-6">
+      Thú cưng: {{rest.his.list[rest.id].petname}} <br> 
+      Cân nặng: {{rest.his.list[rest.id].weight}} <br> 
+      Tuổi: {{rest.his.list[rest.id].age}} <br> 
+      Giống: {{rest.his.list[rest.id].species}} <br> 
+      Giới tính: {{sex[rest.his.list[rest.id].gender]}} <br> 
+    </div>
+    <div class="col-xs-6">
+      Khách hàng: {{rest.his.list[rest.id].customer}} <br>
+      Điện thoại: {{rest.his.list[rest.id].phone}} <br>
+      Người nhận: {{rest.his.list[rest.id].doctor}} <br>
+      Ngày nhận: {{rest.his.list[rest.id].time}} <br>
+      Tình trạng bệnh: {{status[rest.his.list[rest.id].status].name}}
+    </div>
+    <div class="upperline">
+      Tiền sử bệnh: {{rest.his.list[rest.id].his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis()">
+    </div>
+  </div>
+
+  <div class="stl-card" *ngFor="let detail of rest.his.list[rest.id].detail; let i = index">
+    <div class="col-xs-6">
+      Người làm: {{detail.doctor}} <br>
+      Ngày làm: {{detail.time}} <br>
+      Tình trạng: {{status[detail.status].name}} <br>
+      Thanh toán: <b> <span [class]="pay[detail.pay].class"> {{pay[detail.pay].name}} </span> </b> <br>
+    </div>
+    <div class="col-xs-6">
+      <!-- <b>Niêm mạc: </b> {{detail.eye}} <br> -->
+      <b>Thân nhiệt: </b> {{detail.temperate}} <br>
+      <b>Triệu chứng lâm sàng: </b> {{detail.other}} <br>
+      <b>Cận lâm sàng: </b> {{detail.subother}} <br>
+      <b>Kết luận: </b> {{detail.conclude}} <br>
+      <b>Điều trị: </b> {{detail.treat}}
+    </div>
+
+    <div
+      *ngIf="detail.xquang != 0 || detail.sinhly != 0 || detail.sinhhoa != 0 || detail.sieuam != 0 || detail.nuoctieu != 0">
+      <span [class]="detail.xquang > 0 ? 'pos' : 'pos yellow'" *ngIf="detail.xquang != 0"
+        (click)="view('xquang', detail.xquang)">
+        X Quang
+        <ion-icon name="checkmark-circle-outline" *ngIf="detail.xquang > 0"></ion-icon>
+        <ion-icon name="close-circle-outline" *ngIf="detail.xquang < 0"></ion-icon>
+      </span>
+      <span [class]="detail.sinhly > 0 ? 'pos' : 'pos yellow'" *ngIf="detail.sinhly != 0"
+        (click)="view('sinhly', detail.sinhly)">
+        Sinh lý
+        <ion-icon name="checkmark-circle-outline" *ngIf="detail.sinhly > 0"></ion-icon>
+        <ion-icon name="close-circle-outline" *ngIf="detail.sinhly < 0"></ion-icon>
+      </span>
+
+      <span class="pos" *ngIf="detail.sinhlyimg.length"
+        (click)="viewall(detail.sinhlyimg)">
+        <ion-icon name="images-outline"></ion-icon>
+      </span>
+
+      <span [class]="detail.sinhhoa > 0 ? 'pos' : 'pos yellow'" *ngIf="detail.sinhhoa != 0"
+        (click)="view('sinhhoa', detail.sinhhoa)">
+        Sinh hóa
+        <ion-icon name="checkmark-circle-outline" *ngIf="detail.sinhhoa > 0"></ion-icon>
+        <ion-icon name="close-circle-outline" *ngIf="detail.sinhhoa < 0"></ion-icon>
+      </span>
+
+      <span class="pos" *ngIf="detail.sinhhoaimg.length"
+        (click)="viewall(detail.sinhhoaimg)">
+        <ion-icon name="images-outline"></ion-icon>
+      </span>
+
+      <span [class]="detail.sieuam > 0 ? 'pos' : 'pos yellow'" *ngIf="detail.sieuam != 0"
+        (click)="view('sieuam', detail.sieuam)">
+        Siêu âm
+        <ion-icon name="checkmark-circle-outline" *ngIf="detail.sieuam > 0"></ion-icon>
+        <ion-icon name="close-circle-outline" *ngIf="detail.sieuam < 0"></ion-icon>
+      </span>
+      <span [class]="detail.nuoctieu > 0 ? 'pos' : 'pos yellow'" *ngIf="detail.nuoctieu != 0"
+        (click)="view('nuoctieu', detail.nuoctieu)">
+        Nước tiểu
+        <ion-icon name="checkmark-circle-outline" *ngIf="detail.nuoctieu > 0"></ion-icon>
+        <ion-icon name="close-circle-outline" *ngIf="detail.nuoctieu < 0"></ion-icon>
+      </span>
+    </div>
+
+    <span *ngFor="let exam of detail.exam" [class]="exam.status > 0 ? 'pos' : 'pos yellow'"
+      (click)="view('exam', exam.id, exam.status)">
+      {{exam.name}}
+      <ion-icon name="checkmark-circle-outline" *ngIf="exam.status > 0"></ion-icon>
+      <ion-icon name="close-circle-outline" *ngIf="exam.status <= 0"></ion-icon>
+    </span>
+
+    <div class="upperline">
+      <div *ngIf="detail.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of detail.image" [src]="image" (click)="rest.view(image)">
+      </div>
+      <img *ngIf="rest.his.list[rest.id].insult == 0" class="right icon" src="/assets/icon/update.png"
+        (click)="update(i)">
+      <img class="icon" src="/assets/icon/printer.png" (click)="print(i)">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xacnhanxoachitiet(i)">
+
+      <div *ngIf="rest.config.his > 1">
+        <span *ngFor="let item of pay; let payindex = index" [class]="item.class" (click)="change(payindex, i)">
+          {{item.name}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngFor="let chat of list" [class]="x[chat.side]">
+    <div [class]="side[chat.side]">
+      {{chat.text}}
+    </div>
+    <div class="posttime">
+      {{totime(chat.time)}}
+    </div>
+  </div>
+
+  <div class="inp"></div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="text" maxlength="100" placeholder="tối đa 100 từ"> </ion-input>
+    <ion-button fill="clear" (click)="post()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item> -->
+</ion-content>

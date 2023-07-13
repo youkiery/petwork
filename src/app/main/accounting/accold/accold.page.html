@@ -1,0 +1,32 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.accounting.start" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.accounting.end" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="initiaze()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <ion-item *ngFor="let item of rest.accounting.old; let i = index">
+    <ion-label (click)="select(i)"> {{i + 1}}. {{item.time}} </ion-label>
+    <ion-button fill="clear" color="danger" (click)="remove(i)">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,98 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Tháng bắt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.spa.thongke.dauthang" displayFormat="MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Thống kết thúc </ion-label>
+    <ion-datetime [(ngModel)]="rest.spa.thongke.cuoithang" displayFormat="MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Số lần khách đến trên </ion-label>
+    <ion-input [(ngModel)]="solan" (keyup)="nhaptien('solan')"></ion-input>
+  </ion-item>
+
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Tổng tiền dịch vụ trên </ion-label>
+    <ion-input [(ngModel)]="tongtien" (keyup)="nhaptien('tongtien')"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Sắp xếp theo </ion-label>
+    <ion-select [(ngModel)]="sapxep">
+      <ion-select-option value="0">
+        Số lần giảm dần
+      </ion-select-option>
+      <ion-select-option value="1">
+        Số lần tăng dần
+      </ion-select-option>
+      <ion-select-option value="2">
+        Số tiền giảm dần
+      </ion-select-option>
+      <ion-select-option value="3">
+        Số tiền tăng dần
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button color="secondary" expand="block" (click)="khoitao()">
+    Lọc nhắn tin
+  </ion-button>
+
+  <ion-segment [(ngModel)]="hienthi">
+    <ion-segment-button value="0">
+      <ion-label>
+        Toàn bộ
+        <ion-badge color="danger"> {{rest.spa.dulieu.length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Chỉ tháng này
+        <ion-badge color="danger"> {{thangnay}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>
+        Chỉ tháng trước
+        <ion-badge color="danger"> {{thangtruoc}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab color="success" vertical="bottom" horizontal="end" slot="fixed" (click)="nhantin()">
+    <ion-fab-button>
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+
+  <div *ngFor="let khachhang of rest.spa.dulieu">
+    <div *ngIf="(hienthi == '0' || (hienthi == '1' && khachhang.tonglan > 0 && khachhang.thangtruoc.tonglan == 0) || (hienthi == '2' && khachhang.tonglan == 0 && khachhang.thangtruoc.tonglan > 0))" [class]="khachhang.thangnay == 0 && khachhang.thangtruoc > 0 ? 'red stl-card' : 'stl-card'" (click)="chitiet(khachhang.idkhach)">
+      Khách hàng: {{khachhang.tenkhach}} <br>
+      Điện thoại: {{khachhang.dienthoai}}
+      <div class="upperline">
+        Tổng lượt khách đến: {{khachhang.tonglan}} ({{khachhang.thangtruoc.tonglan}}) <br>
+        Tổng tiền dịch vụ: {{rest.comma(khachhang.tongtien)}}đ ({{rest.comma(khachhang.thangtruoc.tongtien)}}đ) <br>
+        Trung bình dịch vụ mỗi lần: {{rest.comma(khachhang.trungbinhtien)}}đ ({{rest.comma(khachhang.thangtruoc.trungbinhtien)}}đ) <br>
+        Khách đến mỗi: {{khachhang.trungbinhthang}} <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.spa.dulieu.length">
+    Không có dữ liệu
+  </div>
+</ion-content>

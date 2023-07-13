@@ -1,0 +1,23 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card blue">
+    {{rest.manual.data[rest.manual.selected].title}}
+  </div>
+  <div class="stl-card">
+    <div *ngFor="let item of rest.manual.data[rest.manual.selected].list">
+      <div class="ph" *ngIf="item.type == 0">
+        {{item.content}}
+      </div>
+      <div *ngIf="item.type == 1" class="text-center">
+        <img [src]="item.content" (click)="detail(item.content)">
+      </div>
+    </div>
+  </div>
+</ion-content>

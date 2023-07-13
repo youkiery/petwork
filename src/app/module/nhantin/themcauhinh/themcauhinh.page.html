@@ -1,0 +1,82 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="xacnhan()">
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-segment [(ngModel)]="loai">
+    <ion-segment-button value="0">
+      <ion-label> Vaccine </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label> Siêu âm </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label> Tái khám </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-item>
+    <ion-label position="stacked"> Mẫu tin </ion-label>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="mautin"></ion-textarea>
+  </ion-item>
+
+  <div class="stl-card">
+    <div class="pos" (click)="dientruong('[loainhac]')" *ngIf="loai == '0'"> [loainhac] </div>
+    <div class="pos" (click)="dientruong('[ngayden]')"> [ngayden] </div>
+    <div class="pos" (click)="dientruong('[ngaynhac]')"> [ngaynhac] </div>
+    <div class="pos" (click)="dientruong('[khachhang]')"> [khachhang] </div>
+    <div class="pos" (click)="dientruong('[dienthoai]')"> [dienthoai] </div>
+    <div class="pos" (click)="dientruong('[thucung]')"> [thucung] </div>
+  </div>
+
+  <div class="stl-card" *ngIf="loai == '1'">
+    <ion-list>
+      <ion-radio-group [(ngModel)]="sukien" value="0">
+        <ion-item>
+          <ion-label> Ngày sinh </ion-label>
+          <ion-radio slot="start" value="0"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label> Xổ giun </ion-label>
+          <ion-radio slot="start" value="1"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Vaccine </ion-label>
+          <ion-radio slot="start" value="2"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>  
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Ngày nhắn tin </ion-label>
+    <ion-input type="number" [(ngModel)]="lich"></ion-input>
+  </ion-item>
+
+  <div class="stl-card">
+    <div class="pos" (click)="chonnhanh('-3')"> Trước 3 ngày </div>
+    <div class="pos" (click)="chonnhanh('0')"> Đúng ngày </div>
+    <div class="pos" (click)="chonnhanh('3')"> Sau 3 ngày </div>
+  </div>
+
+  <div *ngIf="loai == '0'">
+    <ion-item>
+      <ion-label> Nhóm phân loại </ion-label>
+    </ion-item>
+    <ion-item *ngFor="let loai of loainhac">
+      <ion-checkbox slot="start" [(ngModel)]="loai.check"></ion-checkbox>
+      <ion-label> {{loai.name}} </ion-label>
+    </ion-item>
+  </div>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="success" *ngIf="rest.temp.thangnay.length">
+    Tháng này
+  </ion-item>
+
+  <div class="stl-card" *ngFor="let dichvu of rest.temp.thangnay">
+    Ngày: {{dichvu.ngay}} <br>
+    Nhân viên: {{dichvu.nhanvien}} <br>
+    Dịch vụ: {{dichvu.dichvu}}
+  </div>
+
+  <ion-item color="warning" *ngIf="rest.temp.thangtruoc.length">
+    Tháng trước
+  </ion-item>
+  
+  <div class="stl-card" *ngFor="let dichvu of rest.temp.thangtruoc">
+    Ngày: {{dichvu.ngay}} <br>
+    Nhân viên: {{dichvu.nhanvien}} <br>
+    Dịch vụ: {{dichvu.dichvu}}
+  </div>
+
+</ion-content>

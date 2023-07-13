@@ -1,0 +1,55 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      <span *ngIf="!rest.temp.capnhat"> Thêm </span>
+      <span *ngIf="rest.temp.capnhat"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-list>
+    <ion-item> Nhân viên </ion-item>
+    <ion-radio-group [(ngModel)]="rest.temp.idnhanvien">
+      <div *ngFor="let nhanvien of rest.vattu.danhsachnhanvien">
+        <ion-item *ngIf="!rest.temp.capnhat || (rest.temp.capnhat && rest.temp.idnhanvien == nhanvien.userid)">
+          <ion-label>{{nhanvien.name}}</ion-label>
+          <ion-radio slot="start" [value]="nhanvien.userid"></ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+  </ion-list>
+
+  <div *ngFor="let giaodich of rest.temp.giaodich; let i = index" style="position: relative;">
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Tỉ lệ mua (%) </ion-label>
+      <ion-input [(ngModel)]="giaodich.tile"  (keyup)="nhaptile('tile', i)"> </ion-input>
+    </ion-item>
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Giá trị mua ban dầu </ion-label>
+      <ion-input [(ngModel)]="giaodich.giatri" (keyup)="nhaptien('giatri', i)"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="giaodich.ghichu"> </ion-input>
+    </ion-item>
+
+    <div (click)="xoagiaodich(i)" class="close">
+      <ion-icon name="close-outline"></ion-icon>
+    </div>
+  </div>
+  
+  <ion-item (click)="themgiaodich()">
+    <ion-label> 
+      <ion-icon name="add-outline"></ion-icon>
+      &nbsp; Thêm  
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label> Giá trị mua hiện tại: {{tinhgiatri()}} </ion-label>
+  </ion-item>
+</ion-content>

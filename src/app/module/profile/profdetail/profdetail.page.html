@@ -1,0 +1,32 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <p class="underline">
+    <b> Chỉ tiêu: </b>  {{rest.temp['name']}}
+  </p>
+  <p class="underline">
+    <b> Mô tả: </b> {{rest.temp['intro']}}
+  </p>
+  <p class="underline">
+    <b>Đơn vị:</b> {{rest.temp['unit']}}
+  </p>
+  <p class="underline">
+    <b>Trường giá trị:</b> {{rest.temp['flag']}}
+  </p>
+  <p class="underline">
+    <b>Trường hợp tăng:</b> {{rest.temp['up']}}
+  </p>
+  <p class="underline">
+    <b>Trường hợp giảm:</b> {{rest.temp['down']}}
+  </p>
+  <p class="underline">
+    <b>Các bệnh liên quan:</b> {{rest.temp['disease']}}
+  </p>
+  <p class="underline">
+    <b>Hướng điều trị:</b> {{rest.temp['aim']}}
+  </p>
+</ion-content>

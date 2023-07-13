@@ -1,0 +1,8 @@
+{
+  "name": "petwork",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

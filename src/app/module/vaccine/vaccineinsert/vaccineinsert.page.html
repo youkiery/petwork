@@ -1,0 +1,88 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="rest.temp.id && !rest.temp.prv" slot="end" (click)="clear()" color="light" fill="clear" size="small">
+      Hủy
+    </ion-button>
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'vaccine'" slot="end" (click)="insertSubmit()" color="light" fill="clear" size="small">
+      Thêm
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.prv" slot="end"
+      (click)="updateHistorySubmit()" color="light" fill="clear" size="small">
+      Cập nhật & Xác nhận
+    </ion-button>
+
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && !rest.temp.route && !rest.temp.prv" slot="end"
+      (click)="updateSubmit()" color="light" fill="clear" size="small">
+      Cập nhật
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'vaccine' && rest.temp.route == 'history'" slot="end"
+      (click)="insertVaccineHistorySubmit()" color="light" fill="clear" size="small">
+      Thêm & Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="suggest()">
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thú cưng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.petname"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-input [(ngModel)]="rest.temp.address"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Loại tiêm phòng </ion-label>
+    <ion-select [(ngModel)]="rest.temp.typeid">
+      <ion-select-option *ngFor="let item of rest.home.type; let i = index" [value]="item.id">
+        {{item.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày tiêm phòng </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.cometime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày tái chủng </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.calltime" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+  </ion-item>
+
+  <div *ngIf="!rest.temp.prv">
+    <div class="stl-card" *ngFor="let item of this.rest.vaccine.new; let i = index">
+      <div class="col-xs-6">
+        Thú cưng: {{item.petname}} <br>
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}}
+      </div>
+      <div class="col-xs-6">
+        Ngày nhắc: {{item.calltime}} <br>
+        Loại nhắc: {{item.vaccine}} <br>
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item.note}}
+      </div>
+      <img src="/assets/icon/delete.png" (click)="remove(i)">
+      <img src="/assets/icon/update.png" *ngIf="rest.config.vaccine > 1" (click)="update(i)">
+    </div>
+  </div>
+</ion-content>

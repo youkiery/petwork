@@ -1,0 +1,28 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="xacnhan()">
+      Thêm
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên nhóm </ion-label>
+    <ion-input [(ngModel)]="tennhom"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Mẫu tin </ion-label>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="mautin"></ion-textarea>
+  </ion-item>
+
+  <div class="stl-card">
+    <div class="pos" (click)="dientruong('[khachhang]')"> [khachhang] </div>
+    <div class="pos" (click)="dientruong('[dienthoai]')"> [dienthoai] </div>
+  </div>
+</ion-content>

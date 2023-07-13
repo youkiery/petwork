@@ -1,0 +1,93 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    
+    <ion-button slot="end" color="light" fill="clear" (click)="capnhat()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên nhân viên Kiot </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tenkiot"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Lương cơ bản </ion-label>
+    <ion-input [(ngModel)]="rest.temp.luongcoban" (keyup)="nhaptien('luongcoban')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Lương phụ cấp </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phucap" (keyup)="nhaptien('phucap')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Lên lương </ion-label>
+    <ion-input [(ngModel)]="rest.temp.lenluong" (keyup)="nhaptien('lenluong')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ tiết kiệm </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tiletietkiem" (keyup)="nhaptien('tiletietkiem')"> </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked"> Ngày ký hợp đồng </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.kyhopdong" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label> Tạm nghỉ </ion-label>
+    <ion-checkbox [(ngModel)]="rest.temp.tamnghi" slot="start">  </ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label> Hệ lương bán hàng </ion-label>
+    <ion-checkbox [(ngModel)]="rest.temp.heluong" slot="start">  </ion-checkbox>
+  </ion-item>
+
+  <div *ngIf="rest.temp.heluong">
+    <div *ngFor="let item of rest.temp.tilethuong[1]; let i = index">
+      <ion-item class="half-item">
+        <ion-input [(ngModel)]="rest.temp.tilethuong[1][i].khoang" (keyup)="nhapthuong('khoang', i)"> </ion-input>
+      </ion-item>
+      <ion-item class="half-item">
+        <ion-input [(ngModel)]="rest.temp.tilethuong[1][i].tien" (keyup)="nhapthuong('tien', i)"> </ion-input>
+        <ion-button size="small" color="danger" (click)="xoatile(i)"> 
+          <ion-icon name="trash"></ion-icon>  
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <ion-item (click)="themtile()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      &nbsp; Thêm
+    </ion-item>
+  </div>
+
+  <div *ngIf="!rest.temp.heluong">
+    <ion-item>
+      <ion-label position="stacked"> Tỉ lệ lợi nhuận bán hàng (%) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.tilethuong[0].loinhuanbanhang" (keyup)="nhaptile('loinhuanbanhang')"> </ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked"> Tỉ lệ lợi nhuận điều trị + spa (%) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.tilethuong[0].loinhuanspa" (keyup)="nhaptile('loinhuanspa')"> </ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked"> Tỉ lệ chiết khấu bán hàng (%) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.tilethuong[0].chietkhaubanhang" (keyup)="nhaptile('chietkhaubanhang')"> </ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked"> Tỉ lệ chiết khấu điều trị + spa (%) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.tilethuong[0].chietkhauspa" (keyup)="nhaptile('chietkhauspa')"> </ion-input>
+    </ion-item>
+  </div>
+</ion-content>

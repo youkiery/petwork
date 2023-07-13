@@ -1,0 +1,26 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small"
+      (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let khachhang of danhsach; let i = index">
+    Khách hàng: {{khachhang.name}} <br>
+    Điện thoại: {{khachhang.phone}} <br>
+    Địa chỉ: {{khachhang.address}} <br>
+    <div class="upperline"></div>
+    <img class="icon" src="/assets/icon/revert.png" (click)="xacnhanhoiphuc(i)">
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!danhsach.length">
+    Không có danh sách
+  </div>
+</ion-content>

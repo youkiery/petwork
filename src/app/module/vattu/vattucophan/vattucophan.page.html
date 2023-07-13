@@ -1,0 +1,42 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="rest.config.vattu > 1" slot="end" color="light" fill="clear" size="small" (click)="themgiaodich()">
+      Thêm giao dịch
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngIf="rest.config.vattu > 1">
+    Tổng tỉ lệ: {{rest.vattu.cophan.tile}}% <br>
+    Tổng mua ban đầu: {{rest.comma(rest.vattu.cophan.giatri)}}đ <br>
+    Tổng giá trị hiện tại: {{rest.comma(rest.vattu.tongtien)}}đ <br>
+  </div>
+
+  <div *ngIf="rest.vattu.cophan.danhsach.length">
+    <div class="stl-card" *ngFor="let giaodich of rest.vattu.cophan.danhsach; let i = index">
+      Người mua: {{giaodich.nguoimua}} <br>
+      Tỉ lệ mua: {{giaodich.tile}}% <br>
+      Giá trị ban đầu: {{giaodich.giatri}}đ <br>
+      <div *ngFor="let gd of giaodich.giaodich">
+        &nbsp; - {{gd.giatri}} ({{gd.tile}}%) <span *ngIf="gd.ghichu.length"> ({{gd.ghichu}}) </span>
+      </div>
+      Giá trị hiện tại: {{giaodich.hientai}}đ <br>
+      <div *ngIf="rest.config.vattu > 1" class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoa(giaodich.id)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhat(i)">
+      </div>
+    </div>
+  </div>
+  <div class="stl-card text-center" *ngIf="!rest.vattu.cophan.danhsach.length">
+    Hiện không có giao dịch nào
+  </div>
+</ion-content>

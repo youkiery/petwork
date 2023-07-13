@@ -1,0 +1,108 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card">
+    Cấu hình lịch nhắc
+    <div class="upperline" *ngIf="!cauhinh.length">
+      Không có danh sách
+    </div>
+    <div class="upperline" *ngFor="let chitiet of cauhinh; let i = index">
+      {{chitiet.danhsach.join(', ')}}: {{chitiet.thoigian}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="capnhatcauhinh(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="xacnhanxoacauhinh(chitiet.ngay)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="themcauhinh()">
+    </div>
+    <!-- <ion-item>
+      <ion-label position="stacked"> Nhắc vaccine trước (ngày) </ion-label>
+      <ion-input [(ngModel)]="ngay"></ion-input>
+      <div class="upperline"> </div>
+      <ion-button (click)="luucauhinh()" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-item> -->
+  </div>
+
+  <div class="stl-card">
+    Danh sách nhóm loại nhắc:
+    <div class="upperline" *ngFor="let item of nhomloai; let i = index">
+      {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="themnhomloai(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="xoanhomloai(item.id)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="themnhomloai()">
+    </div>
+  </div>
+
+  <div class="stl-card">
+    Danh sách loại nhắc:
+    <div class="upperline" *ngFor="let item of loainhac; let i = index">
+      {{item.code}}: {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="themloai(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="xacnhanxoaloai(item.id)"> <br>
+      <div *ngFor="let nhom of nhomloai" [class]="item.idnhom == nhom.id ? 'pos' : 'pos pos-def'"
+        (click)="chonnhom(nhom.id, item.id)"> {{nhom.name}} </div>
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="themloai()">
+    </div>
+  </div>
+
+  <div class="stl-card">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label>
+          Chuyển nhượng
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>
+          Xóa mục cũ
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="segment == '0'">
+      <ion-item *ngFor="let item of rest.home.doctor">
+        <ion-label> {{item.name}} </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.doctor[item.userid]"> </ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Chuyển cho nhân viên </ion-label>
+        <ion-select [(ngModel)]="userid">
+          <ion-select-option *ngFor="let item of rest.home.doctor" [value]="item.userid"> {{item.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="chuyendulieuvaccine()">
+        Chuyển nhượng
+      </ion-button>
+    </div>
+    <div *ngIf="segment == '1'">
+      <ion-item>
+        <ion-label position="stacked"> Xóa trước ngày </ion-label>
+        <ion-datetime [(ngModel)]="date" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="xoadulieuvaccine()">
+        Xóa bỏ
+      </ion-button>
+    </div>
+  </div>
+  <div *ngIf="segment == '0'" class="stl-card yellow"> Khi không chọn nhân viên nhận gọi nhắc, phiếu nhắc sẽ được chuyển
+    ngẫu nhiên cho nhân viên khác </div>
+</ion-content>

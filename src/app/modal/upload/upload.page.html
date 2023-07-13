@@ -1,0 +1,72 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="!rest.temp.id && rest.action == 'drug'" slot="end" (click)="drugInsert()" color="light" fill="clear" size="small">
+      Thêm
+    </ion-button>
+    <ion-button *ngIf="rest.temp.id && rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="light" fill="clear" size="small">
+      Cập nhật
+    </ion-button>
+
+    <ion-button *ngIf="rest.action == 'item' && !rest.temp.id" slot="end" (click)="insertPosition()" color="light" fill="clear" size="small">
+      Xác nhận
+    </ion-button>
+    
+    <ion-button *ngIf="rest.action == 'item' && rest.temp.id" slot="end" (click)="updatePosition()" color="light" fill="clear" size="small">
+      Xác nhận
+    </ion-button>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <div *ngIf="rest.action == 'item'">
+    <ion-item>
+      <ion-label position="stacked"> Vị trí </ion-label>
+      <ion-input [(ngModel)]="rest.temp.pos"></ion-input>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+      <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+      <img class="thumbnail" [src]="item">
+    </span>
+  </div>
+
+
+  <div *ngIf="rest.action == 'drug'">
+    <ion-item>
+      <ion-label position="stacked"> Tên thuốc </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Liều dùng </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.limits" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Công dụng </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.effect" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tác dụng phụ </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.sideeffect" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Cơ chế hoạt động </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.mechanic" autoGrow="true"></ion-textarea>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+      <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+      <img class="thumbnail" [src]="item">
+    </span>
+  </div>
+</ion-content>

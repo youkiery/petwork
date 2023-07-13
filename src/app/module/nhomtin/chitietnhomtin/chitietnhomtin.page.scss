@@ -1,0 +1,29 @@
+.loaitru, .boloaitru {
+  float: right;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  line-height: 27px;
+  font-weight: bold;
+  color: black;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.loaitru {
+  background: lightcoral;
+}
+
+.boloaitru {
+  background: lightgreen;
+}
+
+.nuttimkiem {
+  background-color: lightcyan;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 0px 5px;
+  color: black;
+}

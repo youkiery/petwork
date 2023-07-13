@@ -1,0 +1,22 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="danger" slot="end" fill="clear" (click)="xoanhanvien()">
+      Xóa nhân viên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Chuyển cho nhân viên </ion-label>
+    <ion-select [(ngModel)]="rest.temp.nhanvienchuyen">
+      <ion-select-option *ngFor="let item of rest.home.doctor" [value]="item.userid"> {{item.name}} </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="stl-card yellow"> Phiếu nhắc, phiếu điều trị sẽ được chuyển ngẫu nhiên cho nhân viên khác </div>
+
+</ion-content>

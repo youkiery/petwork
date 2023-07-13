@@ -1,0 +1,84 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card">
+    <div class="card-tickbox" (click)="xacnhan()">
+      <img [src]="trangthai[rest.detail.status]">
+    </div>
+    <div class="card-content">
+      <div>
+        {{rest.detail.title}}
+      </div>
+      <span [class]="rest.detail.expire ? 'pinky' : ''"> {{rest.detail.createtime}} {{rest.detail.expiretime.length ? '- ' +
+        rest.detail.expiretime : ''}} </span>
+      <span class="pos" *ngIf="rest.detail.danhmuc.length"> {{rest.detail.danhmuc}} </span>
+      <div *ngIf="rest.detail.usertext.length">
+        <b> Người tạo: </b> {{rest.detail.usertext}}
+      </div>
+      <div *ngIf="rest.detail.assigntext.length">
+        <b> Nhận việc: </b> {{rest.detail.assigntext}}
+      </div>
+      <div *ngIf="rest.detail.followtext.length">
+        <b> Theo dõi: </b> {{rest.detail.followtext}}
+      </div>      
+      <span class="pos" *ngIf="rest.detail.type > 0" (click)="capnhat()"> sửa </span>
+      <span class="pos red" *ngIf="rest.detail.type > 0 || rest.config.work > 1" (click)="xoa()"> x </span>
+    </div>
+    <div class="upperline">
+      <b> Nội dung công việc </b>
+    </div>
+    <pre>{{rest.detail.content}}</pre>
+    <div class="upperline" *ngIf="rest.detail.file.length">
+      <img class="thumbnail-sm" *ngFor="let image of rest.detail.file" [src]="image" (click)="rest.view(image)">
+    </div>
+</div>
+
+  <div class="stl-card">
+    <div>
+      <b> Bình luận </b>
+    </div>
+    <div *ngFor="let comment of binhluan; let i = index" class="upperline">
+      <div class="comment-left"> <b> {{comment.fullname}} </b> </div>
+      <div class="comment-right"> {{comment.time}} </div>
+      <pre style="clear: both">{{comment.comment}}</pre>
+      <img class="thumbnail-sm" *ngIf="comment.file.length" [src]="comment.file" (click)="rest.view(comment.file)">
+      <div> 
+        <div *ngIf="comment.userid == rest.home.userid">
+          <ion-icon class="pw-icon" name="pencil-outline" (click)="updatecomment(i)"></ion-icon>
+          <ion-icon class="pw-icon" name="trash-outline" color="danger" (click)="deletecomment(comment.id)"></ion-icon>  
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!binhluan.length" class="text-center">
+      Chưa có bình luận
+    </div>
+  </div>
+</ion-content>
+<div style="position: fixed; bottom: 0px; width: 100%; background: white;">
+  <div *ngIf="id" color="danger">
+    Cập nhật bình luận <ion-icon class="pw-icon" name="close-circle-outline" color="danger" (click)="removeupdate()"></ion-icon>
+  </div>
+  <ion-item>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="chat" placeholder="Nhập nội dung" autoGrow="true" cols="1"></ion-textarea>
+    <ion-icon style="margin: 0px 5px;" name="image-outline" (click)="upload()"></ion-icon>
+    <ion-icon style="margin-left: 5px;" name="paper-plane-outline" (click)="nhantin()"></ion-icon>
+  </ion-item>
+  <span *ngFor="let hinhanh of image; let i = index">
+    <span class="thumbnail-box" *ngIf="hinhanh.length">
+      <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+      <img class="thumbnail" [src]="hinhanh">
+    </span>
+  </span>
+</div>

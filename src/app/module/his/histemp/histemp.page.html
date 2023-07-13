@@ -1,0 +1,35 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="insert()">
+      Thêm mới
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngFor="let item of list; let i = index">
+    <div class="row">
+      <div class="col-xs-6">
+        Khách hàng: {{item.customer}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Thú cưng: {{item.petname}} <br>
+      </div>
+      <div class="col-xs-6">
+        Người nhận: {{item.doctor}} <br>
+        Ngày nhận: {{time.timetodate(item.time * 1000)}} <br>
+        Tình trạng bệnh: {{status[item.status].name}}
+      </div>
+
+      <div>
+        Tiền sử bệnh: {{item.his}}
+      </div>
+      <div class="upperline">
+        <img class="right icon" src="/assets/icon/update.png" (click)="update(i)">
+      </div>
+    </div>
+  </div>
+</ion-content>

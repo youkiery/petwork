@@ -1,0 +1,54 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item *ngIf="rest.config.excel" (click)="change('vaccine')">
+    <ion-icon name="cloud-upload-outline"></ion-icon>
+    &nbsp; Import dữ liệu Kiotviet
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/customer')">
+    <ion-icon name="cloud-upload-outline"></ion-icon>
+    &nbsp; Import dữ liệu Khách hàng
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/loaivaccine')">
+    <ion-icon name="settings-outline"></ion-icon>
+    &nbsp; Cấu hình vaccine
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/benhnhan')">
+    <ion-icon name="settings-outline"></ion-icon>
+    &nbsp; Cấu hình bệnh nhân
+  </ion-item>
+
+  <!-- <ion-item *ngIf="rest.config.excel" (click)="change('item')">
+    <ion-icon name="cloud-upload-outline"></ion-icon>
+    Import Hàng hóa
+  </ion-item> -->
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/spa')">
+    <ion-icon name="document-text-outline"></ion-icon>
+    &nbsp; Dịch vụ SPA
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="change('usg')">
+    <ion-icon name="document-text-outline"></ion-icon>
+    &nbsp; Mã import siêu âm
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/dangkylich')">
+    <ion-icon name="calendar-outline"></ion-icon>
+    &nbsp; Giới hạn đăng ký lịch
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.excel" (click)="rest.navCtrl.navigateForward('/excel/config')">
+    <ion-icon name="construct-outline"></ion-icon>
+    &nbsp; Cấu hình
+  </ion-item>
+</ion-content>

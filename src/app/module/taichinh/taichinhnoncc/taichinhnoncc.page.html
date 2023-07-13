@@ -1,0 +1,49 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Nội dung </ion-label>
+    <ion-input [(ngModel)]="rest.temp.noidung"> </ion-input>
+  </ion-item>
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Giá trị </ion-label>
+    <ion-input [(ngModel)]="rest.temp.giatri" (keyup)="nhaptien('giatri')"> </ion-input>
+  </ion-item>
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Đã thanh toán </ion-label>
+    <ion-input [(ngModel)]="rest.temp.thanhtoan" (keyup)="nhaptien('thanhtoan')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Nhà cung cấp: </ion-label>
+    <ion-button slot="end" color="success" (click)="themnhacungcap()"> 
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  
+  <ion-radio-group [(ngModel)]="rest.temp.idnhacungcap" [value]="rest.temp.idnhacungcap">
+    <ion-item *ngFor="let ncc of rest.taichinh.danhsachnhacungcap">
+      <ion-radio slot="start" [value]="ncc.id"></ion-radio>
+      <ion-label> {{ncc.ten}} </ion-label>
+    </ion-item>
+  </ion-radio-group>
+
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ghichu"> </ion-input>
+  </ion-item>
+</ion-content>

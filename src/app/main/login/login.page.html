@@ -1,0 +1,51 @@
+<ion-content *ngIf="rest.isready">
+  <div class="col-xs-1 col-sm-3 col-md-4"> </div>
+  <div class="col-xs-10 col-sm-6 col-md-4">
+    <div style="text-align: center; margin-top: 200px">
+      <ion-text color="secondary">
+        <h3> Hệ thống quản lý </h3>
+      </ion-text>
+    </div>
+    <form *ngIf="log">
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.username" name="username" placeholder="Tài khoản"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" placeholder="Mật khẩu"></ion-input>
+      </ion-item>
+      <ion-button color="success" expand="block" shape="round" (click)="rest.login(user)"> Đăng nhập </ion-button>
+    </form>
+    <form *ngIf="!log">
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.fullname" name="fullname" placeholder="Họ và tên"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.name" name="name" placeholder="Tên hiển thị"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input [(ngModel)]="user.username" name="username" placeholder="Tài khoản"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" placeholder="Mật khẩu"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input type="password" [(ngModel)]="user.vpassword" name="vpassword" placeholder="Xác nhận mật khẩu"></ion-input>
+      </ion-item>
+      <ion-button color="success" expand="block" shape="round" (click)="rest.signup(user)"> Đăng ký </ion-button>
+    </form>
+    <div *ngIf="!log">
+      Đã có tài khoản  <ion-button color="secondary" shape="round" (click)="log = 1"> Đăng nhập ngay! </ion-button>
+    </div>
+    <div *ngIf="log">
+      Chưa có tài khoản <ion-button color="secondary" shape="round" (click)="log = 0"> Đăng ký ngay! </ion-button>
+    </div>
+
+  </div>
+</ion-content>

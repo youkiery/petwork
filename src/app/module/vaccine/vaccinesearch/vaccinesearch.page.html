@@ -1,0 +1,40 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small"
+      (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="secondary">
+    <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.vaccine.keyword"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
+  </ion-item>
+
+  <div *ngFor="let item of this.rest.temp; let i = index" [class]="item['over'] ? 'stl-card red' : status[item['status']]">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item['phone']}} <br>
+      <span *ngIf="item['petname']"> Tên thú: {{item['petname']}} <br> </span>
+      Địa chỉ: {{item['address']}}
+    </div>
+    <div class="col-xs-6">
+      Ngày đến: {{item['cometime']}} <br>
+      Loại nhắc: {{item['vaccine']}} <br>
+      <span *ngIf="item['called']"> Gọi nhắc cuối: <span [class]="item['called'] == 'Hôm hay đã gọi' ? 'greening' : 'weight'"> {{item['called']}} </span> <br> </span>
+      Trạng thái: <span class="bold"> {{status_text[item['status']]}} </span> <br>
+      Người tiêm: {{item['doctor']}} <br>
+      Ngày nhắc: {{item['calltime']}} <br>
+    </div>
+    <div class="upperline">
+      Ghi chú: {{item['note']}}
+    </div>
+    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img *ngIf="item.status == 0" class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <!-- <img class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/done.png" (click)="done(i)"> -->
+  </div>
+</ion-content>

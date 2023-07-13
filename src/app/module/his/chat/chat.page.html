@@ -1,0 +1,29 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngFor="let chat of list" [class]="x[chat.side]">
+    <div [class]="side[chat.side]">
+      {{chat.text}}
+    </div>
+    <div class="posttime">
+      {{totime(chat.time)}}
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="text"> </ion-input>
+    <ion-button fill="clear" (click)="post()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-content>

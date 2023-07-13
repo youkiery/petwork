@@ -1,0 +1,123 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="lbl">
+  <div class="lb">
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm công viềc </ion-label>
+      <ion-input [(ngModel)]="rest.work.filter.tukhoa"></ion-input>
+    </ion-item>
+  </div>
+  <div class="rb">
+    <ion-button expand="full" color="warning" (click)="timkiem()">
+      <ion-icon color="light" name="search-outline"></ion-icon>
+    </ion-button>
+  </div>
+</div>
+
+<ion-content *ngIf="rest.isready">
+  <ion-segment [(ngModel)]="rest.work.chedo">
+    <ion-segment-button value="0" (click)="doidanhsach(0)">
+      <ion-label>
+        Công việc
+        <ion-badge *ngIf="rest.work.danhsach[0][0].length + rest.work.danhsach[0][1].length" color="danger"> 
+          {{rest.work.danhsach[0][0].length + rest.work.danhsach[0][1].length}}
+        </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1" (click)="doidanhsach(1)">
+      <ion-label>
+        Theo dõi
+        <ion-badge *ngIf="rest.work.danhsach[1][0].length + rest.work.danhsach[1][1].length" color="danger"> 
+          {{rest.work.danhsach[1][0].length + rest.work.danhsach[1][1].length}}
+        </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+    
+    <ion-fab-list side="top">
+      <ion-fab-button color="success" (click)="themcongvieclaplai()"> Lặp <br> lại </ion-fab-button>
+      <ion-fab-button color="success" (click)="themcongvieclaplai(false)"> CV</ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div *ngFor="let tab of tabs; let i = index">
+    <div *ngIf="rest.work.danhsach[rest.work.chedo][i].length" class="item-group">
+      <div class="item-header">
+        {{tab}}
+        <ion-badge *ngIf="rest.work.danhsach[rest.work.chedo][i].length" color="danger"> 
+          {{rest.work.danhsach[rest.work.chedo][i].length}}
+        </ion-badge>
+      </div>
+      <div class="stl-card" *ngFor="let congviec of rest.work.danhsach[rest.work.chedo][i]; let j = index">
+        <div class="card-tickbox" (click)="xacnhan(i, j)">
+          <img [src]="trangthai[congviec.status]">
+        </div>
+        <div class="card-content">
+          <div>
+            Công việc: {{congviec.title}}
+          </div>
+          {{congviec.createtime}}
+          <span *ngIf="congviec.expiretime.length" [class]="congviec.expire ? 'pinky' : ''">
+            hạn {{congviec.expiretime.length ? congviec.expiretime : ''}}
+          </span>
+          <br>
+          <span class="pos" (click)="chitiet(i, j)"> chi tiết </span>
+          <span class="pos" *ngIf="congviec.danhmuc.length"> {{congviec.danhmuc}} </span>
+          <span class="pos" *ngIf="congviec.type > 0 && rest.config.work > 1" (click)="capnhat(i, j)"> sửa </span>
+          <span class="pos red" *ngIf="congviec.type > 0 || rest.config.work > 1" (click)="xoa(congviec.id)"> x </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stl-card text-center"
+    *ngIf="!(rest.work.danhsach[rest.work.chedo][0].length || rest.work.danhsach[rest.work.chedo][1].length)">
+    Không có danh sách
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/work/filter')">
+        <ion-icon name="filter"></ion-icon>
+        <ion-label> Lọc CV </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/work/repeat')">
+        <ion-icon name="refresh-circle-outline"></ion-icon>
+        <ion-label> CV lặp lại </ion-label>
+      </ion-tab-button>
+      <ion-tab-button *ngIf="rest.config.work > 1" (click)="rest.navCtrl.navigateForward('/work/depart')">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-label> Danh mục </ion-label>
+      </ion-tab-button>
+      <ion-tab-button *ngIf="rest.config.work > 1" (click)="rest.navCtrl.navigateForward('/work/statistic')">
+        <ion-icon name="stats-chart"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

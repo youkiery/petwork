@@ -1,0 +1,79 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="xacnhan()">
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      (change)="tenfile()">
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Tên nhóm </ion-label>
+    <ion-input [(ngModel)]="tennhom"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Mẫu tin </ion-label>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="mautin"></ion-textarea>
+  </ion-item>
+
+  <div class="stl-card">
+    <div class="pos" (click)="dientruong('[khachhang]')"> [khachhang] </div>
+    <div class="pos" (click)="dientruong('[dienthoai]')"> [dienthoai] </div>
+  </div>
+
+  <div class="avatar-box" (click)="chonfile()">
+    <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+  </div>
+  <div *ngIf="name.length" class="text-center">
+    {{name}}
+  </div>
+
+  <ion-item color="success">
+    <ion-label> Mã hàng kiểm tra khách trở lại </ion-label>
+  </ion-item>
+
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="vaccine">
+      <ion-label>
+        Vaccine
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="usg">
+      <ion-label>
+        Siêu âm
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="spa">
+      <ion-label>
+        Spa
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="treat">
+      <ion-label>
+        Điều trị
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="stl-card">
+    <ion-item *ngFor="let loai of rest.temp.dulieu[tab]; let thutu = index">
+      <ion-checkbox slot="start" [(ngModel)]="rest.temp.dulieu[tab][thutu].checker"></ion-checkbox>
+      <ion-label> {{loai.name}} </ion-label>
+    </ion-item>
+    <div *ngIf="!rest.temp.dulieu[tab].length">
+      Không có danh sách, xin hãy vào cài đặt để thêm
+    </div>
+  </div>
+</ion-content>

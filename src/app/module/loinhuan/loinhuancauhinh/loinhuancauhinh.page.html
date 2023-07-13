@@ -1,0 +1,106 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card">
+    <ion-item (click)="doianbangluong()">
+      <ion-label> Hiện bảng lương </ion-label>
+      <ion-checkbox [(ngModel)]="rest.loinhuan.anbangluong" readonly slot="start"> </ion-checkbox>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm nhân viên </ion-label>
+    <ion-input [(ngModel)]="tukhoa" (keyup)="locnhanvien()"> </ion-input>
+  </ion-item>
+
+  <!-- <ion-item color="secondary">
+    <ion-label> Cấu hình tỉ lệ thưởng nhân viên điều trị </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ lợi nhuận bán hàng (%) </ion-label>
+    <ion-input [(ngModel)]="tilespa.loinhuanbanhang" (keyup)="nhaptile('loinhuanbanhang')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ lợi nhuận điều trị + spa (%) </ion-label>
+    <ion-input [(ngModel)]="tilespa.loinhuanspa" (keyup)="nhaptile('loinhuanspa')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ chiết khấu bán hàng (%) </ion-label>
+    <ion-input [(ngModel)]="tilespa.chietkhaubanhang" (keyup)="nhaptile('chietkhaubanhang')"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tỉ lệ chiết khấu điều trị + spa (%) </ion-label>
+    <ion-input [(ngModel)]="tilespa.chietkhauspa" (keyup)="nhaptile('chietkhauspa')"> </ion-input>
+  </ion-item>
+
+  <ion-item (click)="luucauhinh()">
+    <ion-icon name="save-outline"></ion-icon>
+    &nbsp; Lưu
+  </ion-item>
+
+  <ion-item color="secondary">
+    <ion-label> Cấu hình tỉ lệ thưởng nhân viên bán hàng </ion-label>
+  </ion-item>
+
+  <div *ngFor="let item of tilebanhang; let i = index">
+    <ion-item class="half-item">
+      <ion-input [(ngModel)]="tilebanhang[i].khoang" (keyup)="nhaptien('khoang', i)"> </ion-input>
+    </ion-item>
+    <ion-item class="half-item">
+      <ion-input [(ngModel)]="tilebanhang[i].tien" (keyup)="nhaptien('tien', i)"> </ion-input>
+      <ion-button size="small" color="danger" (click)="xoatile(i)"> 
+        <ion-icon name="trash"></ion-icon>  
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <ion-item (click)="themtile()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    &nbsp; Thêm
+  </ion-item>
+
+  <ion-item (click)="luutile()">
+    <ion-icon name="save-outline"></ion-icon>
+    &nbsp; Lưu
+  </ion-item> -->
+
+  <!-- <ion-item color="success">
+    <ion-label> Lương nhân viên </ion-label>
+  </ion-item> -->
+
+  <div class="stl-card" *ngFor="let nhanvien of danhsachtam; let i = index">
+    Nhân viên: {{nhanvien.tenkiot}} <br>
+    Lương cơ bản: {{rest.comma(nhanvien.luongcoban)}} <br>
+    Ngày ký hợp đồng: {{nhanvien.kyhopdong}} <br>
+    Tăng lương: {{rest.comma(nhanvien.lenluong)}} <br>
+    Lương hiện tại: {{rest.comma(nhanvien.luonghientai)}} <br>
+    Tỉ lệ tiết kiệm: {{nhanvien.tiletietkiem}} <br>
+    Phụ cấp: {{rest.comma(nhanvien.phucap)}} <br>
+    Cổ phần: {{nhanvien.cophan}}% <div class="pos" (click)="capnhatcophan(nhanvien.userid)"> sửa </div> <br>
+    Tổng lương + phụ cấp: {{rest.comma(nhanvien.luong)}}
+    <div class="upperline"></div>
+    <div class="pos" (click)="capnhat(i)">
+      Cập nhật
+    </div>
+    <div [class]="buttoncolor[nhanvien.tamnghi]" (click)="thaydoigiatri('tamnghi', nhanvien.tamnghi, nhanvien.userid)">
+      Tạm nghỉ
+    </div>
+    <div [class]="buttoncolor2[nhanvien.heluong]" (click)="thaydoigiatri('heluong', nhanvien.heluong, nhanvien.userid)">
+      {{heluong(nhanvien.heluong)}}
+    </div>
+  </div>
+</ion-content>

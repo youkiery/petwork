@@ -1,0 +1,39 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giá trị </ion-label>
+    <ion-input [(ngModel)]="rest.temp.giatri" (keyup)="nhaptien('giatri')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Loại chi: </ion-label>
+    <ion-button slot="end" color="success" (click)="themloaichi()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-radio-group [(ngModel)]="rest.temp.idloaichi" [value]="rest.temp.idloaichi">
+    <ion-item *ngFor="let loaichi of rest.taichinh.danhsachloaichi">
+      <ion-radio slot="start" [value]="loaichi.id"></ion-radio>
+      <ion-label> {{loaichi.ten}} </ion-label>
+    </ion-item>
+  </ion-radio-group>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ghichu"> </ion-input>
+  </ion-item>
+</ion-content>

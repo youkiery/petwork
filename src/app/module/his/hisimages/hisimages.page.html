@@ -1,0 +1,17 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card">
+    Khách hàng: {{rest.his.list[this.rest.image.index].customer}} <br>
+    Điện thoại: {{rest.his.list[this.rest.image.index].phone}} <br>
+    Thú cưng: {{rest.his.list[this.rest.image.index].pet}} <br>
+  </div>
+  <img *ngFor="let image of rest.image.image" [src]="image">
+</ion-content>

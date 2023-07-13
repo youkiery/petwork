@@ -1,0 +1,105 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('blood')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.hotel.filter.start" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.hotel.filter.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" color="secondary" (click)="init()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.hotel.s">
+      <ion-segment-button value="0"> Lưu trú </ion-segment-button>
+      <ion-segment-button value="1"> Đã về </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div *ngIf="rest.hotel.s == '0'">
+    <div class="stl-card" *ngFor="let item of rest.hotel.list[rest.hotel.s]; let i = index">
+      Khách hàng: {{item.name}} <br>
+      Điện thoại: {{item.phone}} <br>
+      Địa chỉ: {{item.address}} <br>
+      Ngày đến: {{item.cometime}} <br>
+      Lưu đến ngày: {{item.calltime}} <br>
+      Chi phí mỗi ngày: {{item.price}} <br>
+  
+      <div class="upperline">
+        <div *ngIf="item.image.length">
+          <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+        </div>
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/update.png" (click)="update(i)">
+        <img class="icon" src="/assets/icon/return.png" (click)="return(i)">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.hotel.s == '1'">
+    <div class="stl-card" *ngFor="let item of rest.hotel.list[rest.hotel.s]; let i = index">
+      Khách hàng: {{item.name}} <br>
+      Điện thoại: {{item.phone}} <br>
+      Địa chỉ: {{item.address}} <br>
+      Ngày đến: {{item.cometime}} <br>
+      Ngày về: {{item.returntime}} <br>
+      Người trả: {{item.fullname}} <br>
+      Tổng chi phí: {{item.total}} <br>
+  
+      <div class="upperline">
+        <span *ngIf="item.image.length">
+          <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+        </span>
+        <span *ngIf="item.returnimage.length">
+          <img class="thumbnail-sm blue" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+        </span>
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/hopital.png" (click)="hopital(item.id)">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/hotel/config')">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-label> Danh mục </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

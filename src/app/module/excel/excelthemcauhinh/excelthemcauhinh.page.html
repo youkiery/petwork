@@ -1,0 +1,24 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="themcauhinh()">
+      <span *ngIf="!rest.temp.ngaytruoc"> Thêm </span>
+      <span *ngIf="rest.temp.ngaytruoc"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Nhắc trước X ngày </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ngay"></ion-input>
+  </ion-item>
+
+  <ion-item *ngFor="let nhom of rest.temp.nhom; let thutu = index">
+    <ion-label> {{nhom.name}} </ion-label>
+    <ion-checkbox slot="start" [(ngModel)]="rest.temp.nhom[thutu].checked"> </ion-checkbox>
+  </ion-item>
+</ion-content>

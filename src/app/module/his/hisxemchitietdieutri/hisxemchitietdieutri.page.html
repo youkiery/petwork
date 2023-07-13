@@ -1,0 +1,44 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card blue">
+    <div class="col-xs-6">
+      Khách hàng: {{rest.detail.customer}} <br>
+      Điện thoại: {{rest.detail.phone}} <br>
+      Thú cưng: {{rest.detail.petname}}
+    </div>
+    <div class="col-xs-6">
+      Người nhận: {{rest.detail.doctor}} <br>
+      Ngày nhận: {{rest.detail.time}} <br>
+      Tình trạng bệnh: {{status[rest.detail.status].name}}
+    </div>
+    <div class="upperline">
+      Tiền sử bệnh: {{rest.detail.his}}
+    </div>
+  </div>
+
+  <div class="stl-card" *ngFor="let detail of rest.detail.detail">
+    <div class="col-xs-6">
+      Người làm: {{detail.doctor}} <br>
+      Ngày làm: {{detail.time}} <br>
+      Tình trạng: {{status[detail.status].name}} <br>
+    </div>
+    <div class="col-xs-6">
+      <!-- <b>Niêm mạc: </b> {{detail.eye}} <br> -->
+      <b>Thân nhiệt: </b> {{detail.temperate}} <br>
+      <b>Triệu chứng lâm sàng: </b> {{detail.other}} <br>
+      <b>Cận lâm sàng: </b> {{detail.subother}} <br>
+      <b>Kết luận: </b> {{detail.conclude}} <br>
+      <b>Điều trị: </b> {{detail.treat}}
+    </div>
+    <div class="upperline" *ngIf="detail.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of detail.image" [src]="image" (click)="rest.view(image)">
+    </div>
+  </div>
+</ion-content>

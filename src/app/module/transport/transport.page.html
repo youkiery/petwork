@@ -1,0 +1,50 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <!-- <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title> -->
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('transport')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm hàng hóa </ion-label>
+    <ion-input [(ngModel)]="rest.transport.keyword">  </ion-input>
+    <img src="/assets/icon/search.png" class="clear-img" slot="end" (click)="filter()">
+  </ion-item>
+
+  <div class="stl-card" *ngFor="let item of rest.transport.list; let i = index">
+    <div> Nhà xe: {{item.name}} </div>
+    <div> Điện thoại: {{item.phone}} </div>
+    <div> Địa chỉ: {{item.address}} </div>
+    <div class="upperline">
+      <div> Các điểm gửi hàng: {{item.detailcover}} </div>
+      <img class="icon" src="/assets/icon/delete.png" (click)="remove(i)">
+      <img class="icon" src="/assets/icon/update.png" (click)="update(i)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -1,0 +1,83 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="secondary">
+    <ion-label> Chu kỳ nhắn tin </ion-label>
+  </ion-item>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <ion-item>
+        <ion-label position="stacked"> Ngắn nhất (giây) </ion-label>
+        <ion-input [(ngModel)]="rest.nhantin.cauhinhnhantin.min"></ion-input>
+      </ion-item>
+    </div>
+    <div class="col-xs-6">
+      <ion-item>
+        <ion-label position="stacked"> Dài nhất (giây) </ion-label>
+        <ion-input [(ngModel)]="rest.nhantin.cauhinhnhantin.max"></ion-input>
+      </ion-item>
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-button fill="clear" (click)="luucauhinh()">
+      <ion-icon name="save-outline"></ion-icon>
+      &nbsp; Lưu
+    </ion-button>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item color="secondary">
+    <ion-label> Danh sách mẫu tin </ion-label>
+  </ion-item>
+
+  <div class="stl-card" *ngIf="!rest.nhantin.cauhinhnhantin.mautin.length">
+    Không có mẫu tin
+  </div>
+
+  <div *ngIf="rest.nhantin.cauhinhnhantin.mautin.length">
+    <div class="stl-card" *ngFor="let mautin of rest.nhantin.cauhinhnhantin.mautin; let i = index">
+      {{mautin.mautin}} <br>
+      {{mautin.thoigian}} <br>
+      <div class="pos" *ngFor="let loai of mautin.loai">
+        {{loai.name}}
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="xacnhanxoa(mautin.id)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhat(i)">
+      </div>
+    </div>
+  </div>
+
+  <ion-button fill="clear" (click)="themmau()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    &nbsp; Thêm
+  </ion-button>
+
+  <ion-item color="secondary">
+    <ion-label> Danh sách loại trừ </ion-label>
+  </ion-item>
+
+  <div class="stl-card" *ngIf="!rest.nhantin.danhsachloaitru.length">
+    Không có danh sách loại trừ
+  </div>
+
+  <div *ngIf="rest.nhantin.danhsachloaitru.length">
+    <div class="stl-card" *ngFor="let loaitru of rest.nhantin.danhsachloaitru">
+      <div class="boloaitru" (click)="xacnhanboloaitru(loaitru.id)"> <ion-icon name="close-outline"></ion-icon> </div>
+      {{loaitru.khachhang}} <br>
+      {{loaitru.dienthoai}} <br>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="save()">
+      Lưu
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="print()">
+      In thử
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div> -->
+
+  <ion-item>
+    <ion-label position="stacked"> html </ion-label>
+    <ion-textarea [autoGrow]="true" rows="20" [(ngModel)]="rest.temp.html"></ion-textarea>
+  </ion-item>
+
+  <div class="item-group">
+    <div class="item-header">
+      Các trường thay thế
+    </div>
+    <div [innerHTML]="replace" ></div>
+  </div>
+</ion-content>

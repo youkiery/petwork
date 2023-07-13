@@ -44,6 +44,7 @@ export class LoinhuanPage implements OnInit {
       this.rest.loinhuan.luong = resp.luong
       this.rest.loinhuan.tongluong = (Number(this.rest.loinhuan.luongcoban) + Number(this.rest.loinhuan.phucap)).toString()
       this.rest.loinhuan.khoitao = true
+      this.rest.loinhuan.anbangluong = resp.anbangluong
       this.locdanhsach()
     }, () => {
       this.rest.defreeze()
@@ -71,6 +72,7 @@ export class LoinhuanPage implements OnInit {
       this.rest.loinhuan.danhsach = resp.dulieunhanvien
       this.rest.loinhuan.luong = resp.luong
       this.rest.loinhuan.tongluong = (Number(this.rest.loinhuan.luongcoban) + Number(this.rest.loinhuan.phucap)).toString()
+      this.rest.loinhuan.anbangluong = resp.anbangluong
       this.locdanhsach()
       this.init = true
     }, () => {

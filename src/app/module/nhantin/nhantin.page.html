@@ -1,0 +1,101 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="rest.nhantin.thoigian" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="khoitao()">
+    </ion-datetime>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="text-center stl-card" *ngIf="!rest.nhantin.danhsachnhantin.length">
+    Hôm nay không có danh sách nhắc
+  </div>
+
+  <div *ngIf="rest.nhantin.danhsachnhantin.length">
+    <div class="stl-card" *ngIf="rest.nhantin.danggui || rest.nhantin.hoanthanh">
+      Đã gửi: {{rest.nhantin.bodem.dagui}}/{{rest.nhantin.bodem.tongcong}} <br>
+      Thành công: {{rest.nhantin.bodem.thanhcong}} <br>
+      Thất bại: {{rest.nhantin.bodem.thatbai}} <br>
+      Tin nhắn tiếp: {{chuyengiaysangphut(rest.nhantin.bodem.tieptheo)}} <br>
+      Thời gian: {{chuyengiaysangphut(rest.nhantin.bodem.batdau)}} ({{chuyengiaysangphut(rest.nhantin.bodem.min)}} ~ {{chuyengiaysangphut(rest.nhantin.bodem.max)}}) <br>
+      <ion-progress-bar [value]="rest.nhantin.bodem.tile"></ion-progress-bar>
+    </div>
+
+    <div [class]="classtrangthai[nhantin.trangthai]" *ngFor="let nhantin of rest.nhantin.danhsachnhantin; let i = index">
+      <div class="loaitru" (click)="xoanhantin(i)"> <ion-icon name="close-outline"></ion-icon> </div>
+      <div class="boloaitru" (click)="xacnhanthucong(i)"> <ion-icon name="checkmark-outline"></ion-icon> </div>
+      Khách hàng: {{nhantin.khachhang}} <ion-icon name="create-outline" (click)="xacnhandoiten(i)"></ion-icon> <br>
+      Điện thoại: {{nhantin.dienthoai}} <ion-icon name="create-outline" (click)="xacnhandoidienthoai(i)"></ion-icon> <br>
+      <div *ngIf="nhantin.trangthai != 1">
+        Loại nhắc: {{nhantin.loainhac}} <br>
+        Thời gian đến: {{nhantin.thoigiantoi}} <br>
+        Thời gian nhắc: {{nhantin.thoigiannhac}} <br>
+        Tin nhắn: <span [innerHTML]="themxuongdong(nhantin.mautin)"></span> <br>
+        <div *ngIf="nhantin.thoigian.length"> {{nhantin.thoigian}} </div>
+      </div>
+      <div *ngIf="nhantin.ghichu.length">
+        Ghi chú: {{nhantin.ghichu}} <br>
+      </div>
+      Trạng thái: {{trangthai[nhantin.trangthai]}} <br>
+      <div *ngIf="nhantin.thongbaoloi">
+        {{nhantin.thongbaoloi}}
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cauhinh()" *ngIf="rest.config.nhantin > 1">
+        <ion-icon name="documents-outline"></ion-icon>
+        <ion-label> Cấu hình </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="dagui()">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-label> Đã gửi </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="thongke()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.nhantin.danhsachnhantin.length && !rest.nhantin.danggui" (click)="guitinnhan()">
+        <ion-icon name="send-outline"></ion-icon>
+        <ion-label> Gửi tin </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.nhantin.danhsachnhantin.length && rest.nhantin.danggui" (click)="ngunggui()">
+        <ion-icon name="send"></ion-icon>
+        <ion-label> Ngừng gửi </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

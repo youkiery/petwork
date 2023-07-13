@@ -1,0 +1,37 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" *ngIf="!rest.temp.id" color="light" fill="clear" size="small" (click)="insert()">
+      Thêm
+    </ion-button>
+    <ion-button slot="end" *ngIf="rest.temp.id" color="light" fill="clear" size="small" (click)="update()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Nhà xe </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.temp.phone">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.address"></ion-textarea>
+  </ion-item>
+  <div *ngFor="let item of rest.temp.detail; let i = index">
+    <ion-item>
+      <ion-icon color="danger" name="close-circle" (click)="remove(i)"></ion-icon>
+      <ion-label position="stacked"> Gửi đến </ion-label>
+      <ion-input [(ngModel)]="rest.temp.detail[i].name">  </ion-input>
+    </ion-item>
+  </div>
+  <ion-icon name="add-circle" (click)="add()"></ion-icon>
+</ion-content>

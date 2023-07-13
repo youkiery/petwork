@@ -1,0 +1,25 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="item-group" *ngFor="let user of list">
+    <div class="item-header"> 
+      {{user.name}}
+      <ion-badge color="danger" *ngIf="user.list.length"> {{user.total}} con / {{user.list.length}} lần </ion-badge>
+    </div>
+    <div class="stl-card" *ngFor="let item of user.list">
+      Tên khách: {{item.customer.name}} <br>
+      Điện thoại: {{item.customer.phone}} <br>
+      Dịch vụ: {{item.option}} <br>
+      Số con: {{item.number}}
+      <div *ngIf="item.image.length" class="upperline">
+        <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+      </div>
+    </div>
+  </div>
+</ion-content>

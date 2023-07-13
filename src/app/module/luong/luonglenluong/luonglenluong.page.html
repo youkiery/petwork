@@ -1,0 +1,29 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="lenluong()">
+      Lên lương
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item *ngIf="rest.temp.lenluong">
+    <ion-label position="stacked"> Ngày lên lương kế tiếp </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.lenluong" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item *ngIf="rest.temp.hopdong">
+    <ion-label position="stacked"> Ký hợp đồng đến năm </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.hopdong" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+  <ion-item *ngIf="rest.temp.camket">
+    <ion-label position="stacked"> Ký cam kết đến năm </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.camket" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+</ion-content>

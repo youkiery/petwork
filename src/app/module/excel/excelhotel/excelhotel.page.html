@@ -1,0 +1,29 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="save()">
+      Lưu 
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngFor="let item of list; let i = index">
+    <ion-item class="item-label-class">
+      <ion-input [(ngModel)]="list[i].name" placeholder="Cân nặng">  </ion-input>
+    </ion-item>
+    <ion-item class="item-label-class">
+      <ion-input [(ngModel)]="list[i].price" placeholder="Giá tiền" (keyup)="change(i)">  </ion-input>
+    </ion-item>
+  </div>
+  <ion-item (click)="insert()">
+    <ion-avatar slot="start">
+      <img src="/assets/image/his-1.png">
+    </ion-avatar>
+    <ion-label> Thêm </ion-label>
+  </ion-item>
+
+</ion-content>

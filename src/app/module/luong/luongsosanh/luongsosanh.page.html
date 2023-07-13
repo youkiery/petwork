@@ -1,0 +1,58 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.luong.sosanh.thoigian" displayFormat="YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-button expand="full" (click)="sosanh()">
+    So sánh
+  </ion-button>
+
+  <ion-segment [(ngModel)]="rest.luong.sosanh.chedo">
+    <ion-segment-button value="luongcoban">
+      <ion-label> Lương cơ bản </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="luongthuong">
+      <ion-label> Lương thưởng </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="luongphucap">
+      <ion-label> Lương phụ cấp </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="item-group">
+    <div class="item-header">
+      {{chedo[rest.luong.sosanh.chedo]}}
+    </div>
+
+    <table>
+      <tr>
+        <th> Nhân viên </th>
+        <th class="text-center"> Tháng 2 </th>
+        <th class="text-center"> Tháng 3 </th>
+        <th class="text-center"> Tháng 4 </th>
+        <th class="text-center"> Tháng 5 </th>
+        <th class="text-center"> Tháng 6 </th>
+        <th class="text-center"> Tháng 7 </th>
+        <th class="text-center"> Tháng 8 </th>
+        <th class="text-center"> Tháng 9 </th>
+        <th class="text-center"> Tháng 10 </th>
+        <th class="text-center"> Tháng 11 </th>
+        <th class="text-center"> Tháng 12 </th>
+        <th class="text-center"> Tháng 1 </th>
+      </tr>
+      <tr *ngFor="let nhanvien of rest.luong.sosanh.danhsach">
+        <td> {{nhanvien.tennhanvien}} </td>
+        <td class="text-right" *ngFor="let luong of nhanvien.danhsach[rest.luong.sosanh.chedo]"> {{luong}} </td>
+      </tr>
+    </table>
+  </div>
+
+</ion-content>

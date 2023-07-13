@@ -1,0 +1,51 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="uploadcustomer()">
+      Tải lên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="avatar-box" (click)="upload()">
+    <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+  </div>
+  <div *ngIf="name.length" class="text-center">
+    {{name}}
+  </div>
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      (change)="file()">
+  </div>
+
+  <div class="stl-card">
+    <ion-list>
+      <ion-list-header>
+        Cấu hình cột dữ liệu
+      </ion-list-header>
+
+      <ion-item position="stacked">
+        <ion-label> Tên khách </ion-label>
+        <ion-input [(ngModel)]="rest.excel.config.name">  </ion-input>
+      </ion-item>
+      <ion-item position="stacked">
+        <ion-label> Điện thoại </ion-label>
+        <ion-input [(ngModel)]="rest.excel.config.phone">  </ion-input>
+      </ion-item>
+      <ion-item position="stacked">
+        <ion-label> Địa chỉ </ion-label>
+        <ion-input [(ngModel)]="rest.excel.config.address">  </ion-input>
+      </ion-item>
+    </ion-list>
+    <div class="upperline">
+      <ion-button (click)="save()" fill="clear">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

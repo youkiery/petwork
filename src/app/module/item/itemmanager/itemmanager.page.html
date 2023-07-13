@@ -1,0 +1,19 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'user'">
+    <div class="stl-card small" *ngFor="let item of rest.item.user; let i = index">
+      <div class="bei"> Tên hiển thị: {{item.name}} </div>
+      <div class="bei"> Họ tên: {{item.fullname}} </div>
+      <div class="bei"> Tài khoản: {{item.username}} </div>
+      <div class="bei"> Quản kho: {{item.storage}} </div>
+      <img class="icon" src="/assets/icon/update.png" (click)="update(i)">
+    </div>
+  </div>  
+</ion-content>

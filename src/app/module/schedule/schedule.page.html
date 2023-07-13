@@ -1,0 +1,185 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('schedule')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('/gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('/schedule/thongke')"
+    *ngIf="rest.config.schedule > 1">
+    <ion-fab-button>
+      <ion-icon name="stats-chart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="table">
+    <div class="text-center">
+      <div> Ngày hiện tại: {{time.timetodate(rest.schedule.time)}} </div>
+      <div *ngIf="rest.config.schedule < 2"> Số buổi có thể đăng ký trong tháng: {{rest.schedule.dadangky}} </div>
+      <div *ngIf="rest.config.schedule < 2"> Số buổi có thể hủy trong tháng: {{rest.schedule.cauhinh.huydangky - rest.schedule.dangky.huydangky}} </div>
+      <div *ngIf="rest.config.schedule < 2"> Số buổi có thể đăng ký thêm trong tháng: {{rest.schedule.cauhinh.dangkythem - rest.schedule.dangky.dangkythem}} </div>
+    </div>
+
+    <table style="font-size: 0.7em;" *ngIf="rest.config.schedule < 2">
+      <tr>
+        <td> Ngày </td>
+        <td> Thứ </td>
+        <td> Trực BV </td>
+        <td> Trực lưu bệnh </td>
+        <td> Nghỉ sáng </td>
+        <td> Nghỉ chiều </td>
+      </tr>
+      <tr *ngFor="let data of rest.schedule.data; let i = index" [class]="data.day == 'CN' ? 'lastweekuser' : ''">
+        <td> {{data.date}} </td>
+        <td> {{data.day}} </td>
+        <td (click)="reg(i, 0)" [class]="data.list[0].color"> {{data.list[0].name}} </td>
+        <td (click)="reg(i, 1)" [class]="data.list[1].color"> {{data.list[1].name}} </td>
+        <td (click)="reg(i, 2)" [class]="data.list[2].color"> {{data.list[2].name}} </td>
+        <td (click)="reg(i, 3)" [class]="data.list[3].color"> {{data.list[3].name}} </td>
+      </tr>
+    </table>
+
+    <div *ngIf="rest.config.schedule > 1">
+      <div scrolly="true">
+        <table style="font-size: 0.7em;" id="overflow">
+          <tr class="text-center">
+            <td> </td>
+            <td colspan="2" *ngFor="let ngay of rest.schedule.data['ngay']; let i = index"> {{ngay}} </td>
+          </tr>
+          <tr class="text-center">
+            <td> </td>
+            <td colspan="2" *ngFor="let thu of rest.schedule.data['thu']; let i = index"> {{thu}} </td>
+          </tr>
+          <tbody>
+            <tr class="text-center">
+              <th> Họ tên </th>
+              <td *ngFor="let buoi of rest.schedule.data['buoi']; let i = index"> {{buoi}} </td>
+            </tr>
+            <tr *ngFor="let dangky of rest.schedule.data['dangky']; let i = index">
+              <th> {{dangky.nhanvien}} </th>
+              <td *ngFor="let dulieu of dangky.danhsach; let j = index" (click)="reg2(i, j)" [class]="dulieu"> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ion-button size="small" [color]="rest.schedule.state ? 'warning' : 'medium'"
+        (click)="rest.schedule.state = 1; auto()">
+        <span> Lịch nghỉ </span>
+      </ion-button>
+      <ion-button size="small" [color]="!rest.schedule.state ? 'warning' : 'medium'"
+        (click)="rest.schedule.state = 0; auto()">
+        <span> Lịch trực </span>
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="stl-card" *ngIf="rest.schedule.quangay.length">
+    <div *ngFor="let thongtinquangay of rest.schedule.quangay">
+      {{thongtinquangay}}
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.schedule > 1">
+    <div class="stl-card" *ngIf="rest.schedule.dachotlich.batdau">
+      Đã chốt lịch {{rest.schedule.dachotlich.batdau}} - {{rest.schedule.dachotlich.ketthuc}}
+    </div>
+    
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Từ ngày </ion-label>
+      <ion-datetime [(ngModel)]="batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    </ion-item>
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Đến ngày </ion-label>
+      <ion-datetime [(ngModel)]="ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    </ion-item>
+  
+    <div style="width: 50%; display: inline-block;">
+      <ion-button expand="full" (click)="xemchotlich()">
+        Xen chốt lịch nghỉ
+      </ion-button>
+    </div>
+    <div style="width: 50%; display: inline-block;">
+      <ion-button expand="full" color="warning" (click)="chotlich()" [disabled]="!rest.schedule.filter.danhsach.length">
+        Chốt lịch nghỉ
+      </ion-button>
+    </div>
+    <!-- xác nhận để lấy ngày nghỉ nhân viên, nghỉ phạt, tổng nghỉ, tổng quá hạn -->
+
+    <!-- xác nhận để lưu csdl -->
+    <table>
+      <tr>
+        <th> Nhân viên </th>
+        <th> Nghỉ </th>
+        <th> Phạt ngày </th>
+        <th> Phạt lố </th>
+        <th> Tổng </th>
+        <th> Nghỉ lố </th>
+      </tr>
+      <tr *ngFor="let ngaynghi of this.rest.schedule.filter.danhsach; let i = index">
+        <td> {{ngaynghi.tennhanvien}} </td>
+        <td class="text-center"> {{ngaynghi.nghi}} </td>
+        <td class="text-center"> {{ngaynghi.nghiphat}} </td>
+        <td class="text-center"> {{ngaynghi.nghiphat2}} </td>
+        <td class="text-center"> {{ngaynghi.tongnghi}} </td>
+        <td class="text-center"> <ion-input [(ngModel)]="rest.schedule.filter.danhsach[i].nghilo"></ion-input> </td>
+      </tr>
+    </table>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeMonth(-1)">
+        <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+        <ion-label> Tháng trước </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeMonth(1)">
+        <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+        <ion-label> Tháng sau </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="register()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-label> Đăng ký </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cancel()">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-label> Hủy </ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button (click)="notify()">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-label> Thông báo </ion-label>
+        <ion-badge color="danger" *ngIf="rest.unread.kaizen"> {{rest.unread.kaizen}} </ion-badge>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

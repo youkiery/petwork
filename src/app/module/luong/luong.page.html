@@ -1,0 +1,81 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <ion-tab-button (click)="themluongthang()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    <ion-label> Lương </ion-label>
+  </ion-tab-button>
+  <ion-tab-button (click)="()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    <ion-label> Thêm tay </ion-label>
+  </ion-tab-button> -->
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+    
+    <ion-fab-list side="top">
+      <ion-fab-button color="secondary" (click)="themtay()"> Thêm <br> tay </ion-fab-button>
+      <ion-fab-button color="secondary" (click)="themluongthang()"> Lương </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div class="stl-card" *ngFor="let luong of rest.luong.danhsach; let i = index">
+    <div (click)="chitiet(luong.thoigian)">
+      Tháng: {{luong.thang}} <br>
+      Tổng nhân viên: {{luong.nhanvien}} <br>
+      Tiết kiệm: {{rest.comma(luong.tietkiem)}} <br>
+      Tổng lương: {{rest.comma(luong.tongluong)}} <br>
+      Trạng thái: {{trangthai[luong.trangthai]}}
+    </div>
+    <div class="upperline">
+      <div class="pos danger" *ngIf="luong.trangthai == '0'" (click)="capnhat(luong.id)">
+        cập nhật
+      </div>
+      <div class="pos red" (click)="xoa(i)">
+        xóa
+      </div>
+    </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.luong.danhsach.length">
+    Chưa có thông tin lương
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="mucchi()">
+        <ion-icon name="documents-outline"></ion-icon>
+        <ion-label> Mục chi </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="sosanh()">
+        <ion-icon name="git-compare-outline"></ion-icon>
+        <ion-label> So sánh </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="rest.navCtrl.navigateForward('/luong/nhanvien')">
+        <ion-icon name="people"></ion-icon>
+        <ion-label> 
+          Nhân viên
+          <ion-badge color="danger" *ngIf="rest.luong.chuy">{{rest.luong.chuy}}</ion-badge>
+         </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

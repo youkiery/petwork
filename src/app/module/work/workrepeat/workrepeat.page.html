@@ -1,0 +1,24 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let congviec of rest.work.danhsachlaplai; let i = index">
+    <div> Công việc: {{congviec.title}} </div>
+    <div> Ngày tạo: {{congviec.createtime}} </div>
+    <div> {{laplai[congviec.type]}} </div>
+    <span class="pos" *ngIf="congviec.danhmuc.length"> {{congviec.danhmuc}} </span>
+    <span class="pos" *ngIf="congviec.type > 0" (click)="capnhat(i)"> sửa </span>
+    <span class="pos red" *ngIf="congviec.type > 0" (click)="xoa(congviec.id)"> x </span>
+    <!-- lặp lại hằng ngày, hằng tháng, hằng năm -->
+  </div>
+  <div class="stl-card text-center" *ngIf="!rest.work.danhsachlaplai.length">
+    Không có công việc lặp lại
+  </div>
+</ion-content>

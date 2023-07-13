@@ -1,0 +1,55 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="vaccine">
+      <ion-label>
+        Vaccine
+        <ion-badge color="danger"> {{checkvaccine()}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="usg">
+      <ion-label>
+        Siêu âm
+        <ion-badge color="danger"> {{checkusg()}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segment == 'vaccine'">
+    <span *ngFor="let item of list">
+      <div class="stl-card" *ngIf="item.uncall.length || item.vaccine.length">
+        <div class="float-half">
+          {{item.name}}
+        </div>
+        <div class="float-half">
+          <div> Chưa gọi: <span [class]="item.uncall.length ? 'pinky' : ''" > {{item.uncall.length}} </span> </div>
+          <div> Chưa xác nhận: <span [class]="item.vaccine.length ? 'pinky' : ''" > {{item.vaccine.length}} </span> </div>
+        </div>
+      </div>
+    </span>
+  </div>
+
+  <div *ngIf="segment == 'usg'">
+    <span *ngFor="let item of list">
+      <div class="stl-card"
+        *ngIf="item.usg.length || item.prog.length || item.birth.length || item.unbirth.length">
+        <div class="float-half">
+          {{item.name}}
+        </div>
+        <div class="float-half">
+          <div> Chưa sinh: <span [class]="item.unbirth.length ? 'pinky' : ''" > {{item.unbirth.length}} </span> </div>
+          <div> Đã sinh: <span [class]="item.birth.length ? 'pinky' : ''" > {{item.birth.length}} </span> </div>
+          <div> Không thai: <span [class]="item.prog.length ? 'pinky' : ''" > {{item.prog.length}} </span> </div>
+          <div> Chưa xác nhận: <span [class]="item.usg.length ? 'pinky' : ''" > {{item.usg.length}} </span> </div>
+        </div>
+      </div>
+    </span>
+  </div>
+</ion-content>

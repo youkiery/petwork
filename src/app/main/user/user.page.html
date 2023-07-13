@@ -1,0 +1,51 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="rest.config.admin">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('admin')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="avatar-box text-center">
+    <ion-img src="assets/image/avatar.png"></ion-img>
+    <ion-text> {{rest.home.fullname}} </ion-text> <ion-icon name="create-outline" (click)="editName()"></ion-icon>
+  </div>
+  <ion-list>
+    <ion-item (click)="password = !password">
+      <ion-icon name="lock-open-outline"></ion-icon>
+      Đổi mật khẩu
+    </ion-item>
+    <div [hidden]="password">
+      <ion-item>
+        <ion-label position="stacked"> Mật khẩu cũ </ion-label>
+        <ion-input type="password" [(ngModel)]="oldpas"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Mật khẩu mới </ion-label>
+        <ion-input type="password" [(ngModel)]="newpas"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Xác nhận mật khẩu mới </ion-label>
+        <ion-input type="password" [(ngModel)]="verpas"> </ion-input>
+      </ion-item>
+      <ion-button color="secondary" fill="solid" expand="block" (click)="changePassword()">
+        Đổi mật khẩu
+      </ion-button>
+    </div>
+    
+    <!-- <ion-item *ngIf="rest.home.admin" (click)="change('doctor')">
+      <ion-icon name="people-circle-outline"></ion-icon>
+      Bác sĩ
+    </ion-item> -->
+
+    <ion-item (click)="rest.logout()">
+      <ion-icon name="exit-outline" color="danger"></ion-icon>
+      Đăng xuất
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,76 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="item-group item-group-bold" *ngFor="let nhanvien of rest.luong.chitiet">
+    <div class="item-header"> {{nhanvien.tennhanvien}} </div>
+
+    <table>
+      <tbody>
+        <tr>
+          <td colspan="3"> Ngày lập: {{nhanvien.ngaylap}} </td>
+          <td colspan="8" class="text-center"> <b> BẢNG TÔNG HỢP LƯƠNG TỰ ĐỘNG </b> </td>
+          <td colspan="3">  </td>
+        </tr>
+        <tr> <td colspan="14"></td> </tr>
+        <tr> 
+          <td> <b> Họ và tên </b> </td>
+          <td class="text-center"> <b> Tổng doanh thu </b> </td>
+          <td class="text-center"> <b> Lương </b> </td>
+          <td class="text-center"> <b> Thưởng </b> </td>
+          <td class="text-center"> <b> Phụ cấp + Hỗ trợ </b> </td>
+          <td class="text-center"> <b> Hotel </b> </td>
+          <td class="text-center"> <b> Nghỉ phép </b> </td>
+          <td class="text-center"> <b> Gửi tiết kiệm </b> </td>
+          <td class="text-center"> <b> Tổng lương </b> </td>
+          <td class="text-center"> <b> Thực nhận </b> </td>
+          <td colspan="4" rowspan="2"></td>
+        </tr>
+        <tr>
+          <td> <b> {{nhanvien.tennhanvien}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.doanhthu)}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.luongcung)}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma((nhanvien.luongthuong > 0 ? nhanvien.luongthuong : 0))}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.luongphucap)}} </b> </td>
+          <td class="text-right"> - </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.nghiphep)}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.tietkiem)}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.tongluong)}} </b> </td>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.thucnhan)}} </b> </td>
+        </tr>
+        <tr> <td colspan="14"></td> </tr>
+        <tr>
+          <td rowspan="2"> <b> Gửi tiết kiệm </b> </td>
+          <td> <b> Tổng tiền </b> </td>
+          <td class="text-center"> Tháng 2 </td>
+          <td class="text-center"> Tháng 3 </td>
+          <td class="text-center"> Tháng 4 </td>
+          <td class="text-center"> Tháng 5 </td>
+          <td class="text-center"> Tháng 6 </td>
+          <td class="text-center"> Tháng 7 </td>
+          <td class="text-center"> Tháng 8 </td>
+          <td class="text-center"> Tháng 9 </td>
+          <td class="text-center"> Tháng 10 </td>
+          <td class="text-center"> Tháng 11 </td>
+          <td class="text-center"> Tháng 12 </td>
+          <td class="text-center"> Tháng 1 </td>
+        </tr>
+        <tr>
+          <td class="text-right"> <b> {{rest.comma(nhanvien.tongtietkiem)}} </b> </td>
+          <td class="text-right" *ngFor="let tietkiem of nhanvien.dstietkiem"> {{rest.comma(tietkiem)}} </td>
+        </tr>
+        <tr>
+          <td> <b class="red-text"> Lợi nhuận từ cổ phần </b> </td>
+          <td class="text-right"> <b class="red-text"> {{rest.comma(nhanvien.tongcophan)}} </b> </td>
+          <td class="text-right red-text" *ngFor="let cophan of nhanvien.dscophan"> <span class="rest-text"> {{rest.comma(cophan)}} </span></td>
+        </tr>
+        <tr> <td colspan="14"></td> </tr>
+      </tbody>
+    </table>
+  </div>
+</ion-content>

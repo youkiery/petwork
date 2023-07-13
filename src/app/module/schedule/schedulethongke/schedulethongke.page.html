@@ -1,0 +1,28 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.schedule.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.schedule.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-button expand="full" (click)="thongke()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <div class="stl-card" *ngIf="danhsach.length">
+    <div *ngFor="let dangky of danhsach">
+      <div>{{dangky}}</div>
+    </div>
+  </div>
+  <div class="stl-card text-center" *ngIf="!danhsach.length">
+    Không có lịch sử
+  </div>
+</ion-content>

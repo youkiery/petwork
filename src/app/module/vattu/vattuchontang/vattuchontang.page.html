@@ -1,0 +1,26 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="themtang()">
+      Thêm tầng
+    </ion-button>
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="xacnhan()">
+      Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready && khoitao">
+  <div class="stl-card" *ngIf="rest.vattu.danhsachtang.length">
+    <ion-item *ngFor="let tang of rest.vattu.danhsachtang">
+      <ion-checkbox slot="start" [(ngModel)]="danhdau[tang.id]"></ion-checkbox>
+      <ion-label> {{tang.ten}} </ion-label>
+    </ion-item>
+  </div>
+  <div class="stl-card text-center" *ngIf="!rest.vattu.danhsachtang.length">
+    Hiện không có tầng để chọn
+  </div>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button *ngIf="rest.ain" slot="start" color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-buttons *ngIf="!rest.ain" slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-fab *ngIf="rest.config.admin == 1" slot="fixed" vertical="bottom" horizontal="end" (click)="insert()">
+    <ion-fab-button> Thêm </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-input placeholder="Từ khóa" [(ngModel)]="rest.manual.key" (keyup)="search()"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-select [(ngModel)]="rest.manual.cate" (ionChange)="search()">
+      <ion-select-option *ngFor="let item of cate.key; let i = index" [value]="item">
+        {{cate.name[i]}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngFor="let data of rest.manual.list">
+    <ion-list-header>
+      [{{data.name}}]
+    </ion-list-header>
+    <ion-item *ngFor="let index of data.list">
+      <ion-label (click)="open(index)">
+        {{rest.manual.data[index].title}}
+      </ion-label>
+      <ion-button *ngIf="rest.config.admin == 1" color="secondary" slot="end" fill="clear" (click)="update(index)">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="rest.config.admin == 1" color="danger" slot="end" fill="clear" (click)="remove(index)">
+        <ion-icon name="trash-bin-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

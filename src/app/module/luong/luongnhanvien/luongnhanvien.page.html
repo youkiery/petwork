@@ -1,0 +1,89 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-fab color="success" vertical="bottom" horizontal="end" slot="fixed" (click)="themnhanvien()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- <ion-segment [(ngModel)]="chedo">
+    <ion-segment-button value="mobile">
+      <ion-label>
+        Điện thoại
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="desktop">
+      <ion-label>
+        Máy tính
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="chedo == 'mobile'">
+    <div *ngFor="let nhanvien of rest.luong.nhanvien; let i = index" [class]="loplenluong[nhanvien.denlenluong]">
+      Nhân viên: {{nhanvien.ten}} <br>
+      Lương cơ bản: {{nhanvien.luongcoban}} <br>
+      Ngày ký hợp đồng: {{nhanvien.ngayky}} <br>
+      Ngày lên lương: <span [class]="nhanvien.denlenluong ? 'pos red' : ''" (click)="lenluong(i)"> {{nhanvien.lenluong}}
+      </span> <br>
+      Hợp đồng đến năm: <span [class]="nhanvien.denhopdong ? 'pos red' : ''" (click)="denhopdong(i)">
+        {{nhanvien.hopdong}} </span> <br>
+      Cam kết đến năm: <span [class]="nhanvien.dencamket ? 'pos red' : ''" (click)="dencamket(i)"> {{nhanvien.camket}}
+      </span> <br>
+      Tiết kiệm: {{nhanvien.tietkiem}} <br>
+      Cổ phần: {{nhanvien.cophan}}% <br>
+      <div class="upperline">
+        <div class="pos" (click)="capnhat(i)"> cập nhật </div>
+        <div class="pos red" (click)="xoa(nhanvien.userid)"> xóa </div>
+        <div class="pos" (click)="lenluong(i)"> lên lương </div>
+        <div class="pos" (click)="denhopdong(i)"> hợp đồng </div>
+        <div class="pos" (click)="dencamket(i)"> cam kết </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="chedo == 'desktop'">
+    <table *ngIf="rest.luong.nhanvien.length">
+      <tr>
+        <th> Nhân viên </th>
+        <th> Lương cơ bản </th>
+        <th> Số năm </th>
+        <th> Lương hiện tại </th>
+        <th> Năm cam kết </th>
+        <th> Ngày ký hợp đồng </th>
+        <th> Ngày tăng lương </th>
+        <th> Cổ phần </th>
+        <th> Tỉ lệ </th>
+        <th> Phụ cấp % </th>
+        <th> Phụ cấp cứng </th>
+      </tr>
+      <tr *ngFor="let nhanvien of rest.luong.nhanvien; let i = index" (click)="capnhat(i)">
+        <td> {{nhanvien.ten}} </td>
+        <td> {{nhanvien.luongcoban}} </td>
+        <td> {{nhanvien.sonam}} </td>
+        <td> {{nhanvien.luonghientai}} </td>
+        <td [class]="nhanvien.dencamket ? 'pinky' : ''"> {{nhanvien.camket}} </td>
+        <td> {{nhanvien.hopdong}} </td>
+        <td [class]="nhanvien.denlenluong ? 'pinky' : ''"> {{nhanvien.lenluong}} </td>
+        <td> {{nhanvien.cophan}}% </td>
+        <td> {{nhanvien.tile}}% </td>
+        <td> {{nhanvien.phucap}}% </td>
+        <td> {{nhanvien.phucap2}} </td>
+      </tr>
+    </table>
+    <div class="text-center">
+      click vào nhân viên để cập nhật
+    </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.luong.nhanvien.length">
+    Danh sách nhân viên trống
+  </div>
+</ion-content>

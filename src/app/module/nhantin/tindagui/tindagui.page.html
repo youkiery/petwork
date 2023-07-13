@@ -1,0 +1,31 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Hiện thị ngày </ion-label>
+    <ion-datetime [(ngModel)]="ngay" displayFormat="DD/MM/YYYY" max="2100" (ionChange)="khoitao()"> </ion-datetime>
+  </ion-item>
+
+  <div class="text-center stl-card" *ngIf="!danhsachdaguitin.length">
+    Hôm nay không có danh sách nhắc
+  </div>
+
+  <div *ngIf="danhsachdaguitin.length">
+    <div class="stl-card" *ngFor="let nhantin of danhsachdaguitin; let i = index">
+      Khách hàng: {{nhantin.khachhang}} <br>
+      Điện thoại: {{nhantin.dienthoai}} <br>
+      Loại nhắc: {{nhantin.loainhac}} <br>
+      Thời gian đến: {{nhantin.thoigiantoi}} <br>
+      Thời gian nhắc: {{nhantin.thoigiannhac}} <br>
+      Thời gian gửi: {{nhantin.thoigiangui}} <br>
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/done.png" (click)="done(nhantin.idvaccine)">
+    </div>
+  </div>
+</ion-content>

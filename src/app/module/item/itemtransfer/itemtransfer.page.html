@@ -1,0 +1,49 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="next()">
+      Tiếp
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngFor="let item of list; let i = index" [class]="item.done ? 'stl-card green' : 'stl-card'">
+    <div class="col-xs-4" *ngIf="!item.done">
+      <img class="small-thumbnail" [src]="item.image[0].length ? item.image[0] : '/assets/image/no-image.png'">
+    </div>
+    <div class="col-xs-8">
+      <div *ngIf="!item.done">
+        Mã hàng: {{item.code}}
+      </div>
+      <div>
+        Tên hàng: {{item.name}}
+      </div>
+      <div *ngIf="!item.done">
+        Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img
+          src="/assets/icon/storage-xs.png">, {{item.border}} <img src="/assets/icon/limit.png"> <br>
+      </div>
+      <div *ngIf="item.position.length && !item.done">
+        Vị trí: <div class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)">
+          {{pos.name}}
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="upperline text-center">
+      <div *ngIf="!item.done">
+        <div class="pos" (click)="change(i, -10)"> -10 </div>
+        <div class="pos" (click)="change(i, -5)"> -5 </div>
+        <div class="pos" (click)="change(i, -1)"> -1 </div>
+        <div class="pos" (click)="change(i, 1)"> Số lượng: {{item.number}} </div>
+        <div class="pos" (click)="change(i, 5)"> +5 </div>
+        <div class="pos" (click)="change(i, 10)"> +10 </div>
+      </div>
+      <div class="pos green" (click)="list[i].done = !list[i].done"> đã lấy </div>
+      <div class="pos red" (click)="remove(i)"> xóa </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,85 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button slot="start" color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title *ngIf="rest.action == 'admin'" style="text-align: center;">
+      {{username}}
+    </ion-title>
+    <ion-button *ngIf="rest.action == 'admin'" slot="end" (click)="save()" color="light" fill="clear" size="small">
+      Lưu
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'drug'" slot="end" (click)="drugUpdate()" color="light" fill="clear"
+      size="small">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'drug'" class="pad">
+    <div class="endline-text">
+      <div> <b>Tên:</b></div>
+      {{rest.drug.detail.name}}
+    </div>
+    <div class="endline-text">
+      <div> <b>Liều dùng:</b> </div>
+      {{rest.drug.detail.limits}}
+    </div>
+    <div class="endline-text">
+      <div> <b> Công dụng: </b> </div>
+      {{rest.drug.detail.effect}}
+    </div>
+    <div class="endline-text">
+      <div> <b> Tác dụng phụ: </b> </div>
+      {{rest.drug.detail.sideeffect}}
+    </div>
+    <div class="endline-text">
+      <div> <b> Cơ chế hoạt động: </b> </div>
+      {{rest.drug.detail.mechanic}}
+    </div>
+    <div *ngIf="rest.drug.detail.image.length" class="endline-text end">
+      <img class="thumbnail-sm" *ngFor="let image of rest.drug.detail.image" [src]="image" (click)="rest.view(image)">
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'admin'">
+    <ion-item>
+      <ion-label position="stacked"> Họ và tên </ion-label>
+      <ion-input [(ngModel)]="rest.temp.fullname">  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tên hiển thị </ion-label>
+      <ion-input [(ngModel)]="rest.temp.name">  </ion-input>
+    </ion-item>
+    <ion-item *ngFor="let item of list">
+      {{item.name}}: {{level[module[item.module]]}}
+      <ion-button size="small" shape="round" slot="start" color="warning" (click)="change(item.module, -1)">
+        <ion-icon name="caret-down-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small" shape="round" slot="end" color="secondary" (click)="change(item.module, 1)">
+        <ion-icon name="caret-up-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.action == 'his'">
+    <img [src]="rest.temp">
+  </div>
+
+  <div *ngIf="rest.action == 'spa'">
+    <img [src]="rest.temp">
+  </div>
+
+  <div *ngIf="rest.action == 'item'">
+    <img [src]="rest.temp">
+  </div>
+
+  <div *ngIf="rest.action == 'manual'">
+    <img [src]="rest.temp">
+  </div>
+
+  <div *ngIf="rest.action == 'kaizen'">
+    <img [src]="rest.temp">
+  </div>
+</ion-content>

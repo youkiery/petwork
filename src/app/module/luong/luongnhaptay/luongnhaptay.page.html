@@ -1,0 +1,37 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="them()">
+      Thêm
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Ngày chốt lương </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <div class="item-group" *ngFor="let nhanvien of rest.temp.danhsach; let i = index">
+    <div class="item-header">
+      {{nhanvien.tennhanvien}}
+    </div>
+
+    <div>
+      <ion-item>
+        <ion-label position="stacked"> Tiết kiệm </ion-label>
+        <ion-input [(ngModel)]="nhanvien.tietkiem" (ionChange)="nhaptien(i, 'tietkiem')"> </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Cổ phần </ion-label>
+        <ion-input [(ngModel)]="nhanvien.cophan" (ionChange)="nhaptien(i, 'cophan')"> </ion-input>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

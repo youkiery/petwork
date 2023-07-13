@@ -1,0 +1,26 @@
+.pos.side {
+  background: pink;
+  float: right;
+}
+
+ion-item {
+  position: fixed;
+  width: 100%;
+  bottom: 1px;
+}
+
+.pos {
+  display: block;
+  width: 50%;
+  clear: both;
+}
+
+.posttime {
+  font-size: 0.7em;
+  margin-left: 10px;
+  clear: both;
+}
+
+.x .posttime {
+  float: right;
+}

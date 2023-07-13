@@ -1,0 +1,29 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="themtang()">
+      Thêm tầng
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.vattu.danhsachtang.length">
+    <div class="stl-card" *ngFor="let tang of rest.vattu.danhsachtang; let i = index">
+      <b> {{tang.ten}} </b> <br>
+      Tổng số vật tư: {{tang.soluong}} <br>
+      Số loại vật tư: {{tang.vattu}} <br>
+      Tổng giá trị: {{tang.giatri}} 
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoa(i)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhat(i)">
+      </div>
+    </div>
+  </div>
+  <div class="stl-card text-center" *ngIf="!rest.vattu.danhsachtang.length">
+    Hiện không có tầng nào
+  </div>
+</ion-content>

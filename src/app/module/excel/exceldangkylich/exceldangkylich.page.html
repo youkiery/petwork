@@ -1,0 +1,94 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card">
+    <div class="stl-card-header">
+      Giới hạn đăng ký từng ngày trong tuần
+    </div>
+
+    <div *ngFor="let cauhinh of dulieu; let i = index">
+      <ion-item *ngIf="cauhinh.thu.length">
+        <ion-checkbox slot="start" [(ngModel)]="dulieu[i].phat"> </ion-checkbox>
+        <ion-label slot="start"> {{thu[i]}} </ion-label>
+        <ion-input [(ngModel)]="dulieu[i].gioihan"> </ion-input>
+      </ion-item>
+    </div>
+
+    <ion-button color="secondary" fill="clear" size="small" (click)="luu()">
+      <ion-icon name="save-outline"></ion-icon>
+      &nbsp; Lưu
+    </ion-button>
+  </div>
+
+  <div class="stl-card">
+    <div class="stl-card-header">
+      Giới hạn thời gian đăng ký
+    </div>
+
+    <ion-item (click)="thaydoikhoathoigian()">
+      <ion-label> {{trangthai[khoathoigian]}} </ion-label>
+      <ion-icon slot="start" [name]="khoathoigian ? 'checkmark-outline' : ''"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="khoathoigian">
+      <ion-label position="stacked"> Thời gian mở </ion-label>
+      <ion-datetime [(ngModel)]="thoigianmo" displayFormat="HH:mm">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item *ngIf="khoathoigian">
+      <ion-label position="stacked"> Thời gian đóng </ion-label>
+      <ion-datetime [(ngModel)]="thoigiandong" displayFormat="HH:mm">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-button slot="end" color="secondary" fill="clear" size="small" (click)="luuthoigian()">
+      <ion-icon name="save-outline"></ion-icon>
+      &nbsp; Lưu
+    </ion-button>
+  </div>
+
+  <div class="stl-card">
+    <div class="stl-card-header">
+      Giới hạn thay đổi đăng ký trong tháng
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked"> Số buổi hủy đăng ký </ion-label>
+      <ion-input type="number" [(ngModel)]="huydangky"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked"> Số buổi đăng ký thêm </ion-label>
+      <ion-input type="number" [(ngModel)]="dangkythem"></ion-input>
+    </ion-item>
+
+    <ion-button slot="end" color="secondary" fill="clear" size="small" (click)="luudangky()">
+      <ion-icon name="save-outline"></ion-icon>
+      &nbsp; Lưu
+    </ion-button>
+  </div>
+
+  <div class="stl-card">
+    <div class="stl-card-header">
+      Chốt lịch theo
+    </div>
+
+    <ion-item (click)="thaydoichotlich(0)">
+      <ion-label>Theo tuần</ion-label>
+      <ion-icon *ngIf="rest.home.chotlich == '0'" slot="start" name="checkmark-outline" color="success"></ion-icon>
+      <ion-icon *ngIf="rest.home.chotlich == '1'" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item (click)="thaydoichotlich(1)">
+      <ion-label>Theo tháng</ion-label>
+      <ion-icon *ngIf="rest.home.chotlich == '0'" slot="start"></ion-icon>
+      <ion-icon *ngIf="rest.home.chotlich == '1'" slot="start" name="checkmark-outline" color="success"></ion-icon>
+    </ion-item>
+  </div>
+</ion-content>

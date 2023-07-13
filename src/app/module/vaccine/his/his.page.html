@@ -1,0 +1,35 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="rest.back()">
+      Thêm mới
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card">
+    Chủ nuôi: {{rest.temp.name}} <br>
+    Điện thoại: {{rest.temp.phone}}
+  </div>
+  <div class="stl-card blue">
+    Chọn thú cưng đến tái chủng
+  </div>
+  <div *ngFor="let item of rest.vaccine.old; let i = index" [class]="status[item.status]">
+    <div>
+      Thú cưng: {{item.petname}} <br>
+      Loại nhắc: {{item.vaccine}} <br>
+      Ngày đến: {{item.cometime}} <br>
+      Ngày nhắc: {{item.calltime}} <br>
+      Ghi chú: {{item.note}} <br>
+      <span *ngIf="item.called"> Gọi nhắc cuối: {{item.called}} <br> </span>
+      Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
+    </div>
+    <ion-button color="secondary" (click)="done(i)">
+      Tái chủng
+    </ion-button>
+  </div>
+</ion-content>

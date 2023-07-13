@@ -1,0 +1,457 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="rest.taichinh.thoigian" displayFormat="MM/YYYY" max="2100"
+      (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
+  <div class="stl-card">
+    Tổng thu: {{rest.taichinh.thongke.tongthu}} <br>
+    + Tổng thu tiền mặt: {{rest.taichinh.thongke.tienmat}} <br>
+    + Tổng thu ngân hàng: {{rest.taichinh.thongke.nganhang}} <br>
+    Tổng chi: {{rest.taichinh.thongke.tongchi}} <br>
+    + Chi cố định: {{rest.taichinh.thongke.chicodinh}} <br>
+    + Chi thường xuyên: {{rest.taichinh.thongke.chithuongxuyen}} <br>
+    + Chi lương thưởng: {{rest.taichinh.thongke.chiluongthuong}} <br>
+    + Chi nhà cung cấp: {{rest.taichinh.thongke.chinhacungcap}} <br>
+    + Chi tài sản cố định: {{rest.taichinh.thongke.chitaisan}} <br>
+    Tổng khách nợ: {{rest.taichinh.thongke.tongkhachno}} <br>
+    Tổng nợ nhà cung cấp: {{rest.taichinh.thongke.tongnonhacungcap}} <br>
+    Tổng tồn kho: {{rest.taichinh.thongke.tongtaisan}} <br>
+    + Tổng nhà cung cấp nợ kho: {{rest.taichinh.thongke.tongnccno}} <br>
+    Tổng lợi nhuận cổ đông: {{rest.taichinh.thongke.loinhuan}} <br>
+  </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-segment [(ngModel)]="rest.taichinh.tab" (click)="toggle = false">
+    <ion-segment-button value="0">
+      <ion-label>
+        Tiền thu
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Tiền chi
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>
+        Quỹ nợ
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="rest.taichinh.tab == '0'">
+    <div *ngIf="toggle">
+      <div id="pwa" style="display: none;">
+        <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked"> Tiền mặt </ion-label>
+        <ion-input [(ngModel)]="rest.temp.tienmat" (keyup)="nhaptien('tienmat')"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Ngân hàng </ion-label>
+        <ion-input [(ngModel)]="rest.temp.nganhang" (keyup)="nhaptien('nganhang')"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Thời gian </ion-label>
+        <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+
+      <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+      <span class="thumbnail-box" *ngFor="let item of rest.temp.hinhanh; let i = index">
+        <span class="thumbnail-box-icon" (click)="xoaanh(i)"> x </span>
+        <img class="thumbnail" [src]="item">
+      </span>
+
+      <ion-button expand="full" color="success" (click)="xacnhanthemthu()">
+        <span *ngIf="rest.temp.id"> Cập nhật </span>
+        <span *ngIf="!rest.temp.id"> Thêm </span>
+      </ion-button>
+    </div>
+
+    <div class="stl-card text-center" *ngIf="!rest.taichinh.danhsach.length">
+      Không có thông tin tháng này
+    </div>
+
+    <div class="stl-card" *ngFor="let thuchi of rest.taichinh.danhsach; let i = index">
+      Ngày: {{thuchi.thoigian}} <br>
+      Tiền mặt: {{this.rest.comma(thuchi.tienmat)}} <br>
+      Ngân hàng: {{this.rest.comma(thuchi.nganhang)}} <br>
+      <div class="upperline" *ngIf="thuchi.hinhanh.length"></div>
+      <img class="thumbnail-sm" *ngFor="let image of thuchi.hinhanh" [src]="image" (click)="rest.view(image)">
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/delete.png" (click)="xacnhanxoathu(thuchi.id)">
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhatthu(i)">
+    </div>
+  </div>
+
+  <div *ngIf="rest.taichinh.tab == '1'">
+    <div *ngIf="toggle">
+      <ion-item>
+        <ion-label position="stacked"> Thời gian </ion-label>
+        <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Nhóm chi: </ion-label>
+        <ion-button slot="end" color="success" (click)="themnhomchi()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-radio-group [(ngModel)]="rest.temp.loaichi" [value]="rest.temp.loaichi" [disabled]="rest.temp.id">
+        <ion-item>
+          <ion-radio slot="start" value="0"></ion-radio>
+          <ion-label> Chi cố định </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="-1"></ion-radio>
+          <ion-label> Chi vật tư </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="-2"></ion-radio>
+          <ion-label> Chi nhà cung cấp </ion-label>
+        </ion-item>
+        <ion-item *ngFor="let nhomchi of rest.taichinh.danhsachloaichi; let i = index">
+          <ion-radio slot="start" [value]="nhomchi.id" (click)="thaydoiloaichi(i)"></ion-radio>
+          <ion-label> {{nhomchi.ten}} </ion-label>
+          <ion-button color="danger" size="small" slot="end" (click)="xoanhomchi(nhomchi.id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-radio-group>
+
+      <div *ngIf="rest.temp.loaichi == '0'">
+        <!-- chỉ cần nhập vào là được -->
+        <ion-item>
+          <ion-label position="stacked"> Loại chi </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[0].loaichi"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Tiền chi </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[0].giatri" (keyup)="nhapdulieuchi('giatri', 0)"> </ion-input>
+        </ion-item>
+      </div>
+
+      <div *ngIf="rest.temp.loaichi == '-1'">
+        <!-- lấy từ bên vật tư sang, cần danh sách tầng -->
+        <ion-item>
+          <ion-label position="stacked"> Tên </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[1].ten"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Đơn vị </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[1].donvi"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Số lượng </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[1].soluong" (keyup)="nhapdulieuchi('soluong', 1)"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Giá trị </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[1].giatri" (keyup)="nhapdulieuchi('giatri', 1)"> </ion-input>
+        </ion-item>
+        <div *ngIf="!rest.temp.id">
+          <ion-item>
+            <ion-label position="stacked"> Thuộc tầng: </ion-label>
+            <ion-button slot="end" color="success" (click)="themtang()">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item *ngFor="let tang of rest.taichinh.danhsachtang">
+            <ion-checkbox slot="start" [(ngModel)]="rest.temp.dulieu[1].danhdau[tang.id]"></ion-checkbox>
+            <ion-label> {{tang.ten}} </ion-label>
+            <!-- <ion-button color="danger" size="small" slot="end" (click)="xoatang(tang.id)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button> -->
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-label position="stacked"> Ghi chú </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[1].ghichu"> </ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="rest.temp.loaichi == '-2'">
+        <!-- lấy từ nhà cung cấp, nếu thanhtoan > 0 => chi -->
+        <ion-item>
+          <ion-label position="stacked"> Nội dung </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[2].noidung"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Giá trị </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[2].giatri" (keyup)="nhapdulieuchi('giatri', 2)"> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"> Nhà cung cấp: </ion-label>
+          <ion-button slot="end" color="secondary" (click)="toggletype = !toggletype">
+            <ion-icon [name]="toggletype ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="success" (click)="themnhacungcap()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <div *ngIf="toggletype">
+          <ion-radio-group [(ngModel)]="rest.temp.dulieu[2].idnhacungcap" [value]="rest.temp.dulieu[2].idnhacungcap">
+            <ion-item *ngFor="let ncc of rest.taichinh.danhsachnhacungcap;">
+              <ion-radio slot="start" [value]="ncc.id"></ion-radio>
+              <ion-label> {{ncc.ten}} </ion-label>
+              <ion-button color="danger" size="small" slot="end" (click)="xoanhacungcap(ncc.id)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-radio-group>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked"> Ghi chú </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[2].ghichu"> </ion-input>
+        </ion-item>
+      </div>
+
+      <div *ngIf="kiemtrachikhac(rest.temp.loaichi)">
+        <ion-item>
+          <ion-label position="stacked"> Giá trị </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[3].giatri" (keyup)="nhapdulieuchi('giatri', 3)"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Loại chi: </ion-label>
+          <ion-button slot="end" color="secondary" (click)="toggletype = !toggletype">
+            <ion-icon [name]="toggletype ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="success" (click)="themloaichi()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div *ngIf="toggletype">
+          <ion-radio-group [(ngModel)]="rest.temp.dulieu[3].idloaichi" [value]="rest.temp.dulieu[3].idloaichi">
+            <ion-item *ngFor="let loaichi of rest.taichinh.danhsachloaichi[thutu].danhsach">
+              <ion-radio slot="start" [value]="loaichi.id"></ion-radio>
+              <ion-label> {{loaichi.ten}} </ion-label>
+              <ion-button color="danger" size="small" slot="end" (click)="xoaloaichi(loaichi.id)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-radio-group>
+        </div>
+        <ion-item>
+          <ion-label position="stacked"> Ghi chú </ion-label>
+          <ion-input [(ngModel)]="rest.temp.dulieu[3].ghichu"> </ion-input>
+        </ion-item>
+      </div>
+
+      <ion-button expand="full" color="success" (click)="xacnhanthemchi()">
+        <span *ngIf="rest.temp.id"> Cập nhật </span>
+        <span *ngIf="!rest.temp.id"> Thêm </span>
+      </ion-button>
+    </div>
+
+    <div class="stl-card green" (click)="chitiet(0)">
+      <b> Chi cố định </b> <br>
+      Số lượt chi: {{rest.comma(rest.taichinh.danhsachchi[0].lanchi)}} <br>
+      Tổng chi: {{rest.comma(rest.taichinh.danhsachchi[0].tongchi)}} <br>
+    </div>
+
+    <div *ngIf="hienchi[0]">
+      <div class="stl-card" *ngFor="let chi of rest.taichinh.danhsachchi[0].danhsach; let i = index">
+        Loại chi: {{chi.loaichi}} <br>
+        Tiền chi: {{rest.comma(chi.giatri)}}
+        <div class="upperline"></div>
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoachi(chi.id, 0)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhatchicodinh(i)">
+      </div>
+    </div>
+
+    <div class="stl-card green" (click)="chitiet(1)">
+      <b> Chi vật tư (tài sản cố định) </b> <br>
+      Số lượt chi: {{rest.comma(rest.taichinh.danhsachchi[1].lanchi)}} <br>
+      Tổng chi: {{rest.comma(rest.taichinh.danhsachchi[1].tongchi)}} <br>
+    </div>
+
+    <div *ngIf="hienchi[1]">
+      <div class="stl-card" *ngFor="let vattu of rest.taichinh.danhsachchi[1].danhsach; let i = index">
+        Vật tư: {{vattu.ten}} <span *ngIf="vattu.donvi.length"> ({{vattu.donvi}}) </span> <br>
+        Ngày mua: {{vattu.thoigian}} <br>
+        Số lượng mua: {{vattu.soluong}} <br>
+        <div *ngIf="vattu.giatri != '0'"> Đơn giá: {{rest.comma(vattu.giatri)}} </div>
+        Tổng giá trị: {{rest.comma(vattu.tong)}}đ <span *ngIf="vattu.tile > 0"> ({{vattu.tile}}%) </span> <br>
+        <div *ngIf="vattu.ghichu.length">
+          Ghi chú: {{vattu.ghichu}}
+        </div>
+        <div class="upperline"></div>
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoachi(vattu.id, 1)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhatvattu(i)">
+      </div>
+    </div>
+
+    <div class="stl-card green" (click)="chitiet(2)">
+      <b> Chi nhà cung cấp </b> <br>
+      Số lượt chi: {{rest.comma(rest.taichinh.danhsachchi[2].lanchi)}} <br>
+      Tổng chi: {{rest.comma(rest.taichinh.danhsachchi[2].tongchi)}} <br>
+    </div>
+
+    <div *ngIf="hienchi[2]">
+      <div class="stl-card" *ngFor="let chi of rest.taichinh.danhsachchi[2].danhsach; let i = index">
+        Nhà cung cấp: {{chi.nhacungcap}} <br>
+        Tiền chi: {{rest.comma(chi.giatri)}} <br>
+        Nội dung: {{chi.noidung}} <br>
+        Thời gian: {{chi.thoigian}} <br>
+        <div *ngIf="chi.ghichu.length"> Ghi chú: {{rest.comma(chi.giatri)}} </div>
+        <div class="upperline"></div>
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoachi(chi.id, 2)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhatchincc(i)">
+      </div>
+    </div>
+
+    <div *ngFor="let dschi of rest.taichinh.danhsachchi[3]; let i = index">
+      <div class="stl-card green" (click)="chitiet(3, i)">
+        <b> {{dschi.ten}} </b> <br>
+        Số lượt chi: {{rest.comma(dschi.lanchi)}} <br>
+        Tổng chi: {{rest.comma(dschi.tongchi)}} <br>
+      </div>
+
+      <div *ngIf="hienchi[3][i]">
+        <div class="stl-card" *ngFor="let chi of rest.taichinh.danhsachchi[3][i].danhsach; let j = index">
+          Loại chi: {{chi.loaichi}} <br>
+          Tiền chi: {{rest.comma(chi.giatri)}} <br>
+          Thời gian: {{chi.thoigian}} <br>
+          <div *ngIf="chi.ghichu.length"> Ghi chú: {{rest.comma(chi.giatri)}} </div>
+          <div class="upperline"></div>
+          <img class="icon" src="/assets/icon/delete.png" (click)="xoachi(chi.id, 3)">
+          <img class="icon" src="/assets/icon/update.png" (click)="capnhatchi(j, dschi.id)">
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="stl-card text-center" *ngIf="!rest.taichinh.danhsachchi.length">
+      Không có thông tin tháng này
+    </div> -->
+  </div>
+
+  <div *ngIf="rest.taichinh.tab == '2'">
+    <div *ngIf="toggle">
+      <ion-item>
+        <ion-label position="stacked"> Nội dung </ion-label>
+        <ion-input [(ngModel)]="rest.temp.noidung"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Giá trị </ion-label>
+        <ion-input [(ngModel)]="rest.temp.giatri" (keyup)="nhaptienncc('giatri')"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Nhà cung cấp: </ion-label>
+        <ion-button slot="end" color="secondary" (click)="toggletype = !toggletype">
+          <ion-icon [name]="toggletype ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" color="success" (click)="themnhacungcap()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div *ngIf="toggletype">
+        <ion-radio-group [(ngModel)]="rest.temp.idnhacungcap" [value]="rest.temp.idnhacungcap">
+          <ion-item *ngFor="let ncc of rest.taichinh.danhsachnhacungcap;">
+            <ion-radio slot="start" [value]="ncc.id"></ion-radio>
+            <ion-label> {{ncc.ten}} </ion-label>
+            <ion-button color="danger" size="small" slot="end" (click)="xoanhacungcap(ncc.id)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked"> Thời gian </ion-label>
+        <ion-datetime [(ngModel)]="rest.temp.thoigian" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Ghi chú </ion-label>
+        <ion-input [(ngModel)]="rest.temp.ghichu"> </ion-input>
+      </ion-item>
+
+      <ion-button expand="full" color="success" (click)="xacnhanthemnoncc()">
+        <span *ngIf="rest.temp.id"> Cập nhật </span>
+        <span *ngIf="!rest.temp.id"> Thêm </span>
+      </ion-button>
+    </div>
+
+    <div class="stl-card text-center" *ngIf="!rest.taichinh.danhsachncc.length">
+      Không có thông tin tháng này
+    </div>
+
+    <div class="stl-card" *ngFor="let ncc of rest.taichinh.danhsachncc; let i = index">
+      Nhà cung cấp: {{ncc.ten}} <br>
+      Nội dung: {{ncc.noidung}} <br>
+      Tổng nợ: {{rest.comma(ncc.giatri)}} <br>
+      Thời gian: {{ncc.thoigian}}
+      <div *ngIf="ncc.ghichu.length">
+        Ghi chú: {{ncc.ghichu}}
+      </div>
+
+      <div class="upperline"> </div>
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoanoncc(ncc.id)">
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhatnoncc(i)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="themthu()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thu </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="themchi()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Chi </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="themncc()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Nợ NCC </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="import()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Cấu hình/Import </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
+
+<!-- <ion-fab color="success" vertical="bottom" horizontal="end" slot="fixed" (click)="them()">
+  <ion-fab-button>
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->

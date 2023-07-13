@@ -1,0 +1,183 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img *ngIf="rest.vaccine.type == 'usg'" src="assets/icon/manual.png" (click)="rest.goManual('usg')"></ion-img>
+      <ion-img *ngIf="rest.vaccine.type == 'vaccine'" src="assets/icon/manual.png" (click)="rest.goManual('vaccine')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="secondary">
+    <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.vaccine.keyword"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
+  </ion-item>
+
+  <ion-item *ngIf="rest.config.vaccine > 1">
+    <span (click)="docs()" *ngIf="rest.home.default.docscover.length">
+      Bác sĩ: {{rest.home.default.docscover}}
+    </span>
+    <span (click)="docs()" *ngIf="!rest.home.default.docscover.length">
+      Click lọc theo nhân viên
+    </span>
+    <ion-icon name="close-circle" color="danger" slot="end" (click)="cleardocs()"></ion-icon>
+  </ion-item>
+
+  <ion-segment [(ngModel)]="rest.vaccine.type">
+    <ion-segment-button value="vaccine">
+      <ion-label>
+        Vaccine
+        <ion-badge color="danger"> {{rest.vaccine.uncalled}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="usg">
+      <ion-label>
+        Siêu âm
+        <ion-badge color="danger"> {{rest.usg.list[0].length}}
+        </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="rest.vaccine.type == 'vaccine'">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label>
+          Chưa gọi
+          <ion-badge color="danger"> {{rest.vaccine.uncalled}} </ion-badge>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>
+          Đã gọi
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-refresher slot="fixed" (ionRefresh)="filterR($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div *ngFor="let item of this.rest.vaccine.list[segment]; let i = index"
+      [class]="item['over'] ? 'stl-card red' : status[item['status']]">
+      <div class="col-xs-6">
+        Tên khách: {{item['name']}} <br>
+        Điện thoại: {{item['phone']}} <a [href]="'tel:' + item.phone"> <ion-icon name="call"></ion-icon> </a> <br>
+        Ngày nhắc: {{item['calltime']}} <br>
+      </div>
+      <div class="col-xs-6">
+        Thú cưng: {{item['petname']}} <br>
+        Địa chỉ: {{item['address']}} <br>
+        Khách đến: {{item['cometime']}} <br>
+      </div>
+      <div>
+        Loại nhắc: {{item['vaccine']}} <br>
+        Người tiêm: {{item['doctor']}} <br>
+        <div *ngIf="item['called'] != '-'">
+          Đã gọi:
+          <span [class]="item['called'] == 'Hôm hay đã gọi' ? 'greening' : 'weight'">
+            {{item['called']}}
+          </span> <span *ngIf="item.status == 1"> khách không bắt máy </span> <span *ngIf="item.status == 2 && item.called != 'Hôm hay đã gọi'"> đã gọi nhưng chưa tới </span> <br>
+        </div>
+      </div>
+      <div class="upperline">
+        <div *ngIf="item.note.length">Ghi chú: {{item.note}}</div>
+      </div>
+      <img *ngIf="item.status < 3 && item.called == '-'" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+      <img *ngIf="item.status < 3 && item.called == '-'" class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
+      <img *ngIf="item.status < 3" class="icon" src="/assets/icon/delete.png" (click)="dead(i)">
+      <img *ngIf="rest.config.vaccine > 1" class="icon" src="/assets/icon/clean.png" (click)="xacnhandanhsachloaitru(i)">
+      <!-- <img class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/done.png" (click)="done(i)"> -->
+      <img class="right" *ngIf="rest.config.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
+    </div>
+  </div>
+
+  <div *ngIf="rest.vaccine.type == 'usg'">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label>
+          Chưa gọi
+          <ion-badge color="danger"> {{rest.usg.list[0].length}} </ion-badge>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>
+          Đã gọi
+          <ion-badge color="danger"> {{rest.usg.list[1].length}} </ion-badge>
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-refresher slot="fixed" (ionRefresh)="filterR($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div *ngFor="let item of this.rest.usg.list[segment]; let i = index" [class]="ustatus[item['over']]">
+      <div class="col-xs-6">
+        Tên khách: {{item['name']}} <br>
+        Điện thoại: {{item['phone']}} <a [href]="'tel:' + item.phone"> <ion-icon name="call"></ion-icon> </a> <br>
+        Địa chỉ: {{item['address']}} <br>
+      </div>
+      <div class="col-xs-6">
+        Ngày đến: {{item['cometime']}} <br>
+        <span *ngIf="item['number'] > 1 && item['status'] < 4"> Dự sinh: {{item['calltime']}} <br> </span>
+        <span *ngIf="item['number'] > 1 && item['status'] > 3"> Ngày sinh: {{item['calltime']}} <br> </span>
+        <span *ngIf="item['number'] > 0"> Số thai: {{item['number']}} <br> </span>
+      </div>
+      <div>
+        Bác sĩ: {{item['doctor']}} <br>
+      </div>
+      <div class="upperline">
+        <div *ngIf="item.note.length"> Ghi chú: {{item['note']}} </div>
+      </div>
+      <img *ngIf="item['status'] == 3 || item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
+      <img *ngIf="item['status'] <= 3" class="icon" src="/assets/icon/delete.png" (click)="udead(i)">
+      <img *ngIf="rest.config.vaccine> 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="vaccined()">
+        <ion-icon name="eyedrop-outline"></ion-icon>
+        <ion-label> Đã tiêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="loaitru()">
+        <ion-icon name="hand-left-outline"></ion-icon>
+        <ion-label> Loại trừ </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="manager()">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <ion-label>
+          Xác nhận
+          <ion-badge color="danger" *ngIf="rest.vaccine.temp[0].length + rest.vaccine.temp[1].length">
+            {{rest.vaccine.temp[0].length + rest.usg.temp[0].length}}
+          </ion-badge>
+        </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

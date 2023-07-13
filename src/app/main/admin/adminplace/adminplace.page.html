@@ -1,0 +1,32 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item *ngFor="let item of rest.place.list; let i = index">
+    <ion-avatar slot="start" (click)="remove(item.id)">
+      <img src="/assets/image/red.png">
+    </ion-avatar>
+    <ion-avatar slot="start" (click)="update(item.id, item.name)">
+      <img src="/assets/image/blue.png">
+    </ion-avatar>
+    <ion-label (click)="placeselect(item.id)">
+      {{item.name}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item (click)="insert()">
+    <ion-avatar slot="start">
+      <img src="/assets/image/his-1.png">
+    </ion-avatar>
+    <ion-label> Thêm phòng khám </ion-label>
+  </ion-item>
+
+  <div class="stl-card text-center"> 
+    Click tên phòng khám để chọn, Click [+] để thêm & chọn, Click [E] để cập nhật & chọn, Click [X] để xóa
+  </div>
+</ion-content>

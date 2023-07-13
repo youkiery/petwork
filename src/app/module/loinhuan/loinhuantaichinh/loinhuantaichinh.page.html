@@ -1,0 +1,60 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <input type="file" id="pwaphoto" style="display: none;" #bank
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="thaydoiexcel()">
+
+  <div class="item-group">
+    <div class="item-header">
+      Chọn file excel
+    </div>
+
+    <ion-item (click)="chonexcel(0)">
+      <ion-avatar slot="start">
+        <img [src]="bankinput[0] ? ibank[1] : ibank[0]">
+      </ion-avatar>
+      <ion-label>
+        Excel doanh thu bán hàng
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="chonexcel(1)">
+      <ion-avatar slot="start">
+        <img [src]="bankinput[1] ? ibank[1] : ibank[0]">
+      </ion-avatar>
+      <ion-label>
+        Excel doanh thu điều trị + spa
+      </ion-label>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-button color="secondary" expand="full" (click)="tailen()">
+    Tải lên
+  </ion-button>
+
+  <div *ngIf="danhsach.length">
+    <div class="stl-card" *ngFor="let luong of danhsach">
+      Nhân viên: {{luong.nhanvien}} <br>
+      Doanh thu: {{rest.comma(luong.doanhso)}} <br>
+      Lương: {{rest.comma(luong.luongcoban)}} <br>
+      Thưởng: {{rest.comma(luong.thuong)}} <br>
+      Phụ cấp: {{rest.comma(luong.phucap)}} <br>
+      Nghỉ phép: {{rest.comma(luong.nghiphep)}} <br>
+      Tiết kiệm: {{rest.comma(luong.tietkiem)}} <br>
+      Tổng lương: {{rest.comma(luong.tongluong)}} <br>
+      Thực nhận: {{rest.comma(luong.thucnhan)}} <br>
+      Cổ phần: {{rest.comma(luong.cophan)}} <br>
+    </div>
+  </div> -->
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="capnhat()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100" (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <table *ngFor="let nhanvien of danhsachnhanvien; let i=index">
+    <tr>
+      <td colspan="2">
+        <ion-item color="secondary">
+          <ion-label>
+            {{nhanvien.ten}}
+          </ion-label>
+        </ion-item>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <ion-item>
+          <ion-label position="stacked"> Tiết kiệm </ion-label>
+          <ion-input [(ngModel)]="danhsachnhanvien[i].tietkiem" (keyup)="nhaptien('tietkiem', i)"></ion-input>
+        </ion-item>
+      </td>
+      <td>
+        <ion-item>
+          <ion-label position="stacked"> Cổ phần </ion-label>
+          <ion-input [(ngModel)]="danhsachnhanvien[i].cophan" (keyup)="nhaptien('tietkiem', i)"></ion-input>
+        </ion-item>
+      </td>
+    </tr>
+  </table>
+</ion-content>

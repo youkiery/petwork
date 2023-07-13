@@ -1,0 +1,45 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item color="secondary">
+    <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.vaccine.keyword"> </ion-input>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
+  </ion-item>
+
+  <div *ngFor="let item of this.rest.temp; let i = index" [class]="status[item['over']]">
+    <div class="col-xs-6">
+      Tên khách: {{item['name']}} <br>
+      Điện thoại: {{item['phone']}} <br>
+      Địa chỉ: {{item['address']}}
+    </div>
+    <div class="col-xs-6">
+      <span *ngIf="item['number'] > 1 && item['status'] < 4"> Dự sinh: {{item['calltime']}} <br> </span>
+      <span *ngIf="item['number'] > 1 && item['status'] > 3"> Ngày sinh: {{item['calltime']}} <br> </span>
+      <span *ngIf="item['status'] != 6 || item['status'] != 1"> Ngày nhắc kế: {{item['recall']}} <br> </span>
+      Sự kiện: <span class="bold"> {{header[item['status']]}} </span> <br>
+      <span *ngIf="item['number'] == 0"> Số thai: {{item['number']}} <br> </span>
+      Bác sĩ: {{item['doctor']}} <br>
+      Ngày đến: {{item['cometime']}} <br>
+    </div>
+    <div class="upperline">
+      Ghi chú: {{item['note']}}
+    </div>
+    <img *ngIf="item['status'] == 0" class="icon" src="/assets/icon/pregnant.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 1" class="icon" src="/assets/icon/progesterone.png" (click)="progesterone(i)">
+    <img *ngIf="item['status'] == 2" class="icon" src="/assets/icon/resound.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 3 || item['status'] == 2" class="icon" src="/assets/icon/birth.png" (click)="birth(i)">
+    <img *ngIf="item['status'] == 4" class="icon" src="/assets/icon/deworm.png" (click)="called(i)">
+    <img *ngIf="item['status'] == 5" class="icon" src="/assets/icon/firstvac.png" (click)="called(i)">
+    <!-- <img *ngIf="item['status'] <= 5" class="icon" src="/assets/icon/done.png" (click)="done(i)"> -->
+    <img *ngIf="item['status'] <= 6 && item['status'] > 1" class="icon" src="/assets/icon/repregnant.png" (click)="repregnant(i)">
+    <img *ngIf="item['status'] <= 6" class="icon" src="/assets/icon/dead.png" (click)="dead(i)">
+    <!-- <img *ngIf="rest.config.usg > 1" class="icon right" src="/assets/icon/update.png" (click)="update(i)"> -->
+  </div>
+</ion-content>

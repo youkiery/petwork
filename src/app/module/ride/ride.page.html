@@ -1,0 +1,93 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('vehicle')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.ride.start" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.ride.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-button expand="full" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <ion-segment [(ngModel)]="rest.ride.segment">
+    <ion-segment-button value="0">
+      <ion-label>
+        Phiếu Thu
+        <ion-badge color="danger"> {{rest.ride.list[0].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>
+        Phiếu Chi
+        <ion-badge color="danger"> {{rest.ride.list[1].length}} </ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="rest.ride.segment == '0'">
+    <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
+      Người đi: {{item.user}} <br>
+      Điểm đến: {{item.destination}} <br>
+      Số tiền: {{rest.comma(item.money)}} <br>
+      Thời gian: {{time.timetodate(item.time * 1000)}} <br>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.ride.segment == '1'">
+    <div class="stl-card" *ngFor="let item of rest.ride.list[rest.ride.segment]; let i = index">
+      Người đi: {{item.user}} <br>
+      Số tiền: {{rest.comma(item.price)}} <br>
+      Thời gian: {{time.timetodate(item.time * 1000)}} <br>
+      <div *ngIf="rest.config.ride > 1" class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insertRide()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm lịch trình </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insertPay()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm phiếu chi </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

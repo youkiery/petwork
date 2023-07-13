@@ -1,0 +1,355 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div style="padding-bottom: 80px;">
+    <div *ngIf="tiendo == 3 || tiendo == 4 || tiendo == 5">
+      <div class="avatar-box" (click)="upload()">
+        <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+      </div>
+      <div *ngIf="name.length" class="text-center">
+        {{name}}
+      </div>
+      <div id="pwa" style="display: none;">
+        <input type="file" id="pwaphoto" #pwaphoto
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="file()">
+      </div>
+    </div>
+    <div *ngIf="tiendo == 0">
+      <ion-item>
+        <ion-label> Chọn ngày chốt lương </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+          <ion-icon name="play-back"></ion-icon>
+        </button>
+
+        <ion-datetime style="width: 100%" [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100">
+        </ion-datetime>
+
+        <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+          <ion-icon name="play-forward"></ion-icon>
+        </button>
+      </ion-item>
+
+      <ion-item color="secondary">
+        <ion-label> Chốt lương năm nay </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Từ tháng </ion-label>
+        <ion-datetime style="width: 100%" [(ngModel)]="tungay" displayFormat="MM/YYYY" max="2100">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Đến tháng </ion-label>
+        <ion-datetime style="width: 100%" [(ngModel)]="denngay" displayFormat="MM/YYYY" max="2100">
+        </ion-datetime>
+      </ion-item>
+    </div>
+
+    <div *ngIf="tiendo == 1">
+      <ion-item>
+        <ion-label> Chốt lịch nghỉ nhân viên </ion-label>
+      </ion-item>
+
+      <table>
+        <tr>
+          <th> Nhân viên </th>
+          <th> Nghỉ </th>
+          <th> Phạt ngày </th>
+          <th> Phạt lố </th>
+          <th> Tổng </th>
+          <th> Nghỉ lố </th>
+        </tr>
+        <tr *ngFor="let ngaynghi of danhsachchotlich; let i = index">
+          <td> {{ngaynghi.tennhanvien}} </td>
+          <td class="text-center"> {{ngaynghi.nghi}} </td>
+          <td class="text-center"> {{ngaynghi.nghiphat}} </td>
+          <td class="text-center"> {{ngaynghi.nghiphat2}} </td>
+          <td class="text-center"> {{ngaynghi.tongnghi}} </td>
+          <td class="text-center"> <ion-input [(ngModel)]="danhsachchotlich[i].nghilo"></ion-input> </td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngIf="tiendo == 2">
+      <ion-item>
+        <ion-label> Import excel doanh thu bán hàng </ion-label>
+      </ion-item>
+
+      <input type="file" id="pwaphoto" style="display: none;" #bank
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="thaydoiexcel()">
+
+      <ion-item (click)="chonexcel(0)">
+        <ion-avatar slot="start">
+          <img [src]="bankinput[0] ? ibank[1] : ibank[0]">
+        </ion-avatar>
+        <ion-label>
+          Excel doanh thu bán hàng
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="chonexcel(1)">
+        <ion-avatar slot="start">
+          <img [src]="bankinput[1] ? ibank[1] : ibank[0]">
+        </ion-avatar>
+        <ion-label>
+          Excel doanh thu điều trị + spa
+        </ion-label>
+      </ion-item>
+
+      <div class="stl-card">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked"> Cột tên nhân viên </ion-label>
+            <ion-input [(ngModel)]="doanhthu.nhanvien"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột doanh thu </ion-label>
+            <ion-input [(ngModel)]="doanhthu.doanhthu"> </ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="upperline"></div>
+        <ion-button (click)="luucauhinhdoanhthu()" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="tiendo == 3">
+      <ion-item>
+        <ion-label> Import excel chi thường xuyên </ion-label>
+      </ion-item>
+
+      <div class="stl-card">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked"> Cột loại chi </ion-label>
+            <ion-input [(ngModel)]="cauhinh[0].loaichi"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột tiền chi </ion-label>
+            <ion-input [(ngModel)]="cauhinh[0].tienchi"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột thời gian chi </ion-label>
+            <ion-input [(ngModel)]="cauhinh[0].thoigian"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột ghi chú </ion-label>
+            <ion-input [(ngModel)]="cauhinh[0].ghichu"> </ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="upperline"></div>
+        <ion-button (click)="luucauhinh(0)" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="tiendo == 4">
+      <ion-item>
+        <ion-label> Import excel nhà cung cấp </ion-label>
+      </ion-item>
+
+      <div class="stl-card">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked"> Cột nhà cung cấp </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].nhacungcap"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột nội dung </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].noidung"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột thanh toán </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].thanhtoan"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột nợ </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].noncc"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột thời gian </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].thoigian"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột đã thanh toán </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].dathanhtoan"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột đã nhập hàng </ion-label>
+            <ion-input [(ngModel)]="cauhinh[2].danhaphang"> </ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="upperline"></div>
+        <ion-button (click)="luucauhinh(2)" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="tiendo == 5">
+      <ion-item>
+        <ion-label> Import excel khách nợ </ion-label>
+      </ion-item>
+
+      <div class="stl-card">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked"> Cột điện thoại </ion-label>
+            <ion-input [(ngModel)]="cauhinh[1].dienthoai"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột tên khách hàng </ion-label>
+            <ion-input [(ngModel)]="cauhinh[1].khachhang"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"> Cột tiền nợ </ion-label>
+            <ion-input [(ngModel)]="cauhinh[1].tienno"> </ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="upperline"></div>
+        <ion-button (click)="luucauhinh(1)" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="tiendo == 6">
+      <ion-item>
+        <ion-label> Nhập tổng kho tháng này </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked"> Tổng kho ban đầu </ion-label>
+        <ion-input [(ngModel)]="tonkho.bandau" (keyup)="nhaptien('bandau')"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Tổng kho tháng này </ion-label>
+        <ion-input [(ngModel)]="tonkho.thangnay" (keyup)="nhaptien('thangnay')"> </ion-input>
+      </ion-item>
+
+    </div>
+
+    <div *ngIf="tiendo == 7">
+      <ion-item>
+        <ion-label> Xác nhận chốt lương </ion-label>
+      </ion-item>
+
+      <div class="stl-card green">
+        <b> Thống kê lương </b>
+        <div class="upperline"></div>
+        Tổng lương nhân viên: {{rest.comma(thongke.luongnhanvien)}} <br>
+        Tổng tiền tiết kiệm: {{rest.comma(thongke.tietkiem)}} <br>
+        Thực nhận: {{rest.comma(thongke.thucnhan)}} <br>
+        Tổng cổ phần: {{rest.comma(thongke.cophan)}} <br>
+      </div>
+
+      <div *ngIf="danhsach.length">
+        <div class="stl-card" *ngFor="let luong of danhsach">
+          Nhân viên: {{luong.nhanvien}} <br>
+          Doanh thu bán hàng: {{rest.comma(luong.doanhsobanhang)}} <br>
+          Doanh thu spa + điều trị: {{rest.comma(luong.doanhsospa)}} <br>
+          Lương: {{rest.comma(luong.luongcoban)}} <br>
+          Thưởng: {{rest.comma(luong.thuong)}} <br>
+          Phụ cấp: {{rest.comma(luong.phucap)}} <br>
+          Nghỉ phép: {{rest.comma(luong.nghiphep)}} <br>
+          Tiết kiệm: {{rest.comma(luong.tietkiem)}} <br>
+          Tổng lương: {{rest.comma(luong.tongluong)}} <br>
+          Thực nhận: {{rest.comma(luong.thucnhan)}} <br>
+          Cổ phần: {{rest.comma(luong.cophan)}} <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <input type="file" id="pwaphoto" style="display: none;" #bank
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="thaydoiexcel()">
+
+  <div class="item-group">
+    <div class="item-header">
+      Chọn file excel
+    </div>
+
+    <ion-item (click)="chonexcel(0)">
+      <ion-avatar slot="start">
+        <img [src]="bankinput[0] ? ibank[1] : ibank[0]">
+      </ion-avatar>
+      <ion-label>
+        Excel doanh thu bán hàng
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="chonexcel(1)">
+      <ion-avatar slot="start">
+        <img [src]="bankinput[1] ? ibank[1] : ibank[0]">
+      </ion-avatar>
+      <ion-label>
+        Excel doanh thu điều trị + spa
+      </ion-label>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Thời gian </ion-label>
+    <ion-datetime [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100" (ionChange)="khoitao()"> </ion-datetime>
+  </ion-item>
+
+  <ion-button color="secondary" expand="full" (click)="tailen()">
+    Tải lên
+  </ion-button>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card green">
+    <b> Thống kê lương </b>
+    <div class="upperline"></div>
+    Tổng lương nhân vien: {{rest.comma(thongke.luongnhanvien)}} <br>
+    Tổng tiền tiết kiệm: {{rest.comma(thongke.tietkiem)}} <br>
+    Thực nhận: {{rest.comma(thongke.thucnhan)}} <br>
+    Tổng cổ phần: {{rest.comma(thongke.cophan)}} <br>
+  </div>
+
+  <div *ngIf="danhsach.length">
+    <div class="stl-card" *ngFor="let luong of danhsach">
+      Nhân viên: {{luong.nhanvien}} <br>
+      Doanh thu bán hàng: {{rest.comma(luong.doanhsobanhang)}} <br>
+      Doanh thu spa + điều trị: {{rest.comma(luong.doanhsospa)}} <br>
+      Lương: {{rest.comma(luong.luongcoban)}} <br>
+      Thưởng: {{rest.comma(luong.thuong)}} <br>
+      Phụ cấp: {{rest.comma(luong.phucap)}} <br>
+      Nghỉ phép: {{rest.comma(luong.nghiphep)}} <br>
+      Tiết kiệm: {{rest.comma(luong.tietkiem)}} <br>
+      Tổng lương: {{rest.comma(luong.tongluong)}} <br>
+      Thực nhận: {{rest.comma(luong.thucnhan)}} <br>
+      Cổ phần: {{rest.comma(luong.cophan)}} <br>
+    </div>
+  </div> -->
+</ion-content>
+
+<ion-grid style="width: 100%; position: absolute; bottom: 0px; height: 80px; background: white;">
+  <ion-row>
+    <ion-col>
+      <ion-progress-bar [value]="tiendo / 7"></ion-progress-bar>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col> <ion-button expand="full" color="warning" [disabled]="!tiendo" (click)="tiendo = tiendo - 1"> Trở về
+      </ion-button> </ion-col>
+    <ion-col> <ion-button expand="full" color="secondary" (click)="buocsau()"> Tiếp
+      </ion-button> </ion-col>
+  </ion-row>
+</ion-grid>

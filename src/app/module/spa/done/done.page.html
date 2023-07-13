@@ -1,0 +1,109 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="!rest.temp.manager" slot="end" color="light" fill="clear" size="small" (click)="done()">
+      Xác nhận
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <div *ngIf="rest.temp.manager">
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Từ ngày </ion-label>
+      <ion-datetime [(ngModel)]="rest.spa.search.start" displayFormat="DD/MM/YYYY" max="2100">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item class="item-label-class">
+      <ion-label position="stacked"> Đến ngày </ion-label>
+      <ion-datetime [(ngModel)]="rest.spa.search.end" displayFormat="DD/MM/YYYY" max="2100">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
+      <ion-input [(ngModel)]="rest.spa.keyword2"> </ion-input>
+    </ion-item>
+  
+    <ion-button expand="full" (click)="statisticSubmit()">
+      Lọc dữ liệu
+    </ion-button>
+
+    <div *ngFor="let item of this.rest.temp.list; let i = index" class="stl-card green">
+      <div class="quara-left">
+        Thời gian: {{item.hour}} <br>
+        Đánh giá:
+        <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
+        <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
+        <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
+        <ion-icon [class]="item.rate >= 4 ? 'yellow' : ''" name="star" (click)="rate(item.id, 4)"></ion-icon>
+        <ion-icon [class]="item.rate >= 5 ? 'yellow' : ''" name="star" (click)="rate(item.id, 5)"></ion-icon> <br>
+        Nhân viên: {{item.duser}} <br>
+        Khách hàng: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Dịch vụ: {{item.service}}
+      </div>
+      <div class="quara-right">
+        Ngày: {{item.date}}
+        <div class="first-img">
+          <img *ngIf="item.image[0]" [src]="item.image[0]" (click)="detail(item.image[0])">
+          <img *ngIf="!item.image[0]" src="/assets/image/no-image.png">
+        </div>
+      </div>
+      <div class="upperline">
+      </div>
+
+      <div class="quara-img">
+        <img *ngIf="item.dimage[0]" [src]="item.dimage[0]" (click)="detail(item.dimage[0])">
+        <img *ngIf="!item.dimage[0]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[1]" [src]="item.dimage[1]" (click)="detail(item.dimage[1])">
+        <img *ngIf="!item.dimage[1]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[2]" [src]="item.dimage[2]" (click)="detail(item.dimage[2])">
+        <img *ngIf="!item.dimage[2]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[3]" [src]="item.dimage[3]" (click)="detail(item.dimage[3])">
+        <img *ngIf="!item.dimage[3]" src="/assets/image/no-image.png">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!rest.temp.manager">
+    <div class="frame">
+      <div class="heading">
+        Báo cáo Thành quả sau spa
+      </div>
+
+      <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+      <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+        <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+        <img class="thumbnail" [src]="item">
+      </span>
+      </div>
+
+    <ion-list class="frame">
+      <div class="heading">
+        Người thực hiện
+      </div>
+
+      <ion-radio-group [(ngModel)]="rest.temp.uid">
+        <ion-item *ngFor="let doctor of rest.home.doctor">
+          <ion-label> {{doctor.name}} </ion-label>
+          <ion-radio slot="start" [value]="doctor.userid"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,15 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="done()">
+      Hoàn thành
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <textarea rows="10">{{rest.temp}}</textarea>
+</ion-content>

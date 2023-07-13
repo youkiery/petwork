@@ -1,0 +1,32 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-fab color="success" vertical="bottom" horizontal="end" slot="fixed" (click)="themnhanvien()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo tên </ion-label>
+    <ion-input [(ngModel)]="timkiem" (ionChange)="timkiemnhanvien()"></ion-input>
+  </ion-item>
+
+  <div class="stl-card" *ngFor="let nhanvien of danhsachtimkiem; let i = index">
+    ID: {{nhanvien.id}} <br>
+    Tên nhân viên: {{nhanvien.ten}} <br>
+    Tài khoản: {{nhanvien.taikhoan}} <br>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/done.png" (click)="chon(i)">
+    </div>
+  </div>
+  <div class="stl-card text-center" *ngIf="!danhsachtimkiem.length">
+    Không có danh sách nhân viên
+  </div>
+</ion-content>

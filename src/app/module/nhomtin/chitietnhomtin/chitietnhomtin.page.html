@@ -1,0 +1,46 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="rest.nhomtin.danhsachnhan.length && !rest.nhomtin.danggui" slot="end" (click)="guitinnhan()"
+    color="light" fill="clear" size="small">
+    Gửi tin
+  </ion-button>
+
+  <ion-button *ngIf="rest.nhomtin.danhsachnhan.length && rest.nhomtin.danggui" slot="end" (click)="ngunggui()" color="light"
+    fill="clear" size="small">
+    Ngừng gửi
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div style="font-size: 1.5em; font-weight: bold; text-align: center; padding: 10px;">
+    {{rest.nhomtin.tennhom}}
+  </div>
+
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+
+  <div *ngIf="rest.nhomtin.danhsachnhan.length">
+    <div class="stl-card" *ngIf="rest.nhomtin.danggui || rest.nhomtin.hoanthanh">
+      Đã gửi: {{rest.nhomtin.bodem.dagui}}/{{rest.nhomtin.bodem.tongcong}} <br>
+      Thành công: {{rest.nhomtin.bodem.thanhcong}} <br>
+      Thất bại: {{rest.nhomtin.bodem.thatbai}} <br>
+      Tin nhắn tiếp: {{chuyengiaysangphut(rest.nhomtin.bodem.tieptheo)}} <br>
+      Thời gian: {{chuyengiaysangphut(rest.nhomtin.bodem.batdau)}} ({{chuyengiaysangphut(rest.nhomtin.bodem.min)}} ~
+      {{chuyengiaysangphut(rest.nhomtin.bodem.max)}}) <br>
+      <ion-progress-bar [value]="rest.nhomtin.bodem.tile"></ion-progress-bar>
+    </div>
+
+    <div *ngFor="let nhantin of rest.nhomtin.danhsachnhan; let i = index" [class]="classtrangthai[nhantin.dagui]">
+      <div class="loaitru" (click)="xoanhantin(i)"> <ion-icon name="close-outline"></ion-icon> </div>
+      <div class="boloaitru" (click)="xacnhanthucong(i)"> <ion-icon name="checkmark-outline"></ion-icon> </div>
+      Khách hàng: {{nhantin.khachhang}} <ion-icon name="create-outline" (click)="xacnhandoiten(i)"></ion-icon> <br>
+      Điện thoại: {{nhantin.dienthoai}} <br>
+      Mẫu tin: <span [innerHTML]="themxuongdong(nhantin.mautin)"></span> <br>
+      Trạng thái: {{trangthai[nhantin.dagui]}} <br>
+    </div>
+  </div>
+</ion-content>

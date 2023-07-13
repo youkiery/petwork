@@ -1,0 +1,21 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="insert()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="stl-card green">
+    <div class="upperline" *ngFor="let item of rest.other.type; let i = index">
+      {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="update(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="remove(item.id)">
+    </div>
+  </div>
+</ion-content>

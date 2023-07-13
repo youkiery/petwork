@@ -1,0 +1,72 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <div class="item-group">
+    <div class="item-header">
+      Kaizen
+    </div>
+    <ion-item>
+      <ion-label position="fixed"> Vấn đề </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.problem"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed"> Giải quyết </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.solution"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed"> Hiệu quả </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.result"></ion-textarea>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload(2)">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+      <span class="thumbnail-box-icon" (click)="remove(i, 2)"> x </span>
+      <img class="thumbnail" [src]="item">
+    </span>
+  </div>
+
+  <div class="item-group">
+    <div class="item-header">
+      Hỗ trợ đồng đội
+    </div>
+    <ion-item>
+      <ion-label position="fixed"> Nội dung </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.noidungdongdoi"></ion-textarea>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload(0)">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.hinhanhdongdoi; let i = index">
+      <span class="thumbnail-box-icon" (click)="remove(i, 0)"> x </span>
+      <img class="thumbnail" [src]="item">
+    </span>
+  </div>
+
+  <div class="item-group">
+    <div class="item-header">
+      Tinh thần tự giác
+    </div>
+    <ion-item>
+      <ion-label position="fixed"> Nội dung </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.noidungtugiac"></ion-textarea>
+    </ion-item>
+
+    <img class="thumbnail" src="/assets/image/insert.png" (click)="upload(1)">
+    <span class="thumbnail-box" *ngFor="let item of rest.temp.hinhanhtugiac; let i = index">
+      <span class="thumbnail-box-icon" (click)="remove(i, 1)"> x </span>
+      <img class="thumbnail" [src]="item">
+    </span>
+  </div>
+</ion-content>

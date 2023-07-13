@@ -1,0 +1,54 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button slot="start" color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <!-- <ion-button slot="end" (click)="vaccine()" color="light" fill="clear" size="small">
+    Lọc
+  </ion-button> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'spa'">
+    <div *ngFor="let item of this.rest.spa.old; let i = index" class="stl-card green">
+      <div class="quara-left">
+        Thời gian: {{item.hour}} <br>
+        Đánh giá:
+        <ion-icon [class]="item.rate >= 1 ? 'yellow' : ''" name="star" (click)="rate(item.id, 1)"></ion-icon>
+        <ion-icon [class]="item.rate >= 2 ? 'yellow' : ''" name="star" (click)="rate(item.id, 2)"></ion-icon>
+        <ion-icon [class]="item.rate >= 3 ? 'yellow' : ''" name="star" (click)="rate(item.id, 3)"></ion-icon>
+        <ion-icon [class]="item.rate >= 4 ? 'yellow' : ''" name="star" (click)="rate(item.id, 4)"></ion-icon>
+        <ion-icon [class]="item.rate >= 5 ? 'yellow' : ''" name="star" (click)="rate(item.id, 5)"></ion-icon> <br>
+        Nhân viên: {{item.duser}} <br>
+        Dịch vụ: {{item.service}}
+      </div>
+      <div class="quara-right">
+        Ngày: {{item.date}}
+        <div class="first-img">
+          <img *ngIf="item.image[0]" [src]="item.image[0]" (click)="detail(item.image[0])">
+          <img *ngIf="!item.image[0]" src="/assets/image/no-image.png">
+        </div>
+      </div>
+      <div class="upperline">
+      </div>
+
+      <div class="quara-img">
+        <img *ngIf="item.dimage[0]" [src]="item.dimage[0]" (click)="detail(item.dimage[0])">
+        <img *ngIf="!item.dimage[0]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[1]" [src]="item.dimage[1]" (click)="detail(item.dimage[1])">
+        <img *ngIf="!item.dimage[1]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[2]" [src]="item.dimage[2]" (click)="detail(item.dimage[2])">
+        <img *ngIf="!item.dimage[2]" src="/assets/image/no-image.png">
+      </div>
+      <div class="quara-img">
+        <img *ngIf="item.dimage[3]" [src]="item.dimage[3]" (click)="detail(item.dimage[3])">
+        <img *ngIf="!item.dimage[3]" src="/assets/image/no-image.png">
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="save()">
+      Lưu
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Tiêu đề site </ion-label>
+    <ion-input [(ngModel)]="data.title"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Logo </ion-label>
+    <ion-input [(ngModel)]="data.logo"> </ion-input>
+    <img [src]="data.logo.length ? data.logo : (data.temp.length ? data.temp : '/assets/icon/excel-off.png')" class="clear-img" slot="start" (click)="picklogo()">
+  </ion-item>
+
+  <ion-item (click)="getform('phys')">
+    <ion-label> Mẫu form sinh lý </ion-label>
+  </ion-item>
+  <ion-item (click)="getform('prof')">
+    <ion-label> Mẫu form sinh hóa </ion-label>
+  </ion-item>
+  <ion-item (click)="getform('his')">
+    <ion-label> Mẫu form lưu bệnh </ion-label>
+  </ion-item>
+</ion-content>

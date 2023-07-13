@@ -1,0 +1,38 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.start" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.end" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item (click)="rest.navCtrl.navigateForward('/his/statisdisease')">
+    Nhóm bệnh: {{rest.his.d.text}}
+  </ion-item>
+
+  <ion-button expand="full" (click)="statistic()">
+    Thống kê
+  </ion-button>
+
+  <div *ngFor="let item of data" [class]="insult[item.balance]">
+    <b>Bác sĩ:</b>  {{item.name}} <br>
+    <b>Đang điều trị:</b>  {{item.dieutri}} ({{item.tiledieutri}}%) <br>
+    <b>Xuất viện:</b>  {{item.xuatvien}} ({{item.tilexuatvien}}%) <br>
+    <b>Đã chết:</b>  {{item.dachet}} ({{item.tiledachet}}%) <br>
+    <b>Tổng điểm:</b>  {{item.danhgia}}/{{item.tongdanhgia}} ({{item.tiledanhgia}}%) <br>
+    <b>Tổng ca:</b>  {{item.tongca}} <br>
+  </div>
+</ion-content>

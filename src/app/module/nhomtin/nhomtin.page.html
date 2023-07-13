@@ -1,0 +1,57 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item>
+    <ion-input [(ngModel)]="tukhoa"></ion-input>
+    <button class="nuttimkiem" clear item-right (click)="timkiem()">
+      <ion-icon name="search-outline"></ion-icon>
+    </button>
+  </ion-item>
+
+  <div class="text-center stl-card" *ngIf="!rest.nhomtin.danhsach.length">
+    Không có nhóm nào
+  </div>
+
+  <div *ngIf="rest.nhomtin.danhsach.length">
+    <div class="stl-card" *ngFor="let nhomtin of rest.nhomtin.danhsach; let thutu = index">
+      <div (click)="chitiet(thutu)">
+        <div> Tên nhóm: <b> {{nhomtin.tennhom}} </b> </div>
+        <div> Ngày tạo: {{nhomtin.thoigian}} </div>
+        <div> Đã gửi: {{nhomtin.dagui}}/{{nhomtin.tongso}} </div>
+      </div>
+      <div class="upperline"></div>
+      <img *ngIf="rest.config.nhantin > 1" class="icon" src="/assets/icon/delete.png" (click)="xacnhanxoa(nhomtin.id)">
+      <img *ngIf="rest.config.nhantin > 1" class="icon" src="/assets/icon/update.png" (click)="capnhat(thutu)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.nhantin > 1" (click)="themnhomtin()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm nhóm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

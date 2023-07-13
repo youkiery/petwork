@@ -1,0 +1,46 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.work.child.length">
+    <div>
+      Danh mục: {{rest.work.danhmuc[rest.work.childid].name}}
+    </div>
+
+    <div class="stl-card" *ngFor="let danhmuc of rest.work.child; let i = index">
+      <div style="font-size: 1.25em;"> {{danhmuc.name}} </div>
+      <div class="upperline">
+        <b> Danh sách nhân viên: </b> {{danhmuc.text}} <span *ngIf="danhmuc.id > 0"> <span class="pos" (click)="themnhanvien2(i)"> sửa </span><span class="pos red" (click)="xoadanhmuc(danhmuc.id)"> x </span> </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!rest.work.child.length">
+    <div *ngFor="let danhmuc of rest.work.danhmuc; let i = index">
+      <div class="stl-card" *ngIf="danhmuc.parentid == 0">
+        <div style="font-size: 1.25em;" (click)="gochild(i)"> {{danhmuc.name}} </div>
+        <div class="upperline">
+          <b> Danh sách nhân viên: </b> {{danhmuc.text}} <span class="pos" (click)="themnhanvien(i)"> sửa </span><span class="pos red" (click)="xoadanhmuc(danhmuc.id)"> x </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stl-card text-center" *ngIf="!rest.work.danhmuc.length">
+      Không có danh mục
+    </div>
+  </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="themdanhmuc()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

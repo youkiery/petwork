@@ -1,0 +1,18 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="rest.back()">
+      Chọn
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item *ngFor="let disease of rest.his.disease; let i = index" (click)="reload()">
+    <ion-checkbox slot="start" [(ngModel)]="rest.his.d.list[disease.id]"></ion-checkbox>
+    <ion-label> {{disease.name}} </ion-label>
+  </ion-item>
+</ion-content>

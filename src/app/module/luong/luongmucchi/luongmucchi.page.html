@@ -1,0 +1,38 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="luumucchi()">
+      Lưu
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="item-group">
+    <div class="item-header">
+      Nhập mục thu chi
+    </div>
+    <div *ngFor="let thuchi of rest.luong.mucchi; let i = index">
+      <ion-item class="item-label-class">
+        <ion-avatar slot="start" (click)="xoathuchi(i)">
+          <img src="/assets/image/red.png">
+        </ion-avatar>
+        <ion-input [(ngModel)]="rest.luong.mucchi[i].loaichi" placeholder="Loại chi"> </ion-input>
+      </ion-item>
+      <ion-item class="item-label-class">
+        <ion-input [(ngModel)]="rest.luong.mucchi[i].tienchi" placeholder="Tiền chi" (keyup)="nhaptien(i)">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <ion-item (click)="themthuchi()">
+      <ion-avatar slot="start">
+        <img src="/assets/image/his-1.png">
+      </ion-avatar>
+      <ion-label> Thêm thu chi </ion-label>
+    </ion-item>
+  </div>
+</ion-content>

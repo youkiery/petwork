@@ -1,0 +1,89 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-fab *ngIf="rest.config.vattu > 1" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="themvattu()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item (click)="chontang()">
+    <ion-label>
+      Lọc tầng: {{hienthiloctang()}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo tên </ion-label>
+    <ion-input [(ngModel)]="rest.vattu.tukhoa" (ionChange)="lochanghoa()"></ion-input>
+  </ion-item>
+
+  <div class="stl-card">
+    Tổng số vật tư: {{rest.vattu.dulieu.tongsoluong}} <br>
+    Tổng số loại vật tư: {{rest.vattu.dulieu.tongvattu}} <br>
+    Tổng giá trị tài sản: {{rest.comma(rest.vattu.tongtien)}}đ <br>
+  </div>
+
+  <div class="stl-card" *ngFor="let vattu of rest.vattu.danhsachtam; let i = index">
+    Vật tư: {{vattu.ten}} <span *ngIf="vattu.donvi.length"> ({{vattu.donvi}}) </span> <br>
+    Ngày mua: {{vattu.thoigian}} <br>
+    Số lượng mua: {{vattu.soluong}} <br>
+    <div *ngIf="vattu.giatri != '0'"> Đơn giá: {{vattu.giatri}} </div>
+    Tổng giá trị: {{vattu.tongtien}}đ <span *ngIf="vattu.tile > 0"> ({{vattu.tile}}%) </span> <br>
+    Thuộc tầng: {{vattu.thuoctang}} <br>
+    <div *ngIf="vattu.ghichu.length">
+      Ghi chú: {{vattu.ghichu}}
+    </div>
+
+    <div *ngIf="rest.config.vattu > 1" class="upperline">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoa(vattu.id)">
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhat(i)">
+      <img *ngIf="vattu.idchi == 0" class="icon" src="/assets/icon/transfer.png" (click)="chivattu(vattu.id)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.vattu > 1" (click)="danhsachtang()">
+        <ion-icon name="documents-outline"></ion-icon>
+        <ion-label> Tầng </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.vattu > 1" (click)="import()">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-label> Nhập file </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="xacnhanxuat()">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-label> Xuất file </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cophan()">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <ion-label> Cổ phần </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

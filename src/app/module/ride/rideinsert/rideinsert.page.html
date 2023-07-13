@@ -1,0 +1,49 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  
+  <ion-button *ngIf="rest.action == 'cole'" slot="end" (click)="insertCole()" color="light" fill="clear" size="small" >
+    Thêm lịch trình
+  </ion-button>
+  
+  <ion-button *ngIf="rest.action == 'pay'" slot="end" (click)="insertPay()" color="light" fill="clear" size="small" >
+    Thêm phiếu chi
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div *ngIf="rest.action == 'cole'">
+    <ion-item>
+      <ion-label position="stacked"> Số công tơ lúc đi </ion-label>
+      <ion-input [(ngModel)]="rest.temp.clockf" (ionChange)="calcMoney()"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Số công tơ lúc về </ion-label>
+      <ion-input [(ngModel)]="rest.temp.clocke" (ionChange)="calcMoney()"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tiền thu </ion-label>
+      <ion-input [(ngModel)]="rest.temp.money" (ionChange)="recalcMoney()"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Điểm đến </ion-label>
+      <ion-textarea [autoGrow]="true" [(ngModel)]="rest.temp.destination"> </ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.action == 'pay'">
+    <ion-item>
+      <ion-label position="stacked"> Tiền chi </ion-label>
+      <ion-input [(ngModel)]="rest.temp.money" (ionChange)="recalcMoney()"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Ghi chú </ion-label>
+      <ion-input [(ngModel)]="rest.temp.note"> </ion-input>
+    </ion-item>
+  </div>
+</ion-content>

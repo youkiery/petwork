@@ -1,0 +1,130 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('bio')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('/gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.profile.filter.key"></ion-input>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày bắt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.profile.filter.start" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày kết thúc </ion-label>
+    <ion-datetime [(ngModel)]="rest.profile.filter.end" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-button color="secondary" expand="full" (click)="init()">
+    Lọc danh sách
+  </ion-button>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.profile.segment">
+      <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
+      <ion-segment-button value="2"> Chỉ tiêu </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div *ngIf="rest.profile.segment == '1'">
+    <ion-toolbar>
+      <ion-segment [(ngModel)]="rest.profile.s">
+        <ion-segment-button value="1">
+          Cần xét nghiệm
+          <ion-badge color="danger" *ngIf="rest.profile.need.length"> {{rest.profile.need.length}} </ion-badge>
+        </ion-segment-button>
+        <ion-segment-button value="2">
+          Hoàn thành
+          <ion-badge color="danger" *ngIf="rest.profile.list.length"> {{rest.profile.list.length}} </ion-badge>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
+    <div *ngIf="rest.profile.s == '1'">
+      <div class="stl-card" *ngFor="let item of rest.profile.need; let i = index">
+        <div (click)="exam(i)">
+          Khách hàng: {{item.name}} <br>
+          Điện thoại: {{item.phone}} <br>
+          Thú cưng: {{item.petname}} <br>
+          <div class="upperline" *ngIf="item.image.length">
+            <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+          </div>
+        </div>
+        <div class="upperline">
+          <img class="icon" src="/assets/icon/delete.png" (click)="removeneed(item.id)">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="rest.profile.s == '2'">
+      <div class="stl-card" *ngFor="let item of rest.profile.list; let i = index">
+        <b> Chủ: </b> {{item.customer}} <br>
+        <b> Số điện thoại: </b> {{item.phone}} <br>
+        <b> Người làm: </b> {{item.doctor}} <br>
+        <b> Thời gian: </b> {{item.time}}
+        <div class="upperline" *ngIf="item.image.length">
+          <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+        </div>
+        <div class="upperline">
+          <img class="icon" src="/assets/icon/info.png" (click)="detail(item.id)">
+          <img class="icon" src="/assets/icon/printer.png" (click)="print(item.id)">
+          <img class="icon" src="/assets/icon/update.png" (click)="updateProfile(i)">
+          <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.profile.segment == '2'">
+    <ion-list>
+      <ion-item *ngFor="let item of rest.profile.target; let i = index">
+        <ion-label> {{item.name}}</ion-label>
+        <ion-button slot="end" (click)="info(i)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" (click)="updateTarget(i)">
+          <ion-icon name="refresh-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="removeTarget(i)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm hồ sơ </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="insertTarget()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm chỉ tiêu </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

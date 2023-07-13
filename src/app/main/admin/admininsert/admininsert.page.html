@@ -1,0 +1,39 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="!rest.temp.userid" color="light" slot="end" fill="clear" (click)="signup()">
+      Thêm người dùng
+    </ion-button>
+
+    <ion-button *ngIf="rest.temp.userid" color="light" slot="end" fill="clear" (click)="update()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-icon slot="start" name="person-outline"></ion-icon>
+    <ion-input [(ngModel)]="rest.temp.fullname" name="fullname" placeholder="Họ và tên"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="person-outline"></ion-icon>
+    <ion-input [(ngModel)]="rest.temp.username" name="username" placeholder="Tài khoản"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+    <ion-datetime [(ngModel)]="rest.temp.birthday" name="birthday" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+    <ion-input type="password" [(ngModel)]="rest.temp.password" name="password" placeholder="Mật khẩu"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+    <ion-input type="password" [(ngModel)]="rest.temp.vpassword" name="vpassword" placeholder="Xác nhận mật khẩu">
+    </ion-input>
+  </ion-item>
+</ion-content>

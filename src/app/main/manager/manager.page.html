@@ -1,0 +1,352 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="light" fill="clear" size="small"
+      (click)="uploadVaccine()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'item'" slot="end" color="light" fill="clear" size="small"
+      (click)="uploadItem()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'checkout'" slot="end" color="light" fill="clear" size="small"
+      (click)="uploadCheckout()">
+      Tải lên
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="light" fill="clear" size="small"
+      (click)="insertTypeSubmit()">
+      Thêm loại nhắc
+    </ion-button>
+    <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="light" fill="clear" size="small"
+      (click)="updateTypeSubmit()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngIf="rest.action == 'recycle-vaccine'">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="0">
+        <ion-label>
+          Chuyển nhượng
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>
+          Xóa mục cũ
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="segment == '0'">
+      <ion-item position="stacked" color="secondary" class="half-item">
+        <ion-label> Vaccine </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.option.vaccine"> </ion-checkbox>
+      </ion-item>
+      <ion-item position="stacked" color="secondary" class="half-item">
+        <ion-label> Siêu âm </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.option.usg"> </ion-checkbox>
+      </ion-item>
+  
+      <ion-item position="stacked" *ngFor="let item of rest.home.doctor">
+        <ion-label> {{item.name}} </ion-label>
+        <ion-checkbox [(ngModel)]="recycle.doctor[item.userid]"> </ion-checkbox>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="recycleVaccine()">
+        Chuyển nhượng
+      </ion-button>
+    </div>
+    <div *ngIf="segment == '1'">
+      <ion-item>
+        <ion-label position="stacked"> Xóa trước ngày </ion-label>
+        <ion-datetime [(ngModel)]="date" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+      </ion-item>
+
+      <ion-button color="secondary" expand="full" (click)="reduceVaccine()">
+        Xóa bỏ
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'insert-type'">
+    <ion-item>
+      <ion-label position="stacked"> Mã hàng </ion-label>
+      <ion-input [(ngModel)]="input.code"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Loại nhắc </ion-label>
+      <ion-input [(ngModel)]="input.name"></ion-input>
+    </ion-item>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'spa'">
+    <ion-refresher slot="fixed" (ionRefresh)="refreshSpa($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  
+    Danh sách loại nhắc:
+    <div class="upperline" *ngFor="let item of rest.home.spa; let i = index">
+      {{item.name}}
+      <img class="right icon" *ngIf="rest.isnumber(item.alt)" src="/assets/icon/rate-xs.png" (click)="toggleDefault(item.id, item.alt)">
+      <img class="right icon" *ngIf="!rest.isnumber(item.alt)" src="/assets/icon/unrate-xs.png" (click)="toggleDefault(item.id, item.alt)">
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="updateSpa(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="removeSpa(item.id)">
+      <img class="right icon" *ngIf="i > 0" src="/assets/icon/up-xs.png" (click)="upspa(item.id, rest.home.spa[i - 1].id)">
+      <img class="right icon" *ngIf="i < (rest.home.spa.length - 1)" src="/assets/icon/down-xs.png" (click)="downspa(item.id, rest.home.spa[i + 1].id)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="insertSpa()">
+    </div>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'usg'">
+    <ion-refresher slot="fixed" (ionRefresh)="refreshUsg($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    Mã siêu âm:
+    <div class="upperline" *ngFor="let item of rest.home.usgcode; let i = index">
+      {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="updateUsg(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="removeusg(item.id)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="insertUsg()">
+    </div>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'type'">
+    <ion-refresher slot="fixed" (ionRefresh)="refreshType($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    Danh sách loại nhắc:
+    <div class="upperline" *ngFor="let item of rest.home.type; let i = index">
+      {{item.code}}: {{item.name}}
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="updateType(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="removeTypeSubmit(item.id)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="insertType()">
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'vaccine'">
+    <div class="avatar-box" (click)="upload(1)">
+      <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+    </div>
+    <div *ngIf="name.length" class="text-center">
+      {{name}}
+    </div>
+    <div id="pwa" style="display: none;">
+      <input type="file" id="pwaphoto" #pwaphoto
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="file(1)">
+    </div>
+    <div *ngIf="data.on">
+      <div class="stl-card blue">
+        Tổng số mặt hàng: {{data.total}} <br>
+        Tổng số trường nhắc: {{data.vaccine}} <br>
+        Đã thêm: {{data.insert}} <br>
+        Lỗi: {{data.error.length}}
+      </div>
+
+      <div class="stl-card small" *ngFor="let item of data.error">
+        Khách hàng: {{item.name}} <br>
+        Số điện thoại: {{item.phone}} <br>
+        Ghi chú: {{item.note}}
+      </div>
+    </div>
+
+    <div class="stl-card">
+      <ion-item>
+        <ion-label> Ký hiệu tách dòng </ion-label>
+        <ion-input [(ngModel)]="code">  </ion-input>
+      </ion-item>
+      <div class="upperline">
+        <ion-button (click)="save()" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div>
+  
+      <!-- <ion-list>
+        <ion-list-header>
+          Cột dữ liệu
+        </ion-list-header>
+
+        public manager = { code: '', seller: '', phone: '', customer: '', time: '', note: '', item: '', number: '' }
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('seller')">
+          <ion-label> Người bán: {{rest.manager.seller}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('phone')">
+          <ion-label> Điện thoại: {{rest.manager.phone}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+        <ion-item (click)="select('code')">
+          <ion-label> Mã hàng: {{rest.manager.code}} </ion-label>
+        </ion-item>
+      </ion-list>
+      <div class="upperline">
+        <ion-button (click)="save('kiot')" fill="clear">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+      </div> -->
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'item'">
+    <div class="avatar-box" (click)="upload(2)">
+      <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+    </div>
+    <div *ngIf="name.length" class="text-center">
+      {{name}}
+    </div>
+    <div id="pwa" style="display: none;">
+      <input type="file" id="pwaphoto2" #pwaphoto2
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="file(2)">
+    </div>
+    <div *ngIf="data.on">
+      <div class="stl-card blue">
+        Tổng số mặt hàng: {{data.total}} <br>
+        Đã cập nhật: {{data.insert}} <br>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'checkout'">
+    <div class="stl-card small">
+      <div class="avatar-box" (click)="upload(3)">
+        <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+      </div>
+      <div *ngIf="name.length" class="text-center">
+        {{name}}
+      </div>
+      <div id="pwa" style="display: none;">
+        <input type="file" id="pwaphoto3" #pwaphoto3
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="file(3)">
+      </div>
+    </div>
+    <div class="stl-card small">
+      <div class="avatar-box" (click)="upload(4)">
+        <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+      </div>
+      <div *ngIf="name2.length" class="text-center">
+        {{name2}}
+      </div>
+      <div id="pwa" style="display: none;">
+        <input type="file" id="pwaphoto4" #pwaphoto4
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="file(4)">
+      </div>
+    </div>
+    <table *ngIf="checkout.on">
+      <tr> 
+        <th style="width: 25%;"> Kiotviet </th>  
+        <th style="width: 25%"> Vietcombank </th>  
+        <th style="width: 50%"> Thông tin chuyển khoản </th>  
+      </tr>
+      <tr *ngFor="let item of checkout.pair">
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{item.content}} </td>
+      </tr>
+      <tr *ngFor="let item of checkout.vietcom">
+        <td class="red"> {{item.time}} </td>
+        <td> {{rest.comma(item.money)}} </td>
+        <td> {{item.content}} </td>
+      </tr>
+      <tr *ngFor="let item of checkout.kiot">
+        <td> {{rest.comma(item.money)}} </td>
+        <td class="red"> {{item.time}} </td>
+        <td> {{item.content}} </td>
+      </tr>
+      <tr>
+        <td> {{rest.comma(total.kiot)}} </td>
+        <td> {{rest.comma(total.vietcom)}} </td>
+        <td> Tổng </td>
+      </tr>
+    </table>
+
+    <div class="stl-card">
+      <ion-list>
+        <ion-list-header>
+          Kiot
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label> Cột chuyển khoản </ion-label>
+          <ion-select [(ngModel)]="kiot.money">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột Nội dung </ion-label>
+          <ion-select [(ngModel)]="kiot.content">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột thời gian </ion-label>
+          <ion-select [(ngModel)]="kiot.time">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Ngân hàng
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label> Cột chuyển khoản </ion-label>
+          <ion-select [(ngModel)]="vietcom.money">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột Nội dung </ion-label>
+          <ion-select [(ngModel)]="vietcom.content">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label> Cột thời gian </ion-label>
+          <ion-select [(ngModel)]="vietcom.time">
+            <ion-select-option *ngFor="let item of cell" [value]="item">
+              {{item}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
