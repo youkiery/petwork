@@ -39,6 +39,7 @@ export class SpaPage {
   public autoload = null
   public check = true
   public option = []
+  public gioihan = 30 * 60 * 1000;
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -49,9 +50,6 @@ export class SpaPage {
     this.rest.ready().then(() => {
       this.rest.action = 'spa'
       this.search()
-      // this.autoload = setInterval(() => {
-      //   if (this.rest.spa.init) this.init()
-      // }, 15000)
       if (!this.rest.spa.init) {
         let firstDay = this.time.datetotime(this.rest.home.today);
         let lastDay = this.time.datetotime(this.rest.home.today);
@@ -59,6 +57,9 @@ export class SpaPage {
         this.rest.spa.search.end = this.time.timetoisodate(lastDay)
         this.init()
       }
+      this.autoload = setInterval(() => {
+        this.init()
+      }, 60000)
     })
   }
 
@@ -167,6 +168,10 @@ export class SpaPage {
   //     this.rest.defreeze()
   //   })
   // }
+  public kiemtrathoigian(thoigian: number, trangthai: number) {
+    if (trangthai == 0 && (new Date().getTime() - thoigian) > this.gioihan) return true
+    return false
+  }
 
   public insert() {
     this.rest.temp = {
@@ -182,7 +187,8 @@ export class SpaPage {
       image: [],
       option: this.rest.home.default['spa'],
       filter: this.rest.spa.search,
-      did: 0,
+      did: 1,
+      khonglam: 0,
       number: 1
     }
     this.rest.navCtrl.navigateForward('/spa/insert')
@@ -262,7 +268,7 @@ export class SpaPage {
   public async returnedSubmit(index: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'returned', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       filter: this.rest.spa.search,
     }).then((resp) => {
       this.rest.defreeze()
@@ -296,7 +302,7 @@ export class SpaPage {
   public async removeSubmit(index: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'remove', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       filter: this.rest.spa.search,
     }).then((resp) => {
       this.rest.defreeze()
@@ -334,7 +340,7 @@ export class SpaPage {
   public async doneSubmit(index: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'done', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       filter: this.rest.spa.search,
     }).then((resp) => {
       this.rest.defreeze()
@@ -369,7 +375,7 @@ export class SpaPage {
   public async pickSubmit(index: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'pick', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       filter: this.rest.spa.search,
     }).then((resp) => {
       this.rest.defreeze()
@@ -402,7 +408,7 @@ export class SpaPage {
   public async picktransSubmit(index: number, uid: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'picktrans', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       uid: uid,
       filter: this.rest.spa.search,
     }).then((resp) => {
@@ -438,7 +444,7 @@ export class SpaPage {
   public async calledSubmit(index: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'called', {
-      id: this.rest.spa.list[index].id,
+      id: this.rest.spa.filter[index].id,
       filter: this.rest.spa.search,
     }).then((resp) => {
       this.rest.defreeze()

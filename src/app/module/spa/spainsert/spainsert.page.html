@@ -74,6 +74,11 @@
     <ion-checkbox slot="start" [(ngModel)]="rest.temp.did"></ion-checkbox>
   </ion-item>
 
+  <ion-item color="danger" *ngIf="!rest.temp.id">
+    <ion-label> Không làm được </ion-label>
+    <ion-checkbox slot="start" [(ngModel)]="rest.temp.khonglam"></ion-checkbox>
+  </ion-item>
+
   <div *ngIf="!rest.temp.treat">
     <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">
       <ion-label> {{item.name}} </ion-label>

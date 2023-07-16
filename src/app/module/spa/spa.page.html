@@ -73,6 +73,10 @@
     <div *ngIf="rest.spa.filter.length">
       <div *ngFor="let item of this.rest.spa.filter; let i = index">
         <div [class]="status[item.status]">
+          <div *ngIf="kiemtrathoigian(item.dtime, item.status)">
+            <span class="canhbao"> Đã quá 30 phút chưa làm xong </span>
+          </div>
+
           <div class="col-xs-6">
             Tên khách: {{item.name}} <br>
             Điện thoại: {{item.phone}} <br>
@@ -111,7 +115,7 @@
           </div>
           
           <img *ngIf="item.duser == 0" class="icon" src="/assets/icon/pick.png" (click)="pick(i)">
-          <img *ngIf="item.duser == rest.home.userid || rest.home.admin || rest.config.spa > 1" class="icon" src="/assets/icon/picktrans.png" (click)="picktrans(i)">
+          <img *ngIf="rest.config.spa > 1" class="icon" src="/assets/icon/picktrans.png" (click)="picktrans(i)">
           <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
           <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
           <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
