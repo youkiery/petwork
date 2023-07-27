@@ -18,10 +18,10 @@ export class RestService {
   public base: string = '';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 188 // 21-190
+  public version = 21 // 21-191
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -34,6 +34,7 @@ export class RestService {
       end: ''
     },
     chotlich: '0',
+    datlich: 0,
     today: '',
     branch: '',
     prefix: '',
@@ -82,6 +83,7 @@ export class RestService {
   public xquang = { init: false, list: [], need: [], start: '', end: '', s: '1' }
   public sieuam = { init: false, list: [], need: [], start: '', end: '', s: '1' }
   public hotel = { init: false, catinit: false, cat: [], list: [], need: [], filter: {start: '', end: ''}, s: '0' }
+  public datlich = { khoitao: false, tukhoa: "", danhsach: [] }
   public other = { init: false, list: [], need: [], type: [], start: '', end: '', s: '1' }
   public badge = { his: 0, kaizen: 0, profile: 0, physical: 0, xquang: 0, sieuam: 0, other: 0, init: false }
   public excel = { init: false, config: {name: '', phone: '', address: ''} }

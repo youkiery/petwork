@@ -1,0 +1,17 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="xacnhan()" color="light" fill="clear"
+    size="small">
+    Hẹn lại
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Ngày khách hẹn lại </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.ngayhen" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+</ion-content>

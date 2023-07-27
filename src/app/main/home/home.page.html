@@ -22,6 +22,14 @@
     </div>
   </div> -->
 
+  <div *ngIf="rest.config.datlich > 0" class="box" (click)="rest.navCtrl.navigateForward('/datlich')">
+    <ion-img src="assets/image/datlich.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Khách đặt lịch
+      <ion-badge color="danger" *ngIf="rest.home.datlich > 0"> {{rest.home.datlich}} </ion-badge>
+    </div>
+  </div>
+
   <div *ngIf="rest.config.his > 0" class="box" (click)="rest.navCtrl.navigateForward('/his')">
     <ion-img src="assets/image/his-1.png" class="box-image"></ion-img>
     <div class="box-title">

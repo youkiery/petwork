@@ -108,8 +108,6 @@ export class SpaPage {
     }).then((resp) => {
       this.rest.spa.init = true
       this.rest.spa.list = resp.list
-      this.rest.spa.near = resp.near
-      this.rest.spa.datlichhomnay = resp.datlichhomnay
       this.option = []
       resp.nhanvien.forEach(item => {
         this.option.push({
@@ -148,8 +146,6 @@ export class SpaPage {
       this.rest.defreeze()
       this.rest.spa.init = true
       this.rest.spa.list = resp.list
-      this.rest.spa.near = resp.near
-      this.rest.spa.datlichhomnay = resp.datlichhomnay
       this.search()
     }, () => { 
       this.rest.defreeze()
@@ -456,6 +452,43 @@ export class SpaPage {
     })
   }
 
+  public async chuyenngaunhien(index: number) {
+    let alert = await this.alert.create({
+      message: 'Mục spa sẽ được chuyển ngẫu nhiên cho người khác?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.xacnhanchuyenngaunhien(index)
+          }
+        }
+      ]
+    });
+
+    // if (this.rest.home.doctor.length && !this.rest.spa.list[index].duser.length) alert.inputs = this.option
+
+    await alert.present();
+  }
+
+  public async xacnhanchuyenngaunhien(index: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('spa', 'chuyenngaunhienspa', {
+      id: this.rest.spa.filter[index].id,
+      duserid: this.rest.spa.filter[index].duserid,
+      filter: this.rest.spa.search,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.spa.list = resp.list
+      this.search()
+      this.rest.spa.init = resp.time
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public manager() {
     this.rest.temp = {
       manager: 1,
@@ -463,15 +496,6 @@ export class SpaPage {
       list: []
     }
     this.rest.navCtrl.navigateForward('/spa/done')
-  }
-
-  public thaydoidatlich(thutu: number) {
-    var datlich = this.rest.spa.datlichhomnay[thutu]
-    this.rest.temp = {
-      id: datlich.id,
-      thoigian: this.time.datetoisodate(datlich.thoigian)
-    }
-    this.rest.navCtrl.navigateForward('/spa/near')
   }
 
   // public report(index: number) {

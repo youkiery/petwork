@@ -26,7 +26,7 @@ export class SpainsertPage {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/spa')
     else {
-      if (!this.rest.temp.id && !this.init) {
+      if (!this.rest.temp.phone && !this.init) {
         this.init = true
         this.suggest()
       }
@@ -57,6 +57,7 @@ export class SpainsertPage {
         this.rest.defreeze()
         this.rest.spa.list = resp.list
         this.rest.spa.init = resp.time
+        if (this.rest.temp.datlich > 0) this.rest.datlich.khoitao = false
         this.rest.back()
       }, () => {
         this.rest.defreeze()

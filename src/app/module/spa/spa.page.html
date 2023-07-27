@@ -37,124 +37,71 @@
     <ion-input [(ngModel)]="rest.spa.keyword" (ionChange)="search()"> </ion-input>
   </ion-item>
 
-  <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="0">
-      <ion-label>
-        Khách Spa
-      </ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="1">
-      <ion-label>
-        Khách đặt lịch
-        <ion-badge color="danger" *ngIf="rest.spa.near.length"> {{rest.spa.near.length}} </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <div *ngIf="rest.spa.filter.length">
+    <div *ngFor="let item of this.rest.spa.filter; let i = index">
+      <div [class]="status[item.status]">
+        <div *ngIf="kiemtrathoigian(item.dtime, item.status)">
+          <span class="canhbao"> Đã quá 30 phút chưa làm xong </span>
+        </div>
 
-  <div *ngIf="segment == '0'">
-    <div *ngIf="!rest.spa.keyword.length">
-      <div class="stl-card" *ngFor="let item of rest.spa.datlichhomnay; let i = index">
-        <div><b> Khách đặt lịch </b></div>
         <div class="col-xs-6">
-          Khách hàng: {{item.tenkhach}} <br>
-          Điện thoại: {{item.dienthoai}} <br>
+          Tên khách: {{item.name}} <br>
+          Điện thoại: {{item.phone}} <br>
+          <span *ngIf="item.name2.length"> Người nhận hộ: {{item.name2}} <br> </span>
+          <span *ngIf="item.phone2.length"> Điện thoại: {{item.phone2}} <br> </span>
+          <!-- Cân nặng: {{weight[item.weight]}} <br>
+            Số con: {{item.number}} -->
         </div>
         <div class="col-xs-6">
-          Ngày đặt: {{item.ngaydat}} <br>
-          Ngày đến: {{item.thoigian}} <br>
-          </div>
-        Dịch vụ: {{item.dichvu}} <br>
-        <div *ngIf="item.ghichu.length"> Ghi chú: {{item.ghichu}} </div>
-        <div class="upperline"></div>
-        <div class="pos" (click)="thaydoidatlich(i)"> Đổi ngày </div>
-      </div>
-    </div>
+          Ngày nhận: {{item.ftime}} <br>
+          Giờ nhận: {{item.time}} <br>
+        </div>
+        <div class="upperline" *ngIf="segment == '0'">
+          <span *ngIf="!item.duser"> Người nhận: {{item.user}} <br> </span>
+          <span *ngIf="item.duser"> Người làm: <span class="bolder"> {{item.duser}} </span> <br> </span>
+          <span *ngIf="item.luser"> Sửa cuối: {{item.luser}}, {{item.ltime}} <br> </span>
+          Trạng thái: <span class="bold"> {{status_text[item.status]}} </span> <br>
+          Dịch vụ: {{item.service}}
+        </div>
+        <div *ngIf="item.note.length">
+          Ghi chú: {{item.note}}
+        </div>
 
-    <div *ngIf="rest.spa.filter.length">
-      <div *ngFor="let item of this.rest.spa.filter; let i = index">
-        <div [class]="status[item.status]">
-          <div *ngIf="kiemtrathoigian(item.dtime, item.status)">
-            <span class="canhbao"> Đã quá 30 phút chưa làm xong </span>
-          </div>
+        <div *ngIf="item.tinhcach.length && toggle" class="bolder">
+          Tính cách: {{item.tinhcach}}
+        </div>
 
-          <div class="col-xs-6">
-            Tên khách: {{item.name}} <br>
-            Điện thoại: {{item.phone}} <br>
-            <span *ngIf="item.name2.length"> Người nhận hộ: {{item.name2}} <br> </span>
-            <span *ngIf="item.phone2.length"> Điện thoại: {{item.phone2}} <br> </span>
-            <!-- Cân nặng: {{weight[item.weight]}} <br>
-            Số con: {{item.number}} -->
-          </div>
-          <div class="col-xs-6">
-            Ngày nhận: {{item.ftime}} <br>
-            Giờ nhận: {{item.time}} <br>
-          </div>
-          <div class="upperline" *ngIf="segment == '0'">
-            <span *ngIf="!item.duser"> Người nhận: {{item.user}} <br> </span>
-            <span *ngIf="item.duser"> Người làm: <span class="bolder"> {{item.duser}} </span> <br> </span>
-            <span *ngIf="item.luser"> Sửa cuối: {{item.luser}}, {{item.ltime}} <br> </span>
-            Trạng thái: <span class="bold"> {{status_text[item.status]}} </span> <br>
-            <div *ngIf="item.near" class="bold"> Đã đặt lịch <br> </div>
-            Dịch vụ: {{item.service}}
-          </div>
-          <div *ngIf="item.note.length">
-            Ghi chú: {{item.note}}
-          </div>
+        <div class="upperline">
+          <span *ngIf="item.image.length">
+            <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+          </span>
+          <span *ngIf="item.dimage.length">
+            <img class="thumbnail-sm blue" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+          </span>
+        </div>
 
-          <div *ngIf="item.tinhcach.length && toggle" class="bolder">
-            Tính cách: {{item.tinhcach}}
-          </div>
-
-          <div class="upperline">
-            <span *ngIf="item.image.length">
-              <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
-            </span>
-            <span *ngIf="item.dimage.length">
-              <img class="thumbnail-sm blue" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
-            </span>
-          </div>
-          
-          <img *ngIf="item.duser == 0" class="icon" src="/assets/icon/pick.png" (click)="pick(i)">
-          <img *ngIf="rest.config.spa > 1" class="icon" src="/assets/icon/picktrans.png" (click)="picktrans(i)">
-          <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
-          <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
-          <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
-          <img class="icon right" src="/assets/icon/update.png" (click)="update(i)">
-          <img *ngIf="rest.config.spa > 1" class="icon right" src="/assets/icon/delete.png" (click)="remove(i)">
-          <!-- <img class="icon right" src="/assets/icon/report.png" (click)="report(i)">
+        <img *ngIf="item.duser == 0" class="icon" src="/assets/icon/pick.png" (click)="pick(i)">
+        <img *ngIf="rest.config.spa > 1" class="icon" src="/assets/icon/picktrans.png" (click)="picktrans(i)">
+        <img *ngIf="rest.config.spa > 1" class="icon" src="/assets/icon/rnd.png" (click)="chuyenngaunhien(i)">
+        <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+        <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+        <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
+        <img class="icon right" src="/assets/icon/update.png" (click)="update(i)">
+        <img *ngIf="rest.config.spa > 1" class="icon right" src="/assets/icon/delete.png" (click)="remove(i)">
+        <!-- <img class="icon right" src="/assets/icon/report.png" (click)="report(i)">
           <img class="icon right" src="/assets/icon/schedule.png" (click)="schedule(i)"> -->
-          <!-- <div *ngIf="item.duser == 0" class="pos" (click)="pick(i)"> nhận làm </div>
+        <!-- <div *ngIf="item.duser == 0" class="pos" (click)="pick(i)"> nhận làm </div>
           <div  *ngIf="item.duser == rest.home.userid || rest.home.admin || user.config.spa > 1" class="pos" (click)="picktrans(i)"> giao việc </div> -->
-          <!-- <div *ngIf="item.status < 1" class="pos" (click)="done(i)"> đã xong </div>
+        <!-- <div *ngIf="item.status < 1" class="pos" (click)="done(i)"> đã xong </div>
           <div *ngIf="item.status < 2" class="pos" (click)="called(i)"> đã gọi </div>
           <div *ngIf="item.status < 3" class="pos" (click)="returned(i)"> đã về </div>
           <div class="pos" (click)="update(i)"> cập nhật </div>
           <div class="pos red" (click)="remove(i)"> xóa </div> -->
-        </div>
       </div>
-    </div>
-    <div *ngIf="!(rest.spa.filter.length + rest.spa.datlichhomnay.length)" class="stl-card text-center">
-      Không có thông tin
     </div>
   </div>
-
-  <div *ngIf="segment == '1'">
-    <div *ngIf="!rest.spa.near.length" class="stl-card text-center">
-      Không có thông tin
-    </div>
-
-    <div class="stl-card" *ngFor="let item of rest.spa.near; let i = index">
-      <div class="col-xs-6">
-        Khách hàng: {{item.tenkhach}} <br>
-        Điện thoại: {{item.dienthoai}} <br>
-      </div>
-      <div class="col-xs-6">
-        Ngày đặt: {{item.ngaydat}} <br>
-        Ngày đến: {{item.thoigian}} <br>
-      </div>
-      Dịch vụ: {{item.dichvu}} <br>
-      <div *ngIf="item.ghichu.length"> Ghi chú: {{item.ghichu}} </div>
-    </div>
+  <div *ngIf="!rest.spa.filter.length" class="stl-card text-center">
+    Không có thông tin
   </div>
 </ion-content>
 

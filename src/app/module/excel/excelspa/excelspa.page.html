@@ -14,7 +14,7 @@
   <div class="stl-card">
     Danh sách loại nhắc:
     <div class="upperline" *ngFor="let item of rest.home.spa; let i = index">
-      {{item.name}}
+      {{item.tendanhmuc}}
       <img class="right icon" *ngIf="rest.isnumber(item.alt)" src="/assets/icon/rate-xs.png"
         (click)="toggleDefault(item.id, item.alt)">
       <img class="right icon" *ngIf="!rest.isnumber(item.alt)" src="/assets/icon/unrate-xs.png"

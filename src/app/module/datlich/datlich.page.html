@@ -1,0 +1,50 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('blood')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo tên, số điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.datlich.tukhoa"> </ion-input>
+  </ion-item>
+
+  <ion-button expand="full" color="secondary" (click)="khoitao()">
+    Tìm kiếm khách hàng
+  </ion-button>
+
+  <div class="stl-card" *ngFor="let item of rest.datlich.danhsach; let i = index">
+    <div> <b> {{loaidatlich[item.loai]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
+    <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
+    <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
+    <div> <b> Thời gian: </b> {{item.thoigian}} </div>
+    <div *ngIf="item.ghichu.length"> <b> Ghi chú: </b> {{item.ghichu}} </div>
+    <div class="upperline" *ngIf="item.trangthai < 1"></div>
+    <div class="pos" (click)="chuyenspa(i)" *ngIf="item.trangthai < 1"> Khách đã đến </div>
+    <div class="pos" (click)="henngay(i)" *ngIf="item.trangthai < 1"> Hẹn ngày khác </div>
+    <div class="pos" (click)="khongden(i)" *ngIf="item.trangthai < 1"> Khách không đến </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

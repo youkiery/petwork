@@ -158,13 +158,18 @@ const routes: Routes = [
   {
     path: 'loinhuan',
     loadChildren: () => import('./module/loinhuan/loinhuan.module').then( m => m.LoinhuanPageModule)
-  },  {
+  },
+  {
     path: 'taichinh',
     loadChildren: () => import('./module/taichinh/taichinh.module').then( m => m.TaichinhPageModule)
   },
   {
     path: 'thietbi',
     loadChildren: () => import('./module/thietbi/thietbi.module').then( m => m.ThietbiPageModule)
+  },
+  {
+    path: 'datlich',
+    loadChildren: () => import('./module/datlich/datlich.module').then( m => m.DatlichPageModule)
   },
 
 ];
