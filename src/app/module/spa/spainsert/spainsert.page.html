@@ -81,7 +81,7 @@
 
   <div *ngIf="!rest.temp.treat">
     <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">
-      <ion-label> {{item.name}} </ion-label>
+      <ion-label> {{item.tendanhmuc}} </ion-label>
       <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>
     </ion-item>
   </div>

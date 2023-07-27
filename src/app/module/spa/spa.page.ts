@@ -72,20 +72,6 @@ export class SpaPage {
     this.search()
   }
 
-  // public async change(i: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('spa', 'nearchange', {
-  //     id: this.rest.spa.near[i].id,
-  //     status: this.rest.spa.near[i].status
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.spa.near = resp.list
-  //     this.rest.spa.count = resp.count
-  //   }, () => { 
-  //     this.rest.defreeze()
-  //   })
-  // }
-
   public search() {
     let rev = [
       ['0', '1', '2', '3'],

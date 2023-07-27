@@ -32,7 +32,7 @@ export class ExcelspaPage implements OnInit {
       this.rest.defreeze()
     })
   }
-  
+
   public async tailai(event: any) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('admin', 'spa', {}).then(resp => {
@@ -47,14 +47,14 @@ export class ExcelspaPage implements OnInit {
   }
 
   public async themloai(thutu: number = -1) {
-    let loai = {id: 0, name: '', code: ''}
+    let loai = { id: 0, name: '', code: '' }
     if (thutu >= 0) loai = this.loainhac[thutu]
-    
+
     let alert = await this.alert.create({
       message: 'Nhập mã spa',
       inputs: [
-        { name: 'code', type: 'text', 'placeholder': 'mã spa', value: loai.code},
-        { name: 'name', type: 'text', 'placeholder': 'Tên loại', value: loai.name}
+        { name: 'code', type: 'text', 'placeholder': 'mã spa', value: loai.code },
+        { name: 'name', type: 'text', 'placeholder': 'Tên loại', value: loai.name }
       ],
       buttons: [
         {
@@ -99,30 +99,36 @@ export class ExcelspaPage implements OnInit {
     })
   }
 
-  
-  public async upspa(id: number, id2: number) {
+
+  public async upspa(thutu: number) {
     await this.rest.freeze('Đang tải dữ liệu')
+    let loaispa1 = this.rest.home.spa[thutu]
+    let loaispa2 = this.rest.home.spa[thutu - 1]
     this.rest.checkpost('spa', 'uptype', {
-      id: id,
-      id2: id2,
+      id1: loaispa1.id,
+      id2: loaispa2.id,
+      vitri1: loaispa1.vitri,
+      vitri2: loaispa2.vitri,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
-      this.rest.home.default.spa = resp.default
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  public async downspa(id: number, id2: number) {
+  public async downspa(thutu: number) {
     await this.rest.freeze('Đang tải dữ liệu')
+    let loaispa1 = this.rest.home.spa[thutu]
+    let loaispa2 = this.rest.home.spa[thutu + 1]
     this.rest.checkpost('spa', 'downtype', {
-      id: id,
-      id2: id2,
+      id1: loaispa1.id,
+      id2: loaispa2.id,
+      vitri1: loaispa1.vitri,
+      vitri2: loaispa2.vitri,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
-      this.rest.home.default.spa = resp.default
     }, () => {
       this.rest.defreeze()
     })
@@ -131,7 +137,10 @@ export class ExcelspaPage implements OnInit {
   public async insertSpa() {
     let alert = await this.alert.create({
       message: 'Thêm dịch vụ Spa',
-      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: ''}],
+      inputs: [
+        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: '' },
+        { name: 'time', type: 'number', 'placeholder': 'Thời gian dự kiến (phút)', value: '0'}
+      ],
       buttons: [
         {
           text: 'Trở về',
@@ -139,7 +148,7 @@ export class ExcelspaPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.insertSpaSubmit(e.name)
+            this.insertSpaSubmit(e.name, e.time)
           }
         }
       ]
@@ -151,7 +160,10 @@ export class ExcelspaPage implements OnInit {
   public async updateSpa(index: number) {
     let alert = await this.alert.create({
       message: 'Cập nhật dịch vụ Spa',
-      inputs: [{ name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.rest.home.spa[index].name}],
+      inputs: [
+        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.rest.home.spa[index].tendanhmuc },
+        { name: 'time', type: 'text', 'placeholder': 'Thời gian dự kiến', value: this.rest.home.spa[index].thoigian }
+      ],
       buttons: [
         {
           text: 'Trở về',
@@ -159,7 +171,7 @@ export class ExcelspaPage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.updateSpaSubmit(this.rest.home.spa[index].id, e.name)
+            this.updateSpaSubmit(this.rest.home.spa[index].id, e.name, e.time)
           }
         }
       ]
@@ -168,10 +180,11 @@ export class ExcelspaPage implements OnInit {
     await alert.present();
   }
 
-  public async insertSpaSubmit(name: string) {
+  public async insertSpaSubmit(name: string, time: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'inserttype', {
       name: name,
+      time: time
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
@@ -180,11 +193,12 @@ export class ExcelspaPage implements OnInit {
     })
   }
 
-  public async updateSpaSubmit(id: number, name: string) {
+  public async updateSpaSubmit(id: number, name: string, time: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'updatetype', {
       id: id,
       name: name,
+      time: time
     }).then(resp => {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
@@ -221,7 +235,7 @@ export class ExcelspaPage implements OnInit {
       this.rest.defreeze()
     })
   }
-  
+
   public async toggleDefault(id: number, alt: string) {
     await this.rest.freeze('Đang tải dữ liệu')
     this.rest.checkpost('spa', 'toggletype', {

@@ -32,6 +32,7 @@ export class SpainsertPage {
       }
 
       this.option = JSON.parse(JSON.stringify(this.rest.home.spa))
+      
       this.rest.temp.option.forEach((id: number) => {
         this.option.forEach((item, index) => {
           if (this.option[index].id == id) this.option[index].check = 1
