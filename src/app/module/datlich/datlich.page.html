@@ -24,15 +24,22 @@
     Tìm kiếm khách hàng
   </ion-button>
 
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" *ngIf="rest.config.datlich > 1" (click)="xuatfile()">
+    <ion-fab-button>
+      <ion-icon name="cloud-download-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <div class="stl-card" *ngFor="let item of rest.datlich.danhsach; let i = index">
-    <div> <b> {{loaidatlich[item.loai]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> {{loaidatlich[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
     <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
     <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
     <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
+    <div *ngIf="item.idnhanvien" style="color: red;"> <b> Chỉ định: </b> {{item.nhanvien}} </div>
     <div> <b> Thời gian: </b> {{item.thoigian}} </div>
     <div *ngIf="item.ghichu.length"> <b> Ghi chú: </b> {{item.ghichu}} </div>
     <div class="upperline" *ngIf="item.trangthai < 1"></div>
-    <div class="pos" (click)="chuyenspa(i)" *ngIf="item.trangthai < 1"> Khách đã đến </div>
+    <div class="pos" (click)="chuyenspa(i)" *ngIf="item.trangthai < 1"> Khách đến </div>
     <div class="pos" (click)="henngay(i)" *ngIf="item.trangthai < 1"> Hẹn ngày khác </div>
     <div class="pos" (click)="khongden(i)" *ngIf="item.trangthai < 1"> Khách không đến </div>
   </div>

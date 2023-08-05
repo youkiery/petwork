@@ -72,9 +72,8 @@
           <img [src]="trangthai[congviec.status]">
         </div>
         <div class="card-content">
-          <div>
-            Công việc: {{congviec.title}}
-          </div>
+          <div> Công việc: {{congviec.title}} </div>
+          <div *ngIf="rest.config.work > 1"> Người làm: {{congviec.assigntext}} </div>
           {{congviec.createtime}}
           <span *ngIf="congviec.expiretime.length" [class]="congviec.expire ? 'pinky' : ''">
             hạn {{congviec.expiretime.length ? congviec.expiretime : ''}}

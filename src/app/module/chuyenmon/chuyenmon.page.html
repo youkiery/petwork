@@ -1,0 +1,43 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item color="success"> Danh sách nhân viên </ion-item>
+
+  <div class="stl-card" *ngFor="let nhanvien of rest.chuyenmon.danhsach">
+    Nhân viên: {{nhanvien.tennhanvien}} <br>
+    <div *ngFor="let chuyenmon of rest.chuyenmon.chuyenmon" [class]="nhanvien.chuyenmon[chuyenmon.id] ? 'pos' : 'pos gray'" (click)="themchuyenmonnhanvien(nhanvien.userid, chuyenmon.id, nhanvien.chuyenmon[chuyenmon.id] ? 1 : 0)"> {{chuyenmon.chuyenmon}} </div>
+  </div>
+
+  <ion-item color="success"> Danh sách dịch vụ chuyên môn </ion-item>
+
+  <div class="stl-card" *ngFor="let dichvu of rest.chuyenmon.dichvu">
+    Tên dịch vụ: {{dichvu.dichvu}}
+    <div class="upperline"></div>
+    <div *ngFor="let chuyenmon of rest.chuyenmon.chuyenmon" [class]="dichvu.chuyenmon[chuyenmon.id] ? 'pos' : 'pos gray'"  (click)="themchuyenmondichvu(dichvu.id, chuyenmon.id, dichvu.chuyenmon[chuyenmon.id] ? 1 : 0)"> {{chuyenmon.chuyenmon}} </div>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -42,14 +42,21 @@ export class DatlichPage implements OnInit {
   }
 
   public chuyenspa(thutu: number) {
-    // chuyển thông tin sang model spa, thêm vào spa
     let datlich = this.rest.datlich.danhsach[thutu]
+    // nếu là điều trị thì hỏi xác nhận
+    if (datlich.loaidatlich == 1) {
+      this.xacnhanden(datlich.id)
+      return
+    }
+
+    // chuyển thông tin sang model spa, thêm vào spa
     if (!this.rest.spa.init) {
       let firstDay = this.time.datetotime(this.rest.home.today);
       let lastDay = this.time.datetotime(this.rest.home.today);
       this.rest.spa.search.start = this.time.timetoisodate(firstDay)
       this.rest.spa.search.end = this.time.timetoisodate(lastDay)
     }
+    
     this.rest.temp = {
       id: 0,
       name: datlich.tenkhach,
@@ -61,12 +68,13 @@ export class DatlichPage implements OnInit {
       weight: 0,
       treat: 0,
       image: [],
-      option: this.rest.home.default['spa'],
+      option: datlich.iddichvu,
       filter: this.rest.spa.search,
       did: 1,
       khonglam: 0,
       number: 1,
-      datlich: datlich.id
+      datlich: datlich.id,
+      duser: datlich.idnhanvien
     }
     setTimeout(() => {
       this.rest.navCtrl.navigateForward('/spa')
@@ -75,6 +83,17 @@ export class DatlichPage implements OnInit {
       }, 100)
     }, 100)
     this.rest.back()
+  }
+
+  public async xuatfile() {
+    await this.rest.freeze()
+    this.rest.checkpost('datlich', 'xuatfile', {
+    }).then(resp => {
+      this.rest.defreeze()
+      window.open(resp.link)
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public henngay(thutu: number) {
@@ -115,6 +134,37 @@ export class DatlichPage implements OnInit {
       loai: datlich.loai,
       tukhoa: this.rest.datlich.tukhoa
     }).then(resp => {
+      this.rest.defreeze()
+      this.rest.datlich.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async xacnhanden(id: number) {
+    let alert = await this.alert.create({
+      message: 'Xác nhận khách đã đến?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.xacnhandaden(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async xacnhandaden(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('datlich', 'dadendieutri', {
+      id: id
+    }).then((resp) => {
       this.rest.defreeze()
       this.rest.datlich.danhsach = resp.danhsach
     }, () => {

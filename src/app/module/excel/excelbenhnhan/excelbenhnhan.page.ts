@@ -8,6 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./excelbenhnhan.page.scss'],
 })
 export class ExcelbenhnhanPage implements OnInit {
+  public loaidichvu = []
   public loainhac = []
   public loaicong = []
   constructor(
@@ -23,11 +24,11 @@ export class ExcelbenhnhanPage implements OnInit {
     else this.khoitao()
   }
 
-  
   public async khoitao() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('his', 'khoitaoloai', {}).then(resp => {
       this.rest.defreeze()
+      this.loaidichvu = resp.loaidichvu
       this.loainhac = resp.loainhac
       this.loaicong = resp.loaicong
     }, () => {
@@ -40,11 +41,161 @@ export class ExcelbenhnhanPage implements OnInit {
     this.rest.checkpost('his', 'khoitaoloai', {}).then(resp => {
       this.rest.defreeze()
       event.target.complete();
+      this.loaidichvu = resp.loaidichvu
       this.loainhac = resp.loainhac
       this.loaicong = resp.loaicong
     }, () => {
       this.rest.defreeze()
       event.target.complete();
+    })
+  }
+
+  
+  public async toggleDefault(id: number, alt: string) {
+    await this.rest.freeze('Đang tải dữ liệu')
+    this.rest.checkpost('his', 'toggletype', {
+      id: id,
+      alt: alt,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async updatehis(index: number) {
+    let alert = await this.alert.create({
+      message: 'Cập nhật dịch vụ his',
+      inputs: [
+        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.loaidichvu[index].tendanhmuc },
+        { name: 'time', type: 'text', 'placeholder': 'Thời gian dự kiến', value: this.loaidichvu[index].thoigian }
+      ],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.updatehisSubmit(this.loaidichvu[index].id, e.name, e.time)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  public async updatehisSubmit(id: number, name: string, time: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('his', 'updatetype', {
+      id: id,
+      name: name,
+      time: time
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async removehis(id: number) {
+    let alert = await this.alert.create({
+      message: 'Xóa dịch vụ his',
+      buttons: [
+        { text: 'Trở về', role: 'cancel', },
+        {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removehisSubmit(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removehisSubmit(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('his', 'removetype', {
+      id: id,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async uphis(thutu: number) {
+    await this.rest.freeze('Đang tải dữ liệu')
+    let loaihis1 = this.loaidichvu[thutu]
+    let loaihis2 = this.loaidichvu[thutu - 1]
+    this.rest.checkpost('his', 'uptype', {
+      id1: loaihis1.id,
+      id2: loaihis2.id,
+      vitri1: loaihis1.vitri,
+      vitri2: loaihis2.vitri,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async downhis(thutu: number) {
+    await this.rest.freeze('Đang tải dữ liệu')
+    let loaihis1 = this.loaidichvu[thutu]
+    let loaihis2 = this.loaidichvu[thutu + 1]
+    this.rest.checkpost('his', 'downtype', {
+      id1: loaihis1.id,
+      id2: loaihis2.id,
+      vitri1: loaihis1.vitri,
+      vitri2: loaihis2.vitri,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async inserthis() {
+    let alert = await this.alert.create({
+      message: 'Thêm dịch vụ his',
+      inputs: [
+        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: '' },
+        { name: 'time', type: 'number', 'placeholder': 'Thời gian dự kiến (phút)', value: '0'}
+      ],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.inserthisSubmit(e.name, e.time)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async inserthisSubmit(name: string, time: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('his', 'inserttype', {
+      name: name,
+      time: time
+    }).then(resp => {
+      this.rest.defreeze()
+      this.loaidichvu = resp.list
+    }, () => {
+      this.rest.defreeze()
     })
   }
 

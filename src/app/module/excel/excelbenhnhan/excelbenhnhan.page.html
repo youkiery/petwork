@@ -12,6 +12,26 @@
   </ion-refresher>
 
   <div class="stl-card">
+    Danh sách loại nhắc:
+    <div class="upperline" *ngFor="let item of loaidichvu; let i = index">
+      {{item.tendanhmuc}}
+      <img class="right icon" *ngIf="rest.isnumber(item.macdinh)" src="/assets/icon/rate-xs.png"
+        (click)="toggleDefault(item.id, item.macdinh)">
+      <img class="right icon" *ngIf="!rest.isnumber(item.macdinh)" src="/assets/icon/unrate-xs.png"
+        (click)="toggleDefault(item.id, item.macdinh)">
+      <img class="right icon" src="/assets/icon/info-xs.png" (click)="updatehis(i)">
+      <img class="right icon" src="/assets/icon/remove-xs.png" (click)="removehis(item.id)">
+      <img class="right icon" *ngIf="i > 0" src="/assets/icon/up-xs.png"
+        (click)="uphis(i)">
+      <img class="right icon" *ngIf="i < (loaidichvu.length - 1)" src="/assets/icon/down-xs.png"
+        (click)="downhis(i)">
+    </div>
+    <div class="upperline">
+      <img class="icon" src="/assets/icon/insert-xs.png" (click)="inserthis()">
+    </div>
+  </div>
+
+  <div class="stl-card">
     Mã import nhắc tái khám:
     <div class="upperline" *ngFor="let item of loainhac; let i = index">
       {{item.code}}

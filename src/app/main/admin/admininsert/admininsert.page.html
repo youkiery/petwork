@@ -15,6 +15,10 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/*" capture (change)="uploadPWA()">
+  </div>
+
   <ion-item>
     <ion-icon slot="start" name="person-outline"></ion-icon>
     <ion-input [(ngModel)]="rest.temp.fullname" name="fullname" placeholder="Họ và tên"></ion-input>
@@ -36,4 +40,10 @@
     <ion-input type="password" [(ngModel)]="rest.temp.vpassword" name="vpassword" placeholder="Xác nhận mật khẩu">
     </ion-input>
   </ion-item>
+
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngIf="rest.temp.image.length">
+    <span class="thumbnail-box-icon" (click)="remove()"> x </span>
+    <img class="thumbnail" [src]="rest.temp.image">
+  </span>
 </ion-content>

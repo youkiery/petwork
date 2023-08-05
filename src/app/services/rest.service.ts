@@ -84,6 +84,7 @@ export class RestService {
   public sieuam = { init: false, list: [], need: [], start: '', end: '', s: '1' }
   public hotel = { init: false, catinit: false, cat: [], list: [], need: [], filter: {start: '', end: ''}, s: '0' }
   public datlich = { khoitao: false, tukhoa: "", danhsach: [] }
+  public danhgia = { khoitao: false, thoigian: "", danhsach: [] }
   public other = { init: false, list: [], need: [], type: [], start: '', end: '', s: '1' }
   public badge = { his: 0, kaizen: 0, profile: 0, physical: 0, xquang: 0, sieuam: 0, other: 0, init: false }
   public excel = { init: false, config: {name: '', phone: '', address: ''} }
@@ -101,6 +102,7 @@ export class RestService {
     chietkhauspa: 0,
   }, tilebanhang: [], luongcoban: '0', phucap: '0', danhsach: [], danhsachtam: [], luong: { doanhsobanhang: '0', doanhsospa: '0', luongcoban: '0', thuong: '0', phucap: '0', nghiphep: '0', tietkiem: '0', tongluong: '0', thucnhan: '0', cophan: '0', tongtietkiemnam: '0', tongcophannam: '0', thoigian: '' }, thoigian: '', tukhoa: '', tongluong: '0', thuong: '0'}
   public thietbi = { khoitao: false, danhsach: [], danhsachtam: [], tukhoa: '' }
+  public chuyenmon = { khoitao: false, danhsach: [], dichvu: [], chuyenmon: [] }
   // public work = {}
 
   public link = ''

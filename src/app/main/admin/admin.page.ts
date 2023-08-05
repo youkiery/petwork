@@ -35,6 +35,8 @@ export class AdminPage {
     { name: 'Quản lý tài chính', module: 'taichinh' },
     { name: 'Quản lý tính lương', module: 'loinhuan' },
     { name: 'Danh sách đặt lịch', module: 'datlich' },
+    { name: 'Danh sách đánh giá', module: 'danhgia' },
+    { name: 'Chuyên môn nhân viên', module: 'chuyenmon'},
     { name: 'Cài đặt', module: 'excel' },
     { name: 'Quản lý công việc', module: 'work'},
   ]
@@ -164,6 +166,7 @@ export class AdminPage {
       fullname: this.rest.admin.list[i].fullname,
       username: this.rest.admin.list[i].username,
       birthday: this.rest.admin.list[i].birthday,
+      image: this.rest.admin.list[i].photo,
       opassword: '',
       password: '',
       vpassword: '',
@@ -177,6 +180,7 @@ export class AdminPage {
       fullname: '',
       username: '',
       birthday: this.time.datetoisodate(this.rest.home.today),
+      image: '',
       password: '',
       vpassword: '',
     }

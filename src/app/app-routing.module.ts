@@ -170,7 +170,15 @@ const routes: Routes = [
   {
     path: 'datlich',
     loadChildren: () => import('./module/datlich/datlich.module').then( m => m.DatlichPageModule)
+  },  {
+    path: 'danhgia',
+    loadChildren: () => import('./module/danhgia/danhgia.module').then( m => m.DanhgiaPageModule)
   },
+  {
+    path: 'chuyenmon',
+    loadChildren: () => import('./module/chuyenmon/chuyenmon.module').then( m => m.ChuyenmonPageModule)
+  },
+
 
 ];
 
