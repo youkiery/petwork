@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
@@ -11,7 +12,8 @@ export class ChuyenmonPage implements OnInit {
 
   constructor(
     public rest: RestService,
-    public time: TimeService
+    public time: TimeService,
+    public alert: AlertController,
   ) { }
 
   ngOnInit() {
@@ -78,6 +80,76 @@ export class ChuyenmonPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.chuyenmon.dichvu = resp.dichvu
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async themchuyenmon(i: number = -1) {
+    let giatri = ''
+    let id = 0
+    if (i >= 0) {
+      let chuyenmon = this.rest.chuyenmon.chuyenmon[i]
+      giatri = chuyenmon.chuyenmon
+      id = chuyenmon.id
+    }
+    let alert = await this.alert.create({
+      message: 'Nhập tên chuyên môn',
+      inputs: [{
+        name: "chuyenmon",
+        value: giatri,
+      }],
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanthemchuyenmon(e.chuyenmon, id)
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
+  public async xacnhanthemchuyenmon(chuyenmon: string, idchuyenmon: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('chuyenmon', 'themchuyenmon', {
+      chuyenmon: chuyenmon,
+      idchuyenmon: idchuyenmon
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.chuyenmon.chuyenmon = resp.chuyenmon
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async xoachuyenmon(id: number) {
+    let alert = await this.alert.create({
+      message: 'xác nhận xoá chuyên môn',
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanxoachuyenmon(id)
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
+  public async xacnhanxoachuyenmon(idchuyenmon: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('chuyenmon', 'xoachuyenmon', {
+      idchuyenmon: idchuyenmon
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.chuyenmon.chuyenmon = resp.chuyenmon
     }, () => {
       this.rest.defreeze()
     })

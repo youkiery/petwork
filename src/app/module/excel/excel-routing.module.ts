@@ -56,6 +56,10 @@ const routes: Routes = [
     path: 'sualoinhuan',
     loadChildren: () => import('./excelsualoinhuan/excelsualoinhuan.module').then( m => m.ExcelsualoinhuanPageModule)
   },
+  {
+    path: 'thongke',
+    loadChildren: () => import('./excelthongke/excelthongke.module').then( m => m.ExcelthongkePageModule)
+  },
 ];
 
 @NgModule({
