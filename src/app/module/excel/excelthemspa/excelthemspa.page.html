@@ -1,0 +1,39 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="xacnhan()">
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Tên loại SPA </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ten"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thời gian SPA </ion-label>
+    <ion-input [(ngModel)]="rest.temp.thoigian"></ion-input>
+  </ion-item>
+
+  <ion-item color="secondary"> Giá dịch vụ theo cân nặng (bỏ trống nghĩa là không tính tiền) </ion-item>
+  <div *ngFor="let khoangcan of rest.temp.khoangcan; let i = index" style="position: relative;">
+    <ion-icon class="floatbutton" color="danger" name="close-circle" (click)="xoakhoangcan(i)"></ion-icon>
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Khoảng cân (từ-đến) </ion-label>
+      <ion-input [(ngModel)]="rest.temp.khoangcan[i].khoangcan"></ion-input>
+    </ion-item>
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Giá dịch vụ </ion-label>
+      <ion-input [(ngModel)]="rest.temp.khoangcan[i].sotien"></ion-input>
+    </ion-item>
+  </div>
+  <ion-button expand="block" color="success" (click)="themkhoangcan()">
+    <ion-icon name="add-circle-outline"></ion-icon> Thêm khoảng cân
+  </ion-button>
+</ion-content>

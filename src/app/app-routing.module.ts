@@ -178,7 +178,11 @@ const routes: Routes = [
   {
     path: 'chuyenmon',
     loadChildren: () => import('./module/chuyenmon/chuyenmon.module').then( m => m.ChuyenmonPageModule)
+  },  {
+    path: 'thongkenghi',
+    loadChildren: () => import('./module/thongkenghi/thongkenghi.module').then( m => m.ThongkenghiPageModule)
   },
+
 
 
 ];

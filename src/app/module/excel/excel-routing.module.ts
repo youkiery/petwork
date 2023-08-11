@@ -60,6 +60,10 @@ const routes: Routes = [
     path: 'thongke',
     loadChildren: () => import('./excelthongke/excelthongke.module').then( m => m.ExcelthongkePageModule)
   },
+  {
+    path: 'themspa',
+    loadChildren: () => import('./excelthemspa/excelthemspa.module').then( m => m.ExcelthemspaPageModule)
+  },
 ];
 
 @NgModule({

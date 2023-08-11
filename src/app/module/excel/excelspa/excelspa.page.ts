@@ -135,76 +135,24 @@ export class ExcelspaPage implements OnInit {
   }
 
   public async insertSpa() {
-    let alert = await this.alert.create({
-      message: 'Thêm dịch vụ Spa',
-      inputs: [
-        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: '' },
-        { name: 'time', type: 'number', 'placeholder': 'Thời gian dự kiến (phút)', value: '0'}
-      ],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.insertSpaSubmit(e.name, e.time)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+    this.rest.temp = {
+      id: 0,
+      ten: '',
+      thoigian: '0',
+      khoangcan: []
+    }
+    this.rest.navCtrl.navigateForward("/excel/themspa")
   }
 
   public async updateSpa(index: number) {
-    let alert = await this.alert.create({
-      message: 'Cập nhật dịch vụ Spa',
-      inputs: [
-        { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.rest.home.spa[index].tendanhmuc },
-        { name: 'time', type: 'text', 'placeholder': 'Thời gian dự kiến', value: this.rest.home.spa[index].thoigian }
-      ],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: (e) => {
-            this.updateSpaSubmit(this.rest.home.spa[index].id, e.name, e.time)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  public async insertSpaSubmit(name: string, time: number) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('spa', 'inserttype', {
-      name: name,
-      time: time
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.spa = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async updateSpaSubmit(id: number, name: string, time: number) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('spa', 'updatetype', {
-      id: id,
-      name: name,
-      time: time
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.home.spa = resp.list
-    }, () => {
-      this.rest.defreeze()
-    })
+    let dichvu = this.rest.home.spa[index]
+    this.rest.temp = {
+      id: dichvu.id,
+      ten: dichvu.tendanhmuc,
+      thoigian: dichvu.thoigian,
+      khoangcan: dichvu.khoangcan
+    }
+    this.rest.navCtrl.navigateForward("/excel/themspa")
   }
 
   public async removeSpa(id: number) {
