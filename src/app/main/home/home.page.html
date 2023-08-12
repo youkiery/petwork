@@ -77,6 +77,13 @@
       Đăng ký lịch
     </div>
   </div>
+
+  <div *ngIf="rest.config.thongkenghi > 0" class="box" (click)="rest.navCtrl.navigateForward('/thongkenghi')">
+    <ion-img src="assets/image/thongkenghi.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Thống kê chấm công
+    </div>
+  </div>
   
   <div *ngIf="rest.config.kaizen > 0"  class="box" (click)="rest.navCtrl.navigateForward('/kaizen')">
     <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>

@@ -28,6 +28,10 @@
     <ion-input [(ngModel)]="rest.temp.username" name="username" placeholder="Tài khoản"></ion-input>
   </ion-item>
   <ion-item>
+    <ion-icon slot="start" name="finger-print-outline"></ion-icon>
+    <ion-input [(ngModel)]="rest.temp.idvantay" name="idvantay" placeholder="ID vân tay"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-icon slot="start" name="sparkles-outline"></ion-icon>
     <ion-datetime [(ngModel)]="rest.temp.birthday" name="birthday" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>

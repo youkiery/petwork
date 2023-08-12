@@ -103,6 +103,7 @@ export class RestService {
   }, tilebanhang: [], luongcoban: '0', phucap: '0', danhsach: [], danhsachtam: [], luong: { doanhsobanhang: '0', doanhsospa: '0', luongcoban: '0', thuong: '0', phucap: '0', nghiphep: '0', tietkiem: '0', tongluong: '0', thucnhan: '0', cophan: '0', tongtietkiemnam: '0', tongcophannam: '0', thoigian: '' }, thoigian: '', tukhoa: '', tongluong: '0', thuong: '0'}
   public thietbi = { khoitao: false, danhsach: [], danhsachtam: [], tukhoa: '' }
   public chuyenmon = { khoitao: false, danhsach: [], dichvu: [], chuyenmon: [] }
+  public thongkenghi = { khoitao: false, tungay: "", denngay: "", danhsach: [], danhsachngay: [] }
   // public work = {}
 
   public link = ''

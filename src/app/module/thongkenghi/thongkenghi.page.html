@@ -1,9 +1,85 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>thongkenghi</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.thongkenghi.tungay" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.thongkenghi.denngay" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
 
+  <ion-row>
+    <ion-col>
+      <ion-button expand="full" size="small" (click)="chonngay(-1)">
+        Tháng trước
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" size="small" (click)="chonngay(1)">
+        Tháng sau
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-button expand="full" size="small" (click)="khoitao()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div scrolly="true">
+    <table style="font-size: 0.7em;">
+      <tr>
+        <td class="nhanten"> Nhân viên </td>
+        <td> Tổng trễ </td>
+        <td> Tổng không chấm (buổi) </td>
+        <td> Tổng không chấm (ngày) </td>
+        <td *ngFor="let ngay of rest.thongkenghi.danhsachngay"> {{ngay}} </td>
+      </tr>
+      <tr *ngFor="let dulieu of rest.thongkenghi.danhsach">
+        <td class="nhanten"> {{dulieu.tennhanvien}} </td>
+        <td> {{dulieu.tongtre}} </td>
+        <td> {{dulieu.tongkhongcham}} </td>
+        <td> {{dulieu.tongkhongcong}} </td>
+        <td *ngFor="let ngay of rest.thongkenghi.danhsachngay" [class]="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length ? (mau[dulieu.dulieu[ngay][0]]) : 'red' ">
+          <span *ngIf="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length && dulieu.dulieu[ngay][1].length"> {{dulieu.dulieu[ngay][1]}} </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div> <span class="khung green"></span>: Nhân viên vào làm đúng giờ </div>
+  <div> <span class="khung yellow"></span>: Nhân viên vào làm đúng giờ nhưng không chấm công </div>
+  <div> <span class="khung orange"></span>: Nhân viên vào làm trễ hoặc về sớm </div>
+  <div> <span class="khung red"></span>: Nhân viên không chấm công </div>
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cauhinh()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Cấu hình / import </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

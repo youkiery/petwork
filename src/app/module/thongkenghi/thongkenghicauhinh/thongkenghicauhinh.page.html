@@ -1,0 +1,22 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button slot="end" color="light" fill="clear" size="small"
+    (click)="tailen()">
+    Tải lên
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <div class="avatar-box" (click)="upload()">
+    <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+  </div>
+  <div *ngIf="name.length" class="text-center">
+    {{name}}
+  </div>
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto accept=".txt" (change)="file()">
+  </div>
+</ion-content>

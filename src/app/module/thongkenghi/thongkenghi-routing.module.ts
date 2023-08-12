@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ThongkenghiPage
+  },
+  {
+    path: 'cauhinh',
+    loadChildren: () => import('./thongkenghicauhinh/thongkenghicauhinh.module').then( m => m.ThongkenghicauhinhPageModule)
   }
 ];
 

@@ -1,0 +1,43 @@
+
+div[scrolly=true] {
+  position: relative;
+}
+
+div[scrolly=true] {
+  overflow-y: scroll;
+}
+
+.red {
+  background: pink;
+}
+
+.orange {
+  background: orange;
+}
+
+.yellow {
+  background: yellow;
+}
+
+.gray {
+  background: lightgray;
+}
+
+.green {
+  background: lightgreen;
+}
+
+.khung {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 1px solid;
+  margin-left: 5px;
+}
+
+.nhanten {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 1;
+}
