@@ -182,6 +182,10 @@ const routes: Routes = [
     path: 'thongkenghi',
     loadChildren: () => import('./module/thongkenghi/thongkenghi.module').then( m => m.ThongkenghiPageModule)
   },
+  {
+    path: 'lichban',
+    loadChildren: () => import('./module/lichban/lichban.module').then( m => m.LichbanPageModule)
+  },
 
 
 
