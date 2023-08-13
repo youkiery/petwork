@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
@@ -15,9 +16,11 @@ export class ThongkenghiPage implements OnInit {
     "orange",
     "red"
   ]
+  public dachon:any = {}
   constructor(
     public rest: RestService,
     public time: TimeService,
+    public alert: AlertController,
   ) { }
 
   ngOnInit() {
@@ -44,6 +47,7 @@ export class ThongkenghiPage implements OnInit {
       this.rest.thongkenghi.khoitao = true
       this.rest.thongkenghi.danhsach = resp.danhsach
       this.rest.thongkenghi.danhsachngay = resp.danhsachngay
+      this.dachon = resp.dachon
     }, () => {
       this.rest.defreeze()
     })
@@ -60,10 +64,57 @@ export class ThongkenghiPage implements OnInit {
       this.rest.thongkenghi.khoitao = true
       this.rest.thongkenghi.danhsach = resp.danhsach
       this.rest.thongkenghi.danhsachngay = resp.danhsachngay
+      this.dachon = resp.dachon
     }, () => {
       this.rest.defreeze()
       event.target.complete();
     })
+  }
+
+  // public chonclass(i, ngay, idnhanvien) {
+  //   var dulieu = this.rest.thongkenghi.danhsach[i].dulieu
+  //   console.log(dulieu);
+    
+  //   return (dulieu && dulieu.length ? (this.mau[dulieu[0]]) : 'red') + (this.dachon[idnhanvien] && this.dachon[idnhanvien][ngay] ? 'dachon' : '')
+  // }
+  
+  public async xacnhandachon() {
+    const alert = await this.alert.create({
+      header: 'Xác nhận những mục đã chọn',
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhandachonok()
+        }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async xacnhandachonok() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+
+    this.rest.checkpost('thongkenghi', 'xacnhandachon', {
+      tungay: this.rest.thongkenghi.tungay,
+      denngay: this.rest.thongkenghi.denngay,
+      dulieu: this.dachon
+    }).then(resp => {
+      this.rest.defreeze()
+      this.dachon = resp.dachon
+      this.rest.thongkenghi.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public chondanhsach(idnhanvien, ngay) {
+    if (!this.dachon[idnhanvien]) this.dachon[idnhanvien] = {}
+    if (!this.dachon[idnhanvien][ngay]) this.dachon[idnhanvien][ngay] = 1
+    else this.dachon[idnhanvien][ngay] = 0
   }
 
   public cauhinh() {

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -8,9 +9,11 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class ThongkenghicauhinhPage implements OnInit {
   public name = 'Chưa chọn file'
+  public cauhinh = []
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
@@ -18,6 +21,85 @@ export class ThongkenghicauhinhPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/thongkenghi')
+    else this.khoitao()
+  }
+  
+  public async khoitao() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('thongkenghi', 'khoitaocauhinh', {
+    }).then(resp => {
+      this.rest.defreeze()
+      this.cauhinh = resp.cauhinh
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async tailai(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('thongkenghi', 'khoitaocauhinh', {
+    }).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
+      this.cauhinh = resp.cauhinh
+    }, () => {
+      this.rest.defreeze()
+      event.target.complete();
+    })
+  }
+
+  public themcatruc() {
+    this.cauhinh.push({
+      id: 0,
+      giovao: "",
+      giora: "",
+    })
+  }
+  
+  public async luucatruc() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('thongkenghi', 'luucatruc', {
+      cauhinh: this.cauhinh
+    }).then(resp => {
+      this.rest.defreeze()
+      this.cauhinh = resp.cauhinh
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async xoaca(id: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận xoá ca trực',
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanxoaca(id)
+        }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public async xacnhanxoaca(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.cauhinh = this.cauhinh.filter(dulieu => {
+      return dulieu.id !== id
+    })
+
+    this.rest.checkpost('thongkenghi', 'xoacatruc', {
+      id: id,
+      cauhinh: this.cauhinh
+    }).then(resp => {
+      this.rest.defreeze()
+      this.cauhinh = resp.cauhinh
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public file() {

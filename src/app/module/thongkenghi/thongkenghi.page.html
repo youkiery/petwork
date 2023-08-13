@@ -55,7 +55,7 @@
         <td> {{dulieu.tongtre}} </td>
         <td> {{dulieu.tongkhongcham}} </td>
         <td> {{dulieu.tongkhongcong}} </td>
-        <td *ngFor="let ngay of rest.thongkenghi.danhsachngay" [class]="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length ? (mau[dulieu.dulieu[ngay][0]]) : 'red' ">
+        <td *ngFor="let ngay of rest.thongkenghi.danhsachngay" [class]="(dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length ? (mau[dulieu.dulieu[ngay][0]]) : 'red') + ((dachon[dulieu.idnhanvien] && dachon[dulieu.idnhanvien][ngay]) ? ' dachon' : '')" (click)="chondanhsach(dulieu.idnhanvien, ngay)">
           <span *ngIf="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length && dulieu.dulieu[ngay][1].length"> {{dulieu.dulieu[ngay][1]}} </span>
         </td>
       </tr>
@@ -74,6 +74,11 @@
       <ion-tab-button (click)="rest.root()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="xacnhandachon()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-label> Xác nhận đã chọn </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="cauhinh()">

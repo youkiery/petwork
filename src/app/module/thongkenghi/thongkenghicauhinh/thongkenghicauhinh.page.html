@@ -19,4 +19,30 @@
   <div id="pwa" style="display: none;">
     <input type="file" id="pwaphoto" #pwaphoto accept=".txt" (change)="file()">
   </div>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item color="secondary">
+    Danh sách ca
+  </ion-item>
+  <div *ngFor="dulieu of cauhinh; let i = index;" style="position: relative;">
+    <ion-icon class="floatbutton" color="danger" name="close-circle" (click)="xoaca(cauhinh[i].id)"></ion-icon>
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Giờ vào  </ion-label>
+      <ion-datetime [(ngModel)]="cauhinh[i].giovao" displayFormat="HH:mm"></ion-datetime>
+    </ion-item>
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Giờ ra </ion-label>
+      <ion-datetime [(ngModel)]="cauhinh[i].giora" displayFormat="HH:mm"></ion-datetime>
+    </ion-item>
+  </div>
+  
+  <ion-item button (click)="themcatruc()">
+    Thêm ca trực
+  </ion-item>
+  <ion-item button (click)="luucatruc()">
+    Lưu ca trực
+  </ion-item>
 </ion-content>
