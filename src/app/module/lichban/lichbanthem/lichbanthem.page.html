@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>lichbanthem</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button slot="end" (click)="them()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
 
 <ion-content>
-
+  <ion-item>
+    <ion-label position="stacked"> Lý do </ion-label>
+    <ion-input [(ngModel)]="rest.temp.lydo"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Bắt đầu từ </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.batdau" displayFormat="DD/MM/YYYY HH:mm"> </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Kết thúc lúc </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.ketthuc" displayFormat="DD/MM/YYYY HH:mm"> </ion-datetime>
+  </ion-item>
 </ion-content>

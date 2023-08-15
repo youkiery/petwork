@@ -1,9 +1,47 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>lichban</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
+  <div *ngFor="let ngay of rest.lichban.danhsach; let i = index">
+    <ion-item color="secondary">
+      Ngày {{ngay.ngay}}
+    </ion-item>
+    <div class="stl-card" *ngFor="let lichban of ngay.danhsach; let j = index">
+      <div> Lý do: {{lichban.lydo}} </div>
+      <div> Bắt đầu từ: {{lichban.batdau}} </div>
+      <div> Kết thúc lúc: {{lichban.ketthuc}} </div>
+      <div class="upperline"></div>
+      <img class="icon" *ngIf="lichban.id > 0" src="/assets/icon/delete.png" (click)="xoa(lichban.id)">
+      <img class="icon" *ngIf="lichban.id > 0" src="/assets/icon/update.png" (click)="capnhat(i, j)">
+    </div>
+  </div>
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="them()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -9,7 +9,7 @@ const routes: Routes = [
     component: LichbanPage
   },
   {
-    path: 'lichbanthem',
+    path: 'them',
     loadChildren: () => import('./lichbanthem/lichbanthem.module').then( m => m.LichbanthemPageModule)
   }
 ];

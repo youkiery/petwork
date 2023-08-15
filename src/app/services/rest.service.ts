@@ -18,10 +18,10 @@ export class RestService {
   public base: string = '';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 21 // 21-191
+  public version = 188 // 21-191
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -104,6 +104,7 @@ export class RestService {
   public thietbi = { khoitao: false, danhsach: [], danhsachtam: [], tukhoa: '' }
   public chuyenmon = { khoitao: false, danhsach: [], dichvu: [], chuyenmon: [] }
   public thongkenghi = { khoitao: false, tungay: "", denngay: "", danhsach: [], danhsachngay: [] }
+  public lichban = { khoitao: false, danhsach: [] }
   // public work = {}
 
   public link = ''

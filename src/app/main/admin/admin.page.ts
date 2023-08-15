@@ -16,6 +16,7 @@ export class AdminPage {
     { name: 'Quản lý nhắc gọi', module: 'vaccine' },
     { name: 'Quản lý Nhắn tin', module: 'nhantin' },
     { name: 'Đăng ký lịch', module: 'schedule' },
+    { name: 'Báo lịch bận', module: 'lichban' },
     { name: 'Thống kê chấm công', module: 'thongkenghi' },
     { name: 'Quản lý hàng hóa', module: 'item' },
     { name: 'Kaizen', module: 'kaizen' },
