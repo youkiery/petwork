@@ -171,4 +171,8 @@ export class DatlichPage implements OnInit {
       this.rest.defreeze()
     })
   }
+
+  public tonghop() {
+    this.rest.navCtrl.navigateForward("/datlich/tonghop")
+  }
 }

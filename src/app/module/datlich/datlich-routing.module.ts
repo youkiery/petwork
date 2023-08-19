@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'chuyenspa',
     loadChildren: () => import('./datlichchuyenspa/datlichchuyenspa.module').then( m => m.DatlichchuyenspaPageModule)
+  },
+  {
+    path: 'tonghop',
+    loadChildren: () => import('./datlichtonghop/datlichtonghop.module').then( m => m.DatlichtonghopPageModule)
   }
 ];
 

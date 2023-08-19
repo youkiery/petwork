@@ -1,0 +1,25 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  
+  <div class="stl-card" *ngFor="let item of danhsach; let i = index">
+    <div> <b> {{loaidatlich[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
+    <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
+    <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
+    <div *ngIf="item.idnhanvien" style="color: red;"> <b> Chỉ định: </b> {{item.nhanvien}} </div>
+    <div> <b> Thời gian: </b> {{item.thoigian}} </div>
+    <div *ngIf="item.lientiep.length" style="color: red;"> <b> Đặt gần đây: </b> {{item.lientiep}} </div>
+    <div *ngIf="item.ghichu.length"> <b> Ghi chú: </b> {{item.ghichu}} </div>
+    <div class="upperline" *ngIf="item.trangthai < 1"></div>
+    <div class="pos" (click)="khongden(i)" *ngIf="item.trangthai < 1"> Khách không đến </div>
+  </div>
+</ion-content>

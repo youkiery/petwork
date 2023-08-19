@@ -17,7 +17,7 @@ export class DatlichhenngayPage implements OnInit {
 
   
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hotel')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/datlich')
   }
 
   public async xacnhan() {
