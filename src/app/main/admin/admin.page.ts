@@ -38,7 +38,6 @@ export class AdminPage {
     { name: 'Quản lý tính lương', module: 'loinhuan' },
     { name: 'Danh sách đặt lịch', module: 'datlich' },
     { name: 'Danh sách đánh giá', module: 'danhgia' },
-    { name: 'Chuyên môn nhân viên', module: 'chuyenmon'},
     { name: 'Cài đặt', module: 'excel' },
     { name: 'Quản lý công việc', module: 'work'},
   ]

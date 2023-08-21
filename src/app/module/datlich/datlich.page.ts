@@ -24,14 +24,20 @@ export class DatlichPage implements OnInit {
   async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'datlich'
-      if (!this.rest.datlich.khoitao) this.khoitao()
+      if (!this.rest.datlich.khoitao) {
+        this.rest.datlich.tungay = this.time.datetoisodate(this.rest.home.today)
+        this.rest.datlich.denngay = this.time.datetoisodate(this.rest.home.today)
+        this.khoitao()
+      }
     })
   }
 
   public async khoitao() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('datlich', 'khoitao', {
-      tukhoa: this.rest.datlich.tukhoa
+      tukhoa: this.rest.datlich.tukhoa,
+      tungay: this.rest.datlich.tungay,
+      denngay: this.rest.datlich.denngay,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.datlich.khoitao = true
@@ -172,7 +178,7 @@ export class DatlichPage implements OnInit {
     })
   }
 
-  public tonghop() {
-    this.rest.navCtrl.navigateForward("/datlich/tonghop")
+  public chuyenmon() {
+    this.rest.navCtrl.navigateForward("/datlich/chuyenmon")
   }
 }

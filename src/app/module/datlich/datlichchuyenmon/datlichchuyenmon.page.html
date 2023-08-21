@@ -1,0 +1,57 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="themchuyenmon()" color="light" fill="clear" size="small">
+    Thêm chuyên môn
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-segment [(ngModel)]="chuyenmon">
+    <ion-segment-button value="nhanvien">
+      <ion-label> Nhân viên </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dichvu">
+      <ion-label> Nhóm dịch vụ </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="danhmuc">
+      <ion-label> Danh mục </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="chuyenmon == 'nhanvien'">
+    <div class="stl-card" *ngFor="let nhanvien of rest.chuyenmon.danhsach">
+      Nhân viên: {{nhanvien.tennhanvien}}
+      <div class="upperline"></div>
+      <div *ngFor="let chuyenmon of rest.chuyenmon.chuyenmon"
+        [class]="nhanvien.chuyenmon[chuyenmon.id] ? 'pos' : 'pos gray'"
+        (click)="themchuyenmonnhanvien(nhanvien.userid, chuyenmon.id, nhanvien.chuyenmon[chuyenmon.id] ? 1 : 0)">
+        {{chuyenmon.chuyenmon}} </div>
+    </div>
+  </div>
+
+  <div *ngIf="chuyenmon == 'dichvu'">
+    <div class="stl-card" *ngFor="let dichvu of rest.chuyenmon.dichvu">
+      Tên dịch vụ: {{dichvu.dichvu}}
+      <div class="upperline"></div>
+      <div *ngFor="let chuyenmon of rest.chuyenmon.chuyenmon"
+        [class]="dichvu.chuyenmon[chuyenmon.id] ? 'pos' : 'pos gray'"
+        (click)="themchuyenmondichvu(dichvu.id, chuyenmon.id, dichvu.chuyenmon[chuyenmon.id] ? 1 : 0)">
+        {{chuyenmon.chuyenmon}} </div>
+    </div>
+  </div>
+
+  <div *ngIf="chuyenmon == 'danhmuc'">
+    <div class="stl-card" *ngFor="let chuyenmon of rest.chuyenmon.chuyenmon; let i = index">
+      {{chuyenmon.chuyenmon}}
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/update.png" (click)="themchuyenmon(i)">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoachuyenmon(chuyenmon.id)">
+    </div>
+  </div>
+</ion-content>

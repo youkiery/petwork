@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'tonghop',
     loadChildren: () => import('./datlichtonghop/datlichtonghop.module').then( m => m.DatlichtonghopPageModule)
+  },
+  {
+    path: 'chuyenmon',
+    loadChildren: () => import('./datlichchuyenmon/datlichchuyenmon.module').then( m => m.DatlichchuyenmonPageModule)
   }
 ];
 

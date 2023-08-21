@@ -20,6 +20,16 @@
     <ion-input [(ngModel)]="rest.datlich.tukhoa"> </ion-input>
   </ion-item>
 
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.datlich.tungay" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-item class="half-item">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.datlich.denngay" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
   <ion-button expand="full" color="secondary" (click)="khoitao()">
     Tìm kiếm khách hàng
   </ion-button>
@@ -52,9 +62,9 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="tonghop()">
+      <ion-tab-button (click)="chuyenmon()">
         <ion-icon name="documents-outline"></ion-icon>
-        <ion-label> Tổng hợp </ion-label>
+        <ion-label> Chuyên môn </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

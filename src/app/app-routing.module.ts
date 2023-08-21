@@ -186,7 +186,11 @@ const routes: Routes = [
   {
     path: 'lichban',
     loadChildren: () => import('./module/lichban/lichban.module').then( m => m.LichbanPageModule)
+  },  {
+    path: 'tintuc',
+    loadChildren: () => import('./module/tintuc/tintuc.module').then( m => m.TintucPageModule)
   },
+
 ];
 
 @NgModule({
