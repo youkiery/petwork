@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'chuyenmon',
     loadChildren: () => import('./datlichchuyenmon/datlichchuyenmon.module').then( m => m.DatlichchuyenmonPageModule)
+  },
+  {
+    path: 'datlichhomnay',
+    loadChildren: () => import('./datlichhomnay/datlichhomnay.module').then( m => m.DatlichhomnayPageModule)
   }
 ];
 

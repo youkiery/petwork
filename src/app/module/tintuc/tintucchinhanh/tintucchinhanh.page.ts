@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-tintucchinhanh',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TintucchinhanhPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public rest: RestService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(
+  ) {
   }
 
+  ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tintuc')
+  }
 }

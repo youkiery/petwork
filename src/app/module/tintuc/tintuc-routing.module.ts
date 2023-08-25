@@ -9,15 +9,15 @@ const routes: Routes = [
     component: TintucPage
   },
   {
-    path: 'tintucthem',
+    path: 'them',
     loadChildren: () => import('./tintucthem/tintucthem.module').then( m => m.TintucthemPageModule)
   },
   {
-    path: 'tintucchuongtrinh',
+    path: 'chuongtrinh',
     loadChildren: () => import('./tintucchuongtrinh/tintucchuongtrinh.module').then( m => m.TintucchuongtrinhPageModule)
   },
   {
-    path: 'tintucchinhanh',
+    path: 'chinhanh',
     loadChildren: () => import('./tintucchinhanh/tintucchinhanh.module').then( m => m.TintucchinhanhPageModule)
   }
 ];

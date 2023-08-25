@@ -1,9 +1,74 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tintuc</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="tintuc">
+      <ion-label> Tin tức </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="chuongtrinh">
+      <ion-label> Chương trình </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="chinhanh">
+      <ion-label> Chi nhánh </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <!-- <div *ngIf="tab == 'tintuc'">
+    <div class="stl-card" *ngFor="let tintuc of rest.tintuc.danhsachtintuc">
+      Tiêu đề: {{tintuc.tieude}}
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhattintuc(i)">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoatintuc(i)">
+    </div>
+  </div>
+
+  <div *ngIf="tab == 'chuongtrinh'">
+    <div class="stl-card" *ngFor="let chuongtrinh of rest.tintuc.danhsachchuongtrinh">
+      Đường dẫn: {{chuongtrinh.link}}
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhatchuongtrinh(i)">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoachuongtrinh(i)">
+    </div>
+  </div>
+
+  <div *ngIf="tab == 'chinhanh'">
+    <div class="stl-card" *ngFor="let chinhanh of rest.tintuc.danhsachchinhanh">
+      Tên: {{chinhanh.tenchinhanh}} <br>
+      Địa chỉ: {{chinhanh.diachi}} <br>
+      Điện thoại: {{chinhanh.dienthoai}} <br>
+      <div class="upperline"></div>
+      <img class="icon" src="/assets/icon/update.png" (click)="capnhatchinhanh(i)">
+      <img class="icon" src="/assets/icon/delete.png" (click)="xoachinhanh(i)">
+    </div>
+  </div> -->
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <!-- <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

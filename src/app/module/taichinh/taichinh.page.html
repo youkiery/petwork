@@ -72,11 +72,11 @@
 
       <ion-item>
         <ion-label position="stacked"> Tiền mặt </ion-label>
-        <ion-input [(ngModel)]="rest.temp.tienmat" (keyup)="nhaptien('tienmat')"> </ion-input>
+        <ion-input [(ngModel)]="rest.temp.tienmat" (ionChange)="nhaptien('tienmat')"> </ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked"> Ngân hàng </ion-label>
-        <ion-input [(ngModel)]="rest.temp.nganhang" (keyup)="nhaptien('nganhang')"> </ion-input>
+        <ion-input [(ngModel)]="rest.temp.nganhang" (ionChange)="nhaptien('nganhang')"> </ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked"> Thời gian </ion-label>

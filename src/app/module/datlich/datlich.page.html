@@ -62,7 +62,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="chuyenmon()">
+      <ion-tab-button (click)="chuyenmon()" *ngIf="rest.config.datlich > 1">
         <ion-icon name="documents-outline"></ion-icon>
         <ion-label> Chuyên môn </ion-label>
       </ion-tab-button>
