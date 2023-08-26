@@ -47,6 +47,10 @@ const routes: Routes = [
   {
     path: 'danhsachnhantin',
     loadChildren: () => import('./spadanhsachnhantin/spadanhsachnhantin.module').then( m => m.SpadanhsachnhantinPageModule)
+  },
+  {
+    path: 'bieudo',
+    loadChildren: () => import('./spabieudo/spabieudo.module').then( m => m.SpabieudoPageModule)
   }
 ];
 

@@ -484,6 +484,10 @@ export class SpaPage {
     this.rest.navCtrl.navigateForward('/spa/done')
   }
 
+  public bieudo() {
+    this.rest.navCtrl.navigateForward('/spa/bieudo')
+  }
+
   // public report(index: number) {
   //   let item = this.rest.spa.list[index]
   //   this.rest.temp = {
