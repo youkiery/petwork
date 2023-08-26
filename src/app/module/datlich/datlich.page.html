@@ -46,7 +46,8 @@
     <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
     <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
     <div *ngIf="item.idnhanvien" style="color: red;"> <b> Chỉ định: </b> {{item.nhanvien}} </div>
-    <div> <b> Thời gian: </b> {{item.thoigian}} </div>
+    <div> <b> Khách đặt: </b> {{item.thoigian}} </div>
+    <div> <b> Thời gian: </b> {{item.ngaydat}} </div>
     <div *ngIf="item.ghichu.length"> <b> Ghi chú: </b> {{item.ghichu}} </div>
     <div class="upperline" *ngIf="item.trangthai < 1"></div>
     <div class="pos" (click)="chuyenspa(i)" *ngIf="item.trangthai < 1"> Khách đến </div>
@@ -61,6 +62,13 @@
       <ion-tab-button (click)="rest.root()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="homnay()">
+        <ion-icon name="documents-outline"></ion-icon>
+        <ion-badge color="warning" *ngIf="rest.home.datlich > 0"> {{rest.home.datlich2}} </ion-badge>
+        <ion-label> 
+          Hôm nay 
+        </ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="chuyenmon()" *ngIf="rest.config.datlich > 1">
         <ion-icon name="documents-outline"></ion-icon>

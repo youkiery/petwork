@@ -116,6 +116,7 @@ export class NhomtinPage implements OnInit {
     let nhomtin = this.rest.nhomtin.danhsach[thutu]
     this.rest.checkpost('nhomtin', 'chitiet', {
       id: nhomtin.id,
+      mautin: nhomtin.mautin
     }).then(resp => {
       this.rest.defreeze()
       this.rest.nhomtin.danhsachnhan = resp.danhsach

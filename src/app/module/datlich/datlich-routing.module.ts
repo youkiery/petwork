@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./datlichchuyenmon/datlichchuyenmon.module').then( m => m.DatlichchuyenmonPageModule)
   },
   {
-    path: 'datlichhomnay',
+    path: 'homnay',
     loadChildren: () => import('./datlichhomnay/datlichhomnay.module').then( m => m.DatlichhomnayPageModule)
   }
 ];

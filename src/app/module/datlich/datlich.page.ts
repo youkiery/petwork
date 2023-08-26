@@ -113,6 +113,10 @@ export class DatlichPage implements OnInit {
     this.rest.navCtrl.navigateForward("/datlich/henngay")
   }
 
+  public homnay() {
+    this.rest.navCtrl.navigateForward("/datlich/homnay")
+  }
+
   public async khongden(id: number) {
     const alert = await this.alert.create({
       message: 'Xác nhận khách không đặt lịch nữa?',

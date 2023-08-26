@@ -21,7 +21,7 @@ export class RestService {
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 21 // 21-191
+  public version = 21 // 21-188
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -35,6 +35,7 @@ export class RestService {
     },
     chotlich: '0',
     datlich: 0,
+    datlich2: 0,
     today: '',
     branch: '',
     prefix: '',

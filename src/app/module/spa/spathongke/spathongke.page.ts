@@ -106,13 +106,6 @@ export class SpathongkePage implements OnInit {
     return false;
   }
 
-  public locnhantin(khachhang: any) {
-    let solan = Number(this.solan.toString().replace(/[^0-9]/g, ''))
-    let tongtien = Number(this.tongtien.toString().replace(/[^0-9]/g, ''))
-    if ((khachhang.thangtruoc >= solan || khachhang.thangnay >= solan) && Number(khachhang.tongtien.replace(/[^0-9]/g, '')) >= tongtien) return true
-    return false
-  }
-
   public async chitiet(idkhach: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'chitietdulieu', {
@@ -131,7 +124,9 @@ export class SpathongkePage implements OnInit {
   public nhantin() {
     let danhsach = []
     this.rest.spa.dulieu.forEach(khachhang => {
-      if ((this.hienthi == '0' || (this.hienthi == '1' && khachhang.tonglan > 0 && khachhang.thangtruoc.tonglan == 0) || (this.hienthi == '2' && khachhang.tonglan == 0 && khachhang.thangtruoc.tonglan > 0)) && this.locnhantin(khachhang)) danhsach.push(khachhang)
+      console.log(this.hienthi, khachhang.tonglan, khachhang.thangtruoc.tonglan);
+      
+      if ((this.hienthi == '0' || (this.hienthi == '1' && khachhang.tonglan > 0 && khachhang.thangtruoc.tonglan == 0) || (this.hienthi == '2' && khachhang.tonglan == 0 && khachhang.thangtruoc.tonglan > 0))) danhsach.push(khachhang)
     })
     if (!danhsach.length) this.rest.notify('Danh sách trống!!!')
     else {
