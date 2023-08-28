@@ -33,7 +33,7 @@ export class SpabieudoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/excel')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/spa')
     else {
       this.thoigian = this.time.datetoisodate(this.rest.home.today)
       this.khoitao()

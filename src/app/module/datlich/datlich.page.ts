@@ -116,6 +116,10 @@ export class DatlichPage implements OnInit {
   public homnay() {
     this.rest.navCtrl.navigateForward("/datlich/homnay")
   }
+  
+  public cauhinh() {
+    this.rest.navCtrl.navigateForward("/datlich/cauhinh")
+  }
 
   public async khongden(id: number) {
     const alert = await this.alert.create({
