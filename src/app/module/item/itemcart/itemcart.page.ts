@@ -15,52 +15,52 @@ export class ItemcartPage {
   ) { }
 
 
-  ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/item')
-    else this.initiaze()
-  }
+  // ionViewWillEnter() {
+  //   if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/item')
+  //   else this.initiaze()
+  // }
 
-  public initiaze() {
-    this.rest.item.list.forEach((item) => {
-      item.number = 0
-      if (item.checked) this.list.push(item)
-    })
-  }
+  // public initiaze() {
+  //   this.rest.item.list.forEach((item) => {
+  //     item.number = 0
+  //     if (item.checked) this.list.push(item)
+  //   })
+  // }
 
-  public async save() {
-    let list = []
-    this.list.forEach(item => {
-      list.push({
-        id: item.id,
-        number: item.number
-      })
-    })
+  // public async save() {
+  //   let list = []
+  //   this.list.forEach(item => {
+  //     list.push({
+  //       id: item.id,
+  //       number: item.number
+  //     })
+  //   })
 
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('item', 'outstocks', {
-      data: list
-    }).then((resp) => {
-      this.rest.defreeze()
-      this.rest.item.toggle = !this.rest.item.toggle;
-      this.rest.item.list.forEach((item, index) => {
-        this.rest.item.list[index].checked = false
-      })
-      this.rest.back()
-      this.rest.freeze('Đang chuyển hướng...')
-      setTimeout(() => {
-        this.rest.navCtrl.navigateForward('/item/purchase')
-        this.rest.defreeze()
-      }, 500);
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
+  //   await this.rest.freeze('Đang tải dữ liệu...')
+  //   this.rest.checkpost('item', 'outstocks', {
+  //     data: list
+  //   }).then((resp) => {
+  //     this.rest.defreeze()
+  //     this.rest.item.toggle = !this.rest.item.toggle;
+  //     this.rest.item.list.forEach((item, index) => {
+  //       this.rest.item.list[index].checked = false
+  //     })
+  //     this.rest.back()
+  //     this.rest.freeze('Đang chuyển hướng...')
+  //     setTimeout(() => {
+  //       this.rest.navCtrl.navigateForward('/item/purchase')
+  //       this.rest.defreeze()
+  //     }, 500);
+  //   }, () => {
+  //     this.rest.defreeze()
+  //   })
+  // }
 
-  public remove(index: number) {
-    let temp = this.list.filter((item, i) => {
-      return i != index
-    })
-    if (temp.length) this.list = temp
-    else this.rest.back()
-  }
+  // public remove(index: number) {
+  //   let temp = this.list.filter((item, i) => {
+  //     return i != index
+  //   })
+  //   if (temp.length) this.list = temp
+  //   else this.rest.back()
+  // }
 }

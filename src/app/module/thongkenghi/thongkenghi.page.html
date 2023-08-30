@@ -57,6 +57,11 @@
         <td> {{dulieu.tongkhongcong}} </td>
         <td *ngFor="let ngay of rest.thongkenghi.danhsachngay" [class]="(dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length ? (mau[dulieu.dulieu[ngay][0]]) : 'red') + ((dachon[dulieu.idnhanvien] && dachon[dulieu.idnhanvien][ngay]) ? ' dachon' : '')" (click)="chondanhsach(dulieu.idnhanvien, ngay)">
           <span *ngIf="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length && dulieu.dulieu[ngay][1].length"> {{dulieu.dulieu[ngay][1]}} </span>
+        <!-- <td *ngFor="let ngay of rest.thongkenghi.danhsachngay"
+          [class]="(dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length ? (mau[dulieu.dulieu[ngay][0]]) : 'red') + ((dachon[dulieu.idnhanvien] && dachon[dulieu.idnhanvien][ngay]) ? ' dachon' : '')">
+          <span *ngIf="dulieu.dulieu[ngay] && dulieu.dulieu[ngay].length && dulieu.dulieu[ngay][1].length">
+            {{dulieu.dulieu[ngay][1]}}
+          </span> -->
         </td>
       </tr>
     </table>

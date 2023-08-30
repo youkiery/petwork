@@ -1,4 +1,4 @@
-<ion-header *ngIf="rest.isready">
+<!-- <ion-header *ngIf="rest.isready">
   <ion-toolbar color="success">
     <ion-button *ngIf="!(rest.temp.action == 'insert' || rest.temp.action == 'update')" color="light" fill="clear" size="small"
       (click)="rest.back()">
@@ -110,7 +110,6 @@
   <div *ngIf="rest.temp.action == 'purchase' && rest.temp.step == 1">
     <ion-item *ngFor="let item of rest.temp.list; let i = index">
       <ion-label> {{item.name}}: {{item.number}} </ion-label>
-      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
     </ion-item>
   </div>
 
@@ -125,7 +124,6 @@
     <ion-item *ngFor="let item of rest.temp.list; let i = index">
       <ion-label> {{item.name}}: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img
           src="/assets/icon/storage-xs.png"> </ion-label>
-      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
     </ion-item>
   </div>
 
@@ -135,7 +133,6 @@
       <ion-button color="primary" (click)="done(item.id)">
         xong
       </ion-button>
-      <!-- <ion-checkbox slot="start" [(ngModal)]="rest.temp.list[i].check"></ion-checkbox> -->
     </ion-item>
   </div>
-</ion-content>
+</ion-content> -->
