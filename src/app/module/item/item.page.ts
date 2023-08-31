@@ -55,6 +55,19 @@ export class ItemPage {
     })
   }
 
+  public themhang() {
+    this.rest.temp = {
+      id: 0,
+      tenhang: "",
+      giaban: 0,
+      image: [],
+      gioithieu: "",
+      donvi: "",
+      shopee: "",
+    }
+    this.rest.navCtrl.navigateForward("/hanghoa/them")
+  }
+
   // public async reload() {
   //   await this.rest.freeze('Đang tải dữ liệu......')
   //   return new Promise(resolve => {

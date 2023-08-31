@@ -1,14 +1,14 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.page.html',
-  styleUrls: ['./upload.page.scss'],
+  selector: 'app-itemthem',
+  templateUrl: './itemthem.page.html',
+  styleUrls: ['./itemthem.page.scss'],
 })
-export class UploadPage {
+export class ItemthemPage implements OnInit {
   public option = []
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public init = false
@@ -22,87 +22,24 @@ export class UploadPage {
     public alert: AlertController
   ) { }
 
-  ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.root()
+  ngOnInit() {
   }
 
-  public suggest(param: number = 0) {
-    this.rest.temp.param = param
-    this.rest.navCtrl.navigateForward('/modal/suggest')
+    ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hanghoa')
   }
 
-  public async drugInsert() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    await this.uploadAllImage()
-    this.rest.temp.filter = {
-      name: this.rest.drug.filter.name,
-      effect: this.rest.drug.filter.effect
-    }
-
-    this.rest.checkpost('drug', 'insert', this.rest.temp).then((response) => {
+  public async xacnhan() {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('item', 'capnhat', this.rest.temp).then(resp => {
       this.rest.defreeze()
-      this.rest.drug.list = response.list
+      this.rest.item.danhsach = resp.danhsach
       this.rest.back()
     }, () => {
       this.rest.defreeze()
     })
   }
-
-  public async drugUpdate() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    await this.uploadAllImage()
-    this.rest.temp.filter = {
-      name: this.rest.drug.filter.name,
-      effect: this.rest.drug.filter.effect
-    }
-
-    this.rest.checkpost('drug', 'update', this.rest.temp).then((response) => {
-      this.rest.defreeze()
-      this.rest.drug.list = response.list
-      this.rest.drug.detail = this.rest.temp
-      this.rest.back()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  // public async updatePosition() {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   await this.uploadAllImage()
-  //   this.rest.checkpost('item', 'uppos', {
-  //     id: this.rest.temp.id,
-  //     pos: this.rest.temp.pos,
-  //     image: this.rest.temp.image,
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.item.image[this.rest.temp.id] = this.rest.temp.image
-  //     this.rest.temp.list[this.rest.temp.prv].name = this.rest.temp.pos
-  //     this.rest.temp.list[this.rest.temp.prv].image = this.rest.temp.image
-  //     this.rest.back()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
-
-  // public async insertPosition() {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   await this.uploadAllImage()
-  //   this.rest.checkpost('item', 'inpos', {
-  //     pos: this.rest.temp.pos,
-  //     image: this.rest.temp.image,
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.item.image[resp.id] = resp.image
-  //     this.rest.temp.list.push({
-  //       name: this.rest.temp.pos,
-  //       list: []
-  //     })
-  //     this.rest.back()
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
-
+  
   public upload() {
     this.pwaphoto.nativeElement.click();
   }
@@ -216,4 +153,5 @@ export class UploadPage {
       })
     })
   }
+
 }

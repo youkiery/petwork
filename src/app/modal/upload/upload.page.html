@@ -11,13 +11,13 @@
       Cập nhật
     </ion-button>
 
-    <ion-button *ngIf="rest.action == 'item' && !rest.temp.id" slot="end" (click)="insertPosition()" color="light" fill="clear" size="small">
+    <!-- <ion-button *ngIf="rest.action == 'item' && !rest.temp.id" slot="end" (click)="insertPosition()" color="light" fill="clear" size="small">
       Xác nhận
     </ion-button>
     
     <ion-button *ngIf="rest.action == 'item' && rest.temp.id" slot="end" (click)="updatePosition()" color="light" fill="clear" size="small">
       Xác nhận
-    </ion-button>
+    </ion-button> -->
 
   </ion-toolbar>
 </ion-header>
@@ -27,7 +27,7 @@
     <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
   </div>
 
-  <div *ngIf="rest.action == 'item'">
+  <!-- <div *ngIf="rest.action == 'item'">
     <ion-item>
       <ion-label position="stacked"> Vị trí </ion-label>
       <ion-input [(ngModel)]="rest.temp.pos"></ion-input>
@@ -38,7 +38,7 @@
       <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
       <img class="thumbnail" [src]="item">
     </span>
-  </div>
+  </div> -->
 
 
   <div *ngIf="rest.action == 'drug'">

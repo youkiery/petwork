@@ -64,7 +64,7 @@ const routes: Routes = [
     loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'item',
+    path: 'hanghoa',
     loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
   },
   {
@@ -186,7 +186,8 @@ const routes: Routes = [
   {
     path: 'lichban',
     loadChildren: () => import('./module/lichban/lichban.module').then( m => m.LichbanPageModule)
-  },  {
+  },
+  {
     path: 'tintuc',
     loadChildren: () => import('./module/tintuc/tintuc.module').then( m => m.TintucPageModule)
   },

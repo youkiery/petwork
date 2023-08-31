@@ -48,8 +48,10 @@ const routes: Routes = [
     path: 'purchased',
     loadChildren: () => import('./itempurchased/itempurchased.module').then( m => m.ItempurchasedPageModule)
   },
-
-
+  {
+    path: 'them',
+    loadChildren: () => import('./itemthem/itemthem.module').then( m => m.ItemthemPageModule)
+  },
 ];
 
 @NgModule({

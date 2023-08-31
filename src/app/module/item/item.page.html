@@ -48,7 +48,7 @@
     Không có hàng hoá
   </div>
 
-  <div class="stl-card text-center" *ngFor="let hanghoa of rest.item.danhsach">
+  <div class="stl-card" *ngFor="let hanghoa of rest.item.danhsach">
     Tên hàng: {{hanghoa.tenhang}} <br>
     Giá bán: {{hanghoa.giaban}} <br>
     Số lượng: {{hanghoa.soluong}} <br>
@@ -119,7 +119,7 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="insertItem()">
+      <ion-tab-button (click)="themhang()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm hàng </ion-label>
       </ion-tab-button>

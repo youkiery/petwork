@@ -1,0 +1,44 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="xacnhan()">
+      {{rest.temp.id ? 'Cập nhật' : 'Thêm'}}
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/*" capture (change)="uploadPWA()">
+  </div>
+
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+    <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+    <img class="thumbnail" [src]="item">
+  </span>
+
+  <ion-item>
+    <ion-label position="stacked"> Tên hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tenhang"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giá bán </ion-label>
+    <ion-input [(ngModel)]="rest.temp.giaban"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Đơn vị </ion-label>
+    <ion-input [(ngModel)]="rest.temp.donvi"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giới thiệu </ion-label>
+    <ion-textarea [(ngModel)]="rest.temp.gioithieu"> </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Link Shopee </ion-label>
+    <ion-input [(ngModel)]="rest.temp.shopee"> </ion-input>
+  </ion-item>
+</ion-content>
