@@ -25,11 +25,13 @@ export class ItemthemPage implements OnInit {
   ngOnInit() {
   }
 
-    ionViewWillEnter() {
+  ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hanghoa')
   }
 
   public async xacnhan() {
+    if (!this.rest.temp.mahang.length) return this.rest.notify("Xin hãy nhập mã hàng")
+    else if (!this.rest.temp.tenhang.length) return this.rest.notify("Xin hãy nhập tên hàng")
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'capnhat', this.rest.temp).then(resp => {
       this.rest.defreeze()

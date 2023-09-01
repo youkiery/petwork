@@ -1,0 +1,45 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    
+    <ion-button slot="end" color="light" fill="clear" (click)="uploadfile()">
+      Tải lên
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div class="avatar-box" (click)="upload()">
+          <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+        </div>
+        <div *ngIf="name.length" class="text-center">
+          {{name}}
+        </div>
+      </ion-col>
+  
+      <ion-col size="6">
+        <div class="avatar-box" (click)="upload2()">
+          <ion-img style="max-width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+        </div>
+        <div *ngIf="name2.length" class="text-center">
+          {{name2}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      (change)="file()">
+    <input type="file" id="pwaphoto2" #pwaphoto2
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      (change)="file2()">
+  </div>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="xacnhan()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <!-- {{hanga}} -->
+        Smartheart bao
+      </ion-col>
+      <ion-col size="6">
+        <!-- {{hangb}} -->
+        Smartheart gói
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+          <ion-input disabled="true" value="1"> </ion-input>
+      </ion-col>
+      <ion-col size="6">
+          <ion-input [(ngModel)]="soluong"> </ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm mã hàng </ion-label>
+    <ion-input [(ngModel)]="tukhoa"> </ion-input>
+  </ion-item>
+
+</ion-content>

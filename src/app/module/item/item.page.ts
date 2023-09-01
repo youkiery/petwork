@@ -58,14 +58,22 @@ export class ItemPage {
   public themhang() {
     this.rest.temp = {
       id: 0,
+      mahang: "",
       tenhang: "",
       giaban: 0,
       image: [],
       gioithieu: "",
       donvi: "",
-      shopee: "",
     }
     this.rest.navCtrl.navigateForward("/hanghoa/them")
+  }
+
+  public importfile() {
+    this.rest.navCtrl.navigateForward("/hanghoa/file")
+  }
+
+  public importimport() {
+    this.rest.navCtrl.navigateForward("/hanghoa/import")
   }
 
   // public async reload() {

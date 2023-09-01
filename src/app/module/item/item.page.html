@@ -49,6 +49,7 @@
   </div>
 
   <div class="stl-card" *ngFor="let hanghoa of rest.item.danhsach">
+    Mã hàng: {{hanghoa.mahang}} <br>
     Tên hàng: {{hanghoa.tenhang}} <br>
     Giá bán: {{hanghoa.giaban}} <br>
     Số lượng: {{hanghoa.soluong}} <br>
@@ -122,6 +123,16 @@
       <ion-tab-button (click)="themhang()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm hàng </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="importfile()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Import hàng </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="importimport()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Import số lượng </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

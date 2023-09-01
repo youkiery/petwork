@@ -52,6 +52,18 @@ const routes: Routes = [
     path: 'them',
     loadChildren: () => import('./itemthem/itemthem.module').then( m => m.ItemthemPageModule)
   },
+  {
+    path: 'import',
+    loadChildren: () => import('./itemimport/itemimport.module').then( m => m.ItemimportPageModule)
+  },
+  {
+    path: 'file',
+    loadChildren: () => import('./itemfile/itemfile.module').then( m => m.ItemfilePageModule)
+  },
+  {
+    path: 'thanhphan',
+    loadChildren: () => import('./itemthanhphan/itemthanhphan.module').then( m => m.ItemthanhphanPageModule)
+  },
 ];
 
 @NgModule({

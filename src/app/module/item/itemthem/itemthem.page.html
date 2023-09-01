@@ -22,12 +22,17 @@
   </span>
 
   <ion-item>
+    <ion-label position="stacked"> Mã hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.mahang"> </ion-input>
+  </ion-item>
+
+  <ion-item>
     <ion-label position="stacked"> Tên hàng </ion-label>
     <ion-input [(ngModel)]="rest.temp.tenhang"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Giá bán </ion-label>
-    <ion-input [(ngModel)]="rest.temp.giaban"> </ion-input>
+    <ion-input type="number" [(ngModel)]="rest.temp.giaban"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Đơn vị </ion-label>
@@ -36,9 +41,5 @@
   <ion-item>
     <ion-label position="stacked"> Giới thiệu </ion-label>
     <ion-textarea [(ngModel)]="rest.temp.gioithieu"> </ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Link Shopee </ion-label>
-    <ion-input [(ngModel)]="rest.temp.shopee"> </ion-input>
   </ion-item>
 </ion-content>
