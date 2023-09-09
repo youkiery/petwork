@@ -30,8 +30,7 @@ export class ItemthemPage implements OnInit {
   }
 
   public async xacnhan() {
-    if (!this.rest.temp.mahang.length) return this.rest.notify("Xin hãy nhập mã hàng")
-    else if (!this.rest.temp.tenhang.length) return this.rest.notify("Xin hãy nhập tên hàng")
+    if (!this.rest.temp.tenhang.length) return this.rest.notify("Xin hãy nhập tên hàng")
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'capnhat', this.rest.temp).then(resp => {
       this.rest.defreeze()

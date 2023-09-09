@@ -70,7 +70,7 @@ export class RestService {
   public schedule = { init: false, time: 0, state: 1, list: [], except: [], data: [], quangay: [], dachotlich: {batdau: 0, ketthuc: 0}, dadangky: 0, filter: { batdau: '', ketthuc: '', danhsach: [] }, start: '', end: '', nghichunhat: [], chedodangky: 0, cauhinh: {dangkythem: 0, huydangky: 0}, dangky: {dangkythem: 0, huydangky: 0}, thangnay: false }
   public cart = { list: [], init: false }
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: [], datetime: '', start: '', end: '', old: [], note: '', id: 0 }
-  public item = { khoitao: false, danhsach: [] }
+  public item = { khoitao: false, danhsach: [], tukhoa: "" }
   // public item = { init: false, list: [], i: [], all: [], image: [], catlist: [], floor: '', keyword: '', user: [], usercat: [], cat: [], cats: '', action: '', purchased: 0, purchase: { item: [], recommend: [] }, source: [], sourceid: '0', purcount: 0, position: [], expired: 0, outstock: 0, outx: {}, toggle: false }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, need: [], target: [], data2: {}, key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', segment: '1', s: '1', filter: {key: '', start: '', end: ''}}

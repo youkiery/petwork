@@ -40,22 +40,35 @@
   </ion-refresher>
 
   <ion-item>
-    <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
-    <ion-input [(ngModel)]="rest.item.keyword" (ionChange)="filter()"></ion-input>
+    <ion-input [(ngModel)]="rest.item.tukhoa" placeholder="Tìm kiếm tên hàng hóa"></ion-input>
   </ion-item>
+
+  <ion-button expand="full" color="primary" (click)="khoitao()">
+    Tìm kiếm
+  </ion-button>
 
   <div class="stl-card text-center" *ngIf="!rest.item.danhsach.length">
     Không có hàng hoá
   </div>
 
-  <div class="stl-card" *ngFor="let hanghoa of rest.item.danhsach">
-    Mã hàng: {{hanghoa.mahang}} <br>
+  <div class="stl-card" *ngFor="let hanghoa of rest.item.danhsach; let i = index">
     Tên hàng: {{hanghoa.tenhang}} <br>
     Giá bán: {{hanghoa.giaban}} <br>
-    Số lượng: {{hanghoa.soluong}} <br>
+    Số lượng: {{hanghoa.soluong}}
+    <div class="upperline"></div>
+    <div class="pos" (click)="suahang(i)"> sửa </div>
+    <div class="pos red" (click)="xoahang(hanghoa.id)"> xoá </div>
+    <!-- <div class="pos" (click)="thanhphan(i)"> thành phần </div> -->
   </div>
-<!-- 
-  <ion-item class="item-label-class">
+
+  <!-- <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+
+  <!-- <ion-item class="item-label-class">
     <ion-label position="stacked"> Tầng </ion-label>
     <ion-select [(ngModel)]="rest.item.floor" (ionChange)="filter()">
       <ion-select-option *ngFor="let item of floor" [value]="item.value">
@@ -103,13 +116,7 @@
       <img *ngIf="rest.item.list[index].outstock > 0" class="right icon" src="/assets/icon/item-on.png" (click)="toggle(index)">
       <img *ngIf="rest.item.list[index].outstock == 0" class="right icon" src="/assets/icon/item-off.png" (click)="outstock(index)">
     </div>
-  </div>
-  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Đang tải dữ liệu...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </div> -->
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -7,9 +8,10 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./itemthanhphan.page.scss'],
 })
 export class ItemthanhphanPage implements OnInit {
-  public hanga = ""
-  public hangb = ""
-  public soluong = 0
+  public tukhoa = ""
+  public danhsach = []
+  public timeout = null
+  @ViewChild(IonContent) content: IonContent;
   constructor(
     public rest: RestService
   ) { }
@@ -18,7 +20,7 @@ export class ItemthanhphanPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hanghoa')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hanghoa')
   }
 
   public async xacnhan() {
@@ -32,5 +34,27 @@ export class ItemthanhphanPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public timkiem() {
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      if (this.tukhoa.length < 1) this.danhsach = []
+      else {
+        this.rest.checkpost('item', 'timhangthanhphan', {
+          tukhoa: this.tukhoa
+        }).then((resp) => {
+          this.danhsach = resp.danhsach
+        }, () => { })
+      }
+    }, 300);
+  }
+
+  public chonhanghoa(thutu: number) {
+    let hanghoa = this.danhsach[thutu]
+    this.rest.temp.idhangb = hanghoa.id
+    this.rest.temp.tenhangb = hanghoa.tenhang
+    this.danhsach = []
+    this.content.scrollToTop(0);
   }
 }

@@ -32,6 +32,7 @@ export class ItemPage {
   public async khoitao() {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'khoitao', {
+      tukhoa: this.rest.item.tukhoa
     }).then(resp => {
       this.rest.defreeze()
       this.rest.item.khoitao = true
@@ -44,6 +45,7 @@ export class ItemPage {
   public async tailai(event: any) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'khoitao', {
+      tukhoa: this.rest.item.tukhoa
     }).then(resp => {
       this.rest.defreeze()
       event.target.complete()
@@ -58,12 +60,26 @@ export class ItemPage {
   public themhang() {
     this.rest.temp = {
       id: 0,
-      mahang: "",
       tenhang: "",
       giaban: 0,
       image: [],
       gioithieu: "",
       donvi: "",
+      tukhoa: this.rest.item.tukhoa,
+    }
+    this.rest.navCtrl.navigateForward("/hanghoa/them")
+  }
+
+  public suahang(thutu: number) {
+    let hanghoa = this.rest.item.danhsach[thutu]
+    this.rest.temp = {
+      id: hanghoa.id,
+      tenhang: hanghoa.tenhang,
+      giaban: hanghoa.giaban.replace(/,/g, ""),
+      image: hanghoa.image,
+      gioithieu: hanghoa.gioithieu,
+      donvi: hanghoa.donvi,
+      tukhoa: this.rest.item.tukhoa,
     }
     this.rest.navCtrl.navigateForward("/hanghoa/them")
   }
@@ -74,6 +90,47 @@ export class ItemPage {
 
   public importimport() {
     this.rest.navCtrl.navigateForward("/hanghoa/import")
+  }
+
+  public thanhphan(thutu: number) {
+    let hanghoa = this.rest.item.danhsach[thutu]
+    this.rest.temp = {
+      idhanga: hanghoa.id,
+      tenhanga: hanghoa.tenhang,
+      idhangb: 0,
+      tenhangb: '',
+      soluong: '',
+    }
+    this.rest.navCtrl.navigateForward("/hanghoa/thanhphan")
+  }
+
+  public async xoahang(id: number) {
+    const alert = await this.alert.create({
+      message: 'Xác nhận xoá hàng hoá',
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanxoahang(id)
+        }
+      }]
+    })
+    await alert.present()
+  }
+
+  public async xacnhanxoahang(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('item', 'xoahang', {
+      id: id,
+      tukhoa: this.rest.item.tukhoa
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.item.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   // public async reload() {

@@ -11,15 +11,13 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <ion-grid>
+<!--   <ion-grid>
     <ion-row>
       <ion-col size="6">
-        <!-- {{hanga}} -->
-        Smartheart bao
+        {{rest.temp.tenhanga}}
       </ion-col>
       <ion-col size="6">
-        <!-- {{hangb}} -->
-        Smartheart gói
+        {{rest.temp.tenhangb.length ? rest.temp.tenhangb : 'Chưa chọn hàng'}}
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -30,14 +28,22 @@
           <ion-input disabled="true" value="1"> </ion-input>
       </ion-col>
       <ion-col size="6">
-          <ion-input [(ngModel)]="soluong"> </ion-input>
+          <ion-input [(ngModel)]="rest.temp.soluong"> </ion-input>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm mã hàng </ion-label>
-    <ion-input [(ngModel)]="tukhoa"> </ion-input>
+    <ion-input [(ngModel)]="tukhoa" (keyup)="timkiem()"> </ion-input>
   </ion-item>
+
+  <ion-item *ngFor="let hanghoa of danhsach; let i = index" (click)="chonhanghoa(i)">
+    {{hanghoa.mahang}} - {{hanghoa.tenhang}}
+  </ion-item>
+
+  <div *ngIf="!danhsach.length" class="text-center">
+    Không tìm thấy hàng hoá
+  </div> -->
 
 </ion-content>
