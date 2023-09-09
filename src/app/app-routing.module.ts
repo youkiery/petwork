@@ -190,7 +190,11 @@ const routes: Routes = [
   {
     path: 'tintuc',
     loadChildren: () => import('./module/tintuc/tintuc.module').then( m => m.TintucPageModule)
+  },  {
+    path: 'tailieu',
+    loadChildren: () => import('./module/tailieu/tailieu.module').then( m => m.TailieuPageModule)
   },
+
 
 ];
 
