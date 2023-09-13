@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tailieudanhmuc</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="themdanhmuc()">
+      Thêm
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngFor="let danhmuc of rest.tailieu.danhmuc; let i = index">
+    {{danhmuc.tendanhmuc}}
+    <div class="upperline"></div>
+    <div class="pos" (click)="themdanhmuc(i)"> cập nhật </div>
+    <div class="pos red" (click)="xoadanhmuc(danhmuc.id)"> xoá </div>
+  </div>
 
+  <div class="stl-card text-center" *ngIf="!rest.tailieu.danhmuc.length">
+    Không có danh mục nào
+  </div>
 </ion-content>

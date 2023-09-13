@@ -1,9 +1,81 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tailieu</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="rest.isready">
+  <ion-row>
+    <ion-col size="6">
+        <ion-label position="stacked"> Tìm kiếm theo tên </ion-label>
+        <ion-input [(ngModel)]="rest.tailieu.timkiem.tukhoa"></ion-input>
+    </ion-col>
+    <ion-col size="6">
+        <ion-label position="stacked"> Tìm kiếm theo danh mục </ion-label>
+        <ion-select [(ngModel)]="rest.tailieu.timkiem.iddanhmuc">
+          <ion-select-option value="0">
+            Tất cả
+          </ion-select-option>
+          <ion-select-option *ngFor="let danhmuc of rest.tailieu.danhmuc; let i = index" [value]="danhmuc.id">
+            {{danhmuc.tendanhmuc}}
+          </ion-select-option>
+        </ion-select>
+    </ion-col>
+  </ion-row>
 
+  <ion-button expand="block" size="small" (click)="khoitao()">
+    Tìm kiếm
+  </ion-button>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card text-center" *ngIf="!rest.tailieu.danhsach.length">
+    Không có tài liệu
+  </div>
+
+  <div class="stl-card" *ngFor="let tailieu of rest.tailieu.danhsach; let i = index">
+    <div> Tên tài liệu: {{tailieu.tentailieu}} </div>
+    <div> Giới thiệu: {{tailieu.gioithieu}} </div>
+    <div> Danh mục: {{tailieu.danhmuc}} </div>
+    <div class="upperline"></div>
+    <div class="pos" *ngIf="tailieu.link.length" (click)="download(tailieu.link)">
+      download
+    </div>
+    <div class="pos" (click)="capnhattailieu(i)">
+      cập nhật
+    </div>
+    <div class="pos red" (click)="xoatailieu(tailieu.id)">
+      xoá
+    </div>
+  </div>
 </ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="themtailieu()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="danhmuc()">
+        <ion-icon name="document-outline"></ion-icon>
+        <ion-label> Danh mục </ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

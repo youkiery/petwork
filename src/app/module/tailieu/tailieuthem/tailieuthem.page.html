@@ -1,9 +1,38 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tailieuthem</ion-title>
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="capnhattailieu()">
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên tài liệu </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tentailieu"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giới thiệu </ion-label>
+    <ion-textarea rows="3" [(ngModel)]="rest.temp.gioithieu"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Danh mục </ion-label>
+    <ion-select [(ngModel)]="rest.temp.iddanhmuc">
+      <ion-select-option value="0">
+        Chưa phân loại
+      </ion-select-option>
+      <ion-select-option *ngFor="let danhmuc of rest.tailieu.danhmuc; let i = index" [value]="danhmuc.id">
+        {{danhmuc.tendanhmuc}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Link </ion-label>
+    <ion-input [(ngModel)]="rest.temp.link"></ion-input>
+  </ion-item>
 </ion-content>

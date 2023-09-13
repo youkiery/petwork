@@ -9,11 +9,11 @@ const routes: Routes = [
     component: TailieuPage
   },
   {
-    path: 'tailieudanhmuc',
+    path: 'danhmuc',
     loadChildren: () => import('./tailieudanhmuc/tailieudanhmuc.module').then( m => m.TailieudanhmucPageModule)
   },
   {
-    path: 'tailieuthem',
+    path: 'them',
     loadChildren: () => import('./tailieuthem/tailieuthem.module').then( m => m.TailieuthemPageModule)
   }
 ];

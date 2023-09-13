@@ -21,6 +21,7 @@ export class AdminPage {
     { name: 'Quản lý hàng hóa', module: 'item' },
     { name: 'Kaizen', module: 'kaizen' },
     { name: 'Tra cứu thuốc', module: 'drug' },
+    { name: 'Tài liệu chuyên môn', module: 'tailieu' },
     { name: 'Giá sỉ', module: 'price' },
     { name: 'Quản lý xe', module: 'ride' },
     { name: 'Quản lý sinh hóa', module: 'profile' },
