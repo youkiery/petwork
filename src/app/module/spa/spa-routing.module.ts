@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./spainsert/spainsert.module').then( m => m.SpainsertPageModule)
   },
   {
-    path: 'work',
+    path: 'congviec',
     loadChildren: () => import('./spawork/spawork.module').then( m => m.SpaworkPageModule)
   },
   {

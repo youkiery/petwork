@@ -6,12 +6,12 @@
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.work.child.length">
+  <div *ngIf="rest.congviec.child.length">
     <div>
-      Danh mục: {{rest.work.danhmuc[rest.work.childid].name}}
+      Danh mục: {{rest.congviec.danhmuc[rest.congviec.childid].name}}
     </div>
 
-    <div class="stl-card" *ngFor="let danhmuc of rest.work.child; let i = index">
+    <div class="stl-card" *ngFor="let danhmuc of rest.congviec.child; let i = index">
       <div style="font-size: 1.25em;"> {{danhmuc.name}} </div>
       <div class="upperline">
         <b> Danh sách nhân viên: </b> {{danhmuc.text}} <span *ngIf="danhmuc.id > 0"> <span class="pos" (click)="themnhanvien2(i)"> sửa </span><span class="pos red" (click)="xoadanhmuc(danhmuc.id)"> x </span> </span>
@@ -19,8 +19,8 @@
     </div>
   </div>
 
-  <div *ngIf="!rest.work.child.length">
-    <div *ngFor="let danhmuc of rest.work.danhmuc; let i = index">
+  <div *ngIf="!rest.congviec.child.length">
+    <div *ngFor="let danhmuc of rest.congviec.danhmuc; let i = index">
       <div class="stl-card" *ngIf="danhmuc.parentid == 0">
         <div style="font-size: 1.25em;" (click)="gochild(i)"> {{danhmuc.name}} </div>
         <div class="upperline">
@@ -29,7 +29,7 @@
       </div>
     </div>
     
-    <div class="stl-card text-center" *ngIf="!rest.work.danhmuc.length">
+    <div class="stl-card text-center" *ngIf="!rest.congviec.danhmuc.length">
       Không có danh mục
     </div>
   </div>

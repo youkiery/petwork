@@ -25,7 +25,7 @@ export class DetailPage {
     { name: 'Quản lý bệnh nhân', module: 'his' },
     { name: 'Quản lý đơn hàng', module: 'cart' },
     { name: 'Quản lý nhà xe', module: 'transport' },
-    // {name: 'Quản lý công việc', module: 'work'},
+    // {name: 'Quản lý công việc', module: 'congviec'},
   ]
   public level = {
     '-1': '', '0': 'Không phận sự', '1': 'Nhân viên', '2': 'Quản lý', '3': ''

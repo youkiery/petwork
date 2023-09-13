@@ -20,7 +20,7 @@ export class SpaworkPage {
 
   public async init( ) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('spa', 'work', this.rest.temp).then(resp => {
+    this.rest.checkpost('spa', 'congviec', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.list = resp.list
     }, () => {

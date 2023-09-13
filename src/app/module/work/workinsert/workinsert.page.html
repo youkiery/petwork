@@ -56,7 +56,7 @@
   <ion-item>
     <ion-label position="stacked"> Danh mục </ion-label>
     <ion-select [(ngModel)]="rest.temp.departid">
-      <ion-select-option *ngFor="let danhmuc of this.rest.work.danhmuc" [value]="danhmuc.id">
+      <ion-select-option *ngFor="let danhmuc of this.rest.congviec.danhmuc" [value]="danhmuc.id">
         {{danhmuc.name}}
       </ion-select-option>
     </ion-select>

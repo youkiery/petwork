@@ -10,41 +10,44 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="lbl">
-  <div class="lb">
-    <ion-item>
-      <ion-label position="stacked"> Tìm kiếm công viềc </ion-label>
-      <ion-input [(ngModel)]="rest.work.filter.tukhoa"></ion-input>
-    </ion-item>
-  </div>
-  <div class="rb">
-    <ion-button expand="full" color="warning" (click)="timkiem()">
-      <ion-icon color="light" name="search-outline"></ion-icon>
-    </ion-button>
-  </div>
-</div>
-
 <ion-content *ngIf="rest.isready">
-  <ion-segment [(ngModel)]="rest.work.chedo">
-    <ion-segment-button value="0" (click)="doidanhsach(0)">
-      <ion-label>
-        Công việc
-        <ion-badge *ngIf="rest.work.danhsach[0][0].length + rest.work.danhsach[0][1].length" color="danger"> 
-          {{rest.work.danhsach[0][0].length + rest.work.danhsach[0][1].length}}
-        </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="1" (click)="doidanhsach(1)">
-      <ion-label>
-        Theo dõi
-        <ion-badge *ngIf="rest.work.danhsach[1][0].length + rest.work.danhsach[1][1].length" color="danger"> 
-          {{rest.work.danhsach[1][0].length + rest.work.danhsach[1][1].length}}
-        </ion-badge>
-      </ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <ion-item>
+    <ion-input [(ngModel)]="rest.congviec.timkiem.tukhoa" placeholder="Từ khóa"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Danh mục </ion-label>
+    <ion-select [(ngModel)]="rest.congviec.timkiem.danhmuc">
+      <ion-select-option value="">
+        Không chọn
+      </ion-select-option>
+      <ion-select-option *ngFor="let danhmuc of rest.congviec.danhmuc" [value]="danhmuc.id">
+        {{danhmuc.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+  <ion-item (click)="rest.congviec.timkiem.hoanthanh = rev[rest.congviec.timkiem.hoanthanh]">
+    <ion-label> <b> Mức hoàn thành: </b> {{hoanthanh[rest.congviec.timkiem.hoanthanh]}} </ion-label>
+  </ion-item>
+
+  <ion-item (click)="rest.congviec.timkiem.denhan = rev[rest.congviec.timkiem.denhan]">
+    <ion-label> <b> Quá hạn: </b> {{denhan[rest.congviec.timkiem.denhan]}} </ion-label>
+  </ion-item>
+
+  <!-- <ion-item *ngIf="rest.config.work > 1">
+    <ion-label position="stacked"> Công việc của nhân viên </ion-label>
+    <ion-select [(ngModel)]="rest.congviec.timkiem.nhanvien">
+      <ion-select-option value="0"> - </ion-select-option>
+      <ion-select-option *ngFor="let nhanvien of rest.home.doctor" [value]="nhanvien.userid"> {{nhanvien.name}}
+      </ion-select-option>
+    </ion-select> 
+  </ion-item>-->
+
+  <ion-button expand="full" (click)="khoitao()">
+    Tìm kiếm
+  </ion-button>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
@@ -52,23 +55,62 @@
     <ion-fab-button>
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-fab-button>
-    
+
     <ion-fab-list side="top">
       <ion-fab-button color="success" (click)="themcongvieclaplai()"> Lặp <br> lại </ion-fab-button>
       <ion-fab-button color="success" (click)="themcongvieclaplai(false)"> CV</ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
-  <div *ngFor="let tab of tabs; let i = index">
-    <div *ngIf="rest.work.danhsach[rest.work.chedo][i].length" class="item-group">
-      <div class="item-header">
-        {{tab}}
-        <ion-badge *ngIf="rest.work.danhsach[rest.work.chedo][i].length" color="danger"> 
-          {{rest.work.danhsach[rest.work.chedo][i].length}}
-        </ion-badge>
+  <div class="card-group" *ngFor="let danhmuc of rest.congviec.danhsach; let i = index">
+    <div class="card-header"(click)="rest.congviec.danhsach[i].hienthi = !danhmuc.hienthi">
+      {{danhmuc.name}}
+      <ion-badge *ngIf="danhmuc.soluong" color="danger">
+        {{danhmuc.soluong}}
+      </ion-badge>
+    </div>
+
+    <div class="card-container" *ngIf="danhmuc.hienthi">
+      <div *ngIf="danhmuc.child.length">
+        <div class="card-group" *ngFor="let danhmuccon of danhmuc.child; let j = index">
+          <div class="card-header" (click)="rest.congviec.danhsach[i].child[j].hienthi = !danhmuccon.hienthi">
+            {{danhmuccon.name}}
+            <ion-badge *ngIf="danhmuccon.soluong" color="danger">
+              {{danhmuccon.soluong}}
+            </ion-badge>
+          </div>
+
+          <div class="card-container" *ngIf="danhmuccon.hienthi">
+            <div class="stl-card" style="border-bottom: 1px solid lightgray;"
+              *ngFor="let congvieccon of danhmuccon.danhsach; let j = index">
+              <div class="card-tickbox" (click)="xacnhan(i, j)">
+                <img [src]="trangthai[congvieccon.status]">
+              </div>
+              <div class="card-content">
+                <div> Công việc: {{congvieccon.title}} </div>
+                <div *ngIf="rest.config.work > 1"> Người làm: {{congvieccon.assigntext}} </div>
+                {{congvieccon.createtime}}
+                <span *ngIf="congvieccon.expiretime.length" [class]="congvieccon.expire ? 'pinky' : ''">
+                  hạn {{congvieccon.expiretime.length ? congvieccon.expiretime : ''}}
+                </span>
+                <br>
+                <span class="pos" (click)="chitiet(i)"> chi tiết </span>
+                <span class="pos" *ngIf="congvieccon.danhmuc.length"> {{congvieccon.danhmuc}} </span>
+                <span class="pos" *ngIf="congvieccon.type > 0 && rest.config.work > 1" (click)="capnhat(i, j)"> sửa
+                </span>
+                <span class="pos red" *ngIf="congvieccon.type > 0 || rest.config.work > 1"
+                  (click)="xoa(congvieccon.id)">
+                  x
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="stl-card" *ngFor="let congviec of rest.work.danhsach[rest.work.chedo][i]; let j = index">
-        <div class="card-tickbox" (click)="xacnhan(i, j)">
+
+      <div class="stl-card" style="border-bottom: 1px solid lightgray;"
+        *ngFor="let congviec of danhmuc.danhsach; let j = index">
+        <div class="card-tickbox" (click)="xacnhan(i)">
           <img [src]="trangthai[congviec.status]">
         </div>
         <div class="card-content">
@@ -79,18 +121,13 @@
             hạn {{congviec.expiretime.length ? congviec.expiretime : ''}}
           </span>
           <br>
-          <span class="pos" (click)="chitiet(i, j)"> chi tiết </span>
+          <span class="pos" (click)="chitiet(i)"> chi tiết </span>
           <span class="pos" *ngIf="congviec.danhmuc.length"> {{congviec.danhmuc}} </span>
-          <span class="pos" *ngIf="congviec.type > 0 && rest.config.work > 1" (click)="capnhat(i, j)"> sửa </span>
+          <span class="pos" *ngIf="congviec.type > 0 && rest.config.work > 1" (click)="capnhat(i)"> sửa </span>
           <span class="pos red" *ngIf="congviec.type > 0 || rest.config.work > 1" (click)="xoa(congviec.id)"> x </span>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="stl-card text-center"
-    *ngIf="!(rest.work.danhsach[rest.work.chedo][0].length || rest.work.danhsach[rest.work.chedo][1].length)">
-    Không có danh sách
   </div>
 </ion-content>
 
@@ -100,10 +137,6 @@
       <ion-tab-button (click)="rest.root()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="rest.navCtrl.navigateForward('/work/filter')">
-        <ion-icon name="filter"></ion-icon>
-        <ion-label> Lọc CV </ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="rest.navCtrl.navigateForward('/work/repeat')">
         <ion-icon name="refresh-circle-outline"></ion-icon>

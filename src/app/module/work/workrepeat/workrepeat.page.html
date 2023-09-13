@@ -9,7 +9,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="stl-card" *ngFor="let congviec of rest.work.danhsachlaplai; let i = index">
+  <div class="stl-card" *ngFor="let congviec of rest.congviec.danhsachlaplai; let i = index">
     <div> Công việc: {{congviec.title}} </div>
     <div> Ngày tạo: {{congviec.createtime}} </div>
     <div> {{laplai[congviec.type]}} </div>
@@ -18,7 +18,7 @@
     <span class="pos red" *ngIf="congviec.type > 0" (click)="xoa(congviec.id)"> x </span>
     <!-- lặp lại hằng ngày, hằng tháng, hằng năm -->
   </div>
-  <div class="stl-card text-center" *ngIf="!rest.work.danhsachlaplai.length">
+  <div class="stl-card text-center" *ngIf="!rest.congviec.danhsachlaplai.length">
     Không có công việc lặp lại
   </div>
 </ion-content>

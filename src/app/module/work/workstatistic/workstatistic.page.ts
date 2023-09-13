@@ -25,7 +25,7 @@ export class WorkstatisticPage {
 
   public async locdulieu() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'thongke', { 
+    this.rest.checkpost('congviec', 'thongke', { 
       batdau: this.batdau,
       ketthuc: this.ketthuc
     }).then(resp => {

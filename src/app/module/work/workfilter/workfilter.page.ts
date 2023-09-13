@@ -18,23 +18,23 @@ export class WorkfilterPage {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/work')
-    else this.loc = JSON.parse(JSON.stringify(this.rest.work.filter))
+    else this.loc = JSON.parse(JSON.stringify(this.rest.congviec.timkiem))
   }
 
   public async filter() {
-    this.rest.work.filter = this.loc
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'danhsach', {
-      chedo: this.rest.work.chedo,
-      filter: this.rest.work.filter
-    }).then(resp => {
-    this.rest.defreeze()
-      this.rest.work.khoitao = [false, false]
-      this.rest.work.khoitao[this.rest.work.chedo] = true
-      this.rest.work.danhsach[this.rest.work.chedo] = resp.danhsach
-      this.rest.back()
-    }, () => {
-      this.rest.defreeze()
-    })
+    // this.rest.congviec.timkiem = this.loc
+    // await this.rest.freeze('Đang tải dữ liệu...')
+    // this.rest.checkpost('congviec', 'danhsach', {
+    //   chedo: this.rest.congviec.chedo,
+    //   filter: this.rest.congviec.timkiem
+    // }).then(resp => {
+    // this.rest.defreeze()
+    //   this.rest.congviec.khoitao = [false, false]
+    //   this.rest.congviec.khoitao[this.rest.congviec.chedo] = true
+    //   this.rest.congviec.danhsach[this.rest.congviec.chedo] = resp.danhsach
+    //   this.rest.back()
+    // }, () => {
+    //   this.rest.defreeze()
+    // })
   }
 }

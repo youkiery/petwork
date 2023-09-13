@@ -44,7 +44,7 @@ export class WorkdetailPage {
   
   public async khoitao() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'laybinhluan', {
+    this.rest.checkpost('congviec', 'laybinhluan', {
       id: this.rest.detail.id,
     }).then((resp) => {
       this.rest.defreeze()
@@ -57,7 +57,7 @@ export class WorkdetailPage {
 
   public async refresh(event: any) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'laybinhluan', {
+    this.rest.checkpost('congviec', 'laybinhluan', {
       id: this.rest.detail.id,
     }).then((resp) => {
       this.rest.defreeze()
@@ -70,15 +70,15 @@ export class WorkdetailPage {
 
   public async capnhat() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'laythongtin', {
+    this.rest.checkpost('congviec', 'laythongtin', {
       id: this.rest.detail.id,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.temp = resp.dulieu
       this.rest.temp.chitiet = 1
       delete this.rest.temp.repeat
-      this.rest.temp.chedo = this.rest.work.chedo,
-      this.rest.temp.filter = this.rest.work.filter,
+      this.rest.temp.chedo = this.rest.congviec.chedo,
+      this.rest.temp.filter = this.rest.congviec.timkiem,
       this.rest.navCtrl.navigateForward('/work/insert')
     }, () => {
       this.rest.defreeze()
@@ -106,13 +106,13 @@ export class WorkdetailPage {
 
   public async xacnhanxoa() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'xoa', {
+    this.rest.checkpost('congviec', 'xoa', {
       id: this.rest.detail.id,
-      chedo: this.rest.work.chedo,
-      filter: this.rest.work.filter,
+      chedo: this.rest.congviec.chedo,
+      filter: this.rest.congviec.timkiem,
     }).then((resp) => {
       this.rest.defreeze()
-      this.rest.work.danhsach[this.rest.work.chedo] = resp.danhsach
+      this.rest.congviec.danhsach[this.rest.congviec.chedo] = resp.danhsach
       this.rest.back()
     }, () => {
       this.rest.defreeze()
@@ -151,15 +151,15 @@ export class WorkdetailPage {
 
   public async xacnhanSubmit(id: number, status: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'chuyentrangthai', {
+    this.rest.checkpost('congviec', 'chuyentrangthai', {
       id: id,
       status: status,
-      chedo: this.rest.work.chedo,
-      filter: this.rest.work.filter,
+      chedo: this.rest.congviec.chedo,
+      filter: this.rest.congviec.timkiem,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.detail.status = resp.trangthai
-      this.rest.work.danhsach[this.rest.work.chedo] = resp.danhsach
+      this.rest.congviec.danhsach[this.rest.congviec.chedo] = resp.danhsach
     }, () => {
       this.rest.defreeze()
     })
@@ -176,7 +176,7 @@ export class WorkdetailPage {
 
   public async updatecommentSubmit(id: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'xoabinhluan', {
+    this.rest.checkpost('congviec', 'xoabinhluan', {
       id: id,
     }).then((resp) => {
       this.rest.defreeze()
@@ -207,7 +207,7 @@ export class WorkdetailPage {
 
   public async deletecommentSubmit(id: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('work', 'xoabinhluan', {
+    this.rest.checkpost('congviec', 'xoabinhluan', {
       id: this.rest.detail.id,
       commentid: id
     }).then((resp) => {
@@ -228,7 +228,7 @@ export class WorkdetailPage {
     if (!this.chat.length && !this.image.length) return 0
     await this.rest.freeze('Đang tải dữ liệu...')
     await this.uploadAllImage()
-    this.rest.checkpost('work', 'nhantin', {
+    this.rest.checkpost('congviec', 'nhantin', {
       chat: this.chat,
       image: this.image,
       id: this.rest.detail.id,

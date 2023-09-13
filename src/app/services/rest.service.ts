@@ -18,10 +18,10 @@ export class RestService {
   public base: string = '';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 188 // 21-188
+  public version = 21 // 21-188
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -92,7 +92,7 @@ export class RestService {
   public excel = { init: false, config: {name: '', phone: '', address: ''} }
   public luong: any = { khoitao: false, khoitaonhanvien: false, khoitaomucchi: false, mucchi: [], chuy: 0, danhsach: [], nhanvien: [], khoitaoluongthang: false, id: 0, dulieu: {nhanvien: []}, excel: { nhanvien: '', doanhthu: '', loinhuan: '' }, chitiet: [], sosanh: { khoitao: false, thoigian: '', chedo: 'luongcoban', danhsach: [] } }
   public place = { init: false, list: []}
-  public work = { khoitao: [false, false, false], filter: { nhanvien: "0", tukhoa: '', danhmuc: '', denhan: 0, hoanthanh: 0 }, chedo: '0', danhsach: [[[], []], [[], []]], danhmuc: [], childid: -1, child: [], nhanvien: [], khoitaolaplai: false, danhsachlaplai: [] }
+  public congviec = { khoitao: false, danhsach: [], timkiem: { nhanvien: "0", tukhoa: '', danhmuc: '', denhan: 0, hoanthanh: 0 }, chedo: '0', danhmuc: [], childid: -1, child: [], nhanvien: [], khoitaolaplai: false, danhsachlaplai: [] }
   public vattu = { danhsachtam: [], tukhoa: '', khoitao: false, khoitaocophan: false, dulieu: { tongsoluong: 0, tongvattu: 0, tonggiatri: 0, danhsach:[] }, loctang: {}, danhsachtang: [], tongtien: '0', danhsachnhanvien: [], cophan: { codong: 0, tile: 0, giatri: '0', danhsach: [] } }
   public nhomtin = { khoitao: false, danhsach: [], tennhom: '', danhsachnhan: [], bodem: { thanhcong: 0, thatbai: 0, batdau: 0, tieptheo: 0, dagui: 0, tongcong: 0, min: 0, max: 0, tile: 0, thutu: 0, dautien: true }, demgio: null, hengio: null, danggui: false, dangguitin: false, hoanthanh: false, cauhinhnhantin: { min: 0, max: 0 }, cauhinhloai: {vaccine: [], spa: [], treat: [], usg: []}, id: 0, mautin: '' }
   public nhantin = { khoitaonhantin: false, danhsachnhantin: [], khoitaoloaitru: false, danhsachloaitru: [], cauhinhnhantin: { min: 0, max: 0, mautin: [], danhsachloai: [] }, bodem: { thanhcong: 0, thatbai: 0, batdau: 0, tieptheo: 0, dagui: 0, tongcong: 0, min: 0, max: 0, tile: 0, thutu: 0, dautien: true }, demgio: null, hengio: null, danggui: false, dangguitin: false, hoanthanh: false, khoitaothongke: false, thongke: { tongnhan: 0, tongkhach: 0, danhsachden: [], danhsachkhongden: [], nhomnhantin: [] }, batdau: '', ketthuc: '', chonngay: [], thoigian: '' }
