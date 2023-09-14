@@ -82,8 +82,8 @@
 
           <div class="card-container" *ngIf="danhmuccon.hienthi">
             <div class="stl-card" style="border-bottom: 1px solid lightgray;"
-              *ngFor="let congvieccon of danhmuccon.danhsach; let j = index">
-              <div class="card-tickbox" (click)="xacnhan(i, j)">
+              *ngFor="let congvieccon of danhmuccon.danhsach; let g = index">
+              <div class="card-tickbox" (click)="xacnhan(i, j, g)">
                 <img [src]="trangthai[congvieccon.status]">
               </div>
               <div class="card-content">
@@ -94,9 +94,9 @@
                   hạn {{congvieccon.expiretime.length ? congvieccon.expiretime : ''}}
                 </span>
                 <br>
-                <span class="pos" (click)="chitiet(i)"> chi tiết </span>
+                <span class="pos" (click)="chitiet(i, j, g)"> chi tiết </span>
                 <span class="pos" *ngIf="congvieccon.danhmuc.length"> {{congvieccon.danhmuc}} </span>
-                <span class="pos" *ngIf="congvieccon.type > 0 && rest.config.work > 1" (click)="capnhat(i, j)"> sửa
+                <span class="pos" *ngIf="congvieccon.type > 0 && rest.config.work > 1" (click)="capnhat(i, j, g)"> sửa
                 </span>
                 <span class="pos red" *ngIf="congvieccon.type > 0 || rest.config.work > 1"
                   (click)="xoa(congvieccon.id)">
@@ -110,7 +110,7 @@
 
       <div class="stl-card" style="border-bottom: 1px solid lightgray;"
         *ngFor="let congviec of danhmuc.danhsach; let j = index">
-        <div class="card-tickbox" (click)="xacnhan(i)">
+        <div class="card-tickbox" (click)="xacnhan(i, j)">
           <img [src]="trangthai[congviec.status]">
         </div>
         <div class="card-content">
@@ -121,9 +121,9 @@
             hạn {{congviec.expiretime.length ? congviec.expiretime : ''}}
           </span>
           <br>
-          <span class="pos" (click)="chitiet(i)"> chi tiết </span>
+          <span class="pos" (click)="chitiet(i, j)"> chi tiết </span>
           <span class="pos" *ngIf="congviec.danhmuc.length"> {{congviec.danhmuc}} </span>
-          <span class="pos" *ngIf="congviec.type > 0 && rest.config.work > 1" (click)="capnhat(i)"> sửa </span>
+          <span class="pos" *ngIf="congviec.type > 0 && rest.config.work > 1" (click)="capnhat(i, j)"> sửa </span>
           <span class="pos red" *ngIf="congviec.type > 0 || rest.config.work > 1" (click)="xoa(congviec.id)"> x </span>
         </div>
       </div>

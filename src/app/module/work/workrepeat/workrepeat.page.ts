@@ -43,7 +43,7 @@ export class WorkrepeatPage {
       this.rest.temp = resp.dulieu
       this.rest.temp.laplai = true
       this.rest.temp.chedo = this.rest.congviec.chedo,
-      this.rest.temp.filter = this.rest.congviec.timkiem,
+      this.rest.temp.timkiem = this.rest.congviec.timkiem,
      this.rest.navCtrl.navigateForward('/work/insert')
     }, () => {
       this.rest.defreeze()

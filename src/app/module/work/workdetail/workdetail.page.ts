@@ -78,7 +78,7 @@ export class WorkdetailPage {
       this.rest.temp.chitiet = 1
       delete this.rest.temp.repeat
       this.rest.temp.chedo = this.rest.congviec.chedo,
-      this.rest.temp.filter = this.rest.congviec.timkiem,
+      this.rest.temp.timkiem = this.rest.congviec.timkiem,
       this.rest.navCtrl.navigateForward('/work/insert')
     }, () => {
       this.rest.defreeze()
@@ -108,8 +108,7 @@ export class WorkdetailPage {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('congviec', 'xoa', {
       id: this.rest.detail.id,
-      chedo: this.rest.congviec.chedo,
-      filter: this.rest.congviec.timkiem,
+      timkiem: this.rest.congviec.timkiem,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.congviec.danhsach[this.rest.congviec.chedo] = resp.danhsach
@@ -155,7 +154,7 @@ export class WorkdetailPage {
       id: id,
       status: status,
       chedo: this.rest.congviec.chedo,
-      filter: this.rest.congviec.timkiem,
+      timkiem: this.rest.congviec.timkiem,
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.detail.status = resp.trangthai

@@ -21,7 +21,7 @@ export class WorkPage {
   public tabs = ['Chưa hoàn thành', 'Hoàn thành']
   public hoanthanh = ['Chưa hoàn thành', 'Đã hoàn thành', 'Toàn bộ']
   public denhan = ['Toàn bộ', 'Gần hạn', 'Quá hạn']
-  public rev = ['1', '2', '0']
+  public rev = [1, 2, 0]
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -103,106 +103,110 @@ export class WorkPage {
     this.rest.navCtrl.navigateForward('/work/insert')
   }
 
-  // public async capnhat(ti: number, i: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   let congviec = this.rest.congviec.danhsach[this.rest.congviec.chedo][ti][i]
+  public async capnhat(i: number = -1, j: number = -1, g: number = -1) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    let congviec: any = {}
+    if (g >= 0) congviec = this.rest.congviec.danhsach[i].child[j].danhsach[g]
+    else congviec = this.rest.congviec.danhsach[i].danhsach[j]
     
-  //   this.rest.checkpost('congviec', 'laythongtin', {
-  //     id: congviec.id,
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.temp = resp.dulieu
-  //     delete this.rest.temp.repeat
-  //     this.rest.temp.chedo = this.rest.congviec.chedo,
-  //     this.rest.temp.timkiem = this.rest.congviec.timkiem,
-  //     this.rest.navCtrl.navigateForward('/work/insert')
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+    this.rest.checkpost('congviec', 'laythongtin', {
+      id: congviec.id,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.temp = resp.dulieu
+      delete this.rest.temp.repeat
+      this.rest.temp.timkiem = this.rest.congviec.timkiem
+      this.rest.navCtrl.navigateForward('/work/insert')
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public chitiet(ti: number, i: number) {
-  //   this.rest.detail = this.rest.congviec.danhsach[this.rest.congviec.chedo][ti][i]
-  //   this.rest.navCtrl.navigateForward('/work/detail')
-  // }
+  public chitiet(i: number = -1, j: number = -1, g: number = -1) {
+    let congviec: any = {}
+    if (g >= 0) congviec = this.rest.congviec.danhsach[i].child[j].danhsach[g]
+    else congviec = this.rest.congviec.danhsach[i].danhsach[j]
+    this.rest.detail = congviec
+    this.rest.navCtrl.navigateForward('/work/detail')
+  }
 
-  // public async xacnhan(ti: number, i: number) {
-  //   let congviec = this.rest.congviec.danhsach[this.rest.congviec.chedo][ti][i]
-  //   // kiểm tra nhân viên có quyền không
-  //   // quyền xác định bằng chủ danh mục, người tạo
-  //   if (congviec.status > 1) return 0
-  //   else if (congviec.type == 0) {
-  //     this.rest.notify('Nhân viên không có quyền xác nhận')
-  //   }
-  //   else if (congviec.type == 1 && congviec.status > 0) {
-  //     this.rest.notify('Chỉ quản lý mới có quyền xác nhận')
-  //   }
-  //   else {
-  //     let alert = await this.alert.create({
-  //       message: this.chuyentrangthai[congviec.status],
-  //       buttons: [
-  //         {
-  //           text: 'Trở về',
-  //           role: 'cancel',
-  //         }, {
-  //           text: 'Xác nhận',
-  //           handler: (e) => {
-  //             this.xacnhanSubmit(congviec.id, congviec.status)
-  //           }
-  //         }
-  //       ]
-  //     });
+  public async xacnhan(i: number = -1, j: number = -1, g: number = -1) {
+    let congviec: any = {}
+    if (g >= 0) congviec = this.rest.congviec.danhsach[i].child[j].danhsach[g]
+    else congviec = this.rest.congviec.danhsach[i].danhsach[j]
+    
+    // kiểm tra nhân viên có quyền không
+    // quyền xác định bằng chủ danh mục, người tạo
+    if (congviec.status > 1) return 0
+    else if (congviec.type == 0) {
+      this.rest.notify('Nhân viên không có quyền xác nhận')
+    }
+    else if (congviec.type == 1 && congviec.status > 0) {
+      this.rest.notify('Chỉ quản lý mới có quyền xác nhận')
+    }
+    else {
+      let alert = await this.alert.create({
+        message: this.chuyentrangthai[congviec.status],
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: (e) => {
+              this.xacnhanSubmit(congviec.id, congviec.status)
+            }
+          }
+        ]
+      });
   
-  //     await alert.present();
-  //   }
-  // }
+      await alert.present();
+    }
+  }
 
-  // public async xacnhanSubmit(id: number, status: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('congviec', 'chuyentrangthai', {
-  //     id: id,
-  //     status: status,
-  //     chedo: this.rest.congviec.chedo,
-  //     timkiem: this.rest.congviec.timkiem,
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.congviec.danhsach = resp.danhsach
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async xacnhanSubmit(id: number, status: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('congviec', 'chuyentrangthai', {
+      id: id,
+      status: status,
+      timkiem: this.rest.congviec.timkiem,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.congviec.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public async xoa(id: number) {
-  //   let alert = await this.alert.create({
-  //     message: 'Xác nhận xóa công việc',
-  //     buttons: [
-  //       {
-  //         text: 'Trở về',
-  //         role: 'cancel',
-  //       }, {
-  //         text: 'Xác nhận',
-  //         handler: (e) => {
-  //           this.xacnhanxoa(id)
-  //         }
-  //       }
-  //     ]
-  //   });
+  public async xoa(id: number) {
+    let alert = await this.alert.create({
+      message: 'Xác nhận xóa công việc',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.xacnhanxoa(id)
+          }
+        }
+      ]
+    });
 
-  //   await alert.present();
-  // }
+    await alert.present();
+  }
 
-  // public async xacnhanxoa(id: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('congviec', 'xoa', {
-  //     id: id,
-  //     chedo: this.rest.congviec.chedo,
-  //     timkiem: this.rest.congviec.timkiem,
-  //   }).then((resp) => {
-  //     this.rest.defreeze()
-  //     this.rest.congviec.danhsach = resp.danhsach
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
-
+  public async xacnhanxoa(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('congviec', 'xoa', {
+      id: id,
+      timkiem: this.rest.congviec.timkiem,
+    }).then((resp) => {
+      this.rest.defreeze()
+      this.rest.congviec.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

@@ -69,27 +69,25 @@ export class WorkinsertPage {
   }
 
   public async insert() {
-    // if (this.rest.temp.repeat && this.rest.temp.repeat.type == '1') {
-    //   // kiếm tra nếu là theo tuần thì phải chọn ít nhất 1
-    //   let all = 0
-    //   this.rest.temp.repeat.list.forEach((repeat: number) => {
-    //     if (repeat) all ++
-    //   });
-    //   if (!all) return this.rest.notify('Xin hãy chọn ít nhất 1 ngày trong tuần')
-    // }
-    // await this.rest.freeze('Đang tải dữ liệu...')
-    // await this.uploadAllImage()
-    // this.rest.checkpost('congviec', 'themcongviec', this.rest.temp).then(resp => {
-    // this.rest.defreeze()
-    //   if (this.rest.temp.laplai) this.rest.congviec.danhsachlaplai = resp.laplai
-    //   this.rest.congviec.khoitao = [false, false]
-    //   this.rest.congviec.khoitao[this.rest.congviec.chedo] = true
-    //   this.rest.congviec.danhsach[this.rest.congviec.chedo] = resp.danhsach
-    //   if (this.rest.temp.chitiet) this.rest.detail = resp.chitiet
-    //   this.rest.back()
-    // }, () => {
-    //   this.rest.defreeze()
-    // })
+    if (this.rest.temp.repeat && this.rest.temp.repeat.type == '1') {
+      // kiếm tra nếu là theo tuần thì phải chọn ít nhất 1
+      let all = 0
+      this.rest.temp.repeat.list.forEach((repeat: number) => {
+        if (repeat) all ++
+      });
+      if (!all) return this.rest.notify('Xin hãy chọn ít nhất 1 ngày trong tuần')
+    }
+    await this.rest.freeze('Đang tải dữ liệu...')
+    await this.uploadAllImage()
+    this.rest.checkpost('congviec', 'themcongviec', this.rest.temp).then(resp => {
+    this.rest.defreeze()
+      if (this.rest.temp.laplai) this.rest.congviec.danhsachlaplai = resp.laplai
+      this.rest.congviec.danhsach = resp.danhsach
+      if (this.rest.temp.chitiet) this.rest.detail = resp.chitiet
+      this.rest.back()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public upload() {
