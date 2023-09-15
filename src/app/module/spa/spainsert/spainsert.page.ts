@@ -58,7 +58,7 @@ export class SpainsertPage {
         this.rest.defreeze()
         this.rest.spa.list = resp.list
         this.rest.spa.init = resp.time
-        if (this.rest.temp.datlich > 0) this.rest.datlich.khoitao = false
+        if (this.rest.temp.datlich > 0) this.rest.khachhang.khoitao = false
         this.rest.back()
       }, () => {
         this.rest.defreeze()

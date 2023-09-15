@@ -168,18 +168,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/thietbi/thietbi.module').then( m => m.ThietbiPageModule)
   },
   {
-    path: 'datlich',
-    loadChildren: () => import('./module/datlich/datlich.module').then( m => m.DatlichPageModule)
-  },
-  {
-    path: 'danhgia',
-    loadChildren: () => import('./module/danhgia/danhgia.module').then( m => m.DanhgiaPageModule)
-  },
-  {
-    path: 'chuyenmon',
-    loadChildren: () => import('./module/chuyenmon/chuyenmon.module').then( m => m.ChuyenmonPageModule)
-  },
-  {
     path: 'thongkenghi',
     loadChildren: () => import('./module/thongkenghi/thongkenghi.module').then( m => m.ThongkenghiPageModule)
   },
@@ -195,6 +183,11 @@ const routes: Routes = [
     path: 'tailieu',
     loadChildren: () => import('./module/tailieu/tailieu.module').then( m => m.TailieuPageModule)
   },
+  {
+    path: 'khachhang',
+    loadChildren: () => import('./module/khachhang/khachhang.module').then( m => m.KhachhangPageModule)
+  },
+
 
 
 ];

@@ -37,9 +37,7 @@ export class AdminPage {
     { name: 'Quản lý thiết bị', module: 'thietbi' },
     { name: 'Quản lý tài chính', module: 'taichinh' },
     { name: 'Quản lý tính lương', module: 'loinhuan' },
-    { name: 'Danh sách đặt lịch', module: 'datlich' },
-    { name: 'Danh sách đánh giá', module: 'danhgia' },
-    { name: 'Quản lý tin tức', module: 'tintuc' },
+    { name: 'Yêu cầu khách hàng', module: 'khachhang' },
     { name: 'Cài đặt', module: 'excel' },
     { name: 'Quản lý công việc', module: 'work'},
   ]

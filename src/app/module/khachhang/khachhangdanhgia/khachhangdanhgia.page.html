@@ -1,0 +1,36 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="rest.khachhang.thoigian" displayFormat="MM/YYYY" max="2100"
+      (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let khachhang of rest.khachhang.danhsach">
+    Khách hàng: {{khachhang.tenkhach}} <br>
+    Điện thoại: {{khachhang.dienthoai}} <br>
+    Nhân viên: {{khachhang.nhanvien}} <br>
+    Lý do: {{khachhang.lydo}} <br>
+    Nội dung: {{khachhang.noidung}} <br>
+    Thời gian: {{khachhang.thoigian}} <br>
+    <div class="upperline"></div>
+    <ion-icon *ngFor="let muchailong of danhsachhailong" name="star" [class]="(muchailong <= khachhang.muchailong ? 'active khachhang' : 'khachhang')"></ion-icon>
+  </div>
+</ion-content>

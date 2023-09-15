@@ -15,26 +15,12 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <!-- <div class="stl-card" *ngIf="rest.config.admin == 1 && rest.home.birthday.length">
-    <div> Sinh nhật </div>
-    <div *ngFor="let nhanvien of rest.home.birthday">
-      {{nhanvien.fullname}} - {{nhanvien.birthday}}
-    </div>
-  </div> -->
-
-  <div *ngIf="rest.config.datlich > 0" class="box" (click)="rest.navCtrl.navigateForward('/datlich')">
-    <ion-img src="assets/image/datlich.png" class="box-image"></ion-img>
+  <div *ngIf="rest.config.khachhang > 0" class="box" (click)="rest.navCtrl.navigateForward('/khachhang')">
+    <ion-img src="assets/image/khachhang.png" class="box-image"></ion-img>
     <div class="box-title">
-      Khách đặt lịch
+      Yêu cầu khách hàng
       <ion-badge color="danger" *ngIf="rest.home.datlich > 0"> {{rest.home.datlich}} </ion-badge>
       <ion-badge color="warning" *ngIf="rest.home.datlich2 > 0"> {{rest.home.datlich2}} </ion-badge>
-    </div>
-  </div>
-
-  <div *ngIf="rest.config.danhgia > 0" class="box" (click)="rest.navCtrl.navigateForward('/danhgia')">
-    <ion-img src="assets/image/danhgia.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Đánh giá nhân viên
     </div>
   </div>
 
@@ -243,13 +229,6 @@
     <ion-img src="assets/image/loinhuan.png" class="box-image"></ion-img>
     <div class="box-title">
       Tài chính
-    </div>
-  </div>
-
-  <div *ngIf="rest.config.tintuc > 0" class="box" (click)="rest.navCtrl.navigateForward('/tintuc')">
-    <ion-img src="assets/image/tintuc.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Tin tức
     </div>
   </div>
   
