@@ -32,7 +32,9 @@ export class WorkPage {
   async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'congviec'
-      if (!this.rest.congviec.khoitao) this.khoitao()
+      if (!this.rest.congviec.khoitao) {
+        this.khoitao()
+      }
     })
   }
 
@@ -42,10 +44,15 @@ export class WorkPage {
       timkiem: this.rest.congviec.timkiem
     }).then(resp => {
     this.rest.defreeze()
-      this.rest.congviec.khoitao = true
-      this.rest.congviec.danhsach = resp.danhsach
-      this.rest.congviec.danhmuc = resp.danhmuc
-      this.rest.congviec.nhanvien = resp.nhanvien
+    this.rest.congviec.danhsach = resp.danhsach
+    this.rest.congviec.danhmuc = resp.danhmuc
+    this.rest.congviec.nhanvien = resp.nhanvien
+    if (!this.rest.congviec.khoitao) {
+      this.rest.congviec.danhmuc.forEach(danhmuc => {
+        this.rest.congviec.modanhmuc[danhmuc.id] = false;
+      });
+    }
+    this.rest.congviec.khoitao = true
     }, () => {
       this.rest.defreeze()
     })

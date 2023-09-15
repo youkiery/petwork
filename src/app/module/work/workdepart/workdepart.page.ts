@@ -14,35 +14,48 @@ export class WorkdepartPage {
     public alert: AlertController
   ) { }
 
-  
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/work')
   }
-
-  public back() {
-    if (this.rest.congviec.child.length) {
-      this.rest.congviec.child = []
-      this.rest.congviec.childid = -1
-    }
-    else this.rest.back()
+  
+  public async tailai(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('congviec', 'khoitao', { 
+      timkiem: this.rest.congviec.timkiem
+    }).then(resp => {
+      this.rest.defreeze()
+      event.target.complete()
+      this.rest.congviec.khoitao = true
+      this.rest.congviec.danhsach = resp.danhsach
+      this.rest.congviec.danhmuc = resp.danhmuc
+      this.rest.congviec.nhanvien = resp.nhanvien
+    }, () => {
+      this.rest.defreeze()
+      event.target.complete()
+    })
   }
 
-  public gochild(i: number) {
-    this.rest.congviec.childid = i
-    this.rest.congviec.child = this.rest.congviec.danhmuc[i].child 
-  }
-
-  public themdanhmuc() {
+  public themdanhmuc(parentid: number = 0) {
     let list = []
     this.rest.congviec.nhanvien.forEach((nhanvien: any) => {
       list.push({ value: false, userid: nhanvien.userid, name: nhanvien.fullname })
     })
-    let child = 0
-    if (this.rest.congviec.childid >= 0) child = this.rest.congviec.danhmuc[this.rest.congviec.childid].id
     this.rest.temp = {
+      id: 0,
+      parentid: parentid,
       name: '',
-      child: child,
-      list: list
+      list: list,
+    }
+    this.rest.navCtrl.navigateForward('/work/departinsert')
+  }
+
+  public suadanhmuc(thutu: number = 0) {
+    let danhmuc = this.rest.congviec.danhmuc[thutu]
+    this.rest.temp = {
+      id: danhmuc.id,
+      parentid: danhmuc.parentid,
+      name: danhmuc.name,
+      list: danhmuc.nhanvien,
     }
     this.rest.navCtrl.navigateForward('/work/departinsert')
   }
@@ -73,53 +86,8 @@ export class WorkdepartPage {
     }).then((resp) => {
       this.rest.defreeze()
       this.rest.congviec.danhmuc = resp.danhmuc
-      if (this.rest.congviec.child.length) this.rest.congviec.child = this.rest.congviec.danhmuc[this.rest.congviec.childid].child
     }, () => {
       this.rest.defreeze()
-    })
-  }
-
-  public themnhanvien(i: number) {
-    let danhmuc = this.rest.congviec.danhmuc[i]
-    let list = []
-    this.rest.congviec.nhanvien.forEach((nhanvien: any) => {
-      if (danhmuc.list[nhanvien.userid]) list.push({ value: true, userid: nhanvien.userid, name: nhanvien.fullname })
-      else list.push({ value: false, userid: nhanvien.userid, name: nhanvien.fullname })
-    })
-
-    this.rest.temp = {
-      id: danhmuc.id,
-      name: danhmuc.name,
-      list: list
-    }
-    this.rest.navCtrl.navigateForward('/work/departinsert')
-  }
-
-  public themnhanvien2(i: number) {
-    let danhmuc = this.rest.congviec.child[i]
-    let list = []
-    this.rest.congviec.nhanvien.forEach((nhanvien: any) => {
-      if (danhmuc.list[nhanvien.userid]) list.push({ value: true, userid: nhanvien.userid, name: nhanvien.fullname })
-      else list.push({ value: false, userid: nhanvien.userid, name: nhanvien.fullname })
-    })
-
-    this.rest.temp = {
-      id: danhmuc.id,
-      name: danhmuc.name,
-      list: list
-    }
-    this.rest.navCtrl.navigateForward('/work/departinsert')
-  }
-
-  public async refresh(event: any) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('congviec', 'danhmuc', { }).then(resp => {
-      this.rest.defreeze()
-      event.target.complete()
-      this.rest.congviec.danhmuc = resp.danhmuc
-    }, () => {
-      this.rest.defreeze()
-      event.target.complete()
     })
   }
 }

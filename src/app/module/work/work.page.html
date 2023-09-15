@@ -63,24 +63,24 @@
   </ion-fab>
 
   <div class="card-group" *ngFor="let danhmuc of rest.congviec.danhsach; let i = index">
-    <div class="card-header"(click)="rest.congviec.danhsach[i].hienthi = !danhmuc.hienthi">
+    <div class="card-header"(click)="rest.congviec.modanhmuc[danhmuc.id] = !rest.congviec.modanhmuc[danhmuc.id]">
       {{danhmuc.name}}
       <ion-badge *ngIf="danhmuc.soluong" color="danger">
         {{danhmuc.soluong}}
       </ion-badge>
     </div>
 
-    <div class="card-container" *ngIf="danhmuc.hienthi">
+    <div class="card-container" *ngIf="rest.congviec.modanhmuc[danhmuc.id]">
       <div *ngIf="danhmuc.child.length">
         <div class="card-group" *ngFor="let danhmuccon of danhmuc.child; let j = index">
-          <div class="card-header" (click)="rest.congviec.danhsach[i].child[j].hienthi = !danhmuccon.hienthi">
+          <div class="card-header" (click)="rest.congviec.modanhmuc[danhmuccon.id] = !rest.congviec.modanhmuc[danhmuccon.id]">
             {{danhmuccon.name}}
             <ion-badge *ngIf="danhmuccon.soluong" color="danger">
               {{danhmuccon.soluong}}
             </ion-badge>
           </div>
 
-          <div class="card-container" *ngIf="danhmuccon.hienthi">
+          <div class="card-container" *ngIf="rest.congviec.modanhmuc[danhmuccon.id]">
             <div class="stl-card" style="border-bottom: 1px solid lightgray;"
               *ngFor="let congvieccon of danhmuccon.danhsach; let g = index">
               <div class="card-tickbox" (click)="xacnhan(i, j, g)">

@@ -1,46 +1,35 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" size="small" (click)="back()">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.congviec.child.length">
-    <div>
-      Danh mục: {{rest.congviec.danhmuc[rest.congviec.childid].name}}
-    </div>
-
-    <div class="stl-card" *ngFor="let danhmuc of rest.congviec.child; let i = index">
-      <div style="font-size: 1.25em;"> {{danhmuc.name}} </div>
-      <div class="upperline">
-        <b> Danh sách nhân viên: </b> {{danhmuc.text}} <span *ngIf="danhmuc.id > 0"> <span class="pos" (click)="themnhanvien2(i)"> sửa </span><span class="pos red" (click)="xoadanhmuc(danhmuc.id)"> x </span> </span>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="!rest.congviec.child.length">
-    <div *ngFor="let danhmuc of rest.congviec.danhmuc; let i = index">
-      <div class="stl-card" *ngIf="danhmuc.parentid == 0">
-        <div style="font-size: 1.25em;" (click)="gochild(i)"> {{danhmuc.name}} </div>
-        <div class="upperline">
-          <b> Danh sách nhân viên: </b> {{danhmuc.text}} <span class="pos" (click)="themnhanvien(i)"> sửa </span><span class="pos red" (click)="xoadanhmuc(danhmuc.id)"> x </span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="stl-card text-center" *ngIf="!rest.congviec.danhmuc.length">
-      Không có danh mục
-    </div>
-  </div>
-
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="success" (click)="themdanhmuc()">
-      <ion-icon name="add-circle-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+
+  <ion-item (click)="themdanhmuc()">
+    Thêm danh mục
+    <ion-button slot="end" fill="clear">
+      <ion-icon color="success" name="add"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item *ngFor="let danhmuc of rest.congviec.danhmuc; let i = index">
+    {{danhmuc.route}} 
+    <ion-button *ngIf="!danhmuc.child" slot="end" fill="clear" (click)="themdanhmuc(danhmuc.id)">
+      <ion-icon color="success" name="add"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear" (click)="suadanhmuc(i)">
+      <ion-icon color="secondary" name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear" (click)="xoadanhmuc(danhmuc.id)">
+      <ion-icon slot="end" color="danger" name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <div class="stl-card text-center" *ngIf="!rest.congviec.danhmuc.length">
+    Không có danh mục
+  </div>
 </ion-content>

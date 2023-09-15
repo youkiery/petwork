@@ -41,7 +41,7 @@ export class AdminPage {
     { name: 'Danh sách đánh giá', module: 'danhgia' },
     { name: 'Quản lý tin tức', module: 'tintuc' },
     { name: 'Cài đặt', module: 'excel' },
-    { name: 'Quản lý công việc', module: 'congviec'},
+    { name: 'Quản lý công việc', module: 'work'},
   ]
   public level = ['l0', 'l1', 'l2']
   constructor(

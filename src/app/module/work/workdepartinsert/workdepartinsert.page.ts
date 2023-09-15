@@ -17,15 +17,17 @@ export class WorkdepartinsertPage {
     if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('/work')
   }
 
-  public async insert() {
+  public async capnhat() {
+    let kiemtra = false
+    this.rest.temp.list.forEach(nhanvien => {
+      if (nhanvien.value) kiemtra = true
+    });
+    if (!kiemtra) return this.rest.notify("Hãy chọn ít nhất 1 nhân viên")
+    else if (!this.rest.temp.name.length) return this.rest.notify("Xin hãy nhập tên danh mục")
     await this.rest.freeze('Đang tải dữ liệu...')
-    let temp = this.rest.temp
-    if (this.rest.detail.work) temp = this.rest.detail
-    this.rest.checkpost('congviec', 'themnhanvien', temp).then(resp => {
+    this.rest.checkpost('congviec', 'capnhatdanhmuc', this.rest.temp).then(resp => {
     this.rest.defreeze()
       this.rest.congviec.danhmuc = resp.danhmuc
-      if (this.rest.congviec.child.length) this.rest.congviec.child = this.rest.congviec.danhmuc[this.rest.congviec.childid].child
-      if (this.rest.detail.work) this.rest.temp.departid = resp.id
       this.rest.back()
     }, () => {
       this.rest.defreeze()

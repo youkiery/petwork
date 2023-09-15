@@ -3,30 +3,18 @@
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
 
-  <ion-button slot="end" color="light" fill="clear" size="small" (click)="insert()">
-    Chọn nhân viên
+  <ion-button slot="end" color="light" fill="clear" size="small" (click)="capnhat()">
+    Cập nhật danh mục
   </ion-button>
 </ion-toolbar>
 
 <ion-content *ngIf="rest.isready">
-  <div *ngIf="rest.detail.work">
-    <ion-item>
-      <ion-label position="stacked" slot="start"> Tên chuyên mục </ion-label>
-      <ion-input [(ngModel)]="rest.detail.name"></ion-input>
-    </ion-item>
-    <ion-item *ngFor="let nhanvien of rest.detail.list; let i = index">
-      <ion-checkbox slot="start" [(ngModel)]="nhanvien.value"></ion-checkbox>
-      <ion-label> {{nhanvien.name}} </ion-label>
-    </ion-item>  
-  </div>
-  <div *ngIf="!rest.detail.work">
-    <ion-item>
-      <ion-label position="stacked" slot="start"> Tên chuyên mục </ion-label>
-      <ion-input [(ngModel)]="rest.temp.name"></ion-input>
-    </ion-item>
-    <ion-item *ngFor="let nhanvien of rest.temp.list; let i = index">
-      <ion-checkbox slot="start" [(ngModel)]="nhanvien.value"></ion-checkbox>
-      <ion-label> {{nhanvien.name}} </ion-label>
-    </ion-item>  
-  </div>
+  <ion-item>
+    <ion-label position="stacked"> Tên chuyên mục </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name"></ion-input>
+  </ion-item>
+  <ion-item *ngFor="let nhanvien of rest.temp.list; let i = index">
+    <ion-checkbox slot="start" [(ngModel)]="nhanvien.value"></ion-checkbox>
+    <ion-label> {{nhanvien.name}} </ion-label>
+  </ion-item>
 </ion-content>

@@ -146,7 +146,9 @@ export class DatlichPage implements OnInit {
     this.rest.checkpost('datlich', 'khongden', {
       id: datlich.id,
       loai: datlich.loai,
-      tukhoa: this.rest.datlich.tukhoa
+      tukhoa: this.rest.datlich.tukhoa,
+      tungay: this.rest.datlich.tungay,
+      denngay: this.rest.datlich.denngay,
     }).then(resp => {
       this.rest.defreeze()
       this.rest.datlich.danhsach = resp.danhsach
