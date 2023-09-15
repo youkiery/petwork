@@ -39,7 +39,7 @@ export class KhachhangdanhgiaPage implements OnInit {
 
   public async tailai(event: any) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('khachhang', 'khoitao', {
+    this.rest.checkpost('khachhang', 'khoitaodanhgia', {
       thoigian: this.rest.khachhang.thoigian
     }).then(resp => {
       this.rest.defreeze()
