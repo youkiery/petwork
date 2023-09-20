@@ -41,7 +41,7 @@
   </ion-fab>
 
   <div class="stl-card" *ngFor="let item of rest.khachhang.danhsach; let i = index">
-    <div> <b> {{loaidatlich[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> {{loaikhachhang[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
     <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
     <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
     <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
@@ -76,6 +76,10 @@
       <ion-tab-button (click)="chuyenmon()" *ngIf="rest.config.datlich > 1">
         <ion-icon name="documents-outline"></ion-icon>
         <ion-label> Chuyên môn </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="chinhanh()" *ngIf="rest.config.datlich > 1">
+        <ion-icon name="business-outline"></ion-icon>
+        <ion-label> Chi nhánh </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

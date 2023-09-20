@@ -36,6 +36,7 @@ export class RestService {
     chotlich: '0',
     datlich: 0,
     datlich2: 0,
+    datlich3: 0,
     today: '',
     branch: '',
     prefix: '',
@@ -84,7 +85,7 @@ export class RestService {
   public xquang = { init: false, list: [], need: [], start: '', end: '', s: '1' }
   public sieuam = { init: false, list: [], need: [], start: '', end: '', s: '1' }
   public hotel = { init: false, catinit: false, cat: [], list: [], need: [], filter: {start: '', end: ''}, s: '0' }
-  public khachhang = { khoitao: false, tukhoa: "", tungay: "", denngay: "", danhsach: [], khoitaochuyenmon: false, chuyenmon: [], nhanvien: [], dichvu: [], danhgia: [], thoigian: "" }
+  public khachhang = { khoitao: false, tukhoa: "", tungay: "", denngay: "", danhsach: [], khoitaochuyenmon: false, chuyenmon: [], nhanvien: [], dichvu: [], danhgia: [], thoigian: "", khoitaochinhanh: false, chinhanh: [] }
   public other = { init: false, list: [], need: [], type: [], start: '', end: '', s: '1' }
   public badge = { his: 0, kaizen: 0, profile: 0, physical: 0, xquang: 0, sieuam: 0, other: 0, init: false }
   public excel = { init: false, config: {name: '', phone: '', address: ''} }

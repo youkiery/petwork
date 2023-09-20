@@ -1,0 +1,23 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" slot="end" fill="clear" size="small" (click)="themchinhanh()">
+      Thêm chi nhánh
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngFor="let chinhanh of rest.khachhang.chinhanh">
+    <div> Tên chi nhánh: {{chinhanh.tenchinhanh}} </div>
+    <div> Địa chỉ: {{chinhanh.diachi}} </div>
+    <div> Điện thoại: {{chinhanh.dienthoai}} </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.khachhang.chinhanh.length">
+    Chưa thêm chi nhánh nào
+  </div>
+</ion-content>

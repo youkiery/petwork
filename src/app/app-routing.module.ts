@@ -176,10 +176,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/lichban/lichban.module').then( m => m.LichbanPageModule)
   },
   {
-    path: 'tintuc',
-    loadChildren: () => import('./module/tintuc/tintuc.module').then( m => m.TintucPageModule)
-  },
-  {
     path: 'tailieu',
     loadChildren: () => import('./module/tailieu/tailieu.module').then( m => m.TailieuPageModule)
   },

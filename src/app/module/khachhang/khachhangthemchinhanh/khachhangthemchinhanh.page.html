@@ -1,0 +1,36 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="them()">
+      <span *ngIf="rest.temp.id"> Cập nhật </span>
+      <span *ngIf="!rest.temp.id"> Thêm </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/*" capture (change)="uploadPWA()">
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked"> Tên chi nhánh </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tenchinhanh"> </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-input [(ngModel)]="rest.temp.diachi" cols="4"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Điện thoại </ion-label>
+    <ion-input [(ngModel)]="rest.temp.dienthoai"> </ion-input>
+  </ion-item>
+  
+  <img class="thumbnail" [src]="rest.temp.image.length ? rest.temp.image : '/assets/image/insert.png'" (click)="upload()">
+
+</ion-content>

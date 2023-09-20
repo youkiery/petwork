@@ -121,6 +121,10 @@ export class KhachhangPage implements OnInit {
     this.rest.navCtrl.navigateForward("/khachhang/danhgia")
   }
 
+  public chinhanh() {
+    this.rest.navCtrl.navigateForward("/khachhang/chinhanh")
+  }
+
   public async khongden(id: number) {
     const alert = await this.alert.create({
       message: 'Xác nhận khách không đặt lịch nữa?',

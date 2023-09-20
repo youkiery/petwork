@@ -23,6 +23,14 @@ const routes: Routes = [
   {
     path: 'danhgia',
     loadChildren: () => import('./khachhangdanhgia/khachhangdanhgia.module').then( m => m.KhachhangdanhgiaPageModule)
+  },
+  {
+    path: 'chinhanh',
+    loadChildren: () => import('./khachhangchinhanh/khachhangchinhanh.module').then( m => m.KhachhangchinhanhPageModule)
+  },
+  {
+    path: 'themchinhanh',
+    loadChildren: () => import('./khachhangthemchinhanh/khachhangthemchinhanh.module').then( m => m.KhachhangthemchinhanhPageModule)
   }
 ];
 

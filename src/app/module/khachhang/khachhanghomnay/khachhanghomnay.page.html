@@ -11,7 +11,7 @@
 
   
   <div class="stl-card" *ngFor="let item of danhsach; let i = index">
-    <div> <b> {{loaidatlich[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> {{loaikhachhang[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
     <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
     <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
     <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>
