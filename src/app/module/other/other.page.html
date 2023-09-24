@@ -21,8 +21,16 @@
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="rest.other.s">
-      <ion-segment-button value="1"> Cần Xét nghiệm </ion-segment-button>
-      <ion-segment-button value="2"> Hoàn thành </ion-segment-button>
+      <ion-segment-button value="1">
+        Cần Xét nghiệm 
+        <ion-badge color="danger" *ngIf="rest.other.need.length">
+          {{rest.other.need.length}} </ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Hoàn thành 
+        <ion-badge color="danger" *ngIf="rest.other.list.length">
+          {{rest.other.list.length}} </ion-badge>
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 

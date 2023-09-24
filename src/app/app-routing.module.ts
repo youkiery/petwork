@@ -116,14 +116,6 @@ const routes: Routes = [
     loadChildren: () => import('./modal/image/image.module').then( m => m.ImagePageModule)
   },
   {
-    path: 'xquang',
-    loadChildren: () => import('./module/xquang/xquang.module').then( m => m.XquangPageModule)
-  },
-  {
-    path: 'sieuam',
-    loadChildren: () => import('./module/sieuam/sieuam.module').then( m => m.SieuamPageModule)
-  },
-  {
     path: 'excel',
     loadChildren: () => import('./module/excel/excel.module').then( m => m.ExcelPageModule)
   },

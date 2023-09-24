@@ -38,61 +38,53 @@
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="rest.profile.segment">
-      <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
-      <ion-segment-button value="2"> Chỉ tiêu </ion-segment-button>
+      <ion-segment-button value="1">
+        Cần xét nghiệm
+        <ion-badge color="danger" *ngIf="rest.profile.need.length"> {{rest.profile.need.length}} </ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Hoàn thành
+        <ion-badge color="danger" *ngIf="rest.profile.list.length"> {{rest.profile.list.length}} </ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="3"> Chỉ tiêu </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
   <div *ngIf="rest.profile.segment == '1'">
-    <ion-toolbar>
-      <ion-segment [(ngModel)]="rest.profile.s">
-        <ion-segment-button value="1">
-          Cần xét nghiệm
-          <ion-badge color="danger" *ngIf="rest.profile.need.length"> {{rest.profile.need.length}} </ion-badge>
-        </ion-segment-button>
-        <ion-segment-button value="2">
-          Hoàn thành
-          <ion-badge color="danger" *ngIf="rest.profile.list.length"> {{rest.profile.list.length}} </ion-badge>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-
-    <div *ngIf="rest.profile.s == '1'">
-      <div class="stl-card" *ngFor="let item of rest.profile.need; let i = index">
-        <div (click)="exam(i)">
-          Khách hàng: {{item.name}} <br>
-          Điện thoại: {{item.phone}} <br>
-          Thú cưng: {{item.petname}} <br>
-          <div class="upperline" *ngIf="item.image.length">
-            <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
-          </div>
-        </div>
-        <div class="upperline">
-          <img class="icon" src="/assets/icon/delete.png" (click)="removeneed(item.id)">
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="rest.profile.s == '2'">
-      <div class="stl-card" *ngFor="let item of rest.profile.list; let i = index">
-        <b> Chủ: </b> {{item.customer}} <br>
-        <b> Số điện thoại: </b> {{item.phone}} <br>
-        <b> Người làm: </b> {{item.doctor}} <br>
-        <b> Thời gian: </b> {{item.time}}
+    <div class="stl-card" *ngFor="let item of rest.profile.need; let i = index">
+      <div (click)="exam(i)">
+        Khách hàng: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Thú cưng: {{item.petname}} <br>
         <div class="upperline" *ngIf="item.image.length">
           <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
         </div>
-        <div class="upperline">
-          <img class="icon" src="/assets/icon/info.png" (click)="detail(item.id)">
-          <img class="icon" src="/assets/icon/printer.png" (click)="print(item.id)">
-          <img class="icon" src="/assets/icon/update.png" (click)="updateProfile(i)">
-          <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
-        </div>
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="removeneed(item.id)">
       </div>
     </div>
   </div>
 
   <div *ngIf="rest.profile.segment == '2'">
+    <div class="stl-card" *ngFor="let item of rest.profile.list; let i = index">
+      <b> Chủ: </b> {{item.customer}} <br>
+      <b> Số điện thoại: </b> {{item.phone}} <br>
+      <b> Người làm: </b> {{item.doctor}} <br>
+      <b> Thời gian: </b> {{item.time}}
+      <div class="upperline" *ngIf="item.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/info.png" (click)="detail(item.id)">
+        <img class="icon" src="/assets/icon/printer.png" (click)="print(item.id)">
+        <img class="icon" src="/assets/icon/update.png" (click)="updateProfile(i)">
+        <img class="icon" src="/assets/icon/delete.png" (click)="remove(item.id)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.profile.segment == '3'">
     <ion-list>
       <ion-item *ngFor="let item of rest.profile.target; let i = index">
         <ion-label> {{item.name}}</ion-label>
