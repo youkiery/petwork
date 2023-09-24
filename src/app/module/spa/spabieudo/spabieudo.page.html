@@ -25,6 +25,11 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <div class="stl-card">
+    Tháng trước: {{data.thangtruoc}} <br>
+    Tháng này: {{data.tong}} (<span [class]="data.tanggiam ? 'tang' : 'giam'">{{data.tanggiam ? 'Tăng' : 'giảm'}} {{data.chenhlech}}%</span>) <br>
+  </div>
+
   <canvas id="bieudongay" >{{bieudongay}}</canvas>
   <canvas id="bieudothu" >{{bieudothu}}</canvas>
   <canvas id="bieudogio" >{{bieudogio}}</canvas>

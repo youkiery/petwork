@@ -13,6 +13,10 @@ export class SpabieudoPage implements OnInit {
   public bieudothu: any;
   public bieudogio: any;
   public data = {
+    tong: 0,
+    thangtruoc: 0,
+    chenhlech: 0,
+    tanggiam: 0,
     ngay: {
       datasets: []
     },
@@ -33,11 +37,14 @@ export class SpabieudoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/spa')
-    else {
-      this.thoigian = this.time.datetoisodate(this.rest.home.today)
-      this.khoitao()
-    }
+    this.rest.ready().then(() => {
+      this.rest.action = "spa"
+      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/spa')
+      else {
+        this.thoigian = this.time.datetoisodate(this.rest.home.today)
+        this.khoitao()
+      }
+    })
   }
 
   public async khoitao() {
@@ -71,19 +78,19 @@ export class SpabieudoPage implements OnInit {
   public createChart() {
     if (this.bieudongay) this.bieudongay.destroy();
     this.bieudongay = new Chart("bieudongay", {
-      type: 'line', 
+      type: 'line',
       data: this.data.ngay
     })
 
     if (this.bieudothu) this.bieudothu.destroy();
     this.bieudothu = new Chart("bieudothu", {
-      type: 'line', 
+      type: 'line',
       data: this.data.thu
     })
 
     if (this.bieudogio) this.bieudogio.destroy();
     this.bieudogio = new Chart("bieudogio", {
-      type: 'line', 
+      type: 'line',
       data: this.data.gio
     })
   }
