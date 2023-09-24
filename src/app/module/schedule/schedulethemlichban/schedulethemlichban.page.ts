@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-lichbanthem',
-  templateUrl: './lichbanthem.page.html',
-  styleUrls: ['./lichbanthem.page.scss'],
+  selector: 'app-schedulethemlichban',
+  templateUrl: './schedulethemlichban.page.html',
+  styleUrls: ['./schedulethemlichban.page.scss'],
 })
-export class LichbanthemPage implements OnInit {
-
+export class SchedulethemlichbanPage implements OnInit {
   constructor(
     public rest: RestService
   ) { }
@@ -16,7 +15,7 @@ export class LichbanthemPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/lichban')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/schedule/lichban')
   }
 
   public async them() {

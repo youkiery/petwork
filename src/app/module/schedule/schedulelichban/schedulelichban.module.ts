@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LichbanPageRoutingModule } from './lichban-routing.module';
+import { SchedulelichbanPageRoutingModule } from './schedulelichban-routing.module';
 
-import { LichbanPage } from './lichban.page';
+import { SchedulelichbanPage } from './schedulelichban.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LichbanPageRoutingModule
+    SchedulelichbanPageRoutingModule
   ],
-  declarations: [LichbanPage]
+  declarations: [SchedulelichbanPage]
 })
-export class LichbanPageModule {}
+export class SchedulelichbanPageModule {}

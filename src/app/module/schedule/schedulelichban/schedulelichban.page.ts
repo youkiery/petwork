@@ -4,11 +4,11 @@ import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
 @Component({
-  selector: 'app-lichban',
-  templateUrl: './lichban.page.html',
-  styleUrls: ['./lichban.page.scss'],
+  selector: 'app-schedulelichban',
+  templateUrl: './schedulelichban.page.html',
+  styleUrls: ['./schedulelichban.page.scss'],
 })
-export class LichbanPage implements OnInit {
+export class SchedulelichbanPage implements OnInit {
 
   constructor(
     public rest: RestService,
@@ -57,7 +57,7 @@ export class LichbanPage implements OnInit {
       batdau: new Date().toISOString(),
       ketthuc: new Date().toISOString()
     }
-    this.rest.navCtrl.navigateForward("/lichban/them")
+    this.rest.navCtrl.navigateForward("/schedule/themlichban")
   }
 
   public capnhat(i, j) {
@@ -68,7 +68,7 @@ export class LichbanPage implements OnInit {
       batdau: lichban.batdauiso,
       ketthuc: lichban.ketthuciso,
     }
-    this.rest.navCtrl.navigateForward("/lichban/them")
+    this.rest.navCtrl.navigateForward("/schedule/themlichban")
   }
 
   public async xoa(id: number) {

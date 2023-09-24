@@ -15,11 +15,6 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.navCtrl.navigateForward('/gopy')">
-    <ion-fab-button>
-      Góp ý
-    </ion-fab-button>
-  </ion-fab> -->
   <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -31,9 +26,22 @@
     </ion-fab-button>
   </ion-fab>
 
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="rest.schedule.time" displayFormat="DD/MM/YYYY" max="2100"
+      (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+
   <div class="table">
     <div class="text-center">
-      <div> Ngày hiện tại: {{time.timetodate(rest.schedule.time)}} </div>
       <div *ngIf="rest.config.schedule < 2"> Số buổi có thể đăng ký trong tháng: {{rest.schedule.dadangky}} </div>
       <div *ngIf="rest.config.schedule < 2"> Số buổi có thể hủy trong tháng: {{rest.schedule.cauhinh.huydangky - rest.schedule.dangky.huydangky}} </div>
       <div *ngIf="rest.config.schedule < 2"> Số buổi có thể đăng ký thêm trong tháng: {{rest.schedule.cauhinh.dangkythem - rest.schedule.dangky.dangkythem}} </div>
@@ -83,11 +91,11 @@
       </div>
 
       <ion-button size="small" [color]="rest.schedule.state ? 'warning' : 'medium'"
-        (click)="rest.schedule.state = 1; auto()">
+        (click)="rest.schedule.state = 1; khoitao()">
         <span> Lịch nghỉ </span>
       </ion-button>
       <ion-button size="small" [color]="!rest.schedule.state ? 'warning' : 'medium'"
-        (click)="rest.schedule.state = 0; auto()">
+        (click)="rest.schedule.state = 0; khoitao()">
         <span> Lịch trực </span>
       </ion-button>
     </div>
@@ -155,16 +163,6 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="changeMonth(-1)">
-        <ion-icon name="play-skip-back-circle-outline"></ion-icon>
-        <ion-label> Tháng trước </ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button (click)="changeMonth(1)">
-        <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
-        <ion-label> Tháng sau </ion-label>
-      </ion-tab-button>
-
       <ion-tab-button (click)="register()">
         <ion-icon name="checkmark-outline"></ion-icon>
         <ion-label> Đăng ký </ion-label>
@@ -173,6 +171,16 @@
       <ion-tab-button (click)="cancel()">
         <ion-icon name="close-outline"></ion-icon>
         <ion-label> Hủy </ion-label>
+      </ion-tab-button>
+      
+      <ion-tab-button (click)="lichban()">
+        <ion-icon name="airplane-outline"></ion-icon>
+        <ion-label> Lịch bận </ion-label>
+      </ion-tab-button>
+      
+      <ion-tab-button *ngIf="rest.config.schedule > 1" (click)="chamcong()">
+        <ion-icon name="finger-print-outline"></ion-icon>
+        <ion-label> Chấm công </ion-label>
       </ion-tab-button>
 
       <!-- <ion-tab-button (click)="notify()">

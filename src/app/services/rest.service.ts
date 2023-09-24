@@ -68,7 +68,7 @@ export class RestService {
   public spa = { time: 0, init: false, datlichhomnay: [], list: [], near: [], filter: [], old: [], keyword: '', keyword2: '', toggle: false, search: {status: 0, start: '', end: ''}, thongke: {dauthang: '', cuoithang: ''}, khoitaothongke: false, dulieu: [] }
   public vaccine = { uncalled: 0, init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
   public usg = { uncalled: [0, 0, 0], list: [[], [], []], temp: [[], []], new: [], time: '' }
-  public schedule = { init: false, time: 0, state: 1, list: [], except: [], data: [], quangay: [], dachotlich: {batdau: 0, ketthuc: 0}, dadangky: 0, filter: { batdau: '', ketthuc: '', danhsach: [] }, start: '', end: '', nghichunhat: [], chedodangky: 0, cauhinh: {dangkythem: 0, huydangky: 0}, dangky: {dangkythem: 0, huydangky: 0}, thangnay: false }
+  public schedule = { init: false, time: "", state: 1, list: [], except: [], data: [], quangay: [], dachotlich: {batdau: 0, ketthuc: 0}, dadangky: 0, filter: { batdau: '', ketthuc: '', danhsach: [] }, start: '', end: '', nghichunhat: [], chedodangky: 0, cauhinh: {dangkythem: 0, huydangky: 0}, dangky: {dangkythem: 0, huydangky: 0}, thangnay: false }
   public cart = { list: [], init: false }
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: [], datetime: '', start: '', end: '', old: [], note: '', id: 0 }
   public item = { khoitao: false, danhsach: [], tukhoa: "" }

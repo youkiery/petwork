@@ -3,11 +3,11 @@ import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-thongkenghicauhinh',
-  templateUrl: './thongkenghicauhinh.page.html',
-  styleUrls: ['./thongkenghicauhinh.page.scss'],
+  selector: 'app-schedulecauhinhchamcong',
+  templateUrl: './schedulecauhinhchamcong.page.html',
+  styleUrls: ['./schedulecauhinhchamcong.page.scss'],
 })
-export class ThongkenghicauhinhPage implements OnInit {
+export class SchedulecauhinhchamcongPage implements OnInit {
   public name = 'Chưa chọn file'
   public cauhinh = []
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
@@ -20,7 +20,7 @@ export class ThongkenghicauhinhPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/thongkenghi')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/schedule/chamcong')
     else this.khoitao()
   }
   

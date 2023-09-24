@@ -9,17 +9,6 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./schedule.page.scss'],
 })
 export class SchedulePage {
-  // public day = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
-  // public limit = [1, 2, 2, 2, 2, 2, 1]
-  // public color = [
-  //   ['', '', '', ''],
-  //   ['', '', '', ''],
-  //   ['', '', '', ''],
-  //   ['', '', '', ''],
-  //   ['', '', '', ''],
-  //   ['', '', '', ''],
-  //   ['', '', '', '']
-  // ]
   public batdau = ''
   public ketthuc = ''
   public reversal_color = {
@@ -43,16 +32,11 @@ export class SchedulePage {
   public day = []
   temp: any
   today = ''
-  // public chedodangky = {
-  //   0: 7,
-  //   1: 28
-  // } // 0: theo tuần, 1: theo tháng
   constructor(
     public rest: RestService,
     public time: TimeService,
     private alert: AlertController
   ) { }
-
 
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
@@ -63,16 +47,16 @@ export class SchedulePage {
         danhsach: []
       }
       if (!this.rest.schedule.init) {
+        this.rest.schedule.time = this.time.datetoisodate(this.rest.home.today)
         this.batdau = this.rest.home.month.start
         this.ketthuc = this.rest.home.month.end
-        this.init()
+        this.khoitao()
       }
     })
   }
 
-  public async init() {
+  public async khoitao() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.schedule.time = this.time.datetotime(this.rest.home.today)
     this.rest.checkpost('schedule', 'init', {
       time: this.rest.schedule.time,
       name: this.rest.home.fullname,
@@ -87,7 +71,6 @@ export class SchedulePage {
       this.rest.schedule.list = resp.list
       this.rest.schedule.except = resp.except
       this.rest.schedule.data = resp.data
-      // this.rest.schedule.chedodangky = resp.chedochotlich
       this.rest.schedule.quangay = resp.quangay
       this.rest.schedule.dachotlich = resp.dachotlich
       this.rest.schedule.dadangky = resp.dadangky
@@ -95,19 +78,35 @@ export class SchedulePage {
       this.rest.schedule.cauhinh = resp.cauhinh
       this.rest.schedule.dangky = resp.dangky
       this.rest.schedule.thangnay = resp.thangnay
-      // if (this.rest.config.schedule < 2) this.parseData()
-      // else this.temp = JSON.parse(JSON.stringify(resp['data']))
     }, () => {
       this.rest.defreeze()
     })
   }
 
-  // 'red': 'purple',
-  // 'purple': 'red',
-  // 'green': 'yellow',
-  // 'yellow': 'green',
-  // 'orange': 'blue',
-  // 'blue': 'orange',
+  public async reload(event: any) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('schedule', 'init', {
+      time: this.rest.schedule.time,
+      name: this.rest.home.fullname,
+      state: this.rest.schedule.state,
+      batdau: this.batdau,
+      ketthuc: this.ketthuc
+    }).then(resp => {
+      this.rest.defreeze()
+      event.target.complete()
+      this.rest.schedule.data = resp.data
+      this.rest.schedule.quangay = resp.quangay
+      this.rest.schedule.dachotlich = resp.dachotlich
+      this.rest.schedule.dadangky = resp.dadangky
+      this.rest.schedule.nghichunhat = resp.nghichunhat
+      this.rest.schedule.cauhinh = resp.cauhinh
+      this.rest.schedule.dangky = resp.dangky
+      this.rest.schedule.thangnay = resp.thangnay
+    }, () => {
+      event.target.complete()
+      this.rest.defreeze()
+    })
+  }
 
   public reg(index: number, type: number) {
     // kiểm tra nếu type là chủ nhật thì kiểm tra toàn bộ, nếu có 2 cái chủ nhật thì thông báo
@@ -276,84 +275,10 @@ export class SchedulePage {
     }
   }
 
-  public async changeMonth(increase: number) {
-    // let time = this.rest.schedule.time + increase * this.chedodangky[this.rest.schedule.chedodangky] * 60 * 60 * 24 * 1000
-    let date = new Date(this.rest.schedule.time)
-    let time = 0
-    if (increase > 0) {
-      if (date.getMonth() == 11) time = new Date(date.getFullYear() + 1, 0, 1).getTime()
-      else time = new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime()
-    }
-    else {
-      if (date.getMonth() == 0) time = new Date(date.getFullYear() - 1, 11, 1).getTime()
-      else time = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime()
-    }
-
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('schedule', 'init', {
-      time: time,
-      name: this.rest.home.fullname,
-      state: this.rest.schedule.state,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.schedule.data = resp.data
-      this.rest.schedule.quangay = resp.quangay
-      this.rest.schedule.time = time
-      this.rest.schedule.dachotlich = resp.dachotlich
-      this.rest.schedule.dadangky = resp.dadangky
-      this.rest.schedule.nghichunhat = resp.nghichunhat
-      this.rest.schedule.cauhinh = resp.cauhinh
-      this.rest.schedule.dangky = resp.dangky
-      this.rest.schedule.thangnay = resp.thangnay
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async auto() {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('schedule', 'init', {
-      time: this.rest.schedule.time,
-      name: this.rest.home.fullname,
-      state: this.rest.schedule.state,
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.schedule.data = resp.data
-      this.rest.schedule.quangay = resp.quangay
-      this.rest.schedule.dachotlich = resp.dachotlich
-      this.rest.schedule.dadangky = resp.dadangky
-      this.rest.schedule.nghichunhat = resp.nghichunhat
-      this.rest.schedule.cauhinh = resp.cauhinh
-      this.rest.schedule.dangky = resp.dangky
-      this.rest.schedule.thangnay = resp.thangnay
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async reload(event: any) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('schedule', 'init', {
-      time: this.rest.schedule.time,
-      name: this.rest.home.fullname,
-      state: this.rest.schedule.state,
-      batdau: this.batdau,
-      ketthuc: this.ketthuc
-    }).then(resp => {
-      this.rest.defreeze()
-      event.target.complete()
-      this.rest.schedule.data = resp.data
-      this.rest.schedule.quangay = resp.quangay
-      this.rest.schedule.dachotlich = resp.dachotlich
-      this.rest.schedule.dadangky = resp.dadangky
-      this.rest.schedule.nghichunhat = resp.nghichunhat
-      this.rest.schedule.cauhinh = resp.cauhinh
-      this.rest.schedule.dangky = resp.dangky
-      this.rest.schedule.thangnay = resp.thangnay
-    }, () => {
-      event.target.complete()
-      this.rest.defreeze()
-    })
+  public chonngay(songay: number) {
+    let ngay = this.time.isodatetodate(this.rest.schedule.time).split('/')
+    let thoigian = new Date(Number(ngay[2]), Number(ngay[1]) - 1 + songay, Number(ngay[0]))
+    this.rest.schedule.time = this.time.timetoisodate(thoigian.getTime())
   }
 
   public async xemchotlich() {
@@ -401,5 +326,13 @@ export class SchedulePage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public lichban() {
+    this.rest.navCtrl.navigateForward("/schedule/lichban")
+  }
+
+  public chamcong() {
+    this.rest.navCtrl.navigateForward("/schedule/chamcong")
   }
 }

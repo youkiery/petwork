@@ -4,11 +4,11 @@ import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
 
 @Component({
-  selector: 'app-thongkenghi',
-  templateUrl: './thongkenghi.page.html',
-  styleUrls: ['./thongkenghi.page.scss'],
+  selector: 'app-schedulechamcong',
+  templateUrl: './schedulechamcong.page.html',
+  styleUrls: ['./schedulechamcong.page.scss'],
 })
-export class ThongkenghiPage implements OnInit {
+export class SchedulechamcongPage implements OnInit {
   public mau = [
     "green",
     "gray",
@@ -118,7 +118,7 @@ export class ThongkenghiPage implements OnInit {
   }
 
   public cauhinh() {
-    this.rest.navCtrl.navigateForward("/thongkenghi/cauhinh")
+    this.rest.navCtrl.navigateForward("/schedule/cauhinh")
   }
   
   public chonngay(songay: number) {

@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LichbanthemPageRoutingModule } from './lichbanthem-routing.module';
+import { SchedulechamcongPageRoutingModule } from './schedulechamcong-routing.module';
 
-import { LichbanthemPage } from './lichbanthem.page';
+import { SchedulechamcongPage } from './schedulechamcong.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LichbanthemPageRoutingModule
+    SchedulechamcongPageRoutingModule
   ],
-  declarations: [LichbanthemPage]
+  declarations: [SchedulechamcongPage]
 })
-export class LichbanthemPageModule {}
+export class SchedulechamcongPageModule {}
