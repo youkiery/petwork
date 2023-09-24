@@ -7,7 +7,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./vattuthemcophan.page.scss'],
 })
 export class VattuthemcophanPage implements OnInit {
-
+  public thanhtoan = ["Chưa thanh toán", "Đã thanh toán"]
   constructor(
     public rest: RestService
   ) { }
@@ -41,12 +41,17 @@ export class VattuthemcophanPage implements OnInit {
     this.rest.temp.giaodich[thutu][bien] = tam
   }
 
+  public hienthanhtoan(trangthai: number = 0) {
+    return this.thanhtoan[Number(trangthai)]
+  }
+
   public themgiaodich() {
     this.rest.temp.giaodich.push({
       id: 0,
       tile: '0',
       giatri: '0',
       ghichu: '',
+      thanhtoan: 0,
     })
   }
 

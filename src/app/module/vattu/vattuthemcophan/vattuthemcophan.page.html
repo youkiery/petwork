@@ -24,7 +24,7 @@
     </ion-radio-group>
   </ion-list>
 
-  <div *ngFor="let giaodich of rest.temp.giaodich; let i = index" style="position: relative;">
+  <div *ngFor="let giaodich of rest.temp.giaodich; let i = index" class="giaodich">
     <ion-item class="item-label-class">
       <ion-label position="stacked"> Tỉ lệ mua (%) </ion-label>
       <ion-input [(ngModel)]="giaodich.tile"  (keyup)="nhaptile('tile', i)"> </ion-input>
@@ -36,6 +36,10 @@
     <ion-item>
       <ion-label position="stacked"> Ghi chú </ion-label>
       <ion-input [(ngModel)]="giaodich.ghichu"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label> Thanh toán </ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="rest.temp.giaodich[i].thanhtoan"></ion-checkbox>
     </ion-item>
 
     <div (click)="xoagiaodich(i)" class="close">

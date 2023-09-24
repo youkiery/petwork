@@ -19,8 +19,10 @@ export class VattucophanPage implements OnInit {
 
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/vattu')
-    else if (!this.rest.vattu.khoitaocophan) this.khoitao()
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/vattu')
+      else if (!this.rest.vattu.khoitaocophan) this.khoitao()
+    })
   }
 
   public async khoitao() {

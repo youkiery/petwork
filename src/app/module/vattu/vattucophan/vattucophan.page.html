@@ -26,7 +26,7 @@
       Người mua: {{giaodich.nguoimua}} <br>
       Tỉ lệ mua: {{giaodich.tile}}% <br>
       Giá trị ban đầu: {{giaodich.giatri}}đ <br>
-      <div *ngFor="let gd of giaodich.giaodich">
+      <div *ngFor="let gd of giaodich.giaodich" [class]="gd.thanhtoan == '1' ? 'dathanhtoan' : 'chuathanhtoan'">
         &nbsp; - {{gd.giatri}} ({{gd.tile}}%) <span *ngIf="gd.ghichu.length"> ({{gd.ghichu}}) </span>
       </div>
       Giá trị hiện tại: {{giaodich.hientai}}đ <br>
