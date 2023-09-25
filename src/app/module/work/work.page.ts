@@ -33,6 +33,8 @@ export class WorkPage {
     this.rest.ready().then(() => {
       this.rest.action = 'congviec'
       if (!this.rest.congviec.khoitao) {
+        this.rest.congviec.timkiem.batdau = this.rest.home.month.start
+        this.rest.congviec.timkiem.ketthuc = this.rest.home.month.end
         this.khoitao()
       }
     })

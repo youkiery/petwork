@@ -160,14 +160,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/thietbi/thietbi.module').then( m => m.ThietbiPageModule)
   },
   {
-    path: 'thongkenghi',
-    loadChildren: () => import('./module/thongkenghi/thongkenghi.module').then( m => m.ThongkenghiPageModule)
-  },
-  {
-    path: 'lichban',
-    loadChildren: () => import('./module/lichban/lichban.module').then( m => m.LichbanPageModule)
-  },
-  {
     path: 'tailieu',
     loadChildren: () => import('./module/tailieu/tailieu.module').then( m => m.TailieuPageModule)
   },

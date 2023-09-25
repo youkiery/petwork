@@ -30,6 +30,16 @@
     <ion-label> <b> Mức hoàn thành: </b> {{hoanthanh[rest.congviec.timkiem.hoanthanh]}} </ion-label>
   </ion-item>
 
+  <ion-item class="half-item" *ngIf="rest.congviec.timkiem.hoanthanh > 0">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.congviec.timkiem.batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-item class="half-item" *ngIf="rest.congviec.timkiem.hoanthanh > 0">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.congviec.timkiem.ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
   <ion-item (click)="rest.congviec.timkiem.denhan = rev[rest.congviec.timkiem.denhan]">
     <ion-label> <b> Quá hạn: </b> {{denhan[rest.congviec.timkiem.denhan]}} </ion-label>
   </ion-item>
