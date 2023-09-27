@@ -1,0 +1,126 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-img src="assets/icon/manual.png" (click)="rest.goManual('bio')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.xetnghiem.timkiem.tukhoa"></ion-input>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày bắt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.xetnghiem.timkiem.batdau" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Ngày kết thúc </ion-label>
+    <ion-datetime [(ngModel)]="rest.xetnghiem.timkiem.ketthuc" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-button color="secondary" expand="full" (click)="khoitao()">
+    Lọc danh sách
+  </ion-button>
+
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.xetnghiem.tab">
+      <!-- <ion-segment-button value="1">
+        Cần xét nghiệm
+        <ion-badge color="danger" *ngIf="rest.xetnghiem.danhsachcan.length"> 
+          {{rest.xetnghiem.danhsachcan.length}} 
+        </ion-badge>
+      </ion-segment-button> -->
+      <ion-segment-button value="2">
+        Hoàn thành
+        <ion-badge color="danger" *ngIf="rest.xetnghiem.danhsach.length"> 
+          {{rest.xetnghiem.danhsach.length}} 
+        </ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="3"> Chỉ tiêu </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <!-- <div *ngIf="rest.xetnghiem.tab == '1'">
+    <div class="stl-card" *ngFor="let item of rest.xetnghiem.danhsachcan; let i = index">
+      <div (click)="xetnghiem(i)">
+        Khách hàng: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Thú cưng: {{item.petname}} <br>
+        <div class="upperline" *ngIf="item.hinhanh.length">
+          <img class="thumbnail-sm" *ngFor="let hinhanh of item.hinhanh" [src]="hinhanh" (click)="rest.view(hinhanh)">
+        </div>
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/delete.png" (click)="removeneed(item.id)">
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="rest.xetnghiem.tab == '2'">
+    <div class="stl-card" *ngFor="let item of rest.xetnghiem.danhsach; let i = index">
+      <b> Chủ: </b> {{item.khachhang}} <br>
+      <b> Số điện thoại: </b> {{item.dienthoai}} <br>
+      <b> Người làm: </b> {{item.nhanvien}} <br>
+      <b> Thời gian: </b> {{item.thoigian}} <br>
+      <b> Loại xét nghiệm: </b> {{xetnghiem[item.xetnghiem]}} <br>
+      <div class="upperline" *ngIf="item.hinhanh.length">
+        <img class="thumbnail-sm" *ngFor="let hinhanh of item.hinhanh" [src]="hinhanh" (click)="rest.view(hinhanh)">
+      </div>
+      <div class="upperline">
+        <img class="icon" src="/assets/icon/info.png" (click)="chitietxetnghiem(item.id)">
+        <img class="icon" src="/assets/icon/printer.png" (click)="inxetnghiem(item.id)">
+        <img class="icon" src="/assets/icon/update.png" (click)="capnhatxetnghiem(i)">
+        <img class="icon" src="/assets/icon/delete.png" (click)="xoaxetnghiem(item.id)">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="rest.xetnghiem.tab == '3'">
+    <ion-list>
+      <ion-item *ngFor="let item of rest.xetnghiem.danhsachchitieu; let i = index">
+        <ion-label> {{item.ten}}</ion-label>
+        <ion-button slot="end" (click)="chitietuchitieu(i)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" (click)="capnhatchitieu(i)">
+          <ion-icon name="refresh-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" *ngIf="rest.config.xetnghiem > 1" color="danger" (click)="xoachitieu(i)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="themxetnghiem()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm hồ sơ </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="themchitieu()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm chỉ tiêu </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -60,10 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/lookup/lookup.module').then( m => m.LookupPageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
     path: 'hanghoa',
     loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
   },
@@ -98,10 +94,6 @@ const routes: Routes = [
   {
     path: 'ride',
     loadChildren: () => import('./module/ride/ride.module').then( m => m.RidePageModule)
-  },
-  {
-    path: 'physical',
-    loadChildren: () => import('./module/physical/physical.module').then( m => m.PhysicalPageModule)
   },
   {
     path: 'accounting',
@@ -167,9 +159,10 @@ const routes: Routes = [
     path: 'khachhang',
     loadChildren: () => import('./module/khachhang/khachhang.module').then( m => m.KhachhangPageModule)
   },
-
-
-
+  {
+    path: 'xetnghiem',
+    loadChildren: () => import('./module/xetnghiem/xetnghiem.module').then( m => m.XetnghiemPageModule)
+  },
 ];
 
 @NgModule({

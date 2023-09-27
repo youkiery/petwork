@@ -130,20 +130,12 @@
     </div>
   </div>
 
-  <div *ngIf="rest.config.profile > 0" class="box" (click)="rest.navCtrl.navigateForward('/profile')">
-    <ion-img src="assets/image/profile.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Quản lý sinh hóa
-    </div>
-    <span class="redbadge" *ngIf="rest.badge.profile > 0"> {{rest.badge.profile}} </span>
-  </div>
-
-  <div *ngIf="rest.config.physical > 0" class="box" (click)="rest.navCtrl.navigateForward('/physical')">
+  <div *ngIf="rest.config.xetnghiem > 0" class="box" (click)="rest.navCtrl.navigateForward('/xetnghiem')">
     <ion-img src="assets/image/physical.png" class="box-image"></ion-img>
     <div class="box-title">
-      Quản lý sinh lý
+      Quản lý xét nghiệm máu
     </div>
-    <span class="redbadge" *ngIf="rest.badge.physical > 0"> {{rest.badge.physical}} </span>
+    <span class="redbadge" *ngIf="rest.badge.xetnghiem > 0"> {{rest.badge.xetnghiem}} </span>
   </div>
 
   <!-- <div *ngIf="rest.config.xquang > 0" class="box" (click)="rest.navCtrl.navigateForward('/xquang')">
