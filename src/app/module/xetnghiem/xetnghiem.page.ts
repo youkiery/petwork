@@ -38,7 +38,7 @@ export class XetnghiemPage implements OnInit {
       this.rest.xetnghiem.khoitao = true
       this.rest.xetnghiem.danhsach = resp.danhsach
       // this.rest.xetnghiem.danhsachcan = resp.danhsachcan
-      this.rest.xetnghiem.dulieuchitieu = resp.dulieuchitieu
+      this.rest.xetnghiem.chitieugiong = resp.chitieugiong
       this.rest.xetnghiem.danhsachchitieu = resp.danhsachchitieu
     }, () => {
       this.rest.defreeze()
@@ -55,7 +55,7 @@ export class XetnghiemPage implements OnInit {
       this.rest.xetnghiem.khoitao = true
       this.rest.xetnghiem.danhsach = resp.danhsach
       // this.rest.xetnghiem.danhsachcan = resp.danhsachcan
-      this.rest.xetnghiem.dulieuchitieu = resp.dulieuchitieu
+      this.rest.xetnghiem.chitieugiong = resp.chitieugiong
       this.rest.xetnghiem.danhsachchitieu = resp.danhsachchitieu
     }, () => {
       this.rest.defreeze()
@@ -63,107 +63,82 @@ export class XetnghiemPage implements OnInit {
     })
   }
 
-  public info(index: number) {
-    this.rest.temp = this.rest.xetnghiem.danhsachchitieu[index]
+  public chitietuchitieu(xetnghiem: number, thutu: number) {
+    this.rest.temp = this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu]
     this.rest.navCtrl.navigateForward('/xetnghiem/chitiet')
   }
 
-  public capnhatchitieu(index: number) {
-    this.rest.temp.act = 'target'
-    this.rest.temp = this.rest.xetnghiem.danhsachchitieu[index]
-    this.rest.navCtrl.navigateForward('/xetnghiem/them')
+  public capnhatchitieu(xetnghiem: number, thutu: number) {
+    this.rest.temp = this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu]
+    this.rest.navCtrl.navigateForward('/xetnghiem/themchitieu')
   }
 
-  public async themchitieu() {
-    if (this.rest.config.xetnghiem < 2) this.rest.notify('Chưa cấp quyền truy cập')
-    else {
-      this.rest.temp = {
-        id: 0,
-        name: '',
-        intro: '',
-        unit: '',
-        flag: '0 - 1',
-        up: '',
-        down: '',
-        disease: '',
-        aim: ''
-      }
-      this.rest.navCtrl.navigateForward('/xetnghiem/them')
+  public async themchitieu(xetnghiem: number) {
+    this.rest.temp = {
+      id: 0,
+      ten: "",
+      xetnghiem: xetnghiem,
+      gioithieu: '',
+      donvi: '',
+      flag: '',
+      len: '',
+      xuong: '',
+      benh: '',
+      dieutri: ''
     }
+    this.rest.navCtrl.navigateForward('/xetnghiem/themchitieu')
   }
 
-  // public async removeTarget(i: number) {
-  //   if (this.rest.config.xetnghiem < 2) this.rest.notify('Chưa cấp quyền truy cập')
-  //   else {
-  //     const alert = await this.alert.create({
-  //       header: 'Xóa chỉ tiêu',
-  //       message: 'Sau khi xác nhận, chỉ tiêu sẽ bị xóa',
-  //       buttons: [
-  //         {
-  //           text: 'Trở về',
-  //           role: 'cancel',
-  //           cssClass: 'default'
-  //         }, {
-  //           text: 'Xác nhận',
-  //           cssClass: 'danger',
-  //           handler: () => {
-  //             this.removeTargetSubmit(i)
-  //           }
-  //         }
-  //       ]
-  //     });
+  public async xoachitieu(id: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận xoá chỉ tiêu',
+      buttons: [{
+        text: 'Trở về',
+        role: 'cancel',
+      }, {
+        text: 'Xác nhận',
+        cssClass: 'danger',
+        handler: () => {
+          this.xacnhanxoachitieu(id)
+        }
+      }]
+    })
+    await alert.present();
+  }
 
-  //     await alert.present();
-  //   }
-  // }
+  public async xacnhanxoachitieu(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('xetnghiem', 'xoachitieu', {
+      id: id,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.xetnghiem.danhsachchitieu = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public async removeTargetSubmit(i: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('target', 'remove', {
-  //     id: this.rest.xetnghiem.target[i].id,
-  //     key: this.rest.xetnghiem.key2
-  //   }).then(resp => {
-  //     this.rest.defreeze()
-  //     this.rest.notify('Đã xóa chỉ tiêu')
-  //     this.rest.xetnghiem.target = resp.list
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public themgiong(xetnghiem: number) {
+    let danhsachchitieu = []
+    this.rest.xetnghiem.danhsachchitieu[xetnghiem].forEach(chitieu => {
+      danhsachchitieu.push({
+        id: chitieu.id,
+        ten: chitieu.ten,
+        donvi: chitieu.donvi,
+      })
+    });
+    this.rest.temp = {
+      id: 0,
+      ten: "",
+      chitieu: danhsachchitieu
+    }
+    this.rest.navCtrl.navigateForward("/xetnghiem/themgiong")
+  }
 
-  // public async reset(index: number) {
-  //   const alert = await this.alert.create({
-  //     header: 'Cài lại chỉ tiêu',
-  //     message: 'Sau khi xác nhận, chỉ tiêu bằng 0',
-  //     buttons: [
-  //       {
-  //         text: 'Trở về',
-  //         role: 'cancel',
-  //         cssClass: 'default'
-  //       }, {
-  //         text: 'Xác nhận',
-  //         handler: () => {
-  //           this.resetSubmit(index)
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present();
-  // }
-
-  // public async resetSubmit(index: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('target', 'res', {
-  //     id: this.rest.xetnghiem.target[index].id,
-  //     filter: this.rest.xetnghiem.timkiem,
-  //   }).then(resp => {
-  //     this.rest.defreeze()
-  //     this.rest.xetnghiem.target[index].number = 0
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public capnhatgiong(xetnghiem: number, thutu: number) {
+    this.rest.temp = this.rest.xetnghiem.chitieugiong[xetnghiem][thutu]
+    this.rest.navCtrl.navigateForward("/xetnghiem/themgiong")
+  }
 
   // public async print(id: number) {
   //   await this.rest.freeze('Đang tải dữ liệu...')
@@ -258,7 +233,7 @@ export class XetnghiemPage implements OnInit {
   //     samplestatus: '1',
   //     symptom: '',
   //     doctor: this.rest.home.userid,
-  //     target: this.temptarget(),
+  //     xetnghiem: this.tempxetnghiem(),
   //     filter: this.rest.xetnghiem.timkiem,
   //     image: []
   //   }
@@ -284,7 +259,7 @@ export class XetnghiemPage implements OnInit {
   //     samplesymbol: item.samplesymbol,
   //     samplestatus: item.samplestatus,
   //     symptom: item.symptom,
-  //     target: item.target,
+  //     xetnghiem: item.xetnghiem,
   //     module: this.rest.action,
   //     doctor: item.doctorid,
   //     filter: this.rest.xetnghiem.timkiem,
@@ -293,12 +268,12 @@ export class XetnghiemPage implements OnInit {
   //   this.rest.navCtrl.navigateForward('/xetnghiem/insert')
   // }
 
-  // public temptarget() {
-  //   let target = {}
-  //   this.rest.xetnghiem.target.forEach(item => {
-  //     target[item.id] = ''
+  // public tempxetnghiem() {
+  //   let xetnghiem = {}
+  //   this.rest.xetnghiem.xetnghiem.forEach(item => {
+  //     xetnghiem[item.id] = ''
   //   })
-  //   return target
+  //   return xetnghiem
   // }
 
   public async chitietxetnghiem(id: number) {

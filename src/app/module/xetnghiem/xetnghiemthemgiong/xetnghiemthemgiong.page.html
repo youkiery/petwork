@@ -1,0 +1,20 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button slot="end" (click)="capnhatgiong()" color="light" fill="clear" size="small">
+    {{rest.temp.id > 0 ? "Cập nhật" : "Thêm"}}
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Tên giống </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tengiong"> </ion-input>
+  </ion-item>
+  <ion-item *ngFor="let chitieu of rest.temp.chitieu; let i = index">
+    <ion-label position="stacked"> {{chitieu.ten}} </ion-label>
+    <ion-input [(ngModel)]="rest.temp.chitieu[i].flag" [placeholder]="chitieu.donvi"> </ion-input>
+  </ion-item>
+</ion-content>

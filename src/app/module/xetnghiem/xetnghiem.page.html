@@ -89,20 +89,27 @@
   </div>
 
   <div *ngIf="rest.xetnghiem.tab == '3'">
-    <ion-list>
-      <ion-item *ngFor="let item of rest.xetnghiem.danhsachchitieu; let i = index">
-        <ion-label> {{item.ten}}</ion-label>
-        <ion-button slot="end" (click)="chitietuchitieu(i)">
-          <ion-icon name="eye-outline"></ion-icon>
+    <div *ngFor="let loaixetnghiem of xetnghiem; let j = index">
+      <ion-item color="secondary" (click)="themchitieu(j)"> 
+        <ion-icon name="add-circle-outline"></ion-icon>
+        {{loaixetnghiem}} 
+      </ion-item>
+      <div class="stl-card">
+        Danh sách giống: <div class="pos" *ngFor="let giong of rest.xetnghiem.chitieugiong[j]; let k = index" (click)="capnhatgiong(j, k)"> {{giong.tengiong}} </div> <div class="pos" (click)="themgiong(j)"> + </div>
+      </div>
+      <ion-item *ngFor="let chitieu of rest.xetnghiem.danhsachchitieu[j]; let i = index">
+        <ion-label> {{chitieu.ten}}</ion-label>
+        <ion-button slot="end" (click)="chitietuchitieu(j, i)">
+          <ion-icon name="information-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" (click)="capnhatchitieu(i)">
-          <ion-icon name="refresh-circle-outline"></ion-icon>
+        <ion-button slot="end" *ngIf="rest.config.xetnghiem > 1" (click)="capnhatchitieu(j, i)">
+          <ion-icon name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" *ngIf="rest.config.xetnghiem > 1" color="danger" (click)="xoachitieu(i)">
+        <ion-button slot="end" *ngIf="rest.config.xetnghiem > 1" color="danger" (click)="xoachitieu(chitieu.id)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>
-    </ion-list>
+    </div>
   </div>
 </ion-content>
 
@@ -117,9 +124,9 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm hồ sơ </ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="themchitieu()">
+      <ion-tab-button (click)="themgiong()">
         <ion-icon name="add-circle-outline"></ion-icon>
-        <ion-label> Thêm chỉ tiêu </ion-label>
+        <ion-label> Thêm giống </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

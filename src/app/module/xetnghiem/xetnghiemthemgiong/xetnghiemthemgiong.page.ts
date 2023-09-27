@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-xetnghiemthemchitieu',
-  templateUrl: './xetnghiemthemchitieu.page.html',
-  styleUrls: ['./xetnghiemthemchitieu.page.scss'],
+  selector: 'app-xetnghiemthemgiong',
+  templateUrl: './xetnghiemthemgiong.page.html',
+  styleUrls: ['./xetnghiemthemgiong.page.scss'],
 })
-export class XetnghiemthemchitieuPage implements OnInit {
+export class XetnghiemthemgiongPage implements OnInit {
 
   constructor(
     public rest: RestService
@@ -18,13 +18,13 @@ export class XetnghiemthemchitieuPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/xetnghiem')
   }
-  
-  public async capnhatchitieu() {
+
+  public async capnhatgiong() {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('xetnghiem', 'capnhatchitieu', this.rest.temp).then(resp => {
+    this.rest.checkpost('xetnghiem', 'capnhatgiong', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.xetnghiem.tab = '3'
-      this.rest.xetnghiem.danhsachchitieu = resp.danhsach
+      this.rest.xetnghiem.chitieugiong = resp.danhsach
       this.rest.back()
     }, () => {
       this.rest.defreeze()

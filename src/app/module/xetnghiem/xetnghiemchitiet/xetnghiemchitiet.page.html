@@ -6,27 +6,24 @@
 
 <ion-content *ngIf="rest.isready">
   <p class="underline">
-    <b> Chỉ tiêu: </b>  {{rest.temp['name']}}
+    <b> Chỉ tiêu: </b>  {{rest.temp.ten}}
   </p>
   <p class="underline">
-    <b> Mô tả: </b> {{rest.temp['intro']}}
+    <b> Mô tả: </b> {{rest.temp.gioithieu}}
   </p>
   <p class="underline">
-    <b>Đơn vị:</b> {{rest.temp['unit']}}
+    <b>Đơn vị:</b> {{rest.temp.donvi}}
   </p>
   <p class="underline">
-    <b>Trường giá trị:</b> {{rest.temp['flag']}}
+    <b>Trường hợp tăng:</b> {{rest.temp.len}}
   </p>
   <p class="underline">
-    <b>Trường hợp tăng:</b> {{rest.temp['up']}}
+    <b>Trường hợp giảm:</b> {{rest.temp.xuong}}
   </p>
   <p class="underline">
-    <b>Trường hợp giảm:</b> {{rest.temp['down']}}
+    <b>Các bệnh liên quan:</b> {{rest.temp.benh}}
   </p>
   <p class="underline">
-    <b>Các bệnh liên quan:</b> {{rest.temp['disease']}}
-  </p>
-  <p class="underline">
-    <b>Hướng điều trị:</b> {{rest.temp['aim']}}
+    <b>Hướng điều trị:</b> {{rest.temp.dieutri}}
   </p>
 </ion-content>

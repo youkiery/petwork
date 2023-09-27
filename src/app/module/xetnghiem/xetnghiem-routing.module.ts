@@ -21,8 +21,12 @@ const routes: Routes = [
     loadChildren: () => import('./xetnghiemthem/xetnghiemthem.module').then( m => m.XetnghiemthemPageModule)
   },
   {
-    path: 'xetnghiemthemchitieu',
+    path: 'themchitieu',
     loadChildren: () => import('./xetnghiemthemchitieu/xetnghiemthemchitieu.module').then( m => m.XetnghiemthemchitieuPageModule)
+  },
+  {
+    path: 'themgiong',
+    loadChildren: () => import('./xetnghiemthemgiong/xetnghiemthemgiong.module').then( m => m.XetnghiemthemgiongPageModule)
   }
 ];
 

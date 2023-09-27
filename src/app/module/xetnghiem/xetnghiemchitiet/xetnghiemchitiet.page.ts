@@ -16,6 +16,6 @@ export class XetnghiemchitietPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/profile')
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/xetnghiem')
   }
 }

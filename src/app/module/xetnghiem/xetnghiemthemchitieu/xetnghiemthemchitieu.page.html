@@ -11,34 +11,34 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked"> Chỉ tiêu </ion-label>
-    <ion-input [(ngModel)]="rest.temp.name"> </ion-input>
+    <ion-input [(ngModel)]="rest.temp.ten"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Mô tả </ion-label>
-    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.intro"> </ion-textarea>
+    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.gioithieu"> </ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Đơn vị </ion-label>
-    <ion-input autoGrow="true" [(ngModel)]="rest.temp.unit"> </ion-input>
+    <ion-input autoGrow="true" [(ngModel)]="rest.temp.donvi"> </ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="!rest.temp.id">
     <ion-label position="stacked"> Trường giá trị </ion-label>
     <ion-input autoGrow="true" [(ngModel)]="rest.temp.flag"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Trường hợp tăng </ion-label>
-    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.up"> </ion-textarea>
+    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.len"> </ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Trường hợp giảm </ion-label>
-    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.down"> </ion-textarea>
+    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.xuong"> </ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Các bệnh liên quan </ion-label>
-    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.disease"> </ion-textarea>
+    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.benh"> </ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Hướng điều trị </ion-label>
-    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.aim"> </ion-textarea>
+    <ion-textarea [autoGrow]="true" autoGrow="true" [(ngModel)]="rest.temp.dieutri"> </ion-textarea>
   </ion-item>
 </ion-content>
