@@ -29,6 +29,20 @@ export class ItemthemPage implements OnInit {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/hanghoa')
   }
 
+  public themchuyendoi() {
+    this.rest.temp.chuyendoi.push({
+      mahang: "",
+      chuyendoi: 0
+    })
+  }
+
+  public xoachuyendoi(thutu: number) {
+    this.rest.temp.chuyendoi = this.rest.temp.chuyendoi.filter((chuyendoi: any, thutuchay: number) => {
+      return thutu !== thutuchay
+    })
+    if (!this.rest.temp.chuyendoi.length) this.themchuyendoi()
+  }
+
   public async xacnhan() {
     if (!this.rest.temp.tenhang.length) return this.rest.notify("Xin hãy nhập tên hàng")
     await this.rest.freeze('Đang tải dữ liệu......')
@@ -154,5 +168,4 @@ export class ItemthemPage implements OnInit {
       })
     })
   }
-
 }

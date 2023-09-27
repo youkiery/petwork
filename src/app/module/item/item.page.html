@@ -132,6 +132,14 @@
         <ion-label> Thêm hàng </ion-label>
       </ion-tab-button>
 
+      <ion-tab-button (click)="canhbao()">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <ion-label>
+          Cảnh báo
+          <ion-badge color="danger" *ngIf="rest.item.canhbao"> {{rest.item.canhbao}} </ion-badge>
+        </ion-label>
+      </ion-tab-button>
+
       <ion-tab-button (click)="importfile()">
         <ion-icon name="document-outline"></ion-icon>
         <ion-label> Import hàng </ion-label>

@@ -21,7 +21,6 @@ export class ItemPage {
     public alert: AlertController
   ) { }
 
-
   public async ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'item'
@@ -37,6 +36,7 @@ export class ItemPage {
       this.rest.defreeze()
       this.rest.item.khoitao = true
       this.rest.item.danhsach = resp.danhsach
+      this.rest.item.canhbao = resp.canhbao
     }, () => {
       this.rest.defreeze()
     })
@@ -51,10 +51,15 @@ export class ItemPage {
       event.target.complete()
       this.rest.item.khoitao = true
       this.rest.item.danhsach = resp.danhsach
+      this.rest.item.canhbao = resp.canhbao
     }, () => {
       this.rest.defreeze()
       event.target.complete()
     })
+  }
+
+  public canhbao() {
+    this.rest.navCtrl.navigateForward("/hanghoa/canhbao")
   }
 
   public themhang() {
@@ -65,6 +70,11 @@ export class ItemPage {
       image: [],
       gioithieu: "",
       donvi: "",
+      gioihan: 0,
+      chuyendoi: [{
+        mahang: "",
+        chuyendoi: 0
+      }],
       tukhoa: this.rest.item.tukhoa,
     }
     this.rest.navCtrl.navigateForward("/hanghoa/them")
@@ -79,6 +89,8 @@ export class ItemPage {
       image: hanghoa.image,
       gioithieu: hanghoa.gioithieu,
       donvi: hanghoa.donvi,
+      gioihan: hanghoa.gioihan,
+      chuyendoi: hanghoa.chuyendoi,
       tukhoa: this.rest.item.tukhoa,
     }
     this.rest.navCtrl.navigateForward("/hanghoa/them")

@@ -24,6 +24,11 @@ const routes: Routes = [
     path: 'thanhphan',
     loadChildren: () => import('./itemthanhphan/itemthanhphan.module').then( m => m.ItemthanhphanPageModule)
   },
+  {
+    path: 'canhbao',
+    loadChildren: () => import('./itemcanhbao/itemcanhbao.module').then( m => m.ItemcanhbaoPageModule)
+  },
+
 ];
 
 @NgModule({

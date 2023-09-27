@@ -30,6 +30,10 @@
     <ion-input type="number" [(ngModel)]="rest.temp.giaban"> </ion-input>
   </ion-item>
   <ion-item>
+    <ion-label position="stacked"> Giới hạn </ion-label>
+    <ion-input type="number" [(ngModel)]="rest.temp.gioihan"> </ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label position="stacked"> Đơn vị </ion-label>
     <ion-input [(ngModel)]="rest.temp.donvi"> </ion-input>
   </ion-item>
@@ -37,4 +41,28 @@
     <ion-label position="stacked"> Giới thiệu </ion-label>
     <ion-textarea [(ngModel)]="rest.temp.gioithieu"> </ion-textarea>
   </ion-item>
+
+  <div *ngFor="let chuyendoi of rest.temp.chuyendoi; let i = index" class="giaodich">
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Mã hàng </ion-label>
+      <ion-input [(ngModel)]="rest.temp.chuyendoi[i].mahang"> </ion-input>
+    </ion-item>
+  
+    <ion-item class="half-item">
+      <ion-label position="stacked"> Chuyển đổi </ion-label>
+      <ion-input type="number" [(ngModel)]="rest.temp.chuyendoi[i].chuyendoi"> </ion-input>
+    </ion-item>
+  
+    <div (click)="xoachuyendoi(i)" class="close">
+      <ion-icon name="close-outline"></ion-icon>
+    </div>
+  </div>
+  
+  <ion-item (click)="themchuyendoi()">
+    <ion-label> 
+      <ion-icon name="add-outline"></ion-icon>
+      &nbsp; Thêm  
+    </ion-label>
+  </ion-item>
+
 </ion-content>

@@ -18,10 +18,10 @@ export class RestService {
   public base: string = '';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 21 // 21-188
+  public version = 188 // 21-188
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -71,7 +71,7 @@ export class RestService {
   public schedule = { init: false, time: "", state: 1, list: [], except: [], data: [], quangay: [], dachotlich: {batdau: 0, ketthuc: 0}, dadangky: 0, filter: { batdau: '', ketthuc: '', danhsach: [] }, start: '', end: '', nghichunhat: [], chedodangky: 0, cauhinh: {dangkythem: 0, huydangky: 0}, dangky: {dangkythem: 0, huydangky: 0}, thangnay: false }
   public cart = { list: [], init: false }
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: [], datetime: '', start: '', end: '', old: [], note: '', id: 0 }
-  public item = { khoitao: false, danhsach: [], tukhoa: "" }
+  public item = { khoitao: false, danhsach: [], tukhoa: "", canhbao: 0 }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
   public profile = { init: false, need: [], target: [], data2: {}, key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', segment: '1', s: '1', filter: {key: '', start: '', end: ''}}
   public physical = { init: false, target: [], data2: {}, key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [], need: [], segment: '1', s: '1', filter: {key: '', start: '', end: ''} }
