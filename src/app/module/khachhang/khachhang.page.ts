@@ -80,7 +80,8 @@ export class KhachhangPage implements OnInit {
       khonglam: 0,
       number: 1,
       khachhang: khachhang.id,
-      duser: khachhang.idnhanvien
+      duser: khachhang.idnhanvien,
+      datlich: 1
     }
     setTimeout(() => {
       this.rest.navCtrl.navigateForward('/spa')

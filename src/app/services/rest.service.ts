@@ -18,10 +18,10 @@ export class RestService {
   public base: string = '';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
-  public version = 21 // 21-188
+  public version = 188 // 21-188
   public admindefault = ['1', '5']
   public config: any
   public site: any = {
@@ -73,7 +73,7 @@ export class RestService {
   public accounting = { init: false, kiot: { content: '', time: '', money: '', }, vietcom: { money: '', content: '', time: '' }, total: { kiot: '0', vietcom: '0', subtract: '0' }, checkout: [], datetime: '', start: '', end: '', old: [], note: '', id: 0 }
   public item = { khoitao: false, danhsach: [], tukhoa: "", canhbao: 0 }
   public drug = { init: false, list: [], filter: { name: '', effect: '' }, detail: {name: '', effect: '', limits: '', mechanic: '', sideeffect: '', image: []} }
-  public xetnghiem = { khoitao: false, danhsach: [], danhsachcan: [], danhsachchitieu: [], dulieuchitieu: [], chitieugiong: [], tab: "2", timkiem: { tukhoa: "", batdau: "", ketthuc: "" } }
+  public xetnghiem = { khoitao: false, danhsach: [], danhsachcan: [], danhsachchitieu: [], dulieuchitieu: [], chitieugiong: [], tab: "2", timkiem: { tukhoa: "", batdau: "", ketthuc: "", loai: 0 } }
   public profile = { init: false, need: [], target: [], data2: {}, key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', segment: '1', s: '1', filter: {key: '', start: '', end: ''}}
   public physical = { init: false, target: [], data2: {}, key2: '', list: [], id: 0, print: '', sampletype: [], species: [], serial: '', import: [], need: [], segment: '1', s: '1', filter: {key: '', start: '', end: ''} }
   public his = { init: false, near: [], c: 0, count: 0, treat: [0, 0], pose: [0, 0], disease: [], list: [], manager_init: false, manager: [], type: [], keyword: '', search: false, filter: {docs: [], docscover: '', keyword: '', diseaseid: '', start: '', end: '' }, inits: false, d: {text: '', list: {}}, s: '0', segment: '0', print: '' }

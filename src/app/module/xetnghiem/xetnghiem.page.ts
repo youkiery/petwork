@@ -9,7 +9,14 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./xetnghiem.page.scss'],
 })
 export class XetnghiemPage implements OnInit {
+  public mau = [
+    'success',
+    'secondary',
+    'secondary',
+  ]
+  public loai = ["Toàn bộ", "Sinh lý", "Sinh hoá"]
   public xetnghiem = ["Sinh lý", "Sinh hoá"]
+  public nrev = [1, 2, 0]
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -61,6 +68,10 @@ export class XetnghiemPage implements OnInit {
       this.rest.defreeze()
       event.target.complete()
     })
+  }
+
+  public doiloai() {
+    this.rest.xetnghiem.timkiem.loai = this.nrev[this.rest.xetnghiem.timkiem.loai]
   }
 
   public chitietuchitieu(xetnghiem: number, thutu: number) {
@@ -118,6 +129,21 @@ export class XetnghiemPage implements OnInit {
     })
   }
 
+  public async dichuyen(xetnghiem: number, thutu: number, tanggiam: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('xetnghiem', 'dichuyenchitieu', {
+      ida: this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu].id,
+      vitria: this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu].vitri,
+      idb: this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu - tanggiam].id,
+      vitrib: this.rest.xetnghiem.danhsachchitieu[xetnghiem][thutu - tanggiam].vitri,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.xetnghiem.danhsachchitieu = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public themgiong(xetnghiem: number) {
     let danhsachchitieu = []
     this.rest.xetnghiem.danhsachchitieu[xetnghiem].forEach(chitieu => {
@@ -140,58 +166,57 @@ export class XetnghiemPage implements OnInit {
     this.rest.navCtrl.navigateForward("/xetnghiem/themgiong")
   }
 
-  // public async print(id: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('xetnghiem', 'printword', {
-  //     id: id
-  //   }).then(resp => {
-  //     this.rest.defreeze()
-  //     let html = resp.html
-  //     let winPrint = window.open();
-  //     winPrint.focus()
-  //     winPrint.document.write(html);
-  //     setTimeout(() => {
-  //       winPrint.print()
-  //       winPrint.close()
-  //     }, 300)
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async inxetnghiem(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('xetnghiem', 'printword', {
+      id: id
+    }).then(resp => {
+      this.rest.defreeze()
+      let html = resp.html
+      let winPrint = window.open();
+      winPrint.focus()
+      winPrint.document.write(html);
+      setTimeout(() => {
+        winPrint.print()
+        winPrint.close()
+      }, 300)
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
-  // public async remove(id: number) {
-  //   const alert = await this.alert.create({
-  //     header: 'Chú ý!!!',
-  //     message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
-  //     buttons: [
-  //       {
-  //         text: 'Trở về',
-  //         role: 'cancel',
-  //       }, {
-  //         text: 'Xác nhận',
-  //         handler: () => {
-  //           this.removeSubmit(id)
-  //         }
-  //       }
-  //     ]
-  //   });
+  public async xoaxetnghiem(id: number) {
+    const alert = await this.alert.create({
+      header: 'Chú ý!!!',
+      message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.xacnhanxoaxetnghiem(id)
+          }
+        }
+      ]
+    });
 
-  //   await alert.present();
-  // }
+    await alert.present();
+  }
 
-  // public async removeSubmit(id: number) {
-  //   await this.rest.freeze('Đang tải dữ liệu...')
-  //   this.rest.checkpost('xetnghiem', 'remove', {
-  //     id: id,
-  //     filter: this.rest.xetnghiem.timkiem,
-  //     module: this.rest.action
-  //   }).then(resp => {
-  //     this.rest.defreeze()
-  //     this.rest.xetnghiem.list = resp.list
-  //   }, () => {
-  //     this.rest.defreeze()
-  //   })
-  // }
+  public async xacnhanxoaxetnghiem(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('xetnghiem', 'xoaxetnghiem', {
+      id: id,
+      timkiem: this.rest.xetnghiem.timkiem,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.xetnghiem.danhsach = resp.list
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 
   // public async xetnghiem(i: number) {
   //   let item = this.rest.xetnghiem.danhsachcan[i]
@@ -215,58 +240,68 @@ export class XetnghiemPage implements OnInit {
   //   this.rest.navCtrl.navigateForward('/xetnghiem/insert')
   // }
 
-  // public async insert() {
-  //   this.rest.temp = {
-  //     act: 'xetnghiem',
-  //     name: '',
-  //     phone: '',
-  //     address: '',
-  //     petname: '',
-  //     weight: '',
-  //     age: '1',
-  //     gender: '0',
-  //     species: '',
-  //     serial: this.rest.xetnghiem.serial,
-  //     sampletype: (this.rest.xetnghiem.sampletype.length ? this.rest.xetnghiem.sampletype[0].id : '0'),
-  //     samplenumber: 1,
-  //     samplesymbol: this.rest.xetnghiem.serial,
-  //     samplestatus: '1',
-  //     symptom: '',
-  //     doctor: this.rest.home.userid,
-  //     xetnghiem: this.tempxetnghiem(),
-  //     filter: this.rest.xetnghiem.timkiem,
-  //     image: []
-  //   }
-  //   this.rest.navCtrl.navigateForward('/xetnghiem/insert')
-  // }
+  public async themxetnghiem(xetnghiem: number = 0) {
+    if (!this.rest.xetnghiem.chitieugiong[xetnghiem].length) return this.rest.notify("Xin hãy thêm 1 profile chỉ tiêu trước khi thêm")
+    let giong = 0
+    let idgiong = this.rest.xetnghiem.chitieugiong[xetnghiem][giong].id
+    let chitieu = this.rest.xetnghiem.chitieugiong[xetnghiem][giong].chitieu
+    chitieu.forEach((item, index) => {
+      chitieu[index]["giatri"] = ""
+    });
+    this.rest.temp = {
+      xetnghiem: xetnghiem,
+      id: 0,
+      name: '',
+      phone: '',
+      address: '',
+      tenthucung: '',
+      cannang: '1',
+      tuoi: '1',
+      gioitinh: '0',
+      giong: giong,
+      idgiong: idgiong,
+      trieuchung: '',
+      chitieu: chitieu,
+      timkiem: this.rest.xetnghiem.timkiem,
+      hinhanh: []
+    }
+    
+    this.rest.navCtrl.navigateForward('/xetnghiem/them')
+  }
 
-  // public async updatexetnghiem(i: number) {
-  //   let item = this.rest.xetnghiem.list[i]
-  //   this.rest.temp = {
-  //     act: 'xetnghiem',
-  //     id: item.id,
-  //     name: item.customer,
-  //     phone: item.phone,
-  //     address: item.address,
-  //     petname: item.name,
-  //     weight: item.weight,
-  //     age: item.age,
-  //     gender: item.gender,
-  //     species: item.species,
-  //     serial: item.serial,
-  //     sampletype: item.sampletype,
-  //     samplenumber: item.samplenumber,
-  //     samplesymbol: item.samplesymbol,
-  //     samplestatus: item.samplestatus,
-  //     symptom: item.symptom,
-  //     xetnghiem: item.xetnghiem,
-  //     module: this.rest.action,
-  //     doctor: item.doctorid,
-  //     filter: this.rest.xetnghiem.timkiem,
-  //     image: item.image
-  //   }
-  //   this.rest.navCtrl.navigateForward('/xetnghiem/insert')
-  // }
+  public async capnhatxetnghiem(i: number) {
+    let xetnghiem = this.rest.xetnghiem.danhsach[i]
+    let giong = 0
+    this.rest.xetnghiem.chitieugiong.forEach((chitieugiong, index) => {
+      if (chitieugiong.id == xetnghiem.idgiong) index = giong
+    });
+
+    let chitieu = this.rest.xetnghiem.chitieugiong[xetnghiem.xetnghiem][giong].chitieu
+    chitieu.forEach((item, index) => {
+      chitieu[index]["giatri"] = ""
+      if (xetnghiem.chitieu[item.id]) chitieu[index]["giatri"] = xetnghiem.chitieu[item.id]
+    })
+
+    this.rest.temp = {
+      id: xetnghiem.id,
+      name: xetnghiem.khachhang,
+      phone: xetnghiem.dienthoai,
+      address: xetnghiem.diachi,
+      tenthucung: xetnghiem.tenthucung,
+      cannang: xetnghiem.cannang,
+      tuoi: xetnghiem.tuoi,
+      gioitinh: xetnghiem.gioitinh,
+      giong: giong,
+      idgiong: xetnghiem.idgiong,
+      trieuchung: xetnghiem.trieuchung,
+      chitieu: chitieu,
+      hinhanh: xetnghiem.hinhanh,
+      xetnghiem: xetnghiem.xetnghiem,
+      timkiem: this.rest.xetnghiem.timkiem,
+    }
+
+    this.rest.navCtrl.navigateForward('/xetnghiem/them')
+  }
 
   // public tempxetnghiem() {
   //   let xetnghiem = {}
@@ -286,7 +321,7 @@ export class XetnghiemPage implements OnInit {
         id: id,
         tailieu: resp.html
       }
-      this.rest.navCtrl.navigateForward('/xetnghiem/print')
+      this.rest.navCtrl.navigateForward('/xetnghiem/in')
     }, () => {
       this.rest.defreeze()
     })

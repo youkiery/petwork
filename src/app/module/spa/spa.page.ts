@@ -29,6 +29,13 @@ export class SpaPage {
     0: 'stl-card yellow',
     1: 'stl-card blue'
   }
+
+  public status_color = {
+    0: 'secondary',
+    1: 'danger',
+    2: 'success',
+  }
+
   public ntext = [
     'Chưa về & đã về',
     'Chưa về',

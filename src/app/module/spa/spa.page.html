@@ -24,8 +24,8 @@
     <ion-datetime [(ngModel)]="rest.spa.search.end" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
 
-  <ion-item>
-    <ion-label (click)="changer()"> {{ntext[rest.spa.search.status]}} </ion-label>
+  <ion-item (click)="changer()">
+    <ion-label [color]="status_color[rest.spa.search.status]"> <ion-icon name="caret-forward-outline"></ion-icon> {{ntext[rest.spa.search.status]}} </ion-label>
   </ion-item>
 
   <ion-button expand="full" (click)="filter()">

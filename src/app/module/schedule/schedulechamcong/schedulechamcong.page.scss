@@ -1,0 +1,50 @@
+.gray {
+  background: lightgray;
+}
+.red {
+  background: pink;
+}
+.dachon {
+  border: 1px solid red !important;
+}
+.cyan {
+  background: cyan;
+}
+.green {
+  background: lightgreen;
+}
+.yellow {
+  background: lightyellow;
+}
+.orange {
+  background: orange;
+}
+tr:nth-child(odd) td {
+  border-bottom: 1px solid #888;
+}
+tr:nth-child(even) td {
+  border-bottom: 1px solid #aaa;
+}
+div[scrolly=true] {
+  position: relative;
+}
+
+div[scrolly=true] {
+  overflow-y: scroll;
+}
+table tbody th {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 1;
+}
+
+.nuttimkiem {
+  background-color: lightcyan;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 0px 5px;
+  color: black;
+}

@@ -16,8 +16,7 @@
 
 <ion-content *ngIf="rest.isready">
   <ion-item>
-    <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.xetnghiem.timkiem.tukhoa"></ion-input>
+    <ion-input placeholder="Tìm kiếm theo số điện thoại, tên khách hàng" [(ngModel)]="rest.xetnghiem.timkiem.tukhoa"></ion-input>
   </ion-item>
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Ngày bắt đầu </ion-label>
@@ -27,6 +26,11 @@
     <ion-label position="stacked"> Ngày kết thúc </ion-label>
     <ion-datetime [(ngModel)]="rest.xetnghiem.timkiem.ketthuc" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
+
+  <ion-item (click)="doiloai()">
+    <ion-label [color]="mau[rest.xetnghiem.timkiem.loai]"> <ion-icon name="caret-forward-outline"></ion-icon> {{loai[rest.xetnghiem.timkiem.loai]}} </ion-label>
+  </ion-item>
+
   <ion-button color="secondary" expand="full" (click)="khoitao()">
     Lọc danh sách
   </ion-button>
@@ -99,6 +103,15 @@
       </div>
       <ion-item *ngFor="let chitieu of rest.xetnghiem.danhsachchitieu[j]; let i = index">
         <ion-label> {{chitieu.ten}}</ion-label>
+
+        <ion-button slot="end" (click)="dichuyen(j, i, 1)" *ngIf="i > 0" color="success">
+          <ion-icon name="arrow-up-circle-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button slot="end" (click)="dichuyen(j, i, -1)" *ngIf="i < (rest.xetnghiem.danhsachchitieu[j].length - 1)" color="warning">
+          <ion-icon name="arrow-down-circle-outline"></ion-icon>
+        </ion-button>
+
         <ion-button slot="end" (click)="chitietuchitieu(j, i)">
           <ion-icon name="information-circle-outline"></ion-icon>
         </ion-button>
@@ -124,10 +137,10 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm hồ sơ </ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="themgiong()">
+      <!-- <ion-tab-button (click)="themgiong()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm giống </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>

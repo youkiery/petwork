@@ -24,7 +24,8 @@ export class XetnghiemthemgiongPage implements OnInit {
     this.rest.checkpost('xetnghiem', 'capnhatgiong', this.rest.temp).then(resp => {
       this.rest.defreeze()
       this.rest.xetnghiem.tab = '3'
-      this.rest.xetnghiem.chitieugiong = resp.danhsach
+      this.rest.xetnghiem.danhsachchitieu = resp.danhsach
+      this.rest.xetnghiem.chitieugiong = resp.chitieugiong
       this.rest.back()
     }, () => {
       this.rest.defreeze()

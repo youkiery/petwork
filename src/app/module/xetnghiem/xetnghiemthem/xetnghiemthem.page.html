@@ -12,6 +12,12 @@
   <div id="pwa" style="display: none;"> <input type="file" multiple id="pwaphoto" #pwaphoto
       accept="image/x-png,image/jpeg" (change)="uploadPWA()"> </div>
 
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
+    <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
+    <img class="thumbnail" [src]="item">
+  </span>
+
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
     <ion-input [(ngModel)]="rest.temp.phone"> </ion-input>
@@ -31,15 +37,15 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Trọng lượng </ion-label>
-    <ion-input [(ngModel)]="rest.temp.weight"> </ion-input>
+    <ion-input [(ngModel)]="rest.temp.cannang"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Tuổi </ion-label>
-    <ion-input [(ngModel)]="rest.temp.age"> </ion-input>
+    <ion-input [(ngModel)]="rest.temp.tuoi"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Giới tính </ion-label>
-    <ion-select [(ngModel)]="rest.temp.gender">
+    <ion-select [(ngModel)]="rest.temp.gioitinh">
       <ion-select-option value="0"> - </ion-select-option>
       <ion-select-option value="1"> Đực </ion-select-option>
       <ion-select-option value="2"> Cái </ion-select-option>
@@ -47,48 +53,9 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Loài động vật </ion-label>
-    <ion-input [(ngModel)]="rest.temp.species"> </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Số Serial </ion-label>
-    <ion-input type="number" [(ngModel)]="rest.temp.serial"> </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Loại mẫu </ion-label>
-    <ion-select [(ngModel)]="rest.temp.sampletype">
-      <ion-select-option *ngFor="let type of rest.profile.sampletype" [value]="type.id">
-        {{type.name}}
-      </ion-select-option>
-    </ion-select>
-    <ion-button slot="end" (click)="insertSelect('sampletype')">
-      <ion-icon name="add-circle-outline"></ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Số mẫu </ion-label>
-    <ion-input type="number" [(ngModel)]="rest.temp.samplenumber"> </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Ký hiệu mẫu </ion-label>
-    <ion-input [(ngModel)]="rest.temp.samplesymbol"> </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Tình trạng mẫu </ion-label>
-    <ion-select [(ngModel)]="rest.temp.samplestatus">
-      <ion-select-option value="1">
-        Đạt
-      </ion-select-option>
-      <ion-select-option value="0">
-        Không đạt
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked"> Bác sĩ thực hiện </ion-label>
-    <ion-select [(ngModel)]="rest.temp.doctor">
-      <ion-select-option *ngFor="let doctor of rest.home.doctor" [value]="doctor.userid">
-        {{doctor.name}}
+    <ion-select [(ngModel)]="rest.temp.giong" (ionChange)="thaydoigiong()">
+      <ion-select-option *ngFor="let giong of rest.xetnghiem.chitieugiong[rest.temp.xetnghiem]; let i = index" [value]="i">
+        {{giong.tengiong}}
       </ion-select-option>
     </ion-select>
   </ion-item>
@@ -98,14 +65,8 @@
     <ion-input [(ngModel)]="rest.temp.symptom"> </ion-input>
   </ion-item>
 
-  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
-  <span class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index">
-    <span class="thumbnail-box-icon" (click)="remove(i)"> x </span>
-    <img class="thumbnail" [src]="item">
-  </span>
-
-  <ion-item *ngFor="let item of rest.profile.target">
-    <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>
-    <ion-input [(ngModel)]="rest.temp.target[item.id]"></ion-input>
+  <ion-item *ngFor="let chitieu of rest.temp.chitieu; let i = index">
+    <ion-label position="stacked"> Chỉ tiêu {{chitieu.ten}} </ion-label>
+    <ion-input [(ngModel)]="rest.temp.chitieu[i].giatri"></ion-input>
   </ion-item>
 </ion-content>
