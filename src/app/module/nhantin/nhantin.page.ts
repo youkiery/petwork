@@ -345,15 +345,21 @@ export class NhantinPage implements OnInit {
             this.rest.nhantin.bodem.thanhcong++
             this.rest.nhantin.danhsachnhantin[this.rest.nhantin.bodem.thutu].trangthai = 1
             this.xacnhandagui(nhantin.id, nhantin.idmautin)
-            this.kiemtrahoanthanh()
-            this.guitin()
+            if (!this.kiemtrahoanthanh()) this.guitin()
           }, (e) => {
             this.rest.nhantin.bodem.dagui++
             this.rest.nhantin.bodem.thatbai++
             this.rest.nhantin.danhsachnhantin[this.rest.nhantin.bodem.thutu].thongbaoloi = e
             this.rest.nhantin.danhsachnhantin[this.rest.nhantin.bodem.thutu].trangthai = 2
-            this.kiemtrahoanthanh()
-            this.guitin()
+            this.rest.storage.get('xacnhanloi').then(danhsach => {
+              if (!danhsach) danhsach = []
+              danhsach.push({
+                id: nhantin.id,
+                idmautin: nhantin.idmautin
+              })
+              this.rest.storage.set('xacnhanloi', danhsach)
+            })
+            if (!this.kiemtrahoanthanh()) this.guitin()
           })
         }, thoigiannhan);
       }
@@ -383,7 +389,9 @@ export class NhantinPage implements OnInit {
       this.rest.nhantin.danggui = false
       clearInterval(this.rest.nhantin.demgio)
       clearTimeout(this.rest.nhantin.hengio)
+      return 1
     }
+    return 0
   }
 
   public async xacnhandagui(id: string, idmautin: string) {
