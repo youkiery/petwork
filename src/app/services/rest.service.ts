@@ -88,7 +88,7 @@ export class RestService {
   public hotel = { init: false, catinit: false, cat: [], list: [], need: [], filter: {start: '', end: ''}, s: '0' }
   public khachhang = { khoitao: false, tukhoa: "", tungay: "", denngay: "", danhsach: [], khoitaochuyenmon: false, chuyenmon: [], nhanvien: [], dichvu: [], danhgia: [], thoigian: "", khoitaochinhanh: false, chinhanh: [] }
   public other = { init: false, list: [], need: [], type: [], start: '', end: '', s: '1' }
-  public badge = { his: 0, kaizen: 0, profile: 0, physical: 0, xquang: 0, sieuam: 0, other: 0, init: false }
+  public badge = { his: 0, kaizen: 0, profile: 0, physical: 0, xquang: 0, sieuam: 0, other: 0, hsd: 0, init: false }
   public excel = { init: false, config: {name: '', phone: '', address: ''} }
   public luong: any = { khoitao: false, khoitaonhanvien: false, khoitaomucchi: false, mucchi: [], chuy: 0, danhsach: [], nhanvien: [], khoitaoluongthang: false, id: 0, dulieu: {nhanvien: []}, excel: { nhanvien: '', doanhthu: '', loinhuan: '' }, chitiet: [], sosanh: { khoitao: false, thoigian: '', chedo: 'luongcoban', danhsach: [] } }
   public place = { init: false, list: []}
@@ -108,6 +108,7 @@ export class RestService {
   public lichban = { khoitao: false, danhsach: [] }
   public tintuc = { khoitao: false, danhsachtintuc: [], danhsachchuongtrinh: [], danhsachchinhanh: [] }
   public tailieu = { khoitao: false, timkiem: { tukhoa: "", iddanhmuc: "0" }, danhsach: [], danhmuc: [] }
+  public hansudung = { khoitao: false, danhsach: [] }
   // public work = {}
 
   public link = ''

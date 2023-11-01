@@ -1,0 +1,25 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="xacnhan()" color="light" fill="clear" size="small">
+    Thêm
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.tenhang"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số lượng </ion-label>
+    <ion-input type="number" [(ngModel)]="rest.temp.soluong"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Hạn sử dụng </ion-label>
+    <ion-datetime [(ngModel)]="rest.temp.hansudung" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+</ion-content>

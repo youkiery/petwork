@@ -162,7 +162,11 @@ const routes: Routes = [
   {
     path: 'xetnghiem',
     loadChildren: () => import('./module/xetnghiem/xetnghiem.module').then( m => m.XetnghiemPageModule)
+  },  {
+    path: 'hansudung',
+    loadChildren: () => import('./module/hansudung/hansudung.module').then( m => m.HansudungPageModule)
   },
+
 ];
 
 @NgModule({
