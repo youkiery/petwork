@@ -47,6 +47,10 @@ export class KhachhangPage implements OnInit {
     })
   }
 
+  public thongke() {
+    this.rest.navCtrl.navigateForward("/khachhang/thongke")
+  }
+
   public chuyenspa(thutu: number) {
     let khachhang = this.rest.khachhang.danhsach[thutu]
     // nếu là điều trị thì hỏi xác nhận

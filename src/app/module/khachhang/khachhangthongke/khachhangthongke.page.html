@@ -1,0 +1,68 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <button class="nuttimkiem" clear item-right (click)="chonngay(-1)">
+      <ion-icon name="play-back"></ion-icon>
+    </button>
+
+    <ion-datetime style="width: 100%" [(ngModel)]="thoigian" displayFormat="MM/YYYY" max="2100"
+      (ionChange)="khoitao()">
+    </ion-datetime>
+
+    <button class="nuttimkiem" clear item-right (click)="chonngay(1)">
+      <ion-icon name="play-forward"></ion-icon>
+    </button>
+  </ion-item>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item button color="secondary" (click)="themkhachhang()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    Thêm khách hàng
+  </ion-item>
+
+  <div *ngIf="them">
+    <ion-item>
+      <ion-label position="stacked"> Khách hàng </ion-label>
+      <ion-input [(ngModel)]="dulieu.khachhang"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Điện thoại </ion-label>
+      <ion-input [(ngModel)]="dulieu.dienthoai"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label> VIP Spa </ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="dulieu.spa">  </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label> VIP Hàng hoá </ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="dulieu.hanghoa">  </ion-checkbox>
+    </ion-item>
+
+    <ion-button color="success" expand="full" (click)="xacnhanthemkhachhang()">
+      Xác nhận
+    </ion-button>
+  </div>
+
+  <div class="stl-card" *ngFor="let khachhang of rest.khachhang.thongke">
+    <div> Khách hàng: {{khachhang.khachhang}} </div>
+    <div> Điện thoại: {{khachhang.dienthoai}} </div>
+    <div> Doanh số: {{khachhang.doanhso}}đ <span *ngIf="khachhang.tile" [class]="khachhang.tile > 0 ? 'tang' : 'giam'"> ({{khachhang.tile}}%) </span> </div>
+    <div> Tháng trước: {{khachhang.thangtruoc}}đ </div>
+    <div class="upperline"></div>
+    <img class="icon" src="/assets/icon/delete.png" (click)="xoakhachvip(khachhang.id)">
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.khachhang.thongke.length">
+    Chưa thêm khách hàng nào
+  </div>
+</ion-content>

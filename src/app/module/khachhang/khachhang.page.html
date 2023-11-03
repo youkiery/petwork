@@ -34,9 +34,15 @@
     Tìm kiếm khách hàng
   </ion-button>
 
-  <ion-fab slot="fixed" horizontal="end" vertical="bottom" *ngIf="rest.config.khachhang > 1" (click)="xuatfile()">
+  <ion-fab slot="fixed" horizontal="start" vertical="bottom" *ngIf="rest.config.khachhang > 1" (click)="xuatfile()">
     <ion-fab-button>
       <ion-icon name="cloud-download-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" *ngIf="rest.config.khachhang > 1" (click)="thongke()">
+    <ion-fab-button>
+      <ion-icon name="bar-chart-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 

@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'themchinhanh',
     loadChildren: () => import('./khachhangthemchinhanh/khachhangthemchinhanh.module').then( m => m.KhachhangthemchinhanhPageModule)
+  },
+  {
+    path: 'thongke',
+    loadChildren: () => import('./khachhangthongke/khachhangthongke.module').then( m => m.KhachhangthongkePageModule)
   }
 ];
 
