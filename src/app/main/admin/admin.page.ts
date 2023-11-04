@@ -38,8 +38,9 @@ export class AdminPage {
     { name: 'Quản lý tài chính', module: 'taichinh' },
     { name: 'Quản lý tính lương', module: 'loinhuan' },
     { name: 'Yêu cầu khách hàng', module: 'khachhang' },
-    { name: 'Cài đặt', module: 'excel' },
+    { name: 'Trắc nghiệm', module: 'tracnghiem' },
     { name: 'Quản lý công việc', module: 'work'},
+    { name: 'Cài đặt', module: 'excel' },
   ]
   public level = ['l0', 'l1', 'l2']
   constructor(

@@ -46,7 +46,7 @@
 
         <div class="col-xs-6">
           Tên khách: {{item.name}} <br>
-          Điện thoại: {{item.phone}} <br>
+          Điện thoại: {{item.phone}} <a [href]="'tel:' + item.phone"> <ion-icon name="call"></ion-icon> </a> <br>
           <span *ngIf="item.name2.length"> Người nhận hộ: {{item.name2}} <br> </span>
           <span *ngIf="item.phone2.length"> Điện thoại: {{item.phone2}} <br> </span>
           <!-- Cân nặng: {{weight[item.weight]}} <br>

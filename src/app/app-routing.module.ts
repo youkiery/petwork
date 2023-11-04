@@ -166,6 +166,10 @@ const routes: Routes = [
     path: 'hansudung',
     loadChildren: () => import('./module/hansudung/hansudung.module').then( m => m.HansudungPageModule)
   },
+  {
+    path: 'tracnghiem',
+    loadChildren: () => import('./module/tracnghiem/tracnghiem.module').then( m => m.TracnghiemPageModule)
+  },
 
 ];
 

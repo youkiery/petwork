@@ -1,0 +1,46 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="this.rest.navCtrl.navigateForward('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngFor="let tracnghiem of rest.tracnghiem.danhsach; let i = index">
+    <ion-radio-group>
+      <ion-list-header>
+        <ion-label> {{i + 1}}. {{tracnghiem.noidung}} </ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let cauhoi of tracnghiem.cauhoi; let j = index">
+        <ion-label>{{chuyendoi[j]}}. {{cauhoi.noidung}}</ion-label>
+        <ion-radio [value]="j"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button>
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm sinh lý </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
