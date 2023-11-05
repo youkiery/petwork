@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: TracnghiemPage
+  },
+  {
+    path: 'baithi',
+    loadChildren: () => import('./tracnghiembaithi/tracnghiembaithi.module').then( m => m.TracnghiembaithiPageModule)
   }
 ];
 

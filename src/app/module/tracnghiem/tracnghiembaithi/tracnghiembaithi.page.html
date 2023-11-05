@@ -1,0 +1,34 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" (click)="nopbai()">
+      Nộp bài
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-list *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
+    <ion-radio-group [(ngModel)]="rest.tracnghiem.bailam.danhsach[i].luachon">
+      <ion-list-header>
+        <ion-label> {{i + 1}}. {{tracnghiem.noidung}} </ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" (click)="chondapan(i, j)">
+        <ion-label>{{chuyendoi[j]}}. {{cautraloi.noidung}}</ion-label>
+        <ion-radio [value]="j" slot="start" [disabled]="quahan"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+  <div style="padding-bottom: 50px;"></div>
+  <div class="thoigian">
+    {{this.thoigian}}
+  </div>
+  
+  <div class="diemthi">
+    {{diemthi}}
+  </div>
+</ion-content>

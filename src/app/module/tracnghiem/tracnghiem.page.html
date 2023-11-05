@@ -16,18 +16,16 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngFor="let tracnghiem of rest.tracnghiem.danhsach; let i = index">
-    <ion-radio-group>
-      <ion-list-header>
-        <ion-label> {{i + 1}}. {{tracnghiem.noidung}} </ion-label>
-      </ion-list-header>
-
-      <ion-item *ngFor="let cauhoi of tracnghiem.cauhoi; let j = index">
-        <ion-label>{{chuyendoi[j]}}. {{cauhoi.noidung}}</ion-label>
-        <ion-radio [value]="j"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <div class="stl-card" *ngFor="let chuyenmuc of rest.tracnghiem.danhsach">
+    <div> <b> {{chuyenmuc.ten}} </b> </div>
+    <div> Điểm thi cao nhất: {{chuyenmuc.diemcaonhat}} </div>
+    <div> Lần thi gần nhất: {{chuyenmuc.lanthigannhat}} </div>
+    <div> Điểm thi gần nhất: {{chuyenmuc.diemgannhat}} </div>
+    <div> Tổng số lần thi: {{chuyenmuc.solanthi}} </div>
+    <ion-button color="secondary" expand="full" (click)="batdauthi(chuyenmuc.id)">
+      Bắt đầu thi
+    </ion-button>
+  </div>
 </ion-content>
 
 <ion-toolbar *ngIf="rest.isready">
