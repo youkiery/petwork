@@ -17,13 +17,26 @@ export class TracnghiemcapnhatPage implements OnInit {
 
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
+    else if (!this.rest.temp.cauhoi.length) this.themcauhoi()
   }
 
   public themcauhoi() {
     this.rest.temp.cauhoi.push({
       noidung: "",
-      danhsach: ["", "", "", ""]
+      danhsach: [
+        {id: 0, noidung: "", dapan: 1},
+        {id: 0, noidung: "", dapan: 0},
+        {id: 0, noidung: "", dapan: 0},
+        {id: 0, noidung: "", dapan: 0},
+      ]
     })
+  }
+
+  public xoacauhoi(thutu: number) {
+    this.rest.temp.cauhoi = this.rest.temp.cauhoi.filter((cauhoi, index) => {
+      return thutu !== index
+    })
+    if (!this.rest.temp.cauhoi.length) this.themcauhoi()
   }
 
   public async capnhatchuyenmuc() {

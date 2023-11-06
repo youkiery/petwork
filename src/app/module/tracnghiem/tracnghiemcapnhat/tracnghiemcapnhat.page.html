@@ -16,29 +16,29 @@
     <ion-input [(ngModel)]="rest.temp.tenchuyenmuc"> </ion-input>
   </ion-item>
 
-  <div class="stl-card" *ngFor="let cauhoi of rest.temp.cauhoi; let i = index">
+  <div class="stl-card" style="position: relative;" *ngFor="let cauhoi of rest.temp.cauhoi; let i = index">
+    <div class="nutxoa" (click)="xoacauhoi(i)"> x </div>
     <ion-item>
       <ion-label position="stacked"> Câu hỏi </ion-label>
       <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].noidung"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Câu trả lời đúng </ion-label>
-      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[0]"></ion-input>
+      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[0].noidung"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Câu trả lời sai </ion-label>
-      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[1]"></ion-input>
+      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[1].noidung"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Câu trả lời sai </ion-label>
-      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[2]"></ion-input>
+      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[2].noidung"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Câu trả lời sai </ion-label>
-      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[3]"></ion-input>
+      <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[3].noidung"></ion-input>
     </ion-item>
   </div>
-  <ion-item></ion-item>
 
   <ion-item color="success" (click)="themcauhoi()">
     <ion-icon name="add-circle-outline"></ion-icon> Thêm câu hỏi

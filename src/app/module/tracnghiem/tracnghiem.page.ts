@@ -115,10 +115,7 @@ export class TracnghiemPage implements OnInit {
     this.rest.temp = {
       id: 0,
       tenchuyenmuc: "",
-      cauhoi: [{
-        noidung: "",
-        danhsach: ["", "", "", ""]
-      }]
+      cauhoi: []
     }
     this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
   }
@@ -130,7 +127,9 @@ export class TracnghiemPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.temp = resp.chuyenmuc
-      this.rest.navCtrl.navigateForward("/tracnghiem/chitiet")
+      console.log(this.rest.temp);
+      
+      this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
     }, () => {
       this.rest.defreeze()
     })

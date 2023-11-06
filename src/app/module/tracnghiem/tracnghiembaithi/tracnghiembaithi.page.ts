@@ -28,15 +28,16 @@ export class TracnghiembaithiPage implements OnInit {
       let phut = Math.floor(chenhlech / 60)
       let giay = Math.floor(chenhlech - phut * 60);
       this.thoigian = "Thời gian còn lại: "+ this.rest.dienso(phut) + ":"+ this.rest.dienso(giay)
-      if (chenhlech <= 0) this.hienthidiem()
-
-      this.interval = setInterval(() => {
-        let chenhlech = this.tongthoigian - (new Date().getTime() / 1000 - this.rest.tracnghiem.bailam.thoigian)
-        let phut = Math.floor(chenhlech / 60)
-        let giay = Math.floor(chenhlech - phut * 60);
-        this.thoigian = "Thời gian còn lại: "+ this.rest.dienso(phut) + ":"+ this.rest.dienso(giay)
-        if (chenhlech <= 0) this.hienthidiem()
-      }, 1000)
+      if (chenhlech <= 0 || this.rest.tracnghiem.bailam.nopbai == 1) this.hienthidiem()
+      else {
+        this.interval = setInterval(() => {
+          let chenhlech = this.tongthoigian - (new Date().getTime() / 1000 - this.rest.tracnghiem.bailam.thoigian)
+          let phut = Math.floor(chenhlech / 60)
+          let giay = Math.floor(chenhlech - phut * 60);
+          this.thoigian = "Thời gian còn lại: "+ this.rest.dienso(phut) + ":"+ this.rest.dienso(giay)
+          if (chenhlech <= 0) this.hienthidiem()
+        }, 1000)
+      }
     }
   }
 
