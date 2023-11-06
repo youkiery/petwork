@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'baithi',
     loadChildren: () => import('./tracnghiembaithi/tracnghiembaithi.module').then( m => m.TracnghiembaithiPageModule)
+  },
+  {
+    path: 'chitiet',
+    loadChildren: () => import('./tracnghiemchitiet/tracnghiemchitiet.module').then( m => m.TracnghiemchitietPageModule)
+  },
+  {
+    path: 'capnhat',
+    loadChildren: () => import('./tracnghiemcapnhat/tracnghiemcapnhat.module').then( m => m.TracnghiemcapnhatPageModule)
   }
 ];
 

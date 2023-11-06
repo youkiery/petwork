@@ -24,11 +24,17 @@ export class TracnghiembaithiPage implements OnInit {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
     else {
       this.tongthoigian = 20 * 60; // 20 phut
+      let chenhlech = this.tongthoigian - (new Date().getTime() / 1000 - this.rest.tracnghiem.bailam.thoigian)
+      let phut = Math.floor(chenhlech / 60)
+      let giay = Math.floor(chenhlech - phut * 60);
+      this.thoigian = "Thời gian còn lại: "+ this.rest.dienso(phut) + ":"+ this.rest.dienso(giay)
+      if (chenhlech <= 0) this.hienthidiem()
+
       this.interval = setInterval(() => {
         let chenhlech = this.tongthoigian - (new Date().getTime() / 1000 - this.rest.tracnghiem.bailam.thoigian)
         let phut = Math.floor(chenhlech / 60)
         let giay = Math.floor(chenhlech - phut * 60);
-        this.thoigian = "Thời gian còn lại: "+ phut + ":"+ giay
+        this.thoigian = "Thời gian còn lại: "+ this.rest.dienso(phut) + ":"+ this.rest.dienso(giay)
         if (chenhlech <= 0) this.hienthidiem()
       }, 1000)
     }
@@ -45,6 +51,7 @@ export class TracnghiembaithiPage implements OnInit {
     }).then(resp => {
       this.quahan = true
       this.diemthi = resp.diemthi
+      this.rest.tracnghiem.bailam.nopbai = 1
     }, () => {})
   }
 

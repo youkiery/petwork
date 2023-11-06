@@ -97,4 +97,42 @@ export class TracnghiemPage implements OnInit {
       this.rest.defreeze()
     })
   }
+
+  public async chitiet(idchuyenmuc: number) {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('tracnghiem', 'chitiet', {
+      idchuyenmuc: idchuyenmuc
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.temp = resp.danhsach
+      this.rest.navCtrl.navigateForward("/tracnghiem/chitiet")
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async themchuyenmuc() {
+    this.rest.temp = {
+      id: 0,
+      tenchuyenmuc: "",
+      cauhoi: [{
+        noidung: "",
+        danhsach: ["", "", "", ""]
+      }]
+    }
+    this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
+  }
+
+  public async capnhatchuyenmuc(idchuyenmuc: number) {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('tracnghiem', 'dulieuchuyenmuc', {
+      idchuyenmuc: idchuyenmuc
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.temp = resp.chuyenmuc
+      this.rest.navCtrl.navigateForward("/tracnghiem/chitiet")
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
 }

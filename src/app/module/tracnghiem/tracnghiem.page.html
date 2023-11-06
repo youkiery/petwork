@@ -22,9 +22,24 @@
     <div> Lần thi gần nhất: {{chuyenmuc.lanthigannhat}} </div>
     <div> Điểm thi gần nhất: {{chuyenmuc.diemgannhat}} </div>
     <div> Tổng số lần thi: {{chuyenmuc.solanthi}} </div>
-    <ion-button color="secondary" expand="full" (click)="batdauthi(chuyenmuc.id)">
-      Bắt đầu thi
-    </ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id)">
+          Bắt đầu thi
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" size-md="1">
+        <ion-button color="secondary" expand="full" (click)="chitiet(chuyenmuc.id)">
+          ⓘ
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" size-md="1" *ngIf="rest.config.tracnghiem > 1">
+        <ion-button color="secondary" expand="full" (click)="capnhatchuyenmuc(chuyenmuc.id)">
+          E
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
   </div>
 </ion-content>
 
@@ -35,9 +50,9 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
-      <ion-tab-button>
+      <ion-tab-button (click)="themchuyenmuc()" *ngIf="rest.config.tracnghiem > 1">
         <ion-icon name="add-circle-outline"></ion-icon>
-        <ion-label> Thêm sinh lý </ion-label>
+        <ion-label> Thêm chuyên mục </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
