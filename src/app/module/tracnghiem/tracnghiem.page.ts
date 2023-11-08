@@ -120,6 +120,20 @@ export class TracnghiemPage implements OnInit {
     this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
   }
 
+  public async ketquathi() {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.tracnghiem.ketqua.trang = 1
+    this.rest.checkpost('tracnghiem', 'ketquathi', {
+      trang: this.rest.tracnghiem.ketqua.trang
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.tracnghiem.ketqua.danhsach = resp.danhsach
+      this.rest.navCtrl.navigateForward("/tracnghiem/ketqua")
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async capnhatchuyenmuc(idchuyenmuc: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'dulieuchuyenmuc', {
@@ -127,9 +141,61 @@ export class TracnghiemPage implements OnInit {
     }).then(resp => {
       this.rest.defreeze()
       this.rest.temp = resp.chuyenmuc
-      console.log(this.rest.temp);
-      
       this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async xoachuyenmuc(idchuyenmuc: number) {
+    const alert = await this.alert.create({
+      header: 'Chuyên mục sẽ không thi được nữa',
+      buttons: [{
+        text: 'Trở về',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanxoachuyenmuc(idchuyenmuc)
+        }
+      }]
+    });
+    await alert.present();
+  }
+  
+  public async xacnhanxoachuyenmuc(idchuyenmuc: number) {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('tracnghiem', 'xoachuyenmuc', {
+      idchuyenmuc: idchuyenmuc
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.tracnghiem.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
+  public async hoiphucchuyenmuc(idchuyenmuc: number) {
+    const alert = await this.alert.create({
+      header: 'Cho phép nhân viên làm kiểm tra chuyên mục?',
+      buttons: [{
+        text: 'Trở về',
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhanhoiphucchuyenmuc(idchuyenmuc)
+        }
+      }]
+    });
+    await alert.present();
+  }
+  
+  public async xacnhanhoiphucchuyenmuc(idchuyenmuc: number) {
+    await this.rest.freeze('Đang tải dữ liệu......')
+    this.rest.checkpost('tracnghiem', 'hoiphucchuyenmuc', {
+      idchuyenmuc: idchuyenmuc
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.tracnghiem.danhsach = resp.danhsach
     }, () => {
       this.rest.defreeze()
     })

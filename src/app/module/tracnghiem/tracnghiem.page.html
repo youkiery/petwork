@@ -10,8 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="rest.isready">
-  
+<ion-content *ngIf="rest.isready">  
   <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -24,8 +23,8 @@
     <div> Tổng số lần thi: {{chuyenmuc.solanthi}} </div>
     <ion-row>
       <ion-col>
-        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id)">
-          Bắt đầu thi
+        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id)" [disabled]="chuyenmuc.hienthi == '0'">
+          {{ (chuyenmuc.hienthi == '0' ? '---' : 'Bắt đầu thi') }}
         </ion-button>
       </ion-col>
       <ion-col size="2" size-md="1">
@@ -36,6 +35,16 @@
       <ion-col size="2" size-md="1" *ngIf="rest.config.tracnghiem > 1">
         <ion-button color="secondary" expand="full" (click)="capnhatchuyenmuc(chuyenmuc.id)">
           E
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" size-md="1" *ngIf="rest.config.tracnghiem > 1 && chuyenmuc.hienthi == '0'">
+        <ion-button color="warning" expand="full" (click)="hoiphucchuyenmuc(chuyenmuc.id)">
+          ↺
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" size-md="1" *ngIf="rest.config.tracnghiem > 1 && chuyenmuc.hienthi == '1'">
+        <ion-button color="danger" expand="full" (click)="xoachuyenmuc(chuyenmuc.id)">
+          X
         </ion-button>
       </ion-col>
     </ion-row>
@@ -53,6 +62,10 @@
       <ion-tab-button (click)="themchuyenmuc()" *ngIf="rest.config.tracnghiem > 1">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm chuyên mục </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="ketquathi()" *ngIf="rest.config.tracnghiem > 1">
+        <ion-icon name="library-outline"></ion-icon>
+        <ion-label> Kết quả thi nhân viên </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

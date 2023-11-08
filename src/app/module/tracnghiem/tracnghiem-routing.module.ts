@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'capnhat',
     loadChildren: () => import('./tracnghiemcapnhat/tracnghiemcapnhat.module').then( m => m.TracnghiemcapnhatPageModule)
+  },
+  {
+    path: 'ketqua',
+    loadChildren: () => import('./tracnghiemketqua/tracnghiemketqua.module').then( m => m.TracnghiemketquaPageModule)
   }
 ];
 

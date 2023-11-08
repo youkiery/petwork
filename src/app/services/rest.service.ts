@@ -15,12 +15,11 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
   providedIn: 'root'
 })
 export class RestService {
-  public base: string = '';
-  // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public base: string = 'https://nhatrang.thanhxuanpet.com';
+  // public base: string = 'https://daklak.thanhxuanpet.com';
+  public base: string = 'http://localhost';
+  public baseurl: string = this.base + '/server/index.php?';
+  public include: string = this.base + '/include';
   public version = 21 // 21-188
   public admindefault = ['1', '5']
   public config: any
@@ -109,7 +108,7 @@ export class RestService {
   public tintuc = { khoitao: false, danhsachtintuc: [], danhsachchuongtrinh: [], danhsachchinhanh: [] }
   public tailieu = { khoitao: false, timkiem: { tukhoa: "", iddanhmuc: "0" }, danhsach: [], danhmuc: [] }
   public hansudung = { khoitao: false, danhsach: [] }
-  public tracnghiem = { khoitao: false, danhsach: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0 }}
+  public tracnghiem = { khoitao: false, danhsach: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0 }, ketqua: {trang: 1, danhsach: []}}
   // public work = {}
 
   public link = ''
