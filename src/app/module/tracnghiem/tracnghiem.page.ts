@@ -50,33 +50,35 @@ export class TracnghiemPage implements OnInit {
     })
   }
 
-  public async thongbaobaithi(idchuyenmuc: number) {
+  public async thongbaobaithi(idchuyenmuc: number, socau: number, thoigian: number) {
     const alert = await this.alert.create({
       header: 'Bạn còn 1 bài thi chưa hoàn thành',
       buttons: [{
         text: 'Thi tiếp',
         handler: (e) => {
-          this.xacnhanthitiep()
+          this.xacnhanthitiep(thoigian)
         }
       }, {
         text: 'Thi lại',
         handler: (e) => {
-          this.xacnhanbatdauthi(idchuyenmuc)
+          this.xacnhanbatdauthi(idchuyenmuc, socau, thoigian)
         }
       }]
     });
     await alert.present();
   }
 
-  public async batdauthi(idchuyenmuc: number) {
-    if (this.baithicuoi + 60 * 20 > new Date().getTime() / 1000) this.thongbaobaithi(idchuyenmuc)
-    else this.xacnhanbatdauthi(idchuyenmuc)
+  public async batdauthi(idchuyenmuc: number, socau: number, thoigian: number) {
+    if (this.baithicuoi + thoigian   > new Date().getTime() / 1000) this.thongbaobaithi(idchuyenmuc, socau, thoigian)
+    else this.xacnhanbatdauthi(idchuyenmuc, socau, thoigian)
   }
 
-  public async xacnhanbatdauthi(idchuyenmuc: number) {
+  public async xacnhanbatdauthi(idchuyenmuc: number, socau: number, thoigian: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'batdauthi', {
-      idchuyenmuc: idchuyenmuc
+      idchuyenmuc: idchuyenmuc,
+      socau: socau,
+      thoigian: thoigian
     }).then(resp => {
       this.rest.defreeze()
       this.rest.tracnghiem.bailam = resp.bailam
@@ -87,9 +89,11 @@ export class TracnghiemPage implements OnInit {
     })
   }
 
-  public async xacnhanthitiep() {
+  public async xacnhanthitiep(thoigian: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
-    this.rest.checkpost('tracnghiem', 'xacnhanthitiep', { }).then(resp => {
+    this.rest.checkpost('tracnghiem', 'xacnhanthitiep', {
+      thoigian: thoigian
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.tracnghiem.bailam = resp.bailam
       this.rest.navCtrl.navigateForward("/tracnghiem/baithi")
@@ -115,6 +119,8 @@ export class TracnghiemPage implements OnInit {
     this.rest.temp = {
       id: 0,
       tenchuyenmuc: "",
+      socau: 1,
+      thoigian: 1,
       cauhoi: []
     }
     this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")

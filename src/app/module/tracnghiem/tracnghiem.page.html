@@ -16,14 +16,16 @@
   </ion-refresher>
 
   <div class="stl-card" *ngFor="let chuyenmuc of rest.tracnghiem.danhsach">
-    <div> <b> {{chuyenmuc.ten}} </b> </div>
+    <div> <b> Bài thi: {{chuyenmuc.ten}} </b> </div>
+    <div> <b> Số câu: {{chuyenmuc.socau}} </b> </div>
+    <div> <b> Thời gian thi: {{chuyenmuc.thoigian}} phút </b> </div>
     <div> Điểm thi cao nhất: {{chuyenmuc.diemcaonhat}} </div>
     <div> Lần thi gần nhất: {{chuyenmuc.lanthigannhat}} </div>
     <div> Điểm thi gần nhất: {{chuyenmuc.diemgannhat}} </div>
     <div> Tổng số lần thi: {{chuyenmuc.solanthi}} </div>
     <ion-row>
       <ion-col>
-        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id)" [disabled]="chuyenmuc.hienthi == '0'">
+        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id, chuyenmuc.socau, chuyenmuc.thoigian)" [disabled]="chuyenmuc.hienthi == '0'">
           {{ (chuyenmuc.hienthi == '0' ? '---' : 'Bắt đầu thi') }}
         </ion-button>
       </ion-col>

@@ -108,7 +108,7 @@ export class RestService {
   public tintuc = { khoitao: false, danhsachtintuc: [], danhsachchuongtrinh: [], danhsachchinhanh: [] }
   public tailieu = { khoitao: false, timkiem: { tukhoa: "", iddanhmuc: "0" }, danhsach: [], danhmuc: [] }
   public hansudung = { khoitao: false, danhsach: [] }
-  public tracnghiem = { khoitao: false, danhsach: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0 }, ketqua: {trang: 1, danhsach: []}}
+  public tracnghiem = { khoitao: false, danhsach: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0, han: 0 }, ketqua: {trang: 1, danhsach: []}}
   // public work = {}
 
   public link = ''

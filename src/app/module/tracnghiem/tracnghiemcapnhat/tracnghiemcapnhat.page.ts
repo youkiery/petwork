@@ -43,6 +43,7 @@ export class TracnghiemcapnhatPage implements OnInit {
   }
 
   public async capnhatchuyenmuc() {
+    if (this.rest.temp.socau < 1 && this.rest.temp.thoigian < 1) return this.rest.notify("Số câu và thời gian làm bài > 0 phút")
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'capnhatchuyenmuc', {
       dulieu: this.rest.temp
