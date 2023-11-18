@@ -69,7 +69,7 @@ export class TracnghiemPage implements OnInit {
   }
 
   public async batdauthi(idchuyenmuc: number, socau: number, thoigian: number) {
-    if (this.baithicuoi + thoigian   > new Date().getTime() / 1000) this.thongbaobaithi(idchuyenmuc, socau, thoigian)
+    if (this.baithicuoi + thoigian * 60 > new Date().getTime() / 1000) this.thongbaobaithi(idchuyenmuc, socau, thoigian)
     else this.xacnhanbatdauthi(idchuyenmuc, socau, thoigian)
   }
 

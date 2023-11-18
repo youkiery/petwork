@@ -18,9 +18,9 @@ export class RestService {
   // public base: string = 'https://nhatrang.thanhxuanpet.com';
   // public base: string = 'https://daklak.thanhxuanpet.com';
   public base: string = 'http://localhost';
+  public version = 21 // 21-188
   public baseurl: string = this.base + '/server/index.php?';
   public include: string = this.base + '/include';
-  public version = 21 // 21-188
   public admindefault = ['1', '5']
   public config: any
   public site: any = {

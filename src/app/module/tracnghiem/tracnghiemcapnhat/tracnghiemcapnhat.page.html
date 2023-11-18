@@ -48,7 +48,14 @@
       <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[3].noidung"></ion-input>
     </ion-item>
 
-    <app-hinhanh [luonganh]="'it'"></app-hinhanh>
+    <div id="pwa" style="display: none;">
+      <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+    </div>
+
+    <span class="thumbnail-box" (click)="upload(i)">
+      <span class="thumbnail-box-icon" (click)="xoaanh(i)" *ngIf="rest.temp.cauhoi[i].hinhanh.length"> x </span>
+      <img class="thumbnail" [src]="rest.temp.cauhoi[i].hinhanh.length ? rest.temp.cauhoi[i].hinhanh : '/assets/image/insert.png'">
+    </span>
   </div>
 
   <ion-item color="success" (click)="themcauhoi()">
