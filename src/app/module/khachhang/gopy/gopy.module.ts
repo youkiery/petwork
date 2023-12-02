@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HansudungPageRoutingModule } from './hansudung-routing.module';
+import { GopyPageRoutingModule } from './gopy-routing.module';
 
-import { HansudungPage } from './hansudung.page';
+import { GopyPage } from './gopy.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HansudungPageRoutingModule
+    GopyPageRoutingModule
   ],
-  declarations: [HansudungPage]
+  declarations: [GopyPage]
 })
-export class HansudungPageModule {}
+export class GopyPageModule {}

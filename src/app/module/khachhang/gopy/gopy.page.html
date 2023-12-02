@@ -1,0 +1,25 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card text-center" *ngIf="!danhsach.length">
+    Không có góp ý
+  </div>
+  
+  <div *ngFor="let gopy of danhsach" [class]="(gopy.trangthai == '1' ? 'stl-card green' : 'stl-card')">
+    Tiêu đề: {{gopy.tieude}} <br>
+    Nội dung: <pre>{{gopy.noidung}}</pre> <br>
+    thoigian: {{gopy.thoigian}}
+  </div>
+  
+  <ion-infinite-scroll (ionInfinite)="taithem($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

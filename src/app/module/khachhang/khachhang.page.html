@@ -34,20 +34,26 @@
     Tìm kiếm khách hàng
   </ion-button>
 
-  <ion-fab slot="fixed" horizontal="start" vertical="bottom" *ngIf="rest.config.khachhang > 1" (click)="xuatfile()">
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" *ngIf="rest.config.khachhang > 1">
     <ion-fab-button>
-      <ion-icon name="cloud-download-outline"></ion-icon>
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
-
-  <ion-fab slot="fixed" horizontal="end" vertical="bottom" *ngIf="rest.config.khachhang > 1" (click)="thongke()">
-    <ion-fab-button>
-      <ion-icon name="bar-chart-outline"></ion-icon>
-    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button *ngIf="rest.config.khachhang > 1" (click)="thongke()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="rest.config.khachhang > 1" (click)="xuatfile()">
+        <ion-icon name="cloud-download-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="rest.config.khachhang > 1" (click)="gopy()">
+        <ion-icon name="mail-unread-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 
   <div class="stl-card" *ngFor="let item of rest.khachhang.danhsach; let i = index">
-    <div> <b> {{loaikhachhang[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]"> {{trangthai[item.trangthai]}} </span> </div>
+    <div> <b> {{loaikhachhang[item.loaidatlich]}}: </b> <span [class]="mautrangthai[item.trangthai]">
+        {{trangthai[item.trangthai]}} </span> </div>
     <div> <b> Tên khách: </b> {{item.tenkhach}} </div>
     <div> <b> Điện thoại: </b> {{item.dienthoai}} </div>
     <div> <b> Dịch vụ: </b> {{item.dichvu}} </div>

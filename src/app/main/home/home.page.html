@@ -102,14 +102,6 @@
     </div>
   </div>
 
-  <div class="box" (click)="rest.navCtrl.navigateForward('/hansudung')">
-    <ion-img src="assets/image/hansudung.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Hạn sử dụng
-    </div>
-    <span class="redbadge" *ngIf="rest.badge.hsd"> {{rest.badge.hsd}} </span>
-  </div>
-
   <div *ngIf="rest.config.hotel > 0" class="box" (click)="rest.navCtrl.navigateForward('/hotel')">
     <ion-img src="assets/image/hotel.png" class="box-image"></ion-img>
     <div class="box-title">
