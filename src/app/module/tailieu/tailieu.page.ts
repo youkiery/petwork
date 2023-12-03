@@ -8,7 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./tailieu.page.scss'],
 })
 export class TailieuPage implements OnInit {
-
+  public chondanhmuc = -1
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -102,8 +102,8 @@ export class TailieuPage implements OnInit {
     window.open(url)
   }
 
-  public capnhattailieu(thutu: number) {
-    let tailieu = this.rest.tailieu.danhsach[thutu]
+  public capnhattailieu(thutudanhmuc: number, thututailieu: number) {
+    let tailieu = this.rest.tailieu.danhsach[thutudanhmuc].danhsach[thututailieu]
     
     this.rest.temp = {
       id: tailieu.id,
