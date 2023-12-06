@@ -11,16 +11,28 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên voucher </ion-label>
+    <ion-input [(ngModel)]="tukhoa"> </ion-input>
+  </ion-item>
+
+  <ion-button expand="full" color="secondary" (click)="tracuuvoucher()">
+    Tra cứu voucher
+  </ion-button>
+
   <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="stl-card" *ngFor="let voucher of rest.voucher.danhsach">
-    <div> Tên voucher {{voucher.ten}} </div>
+  <div class="stl-card" *ngFor="let voucher of rest.voucher.danhsach; let i = index">
+    <div> <b> {{voucher.ten}} </b> </div>
     <div> Hạn sử dụng: {{voucher.hansudung}} ngày </div>
     <div> Còn hạn: {{voucher.conhan}} </div>
     <div> Hết hạn: {{voucher.hethan}} </div>
     <div> Tổng: {{voucher.tong}} </div>
+    <div class="upperline"></div>
+    <img class="icon" src="/assets/icon/delete.png" (click)="xoa(voucher.id)">
+    <img class="icon" src="/assets/icon/update.png" (click)="capnhatvoucher(i)">
   </div>
 
   <div class="stl-card text-center" *ngIf="!rest.voucher.danhsach">

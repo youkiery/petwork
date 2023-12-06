@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -7,9 +8,10 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./voucher.page.scss'],
 })
 export class VoucherPage implements OnInit {
-
+  public tukhoa = ""
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
@@ -55,5 +57,60 @@ export class VoucherPage implements OnInit {
       hansudung: "1",
     }
     this.rest.navCtrl.navigateForward("/voucher/them")
+  }
+
+  public capnhatvoucher(thutu: number) {
+    let voucher = this.rest.voucher.danhsach[thutu]
+    this.rest.temp = {
+      id: voucher.id,
+      ten: voucher.ten,
+      hansudung: voucher.hansudung,
+    }
+    this.rest.navCtrl.navigateForward("/voucher/them")
+  }
+
+  public async xoa(idvattu: number) {
+    let alert = await this.alert.create({
+      message: 'Xóa voucher này?',
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.xacnhanxoa(idvattu)
+          }
+        }
+      ]
+    })
+    alert.present()
+  }
+
+  public async xacnhanxoa(idvoucher: number) {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('voucher', 'xoavoucher', {
+      idvoucher: idvoucher,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.voucher.danhsach = resp.danhsach
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async tracuuvoucher() {
+    await this.rest.freeze('Đang tải dữ liệu...')
+    this.rest.checkpost('voucher', 'tracuu', {
+      tukhoa: this.tukhoa
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.temp = resp.danhsach
+      this.rest.navCtrl.navigateForward("/voucher/tracuu")
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }
