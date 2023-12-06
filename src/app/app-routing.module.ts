@@ -166,6 +166,9 @@ const routes: Routes = [
   {
     path: 'tracnghiem',
     loadChildren: () => import('./module/tracnghiem/tracnghiem.module').then( m => m.TracnghiemPageModule)
+  },  {
+    path: 'voucher',
+    loadChildren: () => import('./module/voucher/voucher.module').then( m => m.VoucherPageModule)
   },
 
 ];

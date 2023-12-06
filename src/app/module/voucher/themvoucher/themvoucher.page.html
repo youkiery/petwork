@@ -1,0 +1,22 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="capnhat()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Tên voucher </ion-label>
+    <ion-input [(ngModel)]="rest.temp.ten"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Hạn sử dụng (ngày) </ion-label>
+    <ion-input type="number" [(ngModel)]="rest.temp.hansudung" min="1"> </ion-input>
+  </ion-item>
+</ion-content>

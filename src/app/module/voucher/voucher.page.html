@@ -1,0 +1,45 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      {{rest.site.title}}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-img [src]="rest.site.logo" class="logo" (click)="rest.root()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let voucher of rest.voucher.danhsach">
+    <div> Tên voucher {{voucher.ten}} </div>
+    <div> Hạn sử dụng: {{voucher.hansudung}} ngày </div>
+    <div> Còn hạn: {{voucher.conhan}} </div>
+    <div> Hết hạn: {{voucher.hethan}} </div>
+    <div> Tổng: {{voucher.tong}} </div>
+  </div>
+
+  <div class="stl-card text-center" *ngIf="!rest.voucher.danhsach">
+    Không có voucher nào
+  </div>
+</ion-content>
+
+<ion-toolbar *ngIf="rest.isready">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.root()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="themvoucher()">
+        <ion-icon name="add-outline"></ion-icon>
+        <ion-label> Thêm voucher </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
