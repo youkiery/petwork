@@ -32,6 +32,7 @@ export class AdminPage {
     { name: 'Quản lý xét nghiệm khác', module: 'other' },
     { name: 'Quản lý nhà xe', module: 'transport' },
     // {name: 'Quản lý lương', module: 'luong'},
+    { name: 'Quản lý voucher', module: 'voucher'},
     { name: 'Quản lý kế toán', module: 'accounting' },
     { name: 'Quản lý vật tư', module: 'vattu' },
     { name: 'Quản lý thiết bị', module: 'thietbi' },
@@ -147,7 +148,7 @@ export class AdminPage {
   public async remove(userid: number) {
     this.rest.temp = {
       nhanvienxoa: userid,
-      nhanvienchuyen: this.rest.home.doctor[0].userid
+      nhanvienchuyen: 0
     }
     this.rest.navCtrl.navigateForward('/admin/chuyeninfo')
     // await this.rest.freeze('Đang tải dữ liệu...')
@@ -175,6 +176,11 @@ export class AdminPage {
       vpassword: '',
     }
     this.rest.navCtrl.navigateForward('/admin/insert')
+  }
+
+  public async zalo(i: number) {
+    this.rest.temp = this.rest.admin.list[i].userid,
+    this.rest.navCtrl.navigateForward('/admin/zalo')
   }
 
   public insert() {

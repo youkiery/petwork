@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'chuyeninfo',
     loadChildren: () => import('./adminchuyeninfo/adminchuyeninfo.module').then( m => m.AdminchuyeninfoPageModule)
+  },
+  {
+    path: 'zalo',
+    loadChildren: () => import('./adminzalo/adminzalo.module').then( m => m.AdminzaloPageModule)
   }
 ];
 

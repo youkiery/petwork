@@ -44,6 +44,7 @@
   <div class="stl-card white" *ngFor="let user of rest.admin.list; let i = index">
     <div> <b> Họ tên: </b> {{user.fullname}} </div>
     <div> <b> Tài khoản: </b> {{user.username}} </div>
+    <div> <b> Zalo UID: </b> {{user.zalouid}} </div>
     <div> <b> Chi nhánh: </b> <span class="pos" (click)="selectplace(user.userid)">{{user.place}}</span> </div>
     <div>
       Chức vụ:
@@ -52,6 +53,7 @@
       <span [class]="user.module.manager > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'manager')"> Bán hàng </span>
       <span [class]="user.module.admin > 0 ? 'on' : 'off'" (click)="toggle(user.userid, 'admin')"> Quản lý </span>
       <span *ngIf="(user.userid != '1') || (rest.home.userid == '1')" class="on blue" (click)="update(i)"> sửa </span>
+      <span *ngIf="(user.userid != '1') || (rest.home.userid == '1')" class="on blue" (click)="zalo(i)"> liên kết zalo </span>
       <span *ngIf="user.userid != '1'" class="on red" (click)="remove(user.userid)"> Xóa </span>
     </div>
     <div>
