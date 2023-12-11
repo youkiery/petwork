@@ -7,11 +7,18 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div class="stl-card" *ngFor="let voucher of rest.temp">
-    <div> <b> {{voucher.ten}} </b> </div>
-    <div> Khách hàng: {{voucher.khachhang}} </div>
-    <div> Điện thoại: {{voucher.dienthoai}} </div>
-    <div> Ngày nhận: {{voucher.thoigian}} </div>
-    <div> Hạn sử dụng: {{voucher.hansudung}} </div>
-  </div>
+  <ion-row>
+    <ion-col sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" *ngFor="let voucher of rest.temp.danhsach">
+      <div class="stl-card">
+        <div> <b> {{voucher.ten}} </b> </div>
+        <div> <b> {{voucher.mavoucher}} </b> </div>
+        <div> Khách hàng: {{voucher.khachhang}} </div>
+        <div> Điện thoại: {{voucher.dienthoai}} </div>
+        <div> Ngày nhận: {{voucher.thoigian}} </div>
+        <div> Hạn sử dụng: {{voucher.hansudung}} </div>
+        <div class="upperline"></div>
+        <img class="icon" src="/assets/icon/done.png" (click)="hoanthanh(voucher.id)">
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-content>

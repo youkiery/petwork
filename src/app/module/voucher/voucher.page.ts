@@ -107,7 +107,10 @@ export class VoucherPage implements OnInit {
       tukhoa: this.tukhoa
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.temp = resp.danhsach
+      this.rest.temp = {
+        tukhoa: this.tukhoa,
+        danhsach: resp.danhsach
+      }
       this.rest.navCtrl.navigateForward("/voucher/tracuu")
     }, () => {
       this.rest.defreeze()
