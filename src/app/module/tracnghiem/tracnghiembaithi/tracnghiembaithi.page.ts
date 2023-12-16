@@ -55,16 +55,30 @@ export class TracnghiembaithiPage implements OnInit {
     }, () => {})
   }
 
+  public hienthidapan(thutucauhoi: number, thutucautraloi: number) {
+    let luachon = this.rest.tracnghiem.bailam.danhsach[thutucauhoi].luachon
+    if (this.quahan) {
+      let cautraloi = this.rest.tracnghiem.bailam.danhsach[thutucauhoi].cautraloi[thutucautraloi]
+      if (cautraloi.dapan == 1) return "dung"
+      else if (luachon == thutucautraloi) return "sai"
+    }
+
+    if (luachon == thutucautraloi) return "dachon"
+    return ""
+  }
+
   public async chondapan(thutucauhoi: number, thutucautraloi: number) {
-    let cautraloi = this.rest.tracnghiem.bailam.danhsach[thutucauhoi].cautraloi[thutucautraloi]
-    
-    this.rest.checkpost('tracnghiem', 'chondapan', {
-      idbaithi: this.rest.tracnghiem.bailam.idbaithi,
-      idcauhoi: cautraloi.idcauhoi, 
-      idcautraloi: cautraloi.id,
-    }).then(resp => {
-      this.rest.tracnghiem.danhsach = resp.danhsach
-    }, () => {})
+    if (!this.quahan) {
+      let cautraloi = this.rest.tracnghiem.bailam.danhsach[thutucauhoi].cautraloi[thutucautraloi]
+      this.rest.tracnghiem.bailam.danhsach[thutucauhoi].luachon = thutucautraloi
+      this.rest.checkpost('tracnghiem', 'chondapan', {
+        idbaithi: this.rest.tracnghiem.bailam.idbaithi,
+        idcauhoi: cautraloi.idcauhoi, 
+        idcautraloi: cautraloi.id,
+      }).then(resp => {
+        // this.rest.tracnghiem.danhsach = resp.danhsach
+      }, () => {})
+    }
   }
 
   public async nopbai() {

@@ -11,20 +11,14 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <ion-list *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
-    <ion-radio-group [(ngModel)]="rest.tracnghiem.bailam.danhsach[i].luachon">
-      <ion-list-header>
-        <ion-label> {{i + 1}}. {{tracnghiem.noidung}} </ion-label>
-      </ion-list-header>
-
-      <img *ngIf="tracnghiem.hinhanh.length" class="thumbnail" [src]="tracnghiem.hinhanh" (click)="rest.view(tracnghiem.hinhanh)">
-
-      <ion-item *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" [color]="quahan && (cautraloi.dapan == '1' ? 'success' : (rest.tracnghiem.bailam.danhsach[i].luachon == j ? 'danger' : ''))" (click)="chondapan(i, j)">
-        <ion-label>{{chuyendoi[j]}}. {{cautraloi.noidung}}</ion-label>
-        <ion-radio [value]="j" slot="start" [disabled]="quahan"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <div class="tracnghiem" *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
+    <div class="cauhoi">
+      {{i + 1}}. {{tracnghiem.noidung}}
+    </div>
+    <div [class]="hienthidapan(i,j) + ' cautraloi'" *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" (click)="chondapan(i, j)">
+      {{chuyendoi[j]}}. {{cautraloi.noidung}}
+    </div>
+  </div>
   <div style="padding-bottom: 50px;"></div>
   <div class="thoigian" *ngIf="!rest.tracnghiem.bailam.nopbai">
     {{this.thoigian}}
