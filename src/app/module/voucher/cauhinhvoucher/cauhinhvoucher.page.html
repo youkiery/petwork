@@ -1,0 +1,33 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="capnhat()">
+      Cập nhật
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Chọn nhiều voucher </ion-label>
+    <ion-checkbox [(ngModel)]="cauhinh.voucher" slot="start"> </ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Gửi thông báo về Admin </ion-label>
+    <ion-checkbox [(ngModel)]="cauhinh.admin" slot="start"> </ion-checkbox>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked"> Gửi thông báo về quản lý </ion-label>
+    <ion-checkbox [(ngModel)]="cauhinh.quanly" slot="start"> </ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Gửi thông báo nhân viên </ion-label>
+    <ion-checkbox [(ngModel)]="cauhinh.nhanvien" slot="start"> </ion-checkbox>
+  </ion-item>
+</ion-content>

@@ -55,6 +55,7 @@ export class VoucherPage implements OnInit {
       id: 0,
       ten: "",
       hansudung: "1",
+      image: "",
     }
     this.rest.navCtrl.navigateForward("/voucher/them")
   }
@@ -65,6 +66,7 @@ export class VoucherPage implements OnInit {
       id: voucher.id,
       ten: voucher.ten,
       hansudung: voucher.hansudung,
+      image: voucher.hinhanh,
     }
     this.rest.navCtrl.navigateForward("/voucher/them")
   }
@@ -115,5 +117,9 @@ export class VoucherPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public cauhinh() {
+    this.rest.navCtrl.navigateForward("/voucher/cauhinh")
   }
 }

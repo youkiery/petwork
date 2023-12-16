@@ -11,6 +11,10 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/*" capture (change)="uploadPWA()">
+  </div>
+
   <ion-item>
     <ion-label position="stacked"> Tên voucher </ion-label>
     <ion-input [(ngModel)]="rest.temp.ten"> </ion-input>
@@ -19,4 +23,6 @@
     <ion-label position="stacked"> Hạn sử dụng (ngày) </ion-label>
     <ion-input type="number" [(ngModel)]="rest.temp.hansudung" min="1"> </ion-input>
   </ion-item>
+
+  <img class="thumbnail" [src]="rest.temp.image.length ? rest.temp.image : '/assets/image/insert.png'" (click)="upload()">
 </ion-content>

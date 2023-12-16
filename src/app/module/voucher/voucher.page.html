@@ -25,6 +25,7 @@
   </ion-refresher>
 
   <div class="stl-card" *ngFor="let voucher of rest.voucher.danhsach; let i = index">
+    <ion-img [src]="voucher.hinhanh.length ? voucher.hinhanh : '/assets/image/no-image.png'"></ion-img>
     <div> <b> {{voucher.ten}} </b> </div>
     <div> Hạn sử dụng: {{voucher.hansudung}} ngày </div>
     <div> Còn hạn: {{voucher.conhan}} </div>
@@ -51,6 +52,11 @@
       <ion-tab-button (click)="themvoucher()">
         <ion-icon name="add-outline"></ion-icon>
         <ion-label> Thêm voucher </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cauhinh()">
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label> Cấu hình </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

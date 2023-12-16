@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'tracuu',
     loadChildren: () => import('./tracuuvoucher/tracuuvoucher.module').then( m => m.TracuuvoucherPageModule)
+  },
+  {
+    path: 'cauhinh',
+    loadChildren: () => import('./cauhinhvoucher/cauhinhvoucher.module').then( m => m.CauhinhvoucherPageModule)
   }
 ];
 
