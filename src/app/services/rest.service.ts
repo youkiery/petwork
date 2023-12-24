@@ -16,9 +16,9 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   // public base: string = 'https://nhatrang.thanhxuanpet.com';
-  public base: string = 'https://daklak.thanhxuanpet.com';
-  // public base: string = 'http://localhost';
-  public version = 188 // 21-188
+  // public base: string = 'https://daklak.thanhxuanpet.com';
+  public base: string = 'http://localhost';
+  public version = 21 // 21-188
   public baseurl: string = this.base + '/server/index.php?';
   public include: string = this.base + '/include';
   public admindefault = ['1', '5']
@@ -65,7 +65,7 @@ export class RestService {
   public manager = { code: '', seller: '', phone: '', customer: '', time: '', note: '', item: '', number: '' }
   public admin = { init: false, list: [] }
   public spa = { time: 0, init: false, datlichhomnay: [], list: [], near: [], filter: [], old: [], keyword: '', keyword2: '', toggle: false, search: {status: 0, start: '', end: ''}, thongke: {dauthang: '', cuoithang: ''}, khoitaothongke: false, dulieu: [] }
-  public vaccine = { uncalled: 0, init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
+  public vaccine = { dathem: {vaccine: [], sieuam: []}, uncalled: 0, init: false, list: [], new: [], old: [], temp: [[], []], over: [], keyword: '', time: '', type: 'vaccine' }
   public usg = { uncalled: [0, 0, 0], list: [[], [], []], temp: [[], []], new: [], time: '' }
   public schedule = { init: false, time: "", state: 1, list: [], except: [], data: [], quangay: [], dachotlich: {batdau: 0, ketthuc: 0}, dadangky: 0, filter: { batdau: '', ketthuc: '', danhsach: [] }, start: '', end: '', nghichunhat: [], chedodangky: 0, cauhinh: {dangkythem: 0, huydangky: 0}, dangky: {dangkythem: 0, huydangky: 0}, thangnay: false }
   public cart = { list: [], init: false }

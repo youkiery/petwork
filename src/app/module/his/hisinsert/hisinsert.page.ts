@@ -58,11 +58,8 @@ export class HisinsertPage {
         this.rest.his.segment = this.rest.temp.pos
         this.rest.his.list = resp.list
         this.recount()
-        this.rest.physical.init = false
-        this.rest.profile.init = false
-        this.rest.xquang.init = false
-        this.rest.sieuam.init = false
-        this.rest.other.init = false
+        this.rest.other.init = true
+        this.rest.xetnghiem.khoitao = true
         this.rest.badge.init = false
         this.rest.back()
       }, () => {
@@ -82,11 +79,9 @@ export class HisinsertPage {
         this.rest.his.segment = this.rest.temp.pos
         this.rest.his.list = resp.list
         this.recount()
-        this.rest.physical.init = false
-        this.rest.profile.init = false
-        this.rest.xquang.init = false
-        this.rest.sieuam.init = false
-        this.rest.other.init = false
+        this.rest.other.init = true
+        this.rest.xetnghiem.khoitao = true
+        this.rest.badge.init = false
         this.rest.back()
       }, () => {
         this.rest.defreeze()
@@ -102,13 +97,10 @@ export class HisinsertPage {
       await this.uploadAllImage()
       this.rest.checkpost('his', 'detail', this.rest.temp).then((resp) => {
         this.rest.defreeze()
-        this.rest.his.list = resp.list
         this.recount()
-        this.rest.physical.init = false
-        this.rest.profile.init = false
-        this.rest.xquang.init = false
-        this.rest.sieuam.init = false
-        this.rest.other.init = false
+        this.rest.other.init = true
+        this.rest.xetnghiem.khoitao = true
+        this.rest.badge.init = false
         this.rest.back()
       }, () => {
         this.rest.defreeze()

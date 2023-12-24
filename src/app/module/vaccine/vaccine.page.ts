@@ -80,6 +80,21 @@ export class VaccinePage {
       this.vacCal()
       this.rest.vaccine.temp = resp.vaccine.temp
       this.rest.vaccine.over = resp.vaccine.over
+      this.rest.vaccine.dathem = resp.dathem
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async xuatfile() {
+    await this.rest.freeze()
+    this.rest.checkpost('vaccine', 'xuatfile', {
+      docs: this.rest.home.default.docs,
+      docscover: this.rest.home.default.docscover,
+      time: this.rest.vaccine.time,
+    }).then(resp => {
+      this.rest.defreeze()
+      window.open(this.rest.base + resp.link)
     }, () => {
       this.rest.defreeze()
     })

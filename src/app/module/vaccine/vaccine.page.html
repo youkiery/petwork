@@ -164,17 +164,22 @@
         <ion-label> Đã tiêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="loaitru()">
+      <ion-tab-button (click)="xuatfile()">
+        <ion-icon name="download-outline"></ion-icon>
+        <ion-label> Xuất file </ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button (click)="loaitru()">
         <ion-icon name="hand-left-outline"></ion-icon>
         <ion-label> Loại trừ </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
 
       <ion-tab-button (click)="manager()">
         <ion-icon name="briefcase-outline"></ion-icon>
         <ion-label>
-          Xác nhận
-          <ion-badge color="danger" *ngIf="rest.vaccine.temp[0].length + rest.vaccine.temp[1].length">
-            {{rest.vaccine.temp[0].length + rest.usg.temp[0].length}}
+          Đã thêm
+          <ion-badge color="danger" *ngIf="(rest.vaccine.dathem.vaccine.length + rest.vaccine.dathem.sieuam.length)">
+            {{rest.vaccine.dathem.vaccine.length + rest.vaccine.dathem.sieuam.length}}
           </ion-badge>
         </ion-label>
       </ion-tab-button>

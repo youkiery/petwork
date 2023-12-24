@@ -448,10 +448,10 @@ export class HisPage {
         this.denxquang(id)
         break;
       case 'sinhly':
-        this.densinhly(id)
+        this.denxetnghiem(id)
         break;
       case 'sinhhoa':
-        this.densinhhoa(id)
+        this.denxetnghiem(id)
         break;
       case 'sieuam':
         this.densieuam(id)
@@ -520,29 +520,17 @@ export class HisPage {
     })
   }
 
-  public async densinhly(id: number) {
+  public async denxetnghiem(id: number) {
     await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('physical', 'printword', {
+    this.rest.checkpost('xetnghiem', 'printword', {
       id: id
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.physical.id = id
-      this.rest.physical.print = resp.html
-      this.rest.navCtrl.navigateForward('/physical/print')
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async densinhhoa(id: number) {
-    await this.rest.freeze('Đang tải dữ liệu...')
-    this.rest.checkpost('profile', 'printword', {
-      id: id
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.profile.id = id
-      this.rest.profile.print = resp.html
-      this.rest.navCtrl.navigateForward('/profile/print')
+      this.rest.temp = {
+        id: id,
+        tailieu: resp.html
+      }
+      this.rest.navCtrl.navigateForward('/xetnghiem/in')
     }, () => {
       this.rest.defreeze()
     })

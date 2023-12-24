@@ -37,7 +37,7 @@ export class XetnghieminPage implements OnInit {
   public async download() {
     await this.rest.freeze()
     this.rest.checkpost('xetnghiem', 'download', {
-      id: this.rest.profile.id
+      id: this.rest.temp.id
     }).then(resp => {
       this.rest.defreeze()
       window.open(resp.link)
