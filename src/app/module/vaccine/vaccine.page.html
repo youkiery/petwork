@@ -159,12 +159,12 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="vaccined()">
+      <ion-tab-button (click)="vaccined()" *ngIf="rest.config.vaccine> 1">
         <ion-icon name="eyedrop-outline"></ion-icon>
         <ion-label> Đã tiêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="xuatfile()">
+      <ion-tab-button (click)="xuatfile()" *ngIf="rest.config.vaccine> 1">
         <ion-icon name="download-outline"></ion-icon>
         <ion-label> Xuất file </ion-label>
       </ion-tab-button>
