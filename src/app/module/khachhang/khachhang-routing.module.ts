@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'gopy',
     loadChildren: () => import('./gopy/gopy.module').then( m => m.GopyPageModule)
+  },
+  {
+    path: 'thongkedanhgia',
+    loadChildren: () => import('./thongkedanhgia/thongkedanhgia.module').then( m => m.ThongkedanhgiaPageModule)
   }
 ];
 

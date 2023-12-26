@@ -1,0 +1,41 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="thoigian.batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="thoigian.ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" (click)="dulieu.danhan.morong = !dulieu.danhan.morong">
+    Voucher đã nhận: {{dulieu.danhan.soluong}}
+    <div class="morong" *ngIf="dulieu.danhan.morong">
+      <div class="voucher" *ngFor="let voucher of dulieu.danhan.danhsach">
+        {{voucher.ten}}: {{voucher.soluong}}
+      </div>
+    </div>
+  </div>
+
+  <div class="stl-card" (click)="dulieu.dasudung.morong = !dulieu.dasudung.morong">
+    Voucher sử dụng: {{dulieu.dasudung.soluong}}
+    <div class="morong" *ngIf="dulieu.dasudung.morong">
+      <div class="voucher" *ngFor="let voucher of dulieu.dasudung.danhsach">
+        {{voucher.ten}}: {{voucher.soluong}}
+      </div>
+    </div>
+  </div>
+
+</ion-content>

@@ -48,6 +48,9 @@
       <ion-fab-button *ngIf="rest.config.khachhang > 1" (click)="gopy()">
         <ion-icon name="mail-unread-outline"></ion-icon>
       </ion-fab-button>
+      <ion-fab-button (click)="chinhanh()" *ngIf="rest.config.datlich > 1">
+        <ion-icon name="business-outline"></ion-icon>
+      </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
@@ -85,13 +88,13 @@
         <ion-badge color="success" *ngIf="rest.home.datlich3 > 0"> {{rest.home.datlich3}} </ion-badge>
         <ion-label> Đánh giá </ion-label>
       </ion-tab-button>
+      <ion-tab-button (click)="thongkedanhgia()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> TK đánh giá </ion-label>
+      </ion-tab-button>
       <ion-tab-button (click)="chuyenmon()" *ngIf="rest.config.datlich > 1">
         <ion-icon name="documents-outline"></ion-icon>
         <ion-label> Chuyên môn </ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="chinhanh()" *ngIf="rest.config.datlich > 1">
-        <ion-icon name="business-outline"></ion-icon>
-        <ion-label> Chi nhánh </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

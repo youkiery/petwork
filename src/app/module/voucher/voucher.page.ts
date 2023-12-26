@@ -122,4 +122,8 @@ export class VoucherPage implements OnInit {
   public cauhinh() {
     this.rest.navCtrl.navigateForward("/voucher/cauhinh")
   }
+
+  public thongke() {
+    this.rest.navCtrl.navigateForward("/voucher/thongke")
+  }
 }

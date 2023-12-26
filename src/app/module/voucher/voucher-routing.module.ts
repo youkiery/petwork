@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'cauhinh',
     loadChildren: () => import('./cauhinhvoucher/cauhinhvoucher.module').then( m => m.CauhinhvoucherPageModule)
+  },
+  {
+    path: 'thongke',
+    loadChildren: () => import('./thongkevoucher/thongkevoucher.module').then( m => m.ThongkevoucherPageModule)
   }
 ];
 
