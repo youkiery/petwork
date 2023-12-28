@@ -15,6 +15,10 @@
     <ion-label position="stacked"> Đến ngày </ion-label>
     <ion-datetime [(ngModel)]="thoigian.ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
+
+  <ion-button expand="full" (click)="khoitao()">
+    Lọc dữ liệu
+  </ion-button>
   
   <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
     <ion-refresher-content></ion-refresher-content>

@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SchedulelichbanPageRoutingModule } from './schedulelichban-routing.module';
+import { SpathemlichbanPageRoutingModule } from './spathemlichban-routing.module';
 
-import { SchedulelichbanPage } from './schedulelichban.page';
+import { SpathemlichbanPage } from './spathemlichban.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SchedulelichbanPageRoutingModule
+    SpathemlichbanPageRoutingModule
   ],
-  declarations: [SchedulelichbanPage]
+  declarations: [SpathemlichbanPage]
 })
-export class SchedulelichbanPageModule {}
+export class SpathemlichbanPageModule {}

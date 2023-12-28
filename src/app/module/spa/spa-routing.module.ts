@@ -51,6 +51,14 @@ const routes: Routes = [
   {
     path: 'bieudo',
     loadChildren: () => import('./spabieudo/spabieudo.module').then( m => m.SpabieudoPageModule)
+  },
+  {
+    path: 'lichban',
+    loadChildren: () => import('./spalichban/spalichban.module').then( m => m.SpalichbanPageModule)
+  },
+  {
+    path: 'themlichban',
+    loadChildren: () => import('./spathemlichban/spathemlichban.module').then( m => m.SpathemlichbanPageModule)
   }
 ];
 

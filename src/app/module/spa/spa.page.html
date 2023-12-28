@@ -108,11 +108,6 @@
 <ion-toolbar *ngIf="rest.isready">
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.navigateForward('/home')">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-        <ion-label> Trở về </ion-label>
-      </ion-tab-button>
-
       <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
@@ -123,12 +118,12 @@
         <ion-label> Nhắc Spa </ion-label>
       </ion-tab-button> -->
 
-      <ion-tab-button (click)="bieudo()">
+      <ion-tab-button *ngIf="rest.config.spa > 1" (click)="bieudo()">
         <ion-icon name="bar-chart-outline"></ion-icon>
         <ion-label> Biểu đồ </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="thongke()">
+      <ion-tab-button *ngIf="rest.config.spa > 1" (click)="thongke()">
         <ion-icon name="bar-chart-outline"></ion-icon>
         <ion-label> Thống kê </ion-label>
       </ion-tab-button>
@@ -137,6 +132,11 @@
         <ion-icon name="person-circle-outline"></ion-icon>
         <ion-label> Phân công </ion-label>
       </ion-tab-button> -->
+      
+      <ion-tab-button (click)="lichban()">
+        <ion-icon name="airplane-outline"></ion-icon>
+        <ion-label> Lịch bận </ion-label>
+      </ion-tab-button>
 
       <ion-tab-button *ngIf="rest.config.spa > 1" (click)="manager()">
         <ion-icon name="briefcase-outline"></ion-icon>

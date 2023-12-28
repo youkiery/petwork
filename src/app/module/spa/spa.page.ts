@@ -495,6 +495,10 @@ export class SpaPage {
     this.rest.navCtrl.navigateForward('/spa/bieudo')
   }
 
+  public lichban() {
+    this.rest.navCtrl.navigateForward("/spa/lichban")
+  }
+
   // public report(index: number) {
   //   let item = this.rest.spa.list[index]
   //   this.rest.temp = {

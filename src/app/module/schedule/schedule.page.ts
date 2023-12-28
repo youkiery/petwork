@@ -328,10 +328,6 @@ export class SchedulePage {
     })
   }
 
-  public lichban() {
-    this.rest.navCtrl.navigateForward("/schedule/lichban")
-  }
-
   public chamcong() {
     this.rest.navCtrl.navigateForward("/schedule/chamcong")
   }
