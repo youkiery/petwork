@@ -19,9 +19,11 @@
     </ion-datetime>
   </ion-item>
 
-  <div class="pos" *ngFor="let ngay of rest.nhantin.chonngay" (click)="chonngay(ngay.batdau, ngay.ketthuc)">{{ngay.ten}}</div>
+  <div class="pos" *ngFor="let ngay of rest.nhantin.chonngay" (click)="chonngay(ngay.batdau, ngay.ketthuc)">{{ngay.ten}}
+  </div>
   <br>
-  <div *ngFor="let nhom of rest.nhantin.thongke.nhomnhantin; let i = index" [class]="nhom.tick > 0 ? 'pos' : 'pos gray'" (click)="chonnhom(i)"> {{nhom.name}}</div>
+  <div *ngFor="let nhom of rest.nhantin.thongke.nhomnhantin; let i = index" [class]="nhom.tick > 0 ? 'pos' : 'pos gray'"
+    (click)="chonnhom(i)"> {{nhom.name}}</div>
   <!-- <div [class]="sieuam ? 'pos' : 'pos gray'" (click)="chonsieuam()"> siêu âm </div> -->
 
   <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
@@ -30,19 +32,41 @@
 
   <canvas id="bieudo">{{bieudo}}</canvas>
 
-  <div class="stl-card">
-    <div class="text-center" *ngIf="!rest.nhantin.thongke.danhsachkhongden.length"> Không có danh sách </div>
-    <div class="upperline" *ngFor="let nhantin of rest.nhantin.thongke.danhsachkhongden">
-      Khách hàng: {{nhantin.khachhang}} <br>
-      Điện thoại: {{nhantin.dienthoai}} <br>
-      <div *ngIf="nhantin.loai"> {{nhantin.loai}} </div>
-      Người làm: {{nhantin.nhanvien}} <br>
-      <!-- <div *ngIf="sieuam">
+  <ion-item color="secondary">
+    Khách không đến: {{rest.nhantin.thongke.tongkhongden}}/{{rest.nhantin.thongke.tongkhach}} ({{rest.nhantin.thongke.tile}}%)
+  </ion-item>
+
+  <div class="stl-card" *ngIf="!rest.nhantin.thongke.danhsachkhongden.length">
+    <div class="text-center"> Không có danh sách </div>
+  </div>
+
+  <div class="stl-card" *ngFor="let nhanvien of rest.nhantin.thongke.danhsachkhongden">
+    <div class="stl-card-header" (click)="nhanvien.morong = !nhanvien.morong"> {{nhanvien.ten}} ({{nhanvien.danhsach.length}}) </div>
+
+    <div *ngIf="nhanvien.morong">
+      <div class="upperline" *ngFor="let nhantin of nhanvien.danhsach">
+        <ion-row>
+          <ion-col>
+            Khách hàng: {{nhantin.khachhang}} <br>
+            Ngày đến: {{nhantin.ngayden}} <br>
+          </ion-col>
+          <ion-col>
+            Điện thoại: {{nhantin.dienthoai}} <br>
+            Ngày nhắc: {{nhantin.ngaynhac}} <br>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Loại nhắc: {{nhantin.loai}} <br>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="sieuam">
         <div *ngIf="nhantin.xogiun.length"> Ngày xổ giun: {{nhantin.xogiun}} </div>
         <div *ngIf="nhantin.vaccinetime.length"> Ngày tiêm vaccine: {{nhantin.vaccinetime}} </div>
         <div> Đã sinh: {{nhantin.dade}} </div>
         <div> Số con: {{nhantin.number}} </div>
       </div> -->
-    </div>
-  </div>
 </ion-content>
