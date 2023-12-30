@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { TimeService } from 'src/app/services/time.service';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-thongkenhantin',
@@ -8,6 +9,7 @@ import { TimeService } from 'src/app/services/time.service';
   styleUrls: ['./thongkenhantin.page.scss'],
 })
 export class ThongkenhantinPage implements OnInit {
+  public bieudo: any;
   public sieuam = 0
   constructor(
     public rest: RestService,
@@ -18,12 +20,15 @@ export class ThongkenhantinPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/nhantin')
-    else if (!this.rest.nhantin.khoitaothongke) {
-      this.rest.nhantin.batdau = this.time.datetoisodate(this.rest.home.today)
-      this.rest.nhantin.ketthuc = this.time.datetoisodate(this.rest.home.today)
-      this.khoitao()
-    }
+    this.rest.ready().then(() => {
+      if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/nhantin')
+      else 
+      if (!this.rest.nhantin.khoitaothongke) {
+        this.rest.nhantin.batdau = this.rest.home.month.start
+        this.rest.nhantin.ketthuc = this.rest.home.month.end
+        this.khoitao()
+      }
+    })
   }
 
   public async khoitao() {
@@ -32,12 +37,14 @@ export class ThongkenhantinPage implements OnInit {
       batdau: this.rest.nhantin.batdau,
       ketthuc: this.rest.nhantin.ketthuc,
       loctheonhom: this.loctheonhom(),
-      sieuam: this.sieuam
+      sieuam: this.sieuam,
+      khoitao: this.rest.nhantin.khoitaothongke
     }).then(resp => {
+      this.rest.defreeze()
       this.rest.nhantin.thongke = resp.dulieu
       this.rest.nhantin.chonngay = resp.chonngay
       this.rest.nhantin.khoitaothongke = true
-      this.rest.defreeze()
+      this.taobieudo()
     }, () => {
       this.rest.defreeze()
     })
@@ -49,16 +56,39 @@ export class ThongkenhantinPage implements OnInit {
       batdau: this.rest.nhantin.batdau,
       ketthuc: this.rest.nhantin.ketthuc,
       loctheonhom: this.loctheonhom(),
-      sieuam: this.sieuam
+      sieuam: this.sieuam,
+      khoitao: this.rest.nhantin.khoitaothongke
     }).then(resp => {
+      this.rest.defreeze()
+      event.target.complete();
       this.rest.nhantin.thongke = resp.dulieu
       this.rest.nhantin.chonngay = resp.chonngay
       this.rest.nhantin.khoitaothongke = true
-      this.rest.defreeze()
-      event.target.complete();
+      this.taobieudo()
     }, () => {
       this.rest.defreeze()
       event.target.complete();
+    })
+  }
+  
+  public taobieudo() {
+    if (this.bieudo) this.bieudo.destroy();
+    let thongke = this.rest.nhantin.thongke
+    this.bieudo = new Chart("bieudo", {
+      type: 'bar',
+      data: {
+        labels: ["Tổng", "SMS", "GD","ZNS", "Khác"],
+        datasets: [{
+          label: "Tổng",
+          data: [thongke.tongkhach, thongke.loainhan[0], thongke.loainhan[1], thongke.loainhan[2], thongke.loainhan[3]],
+          backgroundColor: 'lightgreen',
+        },
+        {
+          label: "Quay lại",
+          data: [thongke.danhsachden.length, thongke.quaylai[0], thongke.quaylai[1], thongke.quaylai[2], thongke.quaylai[3]],
+          backgroundColor: 'lightblue',
+        }],
+      }
     })
   }
 
