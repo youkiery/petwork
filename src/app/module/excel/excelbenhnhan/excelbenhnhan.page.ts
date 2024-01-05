@@ -66,7 +66,7 @@ export class ExcelbenhnhanPage implements OnInit {
 
   public async updatehis(index: number) {
     let alert = await this.alert.create({
-      message: 'Cập nhật dịch vụ his',
+      message: 'Cập nhật dịch vụ',
       inputs: [
         { name: 'name', type: 'text', 'placeholder': 'Tên dịch vụ', value: this.loaidichvu[index].tendanhmuc },
         { name: 'time', type: 'text', 'placeholder': 'Thời gian dự kiến', value: this.loaidichvu[index].thoigian }
