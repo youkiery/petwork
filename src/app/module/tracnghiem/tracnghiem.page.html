@@ -17,8 +17,8 @@
 
   <div class="stl-card" *ngFor="let chuyenmuc of rest.tracnghiem.danhsach">
     <div> <b> Bài thi: {{chuyenmuc.ten}} </b> </div>
-    <div> <b> Số câu: {{chuyenmuc.socau}} </b> </div>
-    <div> <b> Thời gian thi: {{chuyenmuc.thoigian}} phút </b> </div>
+    <div> Thi {{chuyenmuc.socau}} câu hỏi trên tổng {{chuyenmuc.tongcau}} trong {{chuyenmuc.thoigian}} phút </div>
+    <div> <b> Người soạn: {{chuyenmuc.nhanvien}} </b> </div>
     <div> Điểm thi cao nhất: {{chuyenmuc.diemcaonhat}} </div>
     <div> Lần thi gần nhất: {{chuyenmuc.lanthigannhat}} </div>
     <div> Điểm thi gần nhất: {{chuyenmuc.diemgannhat}} </div>
