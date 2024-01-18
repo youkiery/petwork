@@ -22,6 +22,9 @@
     <ion-segment-button value="2">
       <ion-label> Tái khám </ion-label>
     </ion-segment-button>
+    <ion-segment-button value="3">
+      <ion-label> Đặt lịch </ion-label>
+    </ion-segment-button>
   </ion-segment>
 
   <ion-item>
@@ -33,9 +36,10 @@
     <div class="pos" (click)="dientruong('[loainhac]')" *ngIf="loai == '0'"> [loainhac] </div>
     <div class="pos" (click)="dientruong('[ngayden]')"> [ngayden] </div>
     <div class="pos" (click)="dientruong('[ngaynhac]')"> [ngaynhac] </div>
+    <div class="pos" (click)="dientruong('[ngaygio]')" *ngIf="loai == '3'"> [ngaygio] </div>
     <div class="pos" (click)="dientruong('[khachhang]')"> [khachhang] </div>
     <div class="pos" (click)="dientruong('[dienthoai]')"> [dienthoai] </div>
-    <div class="pos" (click)="dientruong('[thucung]')"> [thucung] </div>
+    <div class="pos" (click)="dientruong('[thucung]')" *ngIf="loai !== '3'"> [thucung] </div>
   </div>
 
   <div class="stl-card" *ngIf="loai == '1'">

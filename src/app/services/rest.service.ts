@@ -16,6 +16,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   // public base: string = 'https://nhatrang.thanhxuanpet.com';
+  // public base: string = 'https://nhatrang3.thanhxuanpet.com';
+  // public base: string = 'https://nhatrang5.thanhxuanpet.com';
   // public base: string = 'https://daklak.thanhxuanpet.com';
   public base: string = 'http://localhost';
   public version = 21 // 21-188
