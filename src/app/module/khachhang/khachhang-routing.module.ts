@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'thongkedanhgia',
     loadChildren: () => import('./thongkedanhgia/thongkedanhgia.module').then( m => m.ThongkedanhgiaPageModule)
+  },
+  {
+    path: 'cauhinh',
+    loadChildren: () => import('./cauhinhkhachhang/cauhinhkhachhang.module').then( m => m.CauhinhkhachhangPageModule)
   }
 ];
 

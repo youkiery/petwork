@@ -126,6 +126,10 @@ export class KhachhangPage implements OnInit {
     this.rest.navCtrl.navigateForward("/khachhang/homnay")
   }
 
+  public cauhinh() {
+    this.rest.navCtrl.navigateForward("/khachhang/cauhinh")
+  }
+
   public danhgia() {
     this.rest.navCtrl.navigateForward("/khachhang/danhgia")
   }

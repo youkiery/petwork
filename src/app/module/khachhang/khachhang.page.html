@@ -74,9 +74,9 @@
 <ion-toolbar *ngIf="rest.isready">
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.root()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-        <ion-label> Trở về </ion-label>
+      <ion-tab-button (click)="cauhinh()" *ngIf="rest.config.khachhang > 1">
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label> Cấu hình </ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="homnay()">
         <ion-icon name="documents-outline"></ion-icon>

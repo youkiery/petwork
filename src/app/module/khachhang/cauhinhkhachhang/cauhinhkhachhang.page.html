@@ -1,0 +1,22 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button slot="end" color="light" fill="clear" size="small" (click)="luucauhinh()">
+      Lưu cấu hình
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-item>
+    <ion-label position="stacked"> Chương trình khuyến mãi </ion-label>
+    <ion-input [(ngModel)]="dulieu.chuongtrinh"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tổng lượt đăng ký mỗi nhân viên mỗi ngày </ion-label>
+    <ion-input type="number" min="0" [(ngModel)]="dulieu.luotdatlich"></ion-input>
+  </ion-item>
+</ion-content>
