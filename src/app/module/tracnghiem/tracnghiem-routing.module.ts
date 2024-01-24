@@ -23,6 +23,18 @@ const routes: Routes = [
   {
     path: 'ketqua',
     loadChildren: () => import('./tracnghiemketqua/tracnghiemketqua.module').then( m => m.TracnghiemketquaPageModule)
+  },
+  {
+    path: 'chuyenmuc',
+    loadChildren: () => import('./tracnghiemchuyenmuc/tracnghiemchuyenmuc.module').then( m => m.TracnghiemchuyenmucPageModule)
+  },
+  {
+    path: 'dethi',
+    loadChildren: () => import('./tracnghiemdethi/tracnghiemdethi.module').then( m => m.TracnghiemdethiPageModule)
+  },
+  {
+    path: 'capnhatdethi',
+    loadChildren: () => import('./tracnghiemcapnhatdethi/tracnghiemcapnhatdethi.module').then( m => m.TracnghiemcapnhatdethiPageModule)
   }
 ];
 

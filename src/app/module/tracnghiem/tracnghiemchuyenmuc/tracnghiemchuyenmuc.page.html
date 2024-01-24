@@ -1,0 +1,36 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" fill="clear" size="small" slot="end" (click)="themchuyenmuc()">
+      Thêm chuyên mục
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="stl-card" *ngFor="let chuyenmuc of rest.tracnghiem.chuyenmuc">
+    <div> <b> Chuyên mục: {{chuyenmuc.tenchuyenmuc}} </b> </div>
+    <div> Thi {{chuyenmuc.socau}} câu hỏi trên tổng {{chuyenmuc.tongsocau}} trong {{chuyenmuc.thoigian}} phút </div>
+    <div> Người soạn: {{chuyenmuc.nhanvien}} </div>
+    
+    <ion-row>
+      <ion-col *ngIf="rest.config.tracnghiem > 1">
+        <ion-button color="secondary" expand="full" (click)="capnhatchuyenmuc(chuyenmuc.id)">
+          Sửa
+        </ion-button>
+      </ion-col>
+      <ion-col *ngIf="rest.config.tracnghiem > 1">
+        <ion-button color="danger" expand="full" (click)="xoachuyenmuc(chuyenmuc.id)">
+          Xoá
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

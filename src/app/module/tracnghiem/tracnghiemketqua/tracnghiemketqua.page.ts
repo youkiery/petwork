@@ -19,14 +19,14 @@ export class TracnghiemketquaPage implements OnInit {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
   }
 
-  public async tailai(event: any) {
+  public async taithem(event: any) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'ketquathi', {
       trang: (this.rest.tracnghiem.ketqua.trang ++)
     }).then(resp => {
       this.rest.defreeze()
       event.target.complete()
-      resp.ketqua.forEach(ketqua => {
+      resp.danhsach.forEach(ketqua => {
         this.rest.tracnghiem.ketqua.danhsach.push(ketqua)  
       });
     }, () => {

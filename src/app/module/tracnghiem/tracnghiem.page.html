@@ -15,21 +15,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="stl-card" *ngFor="let chuyenmuc of rest.tracnghiem.danhsach">
-    <div> <b> Bài thi: {{chuyenmuc.ten}} </b> </div>
-    <div> Thi {{chuyenmuc.socau}} câu hỏi trên tổng {{chuyenmuc.tongcau}} trong {{chuyenmuc.thoigian}} phút </div>
-    <div> <b> Người soạn: {{chuyenmuc.nhanvien}} </b> </div>
-    <div> Điểm thi cao nhất: {{chuyenmuc.diemcaonhat}} </div>
-    <div> Lần thi gần nhất: {{chuyenmuc.lanthigannhat}} </div>
-    <div> Điểm thi gần nhất: {{chuyenmuc.diemgannhat}} </div>
-    <div> Tổng số lần thi: {{chuyenmuc.solanthi}} </div>
+  <div class="stl-card" *ngFor="let dethi of rest.tracnghiem.dethi">
+    <div> <b> Đề thi: {{dethi.tendethi}} </b> </div>
+    <div> {{dethi.socau}} câu hỏi làm trong {{dethi.thoigian}} phút </div>
+    <div> Kho {{dethi.tongsocau}} lấy từ {{dethi.tongchuyenmuc}} chuyên mục </div>
     <ion-row>
       <ion-col>
-        <ion-button color="success" expand="full" (click)="batdauthi(chuyenmuc.id, chuyenmuc.socau, chuyenmuc.thoigian)" [disabled]="chuyenmuc.hienthi == '0'">
-          {{ (chuyenmuc.hienthi == '0' ? '---' : 'Bắt đầu thi') }}
+        <ion-button color="success" expand="full" (click)="batdauthi(dethi.id, dethi.thoigian)">
+          Bắt đầu thi
         </ion-button>
       </ion-col>
-      <ion-col size="2" size-md="1">
+      <!-- <ion-col size="2" size-md="1">
         <ion-button color="secondary" expand="full" (click)="chitiet(chuyenmuc.id)">
           ⓘ
         </ion-button>
@@ -48,9 +44,8 @@
         <ion-button color="danger" expand="full" (click)="xoachuyenmuc(chuyenmuc.id)">
           X
         </ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
-
   </div>
 </ion-content>
 
@@ -61,9 +56,13 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="themchuyenmuc()" *ngIf="rest.config.tracnghiem > 1">
-        <ion-icon name="add-circle-outline"></ion-icon>
-        <ion-label> Thêm chuyên mục </ion-label>
+      <ion-tab-button (click)="chuyenmuc()" *ngIf="rest.config.tracnghiem > 1">
+        <ion-icon name="library-outline"></ion-icon>
+        Chuyên mục
+      </ion-tab-button>
+      <ion-tab-button (click)="dethi()" *ngIf="rest.config.tracnghiem > 1">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label> Đề thi </ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="ketquathi()" *ngIf="rest.config.tracnghiem > 1">
         <ion-icon name="library-outline"></ion-icon>

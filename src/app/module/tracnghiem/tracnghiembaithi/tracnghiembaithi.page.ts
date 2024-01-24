@@ -76,7 +76,7 @@ export class TracnghiembaithiPage implements OnInit {
         idcauhoi: cautraloi.idcauhoi, 
         idcautraloi: cautraloi.id,
       }).then(resp => {
-        // this.rest.tracnghiem.danhsach = resp.danhsach
+        // this.rest.tracnghiem.dethi = resp.danhsach
       }, () => {})
     }
   }
@@ -87,7 +87,7 @@ export class TracnghiembaithiPage implements OnInit {
       idbaithi: this.rest.tracnghiem.bailam.idbaithi,
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.tracnghiem.khoitao = false
+      this.rest.tracnghiem.khoitaodethi = false
       this.hienthidiem()
     }, () => {
       this.rest.defreeze()

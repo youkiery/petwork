@@ -7,10 +7,6 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
   <div class="stl-card" *ngFor="let chitiet of this.rest.tracnghiem.ketqua.danhsach">
     <div> Người thi: {{chitiet.nguoithi}} </div>
     <div> Ngày thi: {{chitiet.ngaythi}} </div>
@@ -19,4 +15,8 @@
       Chi tiết
     </ion-button>
   </div>
+  
+  <ion-infinite-scroll (ionInfinite)="taithem($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

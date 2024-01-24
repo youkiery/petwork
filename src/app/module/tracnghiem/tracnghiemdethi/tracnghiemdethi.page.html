@@ -1,0 +1,31 @@
+<ion-header *ngIf="rest.isready">
+  <ion-toolbar color="success" *ngIf="rest.isready">
+    <ion-button color="light" fill="clear" size="small" (click)="rest.back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button color="light" fill="clear" size="small" slot="end" (click)="themdethi()">
+      Thêm đề thi
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="rest.isready">
+  <div class="stl-card" *ngFor="let dethi of rest.tracnghiem.dethi">
+    <div> <b> Đề thi: {{dethi.tendethi}} </b> </div>
+    <div> {{dethi.socau}} câu hỏi làm trong {{dethi.thoigian}} phút </div>
+    <div> Kho {{dethi.tongsocau}} lấy từ {{dethi.tongchuyenmuc}} chuyên mục </div>
+    <ion-row>
+      <ion-col *ngIf="rest.config.tracnghiem > 1">
+        <ion-button color="secondary" expand="full" (click)="capnhatdethi(dethi.id)">
+          Sửa
+        </ion-button>
+      </ion-col>
+      <ion-col *ngIf="rest.config.tracnghiem > 1">
+        <ion-button color="danger" expand="full" (click)="xoadethi(dethi.id)">
+          Xoá
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

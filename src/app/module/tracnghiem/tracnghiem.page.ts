@@ -20,7 +20,7 @@ export class TracnghiemPage implements OnInit {
   ionViewWillEnter() {
     this.rest.ready().then(() => {
       this.rest.action = 'tracnghiem'
-      if (!this.rest.tracnghiem.khoitao) this.khoitao()
+      if (!this.rest.tracnghiem.khoitaodethi) this.khoitao()
     })
   }
 
@@ -28,9 +28,9 @@ export class TracnghiemPage implements OnInit {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'khoitao', {}).then(resp => {
       this.rest.defreeze()
-      this.rest.tracnghiem.khoitao = true
+      this.rest.tracnghiem.khoitaodethi = true
+      this.rest.tracnghiem.dethi = resp.danhsach
       this.baithicuoi = resp.baithicuoi
-      this.rest.tracnghiem.danhsach = resp.danhsach
     }, () => {
       this.rest.defreeze()
     })
@@ -41,16 +41,16 @@ export class TracnghiemPage implements OnInit {
     this.rest.checkpost('tracnghiem', 'khoitao', {}).then(resp => {
       this.rest.defreeze()
       event.target.complete()
-      this.rest.tracnghiem.khoitao = true
+      this.rest.tracnghiem.khoitaodethi = true
+      this.rest.tracnghiem.dethi = resp.danhsach
       this.baithicuoi = resp.baithicuoi
-      this.rest.tracnghiem.danhsach = resp.danhsach
     }, () => {
       this.rest.defreeze()
       event.target.complete()
     })
   }
 
-  public async thongbaobaithi(idchuyenmuc: number, socau: number, thoigian: number) {
+  public async thongbaobaithi(iddethi: number, thoigian: number) {
     const alert = await this.alert.create({
       header: 'Bạn còn 1 bài thi chưa hoàn thành',
       buttons: [{
@@ -61,23 +61,22 @@ export class TracnghiemPage implements OnInit {
       }, {
         text: 'Thi lại',
         handler: (e) => {
-          this.xacnhanbatdauthi(idchuyenmuc, socau, thoigian)
+          this.xacnhanbatdauthi(iddethi, thoigian)
         }
       }]
     });
     await alert.present();
   }
 
-  public async batdauthi(idchuyenmuc: number, socau: number, thoigian: number) {
-    if (this.baithicuoi + thoigian * 60 > new Date().getTime() / 1000) this.thongbaobaithi(idchuyenmuc, socau, thoigian)
-    else this.xacnhanbatdauthi(idchuyenmuc, socau, thoigian)
+  public async batdauthi(iddethi: number, thoigian: number) {
+    if (this.baithicuoi + thoigian * 60 > new Date().getTime() / 1000) this.thongbaobaithi(iddethi, thoigian)
+    else this.xacnhanbatdauthi(iddethi, thoigian)
   }
 
-  public async xacnhanbatdauthi(idchuyenmuc: number, socau: number, thoigian: number) {
+  public async xacnhanbatdauthi(iddethi: number, thoigian: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'batdauthi', {
-      idchuyenmuc: idchuyenmuc,
-      socau: socau,
+      iddethi: iddethi,
       thoigian: thoigian
     }).then(resp => {
       this.rest.defreeze()
@@ -115,17 +114,6 @@ export class TracnghiemPage implements OnInit {
     })
   }
 
-  public async themchuyenmuc() {
-    this.rest.temp = {
-      id: 0,
-      tenchuyenmuc: "",
-      socau: 1,
-      thoigian: 1,
-      cauhoi: []
-    }
-    this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
-  }
-
   public async ketquathi() {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.tracnghiem.ketqua.trang = 1
@@ -135,46 +123,6 @@ export class TracnghiemPage implements OnInit {
       this.rest.defreeze()
       this.rest.tracnghiem.ketqua.danhsach = resp.danhsach
       this.rest.navCtrl.navigateForward("/tracnghiem/ketqua")
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
-  public async capnhatchuyenmuc(idchuyenmuc: number) {
-    await this.rest.freeze('Đang tải dữ liệu......')
-    this.rest.checkpost('tracnghiem', 'dulieuchuyenmuc', {
-      idchuyenmuc: idchuyenmuc
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.temp = resp.chuyenmuc
-      this.rest.navCtrl.navigateForward("/tracnghiem/capnhat")
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-  
-  public async xoachuyenmuc(idchuyenmuc: number) {
-    const alert = await this.alert.create({
-      header: 'Chuyên mục sẽ không thi được nữa',
-      buttons: [{
-        text: 'Trở về',
-      }, {
-        text: 'Xác nhận',
-        handler: (e) => {
-          this.xacnhanxoachuyenmuc(idchuyenmuc)
-        }
-      }]
-    });
-    await alert.present();
-  }
-  
-  public async xacnhanxoachuyenmuc(idchuyenmuc: number) {
-    await this.rest.freeze('Đang tải dữ liệu......')
-    this.rest.checkpost('tracnghiem', 'xoachuyenmuc', {
-      idchuyenmuc: idchuyenmuc
-    }).then(resp => {
-      this.rest.defreeze()
-      this.rest.tracnghiem.danhsach = resp.danhsach
     }, () => {
       this.rest.defreeze()
     })
@@ -201,9 +149,17 @@ export class TracnghiemPage implements OnInit {
       idchuyenmuc: idchuyenmuc
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.tracnghiem.danhsach = resp.danhsach
+      this.rest.tracnghiem.dethi = resp.danhsach
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public chuyenmuc() {
+    this.rest.navCtrl.navigateForward("/tracnghiem/chuyenmuc")
+  }
+
+  public dethi() {
+    this.rest.navCtrl.navigateForward("/tracnghiem/dethi")
   }
 }

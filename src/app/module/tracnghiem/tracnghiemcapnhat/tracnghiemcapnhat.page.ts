@@ -55,7 +55,7 @@ export class TracnghiemcapnhatPage implements OnInit {
       dulieu: this.rest.temp
     }).then(resp => {
       this.rest.defreeze()
-      this.rest.tracnghiem.danhsach = resp.danhsach
+      this.rest.tracnghiem.chuyenmuc = resp.danhsach
       this.rest.back()
     }, () => {
       this.rest.defreeze()
