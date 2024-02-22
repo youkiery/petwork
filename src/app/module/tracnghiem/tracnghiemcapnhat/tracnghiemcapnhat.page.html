@@ -15,15 +15,6 @@
     <ion-label position="stacked"> Tên chuyên mục </ion-label>
     <ion-input [(ngModel)]="rest.temp.tenchuyenmuc"> </ion-input>
   </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Số lượng câu hỏi </ion-label>
-    <ion-input type="number" min="1" [(ngModel)]="rest.temp.socau"> </ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked"> Thời gian làm (phút) </ion-label>
-    <ion-input type="number" min="1" [(ngModel)]="rest.temp.thoigian"> </ion-input>
-  </ion-item>
 
   <div class="stl-card" style="position: relative;" *ngFor="let cauhoi of rest.temp.cauhoi; let i = index">
     <div class="nutxoa" (click)="xoacauhoi(i)"> x </div>

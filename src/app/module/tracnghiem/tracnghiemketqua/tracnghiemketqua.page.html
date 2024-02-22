@@ -7,16 +7,31 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div class="stl-card" *ngFor="let chitiet of this.rest.tracnghiem.ketqua.danhsach">
-    <div> Người thi: {{chitiet.nguoithi}} </div>
-    <div> Ngày thi: {{chitiet.ngaythi}} </div>
-    <div> Điểm thi: <span style="color: red;"> {{chitiet.diemthi}} điểm </span> </div>
-    <ion-button color="secondary" expand="full" (click)="chitietbaithi(chitiet.id)">
-      Chi tiết
-    </ion-button>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+  <ion-item class="item-label-class">
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="thongkebaithi()">
+    Thống kê
+  </ion-button>
+
+
+  <div class="stl-card" *ngFor="let dethi of danhsach">
+    <div class="dethi">
+      <b> Tên đề thi: {{dethi.tendethi}} </b>
+      <div [class]="nhanvien.diemthi == '-' ? 'baithi chuathi' : 'baithi'" *ngFor="let nhanvien of dethi.nhanvien">
+        Nhân viên: {{nhanvien.nhanvien}} <br>
+        Điểm thi: {{nhanvien.diemthi}} <br>
+        Ngày thi: {{nhanvien.ngaythi}} <br>
+        <ion-button *ngIf="nhanvien.diemthi !== '-'" color="secondary" expand="full" (click)="chitietbaithi(nhanvien.idbaithi)">
+          Chi tiết
+        </ion-button>
+      </div>
+    </div>
   </div>
-  
-  <ion-infinite-scroll (ionInfinite)="taithem($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

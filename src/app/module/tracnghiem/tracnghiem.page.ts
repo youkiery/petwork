@@ -50,34 +50,34 @@ export class TracnghiemPage implements OnInit {
     })
   }
 
-  public async thongbaobaithi(iddethi: number, thoigian: number) {
+  public async thongbaobaithi(iddethi: number, socau: number) {
     const alert = await this.alert.create({
       header: 'Bạn còn 1 bài thi chưa hoàn thành',
       buttons: [{
         text: 'Thi tiếp',
         handler: (e) => {
-          this.xacnhanthitiep(thoigian)
+          this.xacnhanthitiep(socau)
         }
       }, {
         text: 'Thi lại',
         handler: (e) => {
-          this.xacnhanbatdauthi(iddethi, thoigian)
+          this.xacnhanbatdauthi(iddethi, socau)
         }
       }]
     });
     await alert.present();
   }
 
-  public async batdauthi(iddethi: number, thoigian: number) {
-    if (this.baithicuoi + thoigian * 60 > new Date().getTime() / 1000) this.thongbaobaithi(iddethi, thoigian)
-    else this.xacnhanbatdauthi(iddethi, thoigian)
+  public async batdauthi(iddethi: number, socau: number) {
+    if (this.baithicuoi + socau * 30 > new Date().getTime() / 1000) this.thongbaobaithi(iddethi, socau)
+    else this.xacnhanbatdauthi(iddethi, socau)
   }
 
-  public async xacnhanbatdauthi(iddethi: number, thoigian: number) {
+  public async xacnhanbatdauthi(iddethi: number, socau: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'batdauthi', {
       iddethi: iddethi,
-      thoigian: thoigian
+      socau: socau
     }).then(resp => {
       this.rest.defreeze()
       this.rest.tracnghiem.bailam = resp.bailam

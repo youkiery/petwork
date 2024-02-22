@@ -15,6 +15,10 @@ export class TracnghiemcapnhatdethiPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
+  }
+
   public async capnhatdethi() {
     if (this.rest.temp.socau < 1 && this.rest.temp.thoigian < 1) return this.rest.notify("Số câu và thời gian làm bài > 0 phút")
     await this.rest.freeze('Đang tải dữ liệu......')

@@ -1,0 +1,13 @@
+.baithi {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  border-left: 1px solid green;
+}
+
+.baithi.chuathi {
+  background: rgb(255, 227, 238);
+}
+
+.baithi:last-child {
+  border-bottom: none;
+}

@@ -17,11 +17,10 @@
 
   <div class="stl-card" *ngFor="let dethi of rest.tracnghiem.dethi">
     <div> <b> Đề thi: {{dethi.tendethi}} </b> </div>
-    <div> {{dethi.socau}} câu hỏi làm trong {{dethi.thoigian}} phút </div>
-    <div> Kho {{dethi.tongsocau}} lấy từ {{dethi.tongchuyenmuc}} chuyên mục </div>
+    <div> Kho {{dethi.socau}} lấy từ {{dethi.tongchuyenmuc}} chuyên mục </div>
     <ion-row>
       <ion-col>
-        <ion-button color="success" expand="full" (click)="batdauthi(dethi.id, dethi.thoigian)">
+        <ion-button color="success" expand="full" (click)="batdauthi(dethi.id, dethi.socau)">
           Bắt đầu thi
         </ion-button>
       </ion-col>
@@ -58,7 +57,7 @@
       </ion-tab-button>
       <ion-tab-button (click)="chuyenmuc()" *ngIf="rest.config.tracnghiem > 1">
         <ion-icon name="library-outline"></ion-icon>
-        Chuyên mục
+        <ion-label> Soạn câu hỏi </ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="dethi()" *ngIf="rest.config.tracnghiem > 1">
         <ion-icon name="book-outline"></ion-icon>
