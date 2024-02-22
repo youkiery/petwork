@@ -9,11 +9,11 @@
 <ion-content *ngIf="rest.isready">
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Từ ngày </ion-label>
-    <ion-datetime [(ngModel)]="batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.tracnghiem.thongke.batdau" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
   <ion-item class="item-label-class">
     <ion-label position="stacked"> Đến ngày </ion-label>
-    <ion-datetime [(ngModel)]="ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
+    <ion-datetime [(ngModel)]="rest.tracnghiem.thongke.ketthuc" displayFormat="DD/MM/YYYY" max="2100"> </ion-datetime>
   </ion-item>
 
   <ion-button expand="full" (click)="thongkebaithi()">
@@ -21,7 +21,7 @@
   </ion-button>
 
 
-  <div class="stl-card" *ngFor="let dethi of danhsach">
+  <div class="stl-card" *ngFor="let dethi of rest.tracnghiem.thongke.danhsach">
     <div class="dethi">
       <b> Tên đề thi: {{dethi.tendethi}} </b>
       <div [class]="nhanvien.diemthi == '-' ? 'baithi chuathi' : 'baithi'" *ngFor="let nhanvien of dethi.nhanvien">

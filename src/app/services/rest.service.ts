@@ -18,9 +18,9 @@ export class RestService {
   // public base: string = 'https://nhatrang5.thanhxuanpet.com';
   // public base: string = 'https://nhatrang3.thanhxuanpet.com';
   // public base: string = 'https://nhatrang.thanhxuanpet.com';
-  // public base: string = 'https://daklak.thanhxuanpet.com';
-  public base: string = 'http://localhost';
-  public version = 21 // 21-188
+  public base: string = 'https://daklak.thanhxuanpet.com';
+  // public base: string = 'http://localhost';
+  public version = 188 // 21-188
   public baseurl: string = this.base + '/server/index.php?';
   public include: string = this.base + '/include';
   public admindefault = ['1', '5']
@@ -110,7 +110,7 @@ export class RestService {
   public tintuc = { khoitao: false, danhsachtintuc: [], danhsachchuongtrinh: [], danhsachchinhanh: [] }
   public tailieu = { khoitao: false, timkiem: { tukhoa: "", iddanhmuc: "0" }, danhsach: [], danhmuc: [] }
   public hansudung = { khoitao: false, danhsach: [] }
-  public tracnghiem = { khoitaodethi: false, khoitaochuyenmuc: false, chuyenmuc: [], dethi: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0, han: 0 }, ketqua: {trang: 1, danhsach: []}}
+  public tracnghiem = { khoitaodethi: false, khoitaochuyenmuc: false, chuyenmuc: [], dethi: [], bailam: { idbaithi: 0, nopbai: 0, danhsach: [], thoigian: 0, han: 0 }, ketqua: {trang: 1, danhsach: []}, thongke: { khoitao: false, batdau: "", ketthuc: "", danhsach: []}}
   public voucher = { khoitao: false, danhsach: []}
   // public work = {}
 

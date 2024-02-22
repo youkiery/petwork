@@ -18,22 +18,25 @@ export class TracnghiemketquaPage implements OnInit {
 
   ngOnInit() {
   }
-  
+
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
-    this.batdau = this.time.datetoisodate(this.rest.home.today)
-    this.ketthuc = this.time.datetoisodate(this.rest.home.today)
-    this.thongkebaithi()
+    else if (!this.rest.tracnghiem.thongke.khoitao) {
+      this.rest.tracnghiem.thongke.batdau = this.time.datetoisodate(this.rest.home.today)
+      this.rest.tracnghiem.thongke.ketthuc = this.time.datetoisodate(this.rest.home.today)
+      this.thongkebaithi()
+    }
   }
 
   public async thongkebaithi() {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'thongkebaithi', {
-      batdau: this.batdau,
-      ketthuc: this.ketthuc,
-     }).then(resp => {
+      batdau: this.rest.tracnghiem.thongke.batdau,
+      ketthuc: this.rest.tracnghiem.thongke.ketthuc,
+    }).then(resp => {
       this.rest.defreeze()
-      this.danhsach = resp.danhsach
+      this.rest.tracnghiem.thongke.danhsach = resp.danhsach
+      this.rest.tracnghiem.thongke.khoitao = true
     }, () => {
       this.rest.defreeze()
     })
@@ -43,7 +46,7 @@ export class TracnghiemketquaPage implements OnInit {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'chitietbaithi', {
       idbaithi: idbaithi
-     }).then(resp => {
+    }).then(resp => {
       this.rest.defreeze()
       this.rest.tracnghiem.bailam = resp.bailam
       this.rest.navCtrl.navigateForward("/tracnghiem/baithi")
