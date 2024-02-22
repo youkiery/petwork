@@ -11,19 +11,30 @@
 </ion-header>
 
 <ion-content *ngIf="rest.isready">
-  <div class="tracnghiem" *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
-    <div class="cauhoi">
-      {{i + 1}}. {{tracnghiem.noidung}}
-    </div>
-    <div [class]="hienthidapan(i,j) + ' cautraloi'" *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" (click)="chondapan(i, j)">
-      {{chuyendoi[j]}}. {{cautraloi.noidung}}
+  <div *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
+    <div class="tracnghiem" *ngIf="kiemtracautraloi(i)">
+      <div class="cauhoi">
+        {{i + 1}}. {{tracnghiem.noidung}}
+      </div>
+      <div [class]="hienthidapan(i,j) + ' cautraloi'" *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" (click)="chondapan(i, j)">
+        {{chuyendoi[j]}}. {{cautraloi.noidung}}
+      </div>
     </div>
   </div>
-  <div style="padding-bottom: 50px;"></div>
+  <div [style]="'padding-bottom:' + (50 + (rest.tracnghiem.bailam.nopbai ? 50 : 0)) +'px'"></div>
   <div class="thoigian" *ngIf="!rest.tracnghiem.bailam.nopbai">
     {{this.thoigian}}
   </div>
-  
+
+  <div class="tuychon" *ngIf="rest.tracnghiem.bailam.nopbai">
+    <div [class]="dangchon == 0 ? 'nuttuychon dangchon' : 'nuttuychon' " (click)="thaydoituychon(0)">
+      Toàn bộ đáp án
+    </div>
+    <div [class]="dangchon == 1 ? 'nuttuychon dangchon' : 'nuttuychon' " (click)="thaydoituychon(1)">
+      Chỉ đáp án sai
+    </div>
+  </div>
+
   <div class="diemthi" *ngIf="rest.tracnghiem.bailam.nopbai">
     {{diemthi}} điểm
   </div>

@@ -12,6 +12,7 @@ export class TracnghiembaithiPage implements OnInit {
   public diemthi = ""
   public interval = null
   public quahan = false
+  public dangchon = 0
   constructor(
     public rest: RestService,
   ) { }
@@ -55,6 +56,18 @@ export class TracnghiembaithiPage implements OnInit {
     }, () => {})
   }
 
+  public kiemtracautraloi(thutucauhoi) {
+    if (!this.quahan) return true
+    if (!this.dangchon) return true
+    let cauhoi = this.rest.tracnghiem.bailam.danhsach[thutucauhoi]
+    let luachon = cauhoi.luachon
+    let dapan = true
+    cauhoi.cautraloi.forEach((cautraloi, thutucautraloi) => {
+      if (cautraloi.dapan && thutucautraloi == luachon) dapan = false
+    })
+    return dapan
+  }
+
   public hienthidapan(thutucauhoi: number, thutucautraloi: number) {
     let luachon = this.rest.tracnghiem.bailam.danhsach[thutucauhoi].luachon
     if (this.quahan) {
@@ -92,5 +105,9 @@ export class TracnghiembaithiPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public thaydoituychon(tuychon) {
+    this.dangchon = tuychon
   }
 }

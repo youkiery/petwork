@@ -8,9 +8,39 @@
   font-weight: bold;
 }
 
+.tuychon {
+  position: fixed;
+  height: 50px;
+  width: 100%;
+  bottom: 50px;
+}
+
+.nuttuychon {
+  width: 45%;
+  float: left;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin: 5px;
+  padding: 5px;
+  background: white;
+}
+
+.nuttuychon:last-child {
+  float: right;
+}
+
+.nuttuychon.dangchon {
+  background: lightgreen;
+}
+
 .diemthi {
   position: fixed;
+  height: 50px;
+  line-height: 50px;
   bottom: 0px;
+  right: 0px;
   width: 100%;
   font-size: 3em;
   text-align: center;
