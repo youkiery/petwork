@@ -22,8 +22,8 @@ export class TracnghiemketquaPage implements OnInit {
   ionViewWillEnter() {
     if (!this.rest.action.length) this.rest.navCtrl.navigateBack('/tracnghiem')
     else if (!this.rest.tracnghiem.thongke.khoitao) {
-      this.rest.tracnghiem.thongke.batdau = this.time.datetoisodate(this.rest.home.today)
-      this.rest.tracnghiem.thongke.ketthuc = this.time.datetoisodate(this.rest.home.today)
+      this.rest.tracnghiem.thongke.batdau = this.rest.home.month.start
+      this.rest.tracnghiem.thongke.ketthuc = this.rest.home.month.end
       this.thongkebaithi()
     }
   }

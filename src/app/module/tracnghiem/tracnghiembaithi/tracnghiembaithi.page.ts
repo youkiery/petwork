@@ -60,12 +60,9 @@ export class TracnghiembaithiPage implements OnInit {
     if (!this.quahan) return true
     if (!this.dangchon) return true
     let cauhoi = this.rest.tracnghiem.bailam.danhsach[thutucauhoi]
-    let luachon = cauhoi.luachon
-    let dapan = true
-    cauhoi.cautraloi.forEach((cautraloi, thutucautraloi) => {
-      if (cautraloi.dapan && thutucautraloi == luachon) dapan = false
-    })
-    return dapan
+    if (cauhoi.luachon === undefined) return true
+    if (Number(cauhoi.cautraloi[cauhoi.luachon].dapan)) return false
+    return true
   }
 
   public hienthidapan(thutucauhoi: number, thutucautraloi: number) {
