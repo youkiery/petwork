@@ -56,6 +56,8 @@ export class TracnghiemdethiPage implements OnInit {
     this.rest.temp = {
       id: 0,
       tendethi: "",
+      diemliet: "0",
+      socau: "10",
       danhsachchuyenmuc: []
     }
     this.rest.navCtrl.navigateForward("/tracnghiem/capnhatdethi")

@@ -88,10 +88,10 @@ export class TracnghiemPage implements OnInit {
     })
   }
 
-  public async xacnhanthitiep(thoigian: number) {
+  public async xacnhanthitiep(socau: number) {
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('tracnghiem', 'xacnhanthitiep', {
-      thoigian: thoigian
+      socau: socau
     }).then(resp => {
       this.rest.defreeze()
       this.rest.tracnghiem.bailam = resp.bailam

@@ -14,7 +14,7 @@
   <div *ngFor="let tracnghiem of rest.tracnghiem.bailam.danhsach; let i = index">
     <div class="tracnghiem" *ngIf="kiemtracautraloi(i)">
       <div class="cauhoi">
-        {{i + 1}}. {{tracnghiem.noidung}}
+        {{i + 1}}. {{tracnghiem.noidung}} <span class="diemliet" *ngIf="tracnghiem.diemliet"> (câu liệt) </span>
       </div>
       <div [class]="hienthidapan(i,j) + ' cautraloi'" *ngFor="let cautraloi of tracnghiem.cautraloi; let j = index" (click)="chondapan(i, j)">
         {{chuyendoi[j]}}. {{cautraloi.noidung}}

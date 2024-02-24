@@ -11,6 +11,8 @@ export class TracnghiemketquaPage implements OnInit {
   public batdau = ""
   public ketthuc = ""
   public danhsach = []
+  public trangthai = ["Chưa thi", "Rớt", "Đậu"]
+  public loptrangthai = ["", "rot", "dau"]
   constructor(
     public rest: RestService,
     public time: TimeService,

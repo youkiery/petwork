@@ -38,6 +38,10 @@
       <ion-label position="stacked"> Câu trả lời sai </ion-label>
       <ion-input type="text" [(ngModel)]="rest.temp.cauhoi[i].danhsach[3].noidung"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label> Câu điểm liệt </ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="rest.temp.cauhoi[i].diemliet"></ion-checkbox>
+    </ion-item>
 
     <div id="pwa" style="display: none;">
       <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">

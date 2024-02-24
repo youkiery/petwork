@@ -20,7 +20,6 @@
     Thống kê
   </ion-button>
 
-
   <div class="stl-card" *ngFor="let dethi of rest.tracnghiem.thongke.danhsach">
     <div class="dethi">
       <b> Tên đề thi: {{dethi.tendethi}} </b>
@@ -28,6 +27,7 @@
         Nhân viên: {{nhanvien.nhanvien}} <br>
         Điểm thi: {{nhanvien.diemthi}} <br>
         Ngày thi: {{nhanvien.ngaythi}} <br>
+        Trạng thái: <span [class]="loptrangthai[nhanvien.trangthai]"> {{trangthai[nhanvien.trangthai]}} </span> <br>
         <ion-button *ngIf="nhanvien.diemthi !== '-'" color="secondary" expand="full" (click)="chitietbaithi(nhanvien.idbaithi)">
           Chi tiết
         </ion-button>
