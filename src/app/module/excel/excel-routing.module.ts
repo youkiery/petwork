@@ -64,6 +64,11 @@ const routes: Routes = [
     path: 'themspa',
     loadChildren: () => import('./excelthemspa/excelthemspa.module').then( m => m.ExcelthemspaPageModule)
   },
+  {
+    path: 'themkieu',
+    loadChildren: () => import('./excelthemkieu/excelthemkieu.module').then( m => m.ExcelthemkieuPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class ExcelspaPage implements OnInit {
   public loainhac = []
+  public style = []
   constructor(
     public rest: RestService,
     public alert: AlertController
@@ -28,6 +29,7 @@ export class ExcelspaPage implements OnInit {
       this.rest.defreeze()
       this.rest.home.spa = resp.list
       this.loainhac = resp.loainhac
+      this.style = resp.style
     }, () => {
       this.rest.defreeze()
     })
@@ -40,6 +42,7 @@ export class ExcelspaPage implements OnInit {
       event.target.complete();
       this.rest.home.spa = resp.list
       this.loainhac = resp.loainhac
+      this.style = resp.style
     }, () => {
       this.rest.defreeze()
       event.target.complete();
@@ -196,6 +199,37 @@ export class ExcelspaPage implements OnInit {
     }, () => {
       this.rest.defreeze()
     })
+  }
+  
+  public async xoa(id: number) {
+    await this.rest.freeze('Đang tải dữ liệu')
+    this.rest.checkpost('admin', 'xoakieu', {
+      id: id,
+    }).then(resp => {
+      this.rest.defreeze()
+      this.style = resp.style
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public themkieu() {
+    this.rest.temp = {
+      id: 0,
+      ten: "",
+      image: ""
+    }
+    this.rest.navCtrl.navigateForward("/excel/themkieu")
+  }
+
+  public sua(i) {
+    let kieu = this.style[i]
+    this.rest.temp = {
+      id: kieu.id,
+      ten: kieu.ten,
+      image: kieu.hinhanh,
+    }
+    this.rest.navCtrl.navigateForward("/excel/themkieu")
   }
 
 }

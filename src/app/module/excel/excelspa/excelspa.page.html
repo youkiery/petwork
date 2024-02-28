@@ -12,6 +12,17 @@
   </ion-refresher>
 
   <div class="stl-card">
+    <p> Danh sách kiểu cắt tỉa SPA </p>
+    <div class="thumb" (click)="themkieu()">+</div>
+    <div class="thumb slag" *ngFor="let kieu of style; let i = index">
+      <img [src]="kieu.hinhanh" (click)="rest.view(kieu.hinhanh)">
+      <div>{{kieu.ten}}</div>
+      <div (click)="sua(i)">sửa</div>
+      <div (click)="xoa(kieu.id)">xoá</div>
+    </div>
+  </div>
+
+  <div class="stl-card">
     Danh sách loại nhắc:
     <div class="upperline" *ngFor="let item of rest.home.spa; let i = index">
       {{item.tendanhmuc}}

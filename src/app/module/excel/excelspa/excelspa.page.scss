@@ -1,0 +1,25 @@
+.thumb {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 10px;
+  float: left;
+  background: white;
+  margin-right: 10px;
+}
+
+.thumb.slag {
+  line-height: normal;
+}
+
+.thumb.slag img {
+  width: 80px;
+  height: 40px;
+}
+.thumb.slag div {
+  height: 20px;
+  width: 100px;
+  overflow: hidden;
+}
