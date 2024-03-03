@@ -74,10 +74,16 @@
     <ion-checkbox slot="start" [(ngModel)]="rest.temp.did"></ion-checkbox>
   </ion-item>
 
-  <ion-item color="danger" *ngIf="!rest.temp.id">
-    <ion-label> Không làm được </ion-label>
+  <ion-item color="warning" *ngIf="!rest.temp.id">
+    <ion-label> Chuyển người làm </ion-label>
     <ion-checkbox slot="start" [(ngModel)]="rest.temp.khonglam"></ion-checkbox>
   </ion-item>
+
+  <div class="stl-card" style="height: 125px;overflow: auto;white-space: nowrap;">
+    <div *ngFor="let kieu of rest.spa.style; let i = index" [class]="kieu.id == rest.temp.style ? 'thumb selected' : 'thumb'" (click)="selectstyle(i)">
+      <img [src]="kieu.hinhanh">
+    </div>
+  </div>
 
   <div *ngIf="!rest.temp.treat">
     <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">

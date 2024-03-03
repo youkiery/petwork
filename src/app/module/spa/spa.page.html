@@ -78,6 +78,9 @@
           <span *ngIf="item.dimage.length">
             <img class="thumbnail-sm blue" *ngFor="let image of item.image" [src]="image" (click)="rest.view(image)">
           </span>
+          <span *ngIf="item.hinhanh.length">
+            <img class="thumbnail-sm green" [src]="item.hinhanh" (click)="rest.view(item.hinhanh)">
+          </span>
         </div>
 
         <img *ngIf="item.duser == 0" class="icon" src="/assets/icon/pick.png" (click)="pick(i)">

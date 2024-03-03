@@ -41,6 +41,16 @@ export class SpainsertPage {
     }
   }
 
+  public selectstyle(i) {
+    let kieu = this.rest.spa.style[i]
+    if (this.rest.temp.style == kieu.id) {
+      this.rest.view(kieu.hinhanh)
+    }
+    else {
+      this.rest.temp.style = kieu.id
+    }
+  }
+
   public suggest(param: number = 0) {
     this.rest.temp.param = param
     this.rest.navCtrl.navigateForward('/modal/suggest')

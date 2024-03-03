@@ -101,6 +101,7 @@ export class SpaPage {
     }).then((resp) => {
       this.rest.spa.init = true
       this.rest.spa.list = resp.list
+      this.rest.spa.style = resp.style
       this.option = []
       resp.nhanvien.forEach(item => {
         this.option.push({
@@ -115,22 +116,6 @@ export class SpaPage {
     }, () => { })
   }
 
-  // public async auto() {
-  //   if (this.check) {
-  //     this.check = false
-  //     this.rest.checkpost('spa', 'init', {
-  //       start: this.rest.spa.start,
-  //       end: this.rest.spa.end,
-  //     }).then((resp) => {
-  //       this.check = true
-  //       if (resp.list.length) {
-  //         this.rest.spa.list = resp.list
-  //         this.search()
-  //       }
-  //     }, () => { })
-  //   }
-  // }
-
   public async filter() {
     await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.checkpost('spa', 'init', {
@@ -139,6 +124,7 @@ export class SpaPage {
       this.rest.defreeze()
       this.rest.spa.init = true
       this.rest.spa.list = resp.list
+      this.rest.spa.style = resp.style
       this.search()
     }, () => { 
       this.rest.defreeze()
@@ -177,6 +163,7 @@ export class SpaPage {
       option: this.rest.home.default['spa'],
       filter: this.rest.spa.search,
       did: 1,
+      style: 0,
       khonglam: 0,
       number: 1
     }
@@ -198,6 +185,7 @@ export class SpaPage {
       option: item.option,
       weight: Number(item.weight),
       treat: Number(item.treat), 
+      style: item.style,
       filter: this.rest.spa.search,
       number: item.number
     }
