@@ -44,6 +44,10 @@ export class HomePage {
     }, () => { })
   }
 
+  public chuyencongviec() {
+    window.open("https://api.thanhxuanpet.com/dangnhap?session="+ this.rest.session)
+  }
+
   ionViewWillLeave() {
     this.subscription.unsubscribe();
   }
