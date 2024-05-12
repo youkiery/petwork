@@ -25,6 +25,7 @@ export class KhachhanghenngayPage implements OnInit {
       id: this.rest.temp.id,
       loai: this.rest.temp.loai,
       ngayhen: this.rest.temp.ngayhen,
+      tungay: this.rest.khachhang.tungay,
       tukhoa: this.rest.khachhang.tukhoa,
     }).then(resp => {
       this.rest.defreeze()

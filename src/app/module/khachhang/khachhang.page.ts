@@ -117,6 +117,7 @@ export class KhachhangPage implements OnInit {
     this.rest.temp = {
       id: khachhang.id,
       loai: khachhang.loai,
+      tungay: this.rest.khachhang.tungay,
       ngayhen: this.time.datetoisodate(khachhang.thoigian),
     }
     this.rest.navCtrl.navigateForward("/khachhang/henngay")
