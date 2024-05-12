@@ -45,6 +45,7 @@ export class ItemthemPage implements OnInit {
 
   public async xacnhan() {
     if (!this.rest.temp.tenhang.length) return this.rest.notify("Xin hãy nhập tên hàng")
+    await this.uploadAllImage()
     await this.rest.freeze('Đang tải dữ liệu......')
     this.rest.checkpost('item', 'capnhat', this.rest.temp).then(resp => {
       this.rest.defreeze()
